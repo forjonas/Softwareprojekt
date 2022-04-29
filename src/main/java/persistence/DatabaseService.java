@@ -1,13 +1,12 @@
 package persistence;
 
-import entity.Aufgabe;
-import entity.Aufgabensammlung;
-import entity.Benutzer;
+import entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -64,39 +63,81 @@ public class DatabaseService<T> {
     }
 
     public synchronized List<Benutzer> readBenutzerFromDatabase() {
-        TypedQuery<Benutzer> query = em.createQuery("SELECT b FROM Benutzer b", Benutzer.class);
-        List<Benutzer> resultList = query.getResultList();
+        List<Benutzer> resultList = new LinkedList<Benutzer>();
+        resultList.addAll(readStudentenFromDatabase());
+        resultList.addAll(readDozentenFromDatabase());
+        resultList.addAll(readAdministratorenFromDatabase());
+        return resultList;
+    }
+
+    public synchronized List<Student> readStudentenFromDatabase() {
+        TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s", Student.class);
+        List<Student> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<Dozent> readDozentenFromDatabase() {
+        TypedQuery<Dozent> query = em.createQuery("SELECT d FROM Dozent d", Dozent.class);
+        List<Dozent> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<Administrator> readAdministratorenFromDatabase() {
+        TypedQuery<Administrator> query = em.createQuery("SELECT a FROM Administrator a", Administrator.class);
+        List<Administrator> resultList = query.getResultList();
         return resultList;
     }
 
     public synchronized List<Aufgabe> readAufgabenFromDatabase() {
-        TypedQuery<Aufgabe> query = em.createQuery("SELECT a FROM Aufgabe a", Aufgabe.class);
-        List<Aufgabe> resultList = query.getResultList();
+        List<Aufgabe> resultList = new LinkedList<Aufgabe>();
+        resultList.addAll(readDesignaufgabenFromDatabase());
+        resultList.addAll(readEinfachantwortAufgabenFromDatabase());
+        resultList.addAll(readMultipleChoiceAufgabenFromDatabase());
+        resultList.addAll(readProgrammieraufgabenFromDatabase());
+        return resultList;
+    }
+
+    public synchronized List<Programmieraufgabe> readProgrammieraufgabenFromDatabase() {
+        TypedQuery<Programmieraufgabe> query = em.createQuery("SELECT a FROM Programmieraufgabe a", Programmieraufgabe.class);
+        List<Programmieraufgabe> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<Designaufgabe> readDesignaufgabenFromDatabase() {
+        TypedQuery<Designaufgabe> query = em.createQuery("SELECT a FROM Designaufgabe a", Designaufgabe.class);
+        List<Designaufgabe> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<EinfachantwortAufgabe> readEinfachantwortAufgabenFromDatabase() {
+        TypedQuery<EinfachantwortAufgabe> query = em.createQuery("SELECT a FROM EinfachantwortAufgabe a", EinfachantwortAufgabe.class);
+        List<EinfachantwortAufgabe> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<MultipleChoiceAufgabe> readMultipleChoiceAufgabenFromDatabase() {
+        TypedQuery<MultipleChoiceAufgabe> query = em.createQuery("SELECT a FROM MultipleChoiceAufgabe a", MultipleChoiceAufgabe.class);
+        List<MultipleChoiceAufgabe> resultList = query.getResultList();
         return resultList;
     }
 
     public synchronized List<Aufgabensammlung> readAufgabensammlungFromDatabase() {
-        TypedQuery<Aufgabensammlung> query = em.createQuery("SELECT a FROM Aufgabensammlung a", Aufgabensammlung.class);
-        List<Aufgabensammlung> resultList = query.getResultList();
+        List<Aufgabensammlung> resultList = new LinkedList<Aufgabensammlung>();
+        resultList.addAll(readTestateFromDatabase());
+        resultList.addAll(readTrainingsFromDatabase());
         return resultList;
     }
 
-    public synchronized Benutzer readBenutzerFromDatabaseById(long id) {
-        TypedQuery<Benutzer> query = em.createQuery("SELECT b FROM Benutzer b WHERE b.benutzerId = " + id, Benutzer.class);
-        Benutzer result = query.getResultList().get(0);
-        return result;
+    public synchronized List<Training> readTrainingsFromDatabase() {
+        TypedQuery<Training> query = em.createQuery("SELECT a FROM Training a", Training.class);
+        List<Training> resultList = query.getResultList();
+        return resultList;
     }
 
-    public synchronized Aufgabe readAufgabeFromDatabaseById(long id) {
-        TypedQuery<Aufgabe> query = em.createQuery("SELECT a FROM Aufgabe a WHERE a.aufgabenId = " + id, Aufgabe.class);
-        Aufgabe result = query.getResultList().get(0);
-        return result;
-    }
-
-    public synchronized Aufgabensammlung readAufgabensammlungFromDatabaseById(long id) {
-        TypedQuery<Aufgabensammlung> query = em.createQuery("SELECT a FROM Aufgabensammlung a WHERE a.aufgabensammlungId = " + id, Aufgabensammlung.class);
-        Aufgabensammlung result = query.getResultList().get(0);
-        return result;
+    public synchronized List<Testat> readTestateFromDatabase() {
+        TypedQuery<Testat> query = em.createQuery("SELECT a FROM Testat a", Testat.class);
+        List<Testat> resultList = query.getResultList();
+        return resultList;
     }
 
     public void printResults(List<T> resultList) {

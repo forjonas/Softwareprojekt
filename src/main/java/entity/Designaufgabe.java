@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("Designaufgabe")
 public class Designaufgabe extends Aufgabe {
 
     //Datentyp ändern

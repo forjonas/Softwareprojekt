@@ -9,8 +9,7 @@ import jakarta.persistence.*;
  * @version 22.04.22
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="Art", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Benutzer {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

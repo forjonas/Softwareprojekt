@@ -12,7 +12,6 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("Testat")
 public class Testat extends Aufgabensammlung {
 
     private String bewertung;
