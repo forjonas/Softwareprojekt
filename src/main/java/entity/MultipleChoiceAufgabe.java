@@ -13,7 +13,6 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("MultipleChoiceAufgabe")
 public class MultipleChoiceAufgabe extends Aufgabe {
 
     private List<String> antwortmoeglichkeiten;
