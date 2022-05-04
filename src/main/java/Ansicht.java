@@ -19,15 +19,28 @@ public class Ansicht implements ActionListener {
     private JButton generiereTrainingBtn;
     private JButton zurueckStudentMenueBtn;
 
+
+    /** -----------------------------------------------JButtons Dozent Ansicht-------------------------------**/
+    private JButton testatEinsehenBtn;
+    private JButton trainingsEinsehenBtn;
+    private JButton testateErstellenBtn;
+    private JButton testatuebersichtBtn;
+    private JButton aufgabeErstellenBtn;
+    private JButton aufgabenuebersichtBtn;
+    private JButton trainingsDurchfuehrenBtn;
+    private JButton testateDurchfuehrenBtn;
+    private JPanel dozentPnl;
+    /** ----------------------------------------------------------------------------------------------------**/
     private JPanel generalPnl;
     private JPanel studentPnl;
+
     private JPanel trainingAuswahlPnl;
     private JPanel testatAuswahlPnl;
     private JPanel testatErgebnissePnl;
 
 
     private JPanel adminPnl;
-    private JPanel dozentPnl;
+
 
 
 
@@ -82,30 +95,43 @@ public class Ansicht implements ActionListener {
 
     public void fuelleDozentFrame()
     {
-        JButton testatEinsehen = new JButton("Testat Einsehen");testatEinsehen.addActionListener(this);testatEinsehen.setPreferredSize(new Dimension(160, 80));
-        JButton trainingsEinsehen = new JButton("Trainings Einsehen");trainingsEinsehen.addActionListener(this);trainingsEinsehen.setPreferredSize(new Dimension(160, 80));
-        JButton testateErstellen = new JButton("Testate Erstellen");testateErstellen.addActionListener(this);testateErstellen.setPreferredSize(new Dimension(160, 80));
-        JButton testatuebersicht = new JButton("Testat Übersicht");testatuebersicht.addActionListener(this);testatuebersicht.setPreferredSize(new Dimension(160, 80));
-        JButton aufgabeErstellen = new JButton("Aufgabe Erstellen");aufgabeErstellen.addActionListener(this);aufgabeErstellen.setPreferredSize(new Dimension(160, 80));
-        JButton aufgabenuebersicht = new JButton("Aufgaben Übersicht");aufgabenuebersicht.addActionListener(this);aufgabenuebersicht.setPreferredSize(new Dimension(160, 80));
-        JButton trainingsDurchfuehren = new JButton("Trainings Durchführen");trainingsDurchfuehren.addActionListener(this);trainingsDurchfuehren.setPreferredSize(new Dimension(160, 80));
-        JButton testateDurchfuehren = new JButton("Testate Durchführen");testateDurchfuehren.addActionListener(this);testateDurchfuehren.setPreferredSize(new Dimension(160, 80));
+        testatEinsehenBtn = new JButton("Testat Einsehen");
+        testatEinsehenBtn.addActionListener(this);
+        testatEinsehenBtn.setPreferredSize(new Dimension(160, 80));
+        trainingsEinsehenBtn = new JButton("Trainings Einsehen");
+        trainingsEinsehenBtn.addActionListener(this);
+        trainingsEinsehenBtn.setPreferredSize(new Dimension(160, 80));
+        testateErstellenBtn = new JButton("Testate Erstellen");
+        testateErstellenBtn.addActionListener(this);
+        testateErstellenBtn.setPreferredSize(new Dimension(160, 80));
+        testatuebersichtBtn = new JButton("Testat Übersicht");
+        testatuebersichtBtn.addActionListener(this);
+        testatuebersichtBtn.setPreferredSize(new Dimension(160, 80));
+        aufgabeErstellenBtn = new JButton("Aufgabe Erstellen");
+        aufgabeErstellenBtn.addActionListener(this);
+        aufgabeErstellenBtn.setPreferredSize(new Dimension(160, 80));
+        aufgabenuebersichtBtn = new JButton("Aufgaben Übersicht");
+        aufgabenuebersichtBtn.addActionListener(this);
+        aufgabenuebersichtBtn.setPreferredSize(new Dimension(160, 80));
+        trainingsDurchfuehrenBtn = new JButton("Trainings Durchführen");
+        trainingsDurchfuehrenBtn.addActionListener(this);
+        trainingsDurchfuehrenBtn.setPreferredSize(new Dimension(160, 80));
+        testateDurchfuehrenBtn = new JButton("Testate Durchführen");
+        testateDurchfuehrenBtn.addActionListener(this);
+        testateDurchfuehrenBtn.setPreferredSize(new Dimension(160, 80));
 
         FlowLayout fl = new FlowLayout();
-        dozentPanel = new JPanel();
-        dozentPanel.setLayout(fl);
-        dozentPanel.add(zurueckGehen);
-        dozentPanel.add(testatEinsehen);
-        dozentPanel.add(testateDurchfuehren);
-        dozentPanel.add(trainingsDurchfuehren);
-        dozentPanel.add(aufgabenuebersicht);
-        dozentPanel.add(aufgabeErstellen);
-        dozentPanel.add(testatuebersicht);
-        dozentPanel.add(testateErstellen);
-        dozentPanel.add(trainingsEinsehen);
-        hauptmenueDozent.add(dozentPanel);
-        hauptmenueDozent.setSize(1000,1000);
-        hauptmenueDozent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        dozentPnl.setLayout(fl);
+        dozentPnl.add(zurueckGehenBtn);
+        dozentPnl.add(testatEinsehenBtn);
+        dozentPnl.add(testateDurchfuehrenBtn);
+        dozentPnl.add(trainingsDurchfuehrenBtn);
+        dozentPnl.add(aufgabenuebersichtBtn);
+        dozentPnl.add(aufgabeErstellenBtn);
+        dozentPnl.add(testatuebersichtBtn);
+        dozentPnl.add(testateErstellenBtn);
+        dozentPnl.add(trainingsEinsehenBtn);
+        homeFrame.add(dozentPnl);
 
     }
     public void testatEinsehen(){
@@ -196,7 +222,13 @@ public class Ansicht implements ActionListener {
     //Actions für Buttons
     public void anmeldungDozent()
     {
-
+        homeFrame.dispose();
+        DozentAnsicht.main(null);
+        //homeFrame.getContentPane().remove(generalPnl);
+       // homeFrame.getContentPane().add(dozentPnl =new JPanel());
+        //homeFrame.getContentPane().revalidate(); //IMPORTANT
+        //homeFrame.getContentPane().repaint();    //IMPORTANT
+        //fuelleDozentFrame();
     }
 
     public void anmeldungAdmin()
