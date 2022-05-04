@@ -7,20 +7,27 @@ import java.awt.event.ActionListener;
 
 public class Ansicht implements ActionListener {
 
-    public JFrame homeFrame ;
+    private JFrame homeFrame ;
 
-    public JButton studentAnmelden;
-    public JButton dozentAnmelden;
-    public JButton adminAnmelden;
-    public JButton zurueckGehen;//erstmal nur immer zurück zum Hauptmenü
-    public JButton trainingStarten;
-    public JButton testateOeffnen;
-    public JButton ergebnisTestate;
+    private JButton studentAnmeldenBtn;
+    private JButton dozentAnmeldenBtn;
+    private JButton adminAnmeldenBtn;
+    private JButton zurueckGehenBtn;//erstmal nur immer zurück zum Hauptmenü
+    private JButton trainingStartenBtn;
+    private JButton testateOeffnenBtn;
+    private JButton ergebnisTestateBtn;
+    private JButton generiereTrainingBtn;
+    private JButton zurueckStudentMenueBtn;
 
-    JPanel generalPanel;
-    JPanel studentPanel;
-    JPanel adminPanel;
-    JPanel dozentPanel;
+    private JPanel generalPnl;
+    private JPanel studentPnl;
+    private JPanel trainingAuswahlPnl;
+    private JPanel testatAuswahlPnl;
+    private JPanel testatErgebnissePnl;
+
+
+    private JPanel adminPnl;
+    private JPanel dozentPnl;
 
 
 
@@ -31,13 +38,21 @@ public class Ansicht implements ActionListener {
     public Ansicht()
     {
         homeFrame = new JFrame("Home");
-        homeFrame.getContentPane().add(generalPanel=new JPanel());
+        homeFrame.getContentPane().add(generalPnl =new JPanel());
 
-        studentAnmelden = new JButton("Student");studentAnmelden.addActionListener(this);studentAnmelden.setPreferredSize(new Dimension(160, 80));
-        dozentAnmelden = new JButton("Dozent");dozentAnmelden.addActionListener(this);dozentAnmelden.setPreferredSize(new Dimension(160, 80));
-        adminAnmelden = new JButton("Administrator");adminAnmelden.addActionListener(this);adminAnmelden.setPreferredSize(new Dimension(160, 80));
-        zurueckGehen = new JButton("Zurück zum Hauptmenü");zurueckGehen.addActionListener(this);zurueckGehen.setPreferredSize(new Dimension(60, 30));
-        zurueckGehen.setFont(new Zeichenstruktur().schriftKleinerButton());
+        studentAnmeldenBtn = new JButton("Student");
+        studentAnmeldenBtn.addActionListener(this);
+        studentAnmeldenBtn.setPreferredSize(new Dimension(160, 80));
+        dozentAnmeldenBtn = new JButton("Dozent");
+        dozentAnmeldenBtn.addActionListener(this);
+        dozentAnmeldenBtn.setPreferredSize(new Dimension(160, 80));
+        adminAnmeldenBtn = new JButton("Administrator");
+        adminAnmeldenBtn.addActionListener(this);
+        adminAnmeldenBtn.setPreferredSize(new Dimension(160, 80));
+        zurueckGehenBtn = new JButton("Zurück zum Hauptmenü");
+        zurueckGehenBtn.addActionListener(this);
+        zurueckGehenBtn.setPreferredSize(new Dimension(60, 30));
+        zurueckGehenBtn.setFont(new Zeichenstruktur().schriftKleinerButton());
 
         fuelleHomeFrame();
 
@@ -52,48 +67,96 @@ public class Ansicht implements ActionListener {
     {
         JPanel tempPanel=new JPanel();
 
-        generalPanel.setLayout(new java.awt.BorderLayout());
+        generalPnl.setLayout(new java.awt.BorderLayout());
         tempPanel.setLayout(new java.awt.GridLayout(1,3));
 
 
-        tempPanel.add(studentAnmelden);
-        tempPanel.add(dozentAnmelden);
-        tempPanel.add(adminAnmelden);
+        tempPanel.add(studentAnmeldenBtn);
+        tempPanel.add(dozentAnmeldenBtn);
+        tempPanel.add(adminAnmeldenBtn);
 
-        generalPanel.add(tempPanel, BorderLayout.CENTER);
+        generalPnl.add(tempPanel, BorderLayout.CENTER);
 
-        homeFrame.add(generalPanel);
+        homeFrame.add(generalPnl);
     }
 
-    public void fuelleDozentFrame() {
+    public void fuelleDozentFrame()
+    {
 
     }
 
-    public void fuelleAdminFrame() {
+    public void fuelleAdminFrame()
+    {
 
     }
 
     public void fuelleStudentFrame()
     {
-        studentPanel.setLayout(new BorderLayout());
-        JLabel text = new JLabel("Willkommen ");//+Benutzer.getStudentenID());
-        JPanel tempNorth= new JPanel(new FlowLayout());
-        JPanel tempCenter= new JPanel(new FlowLayout());
+        studentPnl.setLayout(new BorderLayout());
+        JLabel textLbl = new JLabel("Willkommen ");//+Benutzer.getStudentenID());
+        JPanel tempNorthPnl= new JPanel(new FlowLayout());
+        JPanel tempCenterPnl= new JPanel(new FlowLayout());
 
 
         //Drei Buttons laut Mock-Up
-        trainingStarten = new JButton("Trainings");trainingStarten.addActionListener(this);trainingStarten.setPreferredSize(new Dimension(160,80));
-        testateOeffnen = new JButton("Testate");testateOeffnen.addActionListener(this);testateOeffnen.setPreferredSize(new Dimension(160,80));
-        ergebnisTestate = new JButton("Ergebnisse");ergebnisTestate.addActionListener(this);ergebnisTestate.setPreferredSize(new Dimension(160,80));
+        trainingStartenBtn = new JButton("Trainings");
+        trainingStartenBtn.addActionListener(this);
+        trainingStartenBtn.setPreferredSize(new Dimension(160,80));
+        testateOeffnenBtn = new JButton("Testate");
+        testateOeffnenBtn.addActionListener(this);
+        testateOeffnenBtn.setPreferredSize(new Dimension(160,80));
+        ergebnisTestateBtn = new JButton("Ergebnisse");
+        ergebnisTestateBtn.addActionListener(this);
+        ergebnisTestateBtn.setPreferredSize(new Dimension(160,80));
 
-        tempCenter.add(trainingStarten);
-        tempCenter.add(testateOeffnen);
-        tempCenter.add(ergebnisTestate);
-        tempNorth.add(zurueckGehen);
-        tempNorth.add(text);
-        studentPanel.add(tempNorth, BorderLayout.NORTH);
-        studentPanel.add(tempCenter, BorderLayout.CENTER);
-        homeFrame.add(studentPanel);
+        tempCenterPnl.add(trainingStartenBtn);
+        tempCenterPnl.add(testateOeffnenBtn);
+        tempCenterPnl.add(ergebnisTestateBtn);
+        tempNorthPnl.add(zurueckGehenBtn);
+        tempNorthPnl.add(textLbl);
+        studentPnl.add(tempNorthPnl, BorderLayout.NORTH);
+        studentPnl.add(tempCenterPnl, BorderLayout.CENTER);
+        homeFrame.add(studentPnl);
+    }
+
+    public void fuelleTrainingAuswahl()
+    {
+        trainingAuswahlPnl.setLayout(new BorderLayout());
+        JPanel tempCenterPnl= new JPanel(new GridLayout(7,2));
+
+        String[] dauerStrings={"5 Minuten","10 Minuten","15 Minuten","20 Minuten"};
+        JComboBox<String> dauerAuswahlCBox=new JComboBox<>(dauerStrings);
+
+        String[] schwierigkeitStrings={"Leicht","Mittel","Schwer"};
+        JComboBox<String>schwierigkeitAuswahlCBox=new JComboBox<>(schwierigkeitStrings);
+
+        String[] aufgabenTypStrings={"Multiple Choice","UML","Code","Einfach Antwort"};
+        JComboBox<String>aufgabenTypAuswahlCBox=new JComboBox<>(aufgabenTypStrings);
+
+        String[] aufgabenMengeStrings={"1-3","3-5","5-7","7-10"};
+        JComboBox<String>aufgabenMengeAuswahlCBox=new JComboBox<>(aufgabenMengeStrings);
+
+        String[] kategorieStrings={"Software Architektur","Programmierung","Grundlagen"};
+        JComboBox<String>kategorieAuswahlCBox=new JComboBox<>(kategorieStrings);
+
+        generiereTrainingBtn = new JButton("Training Generieren");
+        generiereTrainingBtn.addActionListener(this);
+        generiereTrainingBtn.setPreferredSize(new Dimension(80,40));
+        zurueckStudentMenueBtn =new JButton("Zurück");
+        zurueckStudentMenueBtn.addActionListener(this);
+        zurueckStudentMenueBtn.setPreferredSize(new Dimension(80,40));
+
+        tempCenterPnl.add(zurueckStudentMenueBtn);    tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(dauerAuswahlCBox);           tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(schwierigkeitAuswahlCBox);   tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(aufgabenTypAuswahlCBox);     tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(aufgabenMengeAuswahlCBox);   tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(kategorieAuswahlCBox);       tempCenterPnl.add(new JLabel(""));
+        tempCenterPnl.add(new JLabel(""));     tempCenterPnl.add(generiereTrainingBtn);
+
+        trainingAuswahlPnl.add(tempCenterPnl,BorderLayout.CENTER);
+        homeFrame.add(trainingAuswahlPnl);
+
     }
 
     //Actions für Buttons
@@ -109,18 +172,27 @@ public class Ansicht implements ActionListener {
 
     public void anmeldungStudent()
     {
-        homeFrame.getContentPane().remove(generalPanel);
-        homeFrame.getContentPane().add(studentPanel=new JPanel());
+        homeFrame.getContentPane().remove(generalPnl);
+        homeFrame.getContentPane().add(studentPnl =new JPanel());
         homeFrame.getContentPane().revalidate(); //IMPORTANT
         homeFrame.getContentPane().repaint();    //IMPORTANT
         fuelleStudentFrame();
     }
 
 
+    public void trainingStarten()
+    {
+        homeFrame.getContentPane().remove(studentPnl);
+        homeFrame.getContentPane().add(trainingAuswahlPnl =new JPanel());
+        homeFrame.getContentPane().revalidate(); //IMPORTANT
+        homeFrame.getContentPane().repaint();    //IMPORTANT
+        fuelleTrainingAuswahl();
+    }
+
     public void zurueckHauptmenue()
     {
-        homeFrame.getContentPane().remove(studentPanel);
-        homeFrame.getContentPane().add(generalPanel);
+        homeFrame.getContentPane().remove(studentPnl);
+        homeFrame.getContentPane().add(generalPnl);
         homeFrame.getContentPane().revalidate(); //IMPORTANT
         homeFrame.getContentPane().repaint();    //IMPORTANT
 
@@ -130,25 +202,31 @@ public class Ansicht implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
 
-        if(e.getSource() == this.studentAnmelden){
+        if(e.getSource() == this.studentAnmeldenBtn){
             anmeldungStudent();
         }
-        else if(e.getSource() == this.dozentAnmelden){
+        else if(e.getSource() == this.dozentAnmeldenBtn){
             anmeldungDozent();
         }
-        else if(e.getSource() == this.adminAnmelden){
+        else if(e.getSource() == this.adminAnmeldenBtn){
             anmeldungAdmin();
         }
-        else if(e.getSource() == this.zurueckGehen){
+        else if(e.getSource() == this.zurueckGehenBtn){
             zurueckHauptmenue();
         }
-        else if(e.getSource() == this.ergebnisTestate) {
+        else if(e.getSource() == this.ergebnisTestateBtn){
             //dd
         }
-        else if(e.getSource() == this.trainingStarten){
+        else if(e.getSource() == this.trainingStartenBtn){
+            trainingStarten();
+        }
+        else if(e.getSource() == this.testateOeffnenBtn){
             //d
         }
-        else if(e.getSource() == this.testateOeffnen){
+        else if(e.getSource() == this.zurueckStudentMenueBtn){
+            //d
+        }
+        else if(e.getSource() == this.generiereTrainingBtn){
             //d
         }
 
