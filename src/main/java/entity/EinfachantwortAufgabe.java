@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("EinfachantwortAufgabe")
 public class EinfachantwortAufgabe extends Aufgabe {
 
     private String musterloesung;

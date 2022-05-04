@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("Administrator")
 public class Administrator extends Benutzer implements BenutzerMitDozentenrechten {
 
     /**

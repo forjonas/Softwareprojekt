@@ -12,8 +12,7 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity //Abstrakt nimmt er irgendwie nicht
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="Art", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Aufgabensammlung {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

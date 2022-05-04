@@ -12,7 +12,6 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("Training")
 public class Training extends Aufgabensammlung {
 
     private int bearbeitungszeit;

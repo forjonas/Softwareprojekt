@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
  * @version 22.04.22
  */
 @Entity
-@DiscriminatorValue("Student")
 public class Student extends Benutzer {
 
     private int matrikelnummer;
