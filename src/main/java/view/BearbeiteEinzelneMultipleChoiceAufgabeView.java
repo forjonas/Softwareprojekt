@@ -43,17 +43,17 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		
+
+
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
 		JLabel lblNewLabel = new JLabel("Frage: Wer ist der Erfinder des World Wide Webs?");
 		panelNorth.add(lblNewLabel);
-		
-		
+
+
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
-		
+
 		JRadioButton button1 = new JRadioButton("Elon Musk");
 		panelCenter.add(button1);
 		JRadioButton button2 = new JRadioButton("Logan Murphy");
@@ -62,23 +62,23 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame {
 		panelCenter.add(button3);
 		JRadioButton button4 = new JRadioButton(":)");
 		panelCenter.add(button4);
-		
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(button1);
 		bg.add(button2);
 		bg.add(button3);
 		bg.add(button4);
-		
-		
+
+
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.SOUTH);
-		
+
 		JButton btnNewButton = new JButton("Beenden");
 		panel_3.add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("L\u00F6sungshinweis");
 		panel_3.add(btnNewButton_1);
-		
+
 		JButton btnNewButton_2 = new JButton("Aufgabe Beenden");
 		panel_3.add(btnNewButton_2);
 	}
