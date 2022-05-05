@@ -132,6 +132,21 @@ public class Ansicht implements ActionListener {
         dozentPnl.add(testateErstellenBtn);
         dozentPnl.add(trainingsEinsehenBtn);
         homeFrame.add(dozentPnl);
+        dozentPnl = new JPanel();
+        dozentPnl.setLayout(fl);
+        dozentPnl.add(zurueckGehenBtn);
+        dozentPnl.add(testatEinsehen);
+        dozentPnl.add(testateDurchfuehren);
+        dozentPnl.add(trainingsDurchfuehren);
+        dozentPnl.add(aufgabenuebersicht);
+        dozentPnl.add(aufgabeErstellen);
+        dozentPnl.add(testatuebersicht);
+        dozentPnl.add(testateErstellen);
+        dozentPnl.add(trainingsEinsehen);
+        hauptmenueDozent.add(dozentPnl);
+        hauptmenueDozent.setSize(1000,1000);
+        hauptmenueDozent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+
 
     }
     public void testatEinsehen(){
