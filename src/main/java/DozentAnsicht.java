@@ -1,4 +1,6 @@
+import javax.sound.midi.Soundbank;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +29,7 @@ public class DozentAnsicht implements ActionListener {
     {
         homeFrame = new JFrame("Home");
         fuelleDozentFrame();
-        homeFrame.setSize(1000,1000);
+        homeFrame.setSize(1000,250);
         homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homeFrame.setVisible(true);
     }
@@ -60,16 +62,25 @@ public class DozentAnsicht implements ActionListener {
         testateDurchfuehrenBtn.setPreferredSize(new Dimension(160, 80));
 
         dozentPnl = new JPanel();
-        FlowLayout fl = new FlowLayout();
-        dozentPnl.setLayout(fl);
-        dozentPnl.add(testatEinsehenBtn);
-        dozentPnl.add(testateDurchfuehrenBtn);
-        dozentPnl.add(trainingsDurchfuehrenBtn);
-        dozentPnl.add(aufgabenuebersichtBtn);
-        dozentPnl.add(aufgabeErstellenBtn);
-        dozentPnl.add(testatuebersichtBtn);
-        dozentPnl.add(testateErstellenBtn);
-        dozentPnl.add(trainingsEinsehenBtn);
+        JPanel North = new JPanel();
+        JPanel Center = new JPanel();
+
+        dozentPnl.setLayout(new BorderLayout());
+        dozentPnl.setSize(700,700);
+
+        North.add(testatEinsehenBtn);
+        North.add(testateDurchfuehrenBtn);
+        North.add(testatuebersichtBtn);
+        North.add(testateErstellenBtn);
+
+        Center.add(trainingsDurchfuehrenBtn);
+        Center.add(trainingsEinsehenBtn);
+        Center.add(aufgabenuebersichtBtn);
+        Center.add(aufgabeErstellenBtn);
+
+        dozentPnl.add(North,BorderLayout.NORTH);
+        dozentPnl.add(Center,BorderLayout.CENTER);
+
         homeFrame.add(dozentPnl);
 
     }
@@ -105,8 +116,7 @@ public class DozentAnsicht implements ActionListener {
     }
 
     private void trainingsEinsehen() {
-        System.out.println("a");
-        //Hier Link zu der Main Deiner Klasse
+
     }
 
     private void testateErstellen() {
@@ -120,8 +130,8 @@ public class DozentAnsicht implements ActionListener {
     }
 
     private void aufgabeErstellen() {
-        System.out.println("d");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        AufgabeErstellenStartView.main(null);
     }
 
     private void aufgabenuebersicht() {
