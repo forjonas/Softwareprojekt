@@ -42,17 +42,17 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		
+
+
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
 		JLabel lblNewLabel = new JLabel("Frage: Wer ist der Erfinder des World Wide Webs?");
 		panelNorth.add(lblNewLabel);
-		
-		
+
+
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
-		
+
 		JRadioButton button1 = new JRadioButton("Elon Musk");
 		panelCenter.add(button1);
 		JRadioButton button2 = new JRadioButton("Logan Murphy");
@@ -61,14 +61,14 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame {
 		panelCenter.add(button3);
 		JRadioButton button4 = new JRadioButton(":)");
 		panelCenter.add(button4);
-		
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(button1);
 		bg.add(button2);
 		bg.add(button3);
 		bg.add(button4);
-		
-		
+
+
 		JPanel panelSouth = new JPanel();
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 		JButton btnNewButton1 = new JButton("Beenden");

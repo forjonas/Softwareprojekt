@@ -43,26 +43,26 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		
+
+
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
 		JLabel lblNewLabel1 = new JLabel("Frage: Wer ist der Erfinder des World Wide Webs? Schreiben Sie ihre Antwort auf!");
 		panelNorth.add(lblNewLabel1);
-		
-		
+
+
 		JPanel panelCenter= new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
 		textArea = new JTextArea(18, 50);
 		panelCenter.add(textArea);
-		
+
 		JPanel panelWest = new JPanel();
 		contentPane.add(panelWest, BorderLayout.WEST);
 		JLabel lblNewLabel_1 = new JLabel("Antwort");
 		panelWest.add(lblNewLabel_1);
-		
-		
-		
+
+
+
 		JPanel panelSouth = new JPanel();
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 		JButton btnNewButton1 = new JButton("Beenden");
@@ -75,6 +75,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame {
 		panelSouth.add(btnNewButton4);
 		JButton btnNewButton5 = new JButton("Training Beenden");
 		panelSouth.add(btnNewButton5);
-				
+
 	}
 }

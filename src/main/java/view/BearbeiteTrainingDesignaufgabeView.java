@@ -40,39 +40,32 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.SOUTH);
-		
-		JButton btnNewButton = new JButton("Beenden");
-		panel.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("L\u00F6sungshinweis");
-		panel.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Vorherige Aufgabe");
-		panel.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("N\u00E4chste Aufgabe");
-		panel.add(btnNewButton_3);
-		
-		JButton btnNewButton_5 = new JButton("Training Beenden");
-		panel.add(btnNewButton_5);
-		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.NORTH);
-		
-		JLabel lblNewLabel = new JLabel("Aufgabentext");
-		panel_1.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Design Aufgabe");
-		contentPane.add(lblNewLabel_1, BorderLayout.WEST);
-		
+
+		JPanel panelNorth = new JPanel();
+		contentPane.add(panelNorth, BorderLayout.NORTH);
+		JLabel lblNewLabel1 = new JLabel(
+				"Frage: Wer ist der Erfinder des World Wide Webs? Schreiben Sie ihre Antwort auf!");
+		panelNorth.add(lblNewLabel1);
+
 		JLabel lblNewLabel_2 = new JLabel("Hier ist ein Bild");
 		contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
-		
-		JButton btnNewButton_4 = new JButton("Datei Hochladen");
-		contentPane.add(btnNewButton_4, BorderLayout.EAST);
-	}
 
+		JPanel panelWest = new JPanel();
+		contentPane.add(panelWest, BorderLayout.WEST);
+		JButton btnNewButton_3 = new JButton("Upload");
+		panelWest.add(btnNewButton_3);
+		JPanel panelSouth = new JPanel();
+		contentPane.add(panelSouth, BorderLayout.SOUTH);
+		JButton btnNewButton1 = new JButton("Beenden");
+		panelSouth.add(btnNewButton1);
+		JButton btnNewButton2 = new JButton("Loesungshinweis");
+		panelSouth.add(btnNewButton2);
+		JButton btnNewButton3 = new JButton("Vorherige Aufgabe");
+		panelSouth.add(btnNewButton3);
+		JButton btnNewButton4 = new JButton("N\u00E4chste Aufgabe");
+		panelSouth.add(btnNewButton4);
+		JButton btnNewButton5 = new JButton("Training Beenden");
+		panelSouth.add(btnNewButton5);
+
+	}
 }
