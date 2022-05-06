@@ -1,20 +1,20 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame {
+public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-
+	private JButton btnBeendenTestat;
+	private JButton btnLoesungshinweisTestat;
+	private JButton btnVoherigeAufgabeTestat;
+	private JButton btnNaechsteAufgabeTestat;
+	private JButton btnTestatBeenden;
 	/**
 	 * Launch the application.
 	 */
@@ -35,7 +35,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame {
 	 * Create the frame.
 	 */
 	public BearbeiteTestatMultipleChoiceAufgabeView() {
-		setTitle("Multiple Choice");
+		setTitle("Testat Multiple Choice");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -66,18 +66,49 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame {
 		bg.add(button3);
 		bg.add(button4);
 
-		JPanel panelSouth = new JPanel();
+		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
-		JButton btnNewButton1 = new JButton("Beenden");
-		panelSouth.add(btnNewButton1);
-		JButton btnNewButton2 = new JButton("Loesungshinweis");
-		panelSouth.add(btnNewButton2);
-		JButton btnNewButton3 = new JButton("Vorherige Aufgabe");
-		panelSouth.add(btnNewButton3);
-		JButton btnNewButton4 = new JButton("N\u00E4chste Aufgabe");
-		panelSouth.add(btnNewButton4);
-		JButton btnNewButton5 = new JButton("Testat Beenden");
-		panelSouth.add(btnNewButton5);
+
+
+		btnBeendenTestat = new JButton("Beenden");
+		panelSouth.add(btnBeendenTestat);
+		btnLoesungshinweisTestat = new JButton("Loesungshinweis");
+		panelSouth.add(btnLoesungshinweisTestat);
+		btnVoherigeAufgabeTestat = new JButton("Vorherige Aufgabe");
+		panelSouth.add(btnVoherigeAufgabeTestat);
+		btnNaechsteAufgabeTestat = new JButton("N\u00E4chste Aufgabe");
+		panelSouth.add(btnNaechsteAufgabeTestat);
+		btnTestatBeenden = new JButton("Testat Beenden");
+		panelSouth.add(btnTestatBeenden);
+
+		this.btnBeendenTestat.addActionListener(this);
+		this.btnLoesungshinweisTestat.addActionListener(this);
+		this.btnVoherigeAufgabeTestat.addActionListener(this);
+		this.btnNaechsteAufgabeTestat.addActionListener(this);
+		this.btnTestatBeenden.addActionListener(this);
+
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.btnBeendenTestat) {
+			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+		}
+		if (e.getSource() == this.btnLoesungshinweisTestat) {
+			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+		}
+		if (e.getSource() == this.btnTestatBeenden) {
+			JOptionPane.showMessageDialog(this,"Button Testat Beenden");
+		}
+		if (e.getSource() == this.btnVoherigeAufgabeTestat) {
+			JOptionPane.showMessageDialog(this,"Button Vorherige");
+
+		}
+		if (e.getSource() == this.btnNaechsteAufgabeTestat) {
+			JOptionPane.showMessageDialog(this,"Button Nächste");
+
+		}
+
+	}
 }

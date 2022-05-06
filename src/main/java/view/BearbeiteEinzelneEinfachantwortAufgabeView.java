@@ -1,25 +1,19 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame {
+public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextArea textArea;
+	private JButton btnBeendenEinzel;
+	private JButton btnLoesungshinweisEinzel;
+	private JButton btnAufgabeBeendenEinzel;
 
 	/**
 	 * Launch the application.
@@ -41,7 +35,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame {
 	 * Create the frame.
 	 */
 	public BearbeiteEinzelneEinfachantwortAufgabeView() {
-		setTitle("Einfachantwort");
+		setTitle("Einzelne Einfachantwort");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -68,16 +62,35 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame {
 		panelWest.add(lblNewLabel_1);
 
 
-		JPanel panelSouth = new JPanel();
+		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-		JButton btnNewButton1 = new JButton("Beenden");
-		panelSouth.add(btnNewButton1);
-		JButton btnNewButton2 = new JButton("Loesungshinweis");
-		panelSouth.add(btnNewButton2);
-		JButton btnNewButton3 = new JButton("Aufgabe Beenden");
-		panelSouth.add(btnNewButton3);
+		btnBeendenEinzel = new JButton("Beenden");
+		panelSouth.add(btnBeendenEinzel);
+		btnLoesungshinweisEinzel = new JButton("Loesungshinweis");
+		panelSouth.add(btnLoesungshinweisEinzel);
+		btnAufgabeBeendenEinzel = new JButton("Aufgabe Beenden");
+		panelSouth.add(btnAufgabeBeendenEinzel);
+
+		this.btnBeendenEinzel.addActionListener(this);
+		this.btnLoesungshinweisEinzel.addActionListener(this);
+		this.btnAufgabeBeendenEinzel.addActionListener(this);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.btnBeendenEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+		}
+		if (e.getSource() == this.btnLoesungshinweisEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+		}
+		if (e.getSource() == this.btnAufgabeBeendenEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Aufgabe Beenden");
+		}
 
 	}
 }

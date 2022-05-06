@@ -1,19 +1,23 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class BearbeiteTrainingProgrammieraufgabeView extends JFrame {
+public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
+
 
 	private JPanel contentPane;
+	private JButton btnBeendenTraining;
+	private JButton btnLoesungshinweisTraining;
+	private JButton btnVoherigeAufgabeTraining;
+	private JButton btnNaechsteAufgabeTraining;
+	private JButton btnTrainingBeenden;
+	private JButton btnUpload;
+	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\JavaCode.png");
 
 	/**
 	 * Launch the application.
@@ -35,7 +39,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame {
 	 * Create the frame.
 	 */
 	public BearbeiteTrainingProgrammieraufgabeView() {
-		setTitle("Programmier Aufgabe");
+		setTitle("Training Programmier Aufgabe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -45,29 +49,64 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame {
 
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
-		JLabel lblNewLabel1 = new JLabel(
-				"Frage: Wer ist der Erfinder des World Wide Webs? Schreiben Sie ihre Antwort auf!");
+		JLabel lblNewLabel1 = new JLabel("Aufgabe: programmieren Sie den Code in eclipse!");
 		panelNorth.add(lblNewLabel1);
 
-		JLabel lblNewLabel_2 = new JLabel("Hier ist ein Bild");
+		JLabel lblNewLabel_2 = new JLabel (icon);
 		contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
 
 		JPanel panelWest = new JPanel();
 		contentPane.add(panelWest, BorderLayout.WEST);
-		JButton btnNewButton_3 = new JButton("Upload");
-		panelWest.add(btnNewButton_3);
-		JPanel panelSouth = new JPanel();
+		btnUpload = new JButton("Upload");
+		panelWest.add(btnUpload);
+
+
+		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
-		JButton btnNewButton1 = new JButton("Beenden");
-		panelSouth.add(btnNewButton1);
-		JButton btnNewButton2 = new JButton("Loesungshinweis");
-		panelSouth.add(btnNewButton2);
-		JButton btnNewButton3 = new JButton("Vorherige Aufgabe");
-		panelSouth.add(btnNewButton3);
-		JButton btnNewButton4 = new JButton("N\u00E4chste Aufgabe");
-		panelSouth.add(btnNewButton4);
-		JButton btnNewButton5 = new JButton("Training Beenden");
-		panelSouth.add(btnNewButton5);
+
+		btnBeendenTraining = new JButton("Beenden");
+		panelSouth.add(btnBeendenTraining);
+		btnLoesungshinweisTraining = new JButton("Loesungshinweis");
+		panelSouth.add(btnLoesungshinweisTraining);
+		btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
+		panelSouth.add(btnVoherigeAufgabeTraining);
+		btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
+		panelSouth.add(btnNaechsteAufgabeTraining);
+		btnTrainingBeenden = new JButton("Testat Beenden");
+		panelSouth.add(btnTrainingBeenden);
+
+		this.btnBeendenTraining.addActionListener(this);
+		this.btnLoesungshinweisTraining.addActionListener(this);
+		this.btnVoherigeAufgabeTraining.addActionListener(this);
+		this.btnNaechsteAufgabeTraining.addActionListener(this);
+		this.btnTrainingBeenden.addActionListener(this);
+		this.btnUpload.addActionListener(this);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.btnBeendenTraining) {
+			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+		}
+		if (e.getSource() == this.btnLoesungshinweisTraining) {
+			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+		}
+		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
+			JOptionPane.showMessageDialog(this,"Button Vorherige");
+		}
+		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
+			JOptionPane.showMessageDialog(this,"Button Nächste");
+
+		}
+		if (e.getSource() == this.btnTrainingBeenden) {
+			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+		}
+		if (e.getSource() == this.btnUpload) {
+			JOptionPane.showMessageDialog(this,"Upload Button");
+		}
 
 	}
 }

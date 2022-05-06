@@ -1,21 +1,18 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import javax.swing.JRadioButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame {
+public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-
+	private JButton btnBeendenEinzel;
+	private JButton btnLoesungshinweisEinzel;
+	private JButton btnAufgabeBeendenEinzel;
 	/**
 	 * Launch the application.
 	 */
@@ -36,7 +33,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame {
 	 * Create the frame.
 	 */
 	public BearbeiteEinzelneMultipleChoiceAufgabeView() {
-		setTitle("Multiple Choice");
+		setTitle("Einzelne Multiple Choice");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -70,17 +67,34 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame {
 		bg.add(button4);
 
 
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3, BorderLayout.SOUTH);
+		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-		JButton btnNewButton = new JButton("Beenden");
-		panel_3.add(btnNewButton);
+		btnBeendenEinzel = new JButton("Beenden");
+		panelSouth.add(btnBeendenEinzel);
+		btnLoesungshinweisEinzel = new JButton("Loesungshinweis");
+		panelSouth.add(btnLoesungshinweisEinzel);
+		btnAufgabeBeendenEinzel = new JButton("Aufgabe Beenden");
+		panelSouth.add(btnAufgabeBeendenEinzel);
 
-		JButton btnNewButton_1 = new JButton("L\u00F6sungshinweis");
-		panel_3.add(btnNewButton_1);
+		this.btnBeendenEinzel.addActionListener(this);
+		this.btnLoesungshinweisEinzel.addActionListener(this);
+		this.btnAufgabeBeendenEinzel.addActionListener(this);
 
-		JButton btnNewButton_2 = new JButton("Aufgabe Beenden");
-		panel_3.add(btnNewButton_2);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.btnBeendenEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+		}
+		if (e.getSource() == this.btnLoesungshinweisEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+		}
+		if (e.getSource() == this.btnAufgabeBeendenEinzel) {
+			JOptionPane.showMessageDialog(this,"Button Aufgabe Beenden");
+		}
+
+	}
 }
