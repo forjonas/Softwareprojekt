@@ -34,13 +34,15 @@ public class Programmieraufgabe extends Aufgabe {
      * @param punktewert         Punktewert der Aufgabe
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung   Textbeschreibung der Aufgabe
+     * @param name               Name der Aufgabe
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
      */
-    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, String kategorie, String loesungshinweis, int punktewert, int schwierigkeitsgrad, String textbeschreibung, String musterloesung, String userloesung) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung);
+    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
+        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
+        this.aufgabentyp = Aufgabentyp.Programmieren;
     }
 
     /**

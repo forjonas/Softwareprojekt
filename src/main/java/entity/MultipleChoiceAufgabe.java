@@ -41,15 +41,17 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param punktewert            Punktewert der Aufgabe
      * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung      Textbeschreibung der Aufgabe
+     * @param name                  Name der Aufgabe
      * @param antwortmoeglichkeiten Antwortmöglichkeiten der Aufgabe
      * @param musterloesung         Musterlösung der Aufgabe
      * @param userloesung           Userlösung der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, String kategorie, String loesungshinweis, int punktewert, int schwierigkeitsgrad, String textbeschreibung, List<String> antwortmoeglichkeiten, List<Boolean> musterloesung, List<Boolean> userloesung) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung);
+    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, List<String> antwortmoeglichkeiten, List<Boolean> musterloesung, List<Boolean> userloesung) {
+        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
+        this.aufgabentyp = Aufgabentyp.MultipleChoice;
     }
 
     /**

@@ -1,6 +1,5 @@
 package entity;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.util.List;
@@ -16,6 +15,7 @@ public class Testat extends Aufgabensammlung {
 
     private String bewertung;
     private String passwort;
+    private String name;
 
     /**
      * Leerer Konstruktor für Klasse Testat
@@ -31,11 +31,13 @@ public class Testat extends Aufgabensammlung {
      * @param aufgaben  Aufgaben, die im Testat enthalten sind
      * @param bewertung Bewertung des Testats
      * @param passwort  Passwort des Testats
+     * @param name      Name des Testats
      */
-    public Testat(List<Aufgabe> aufgaben, String bewertung, String passwort) {
+    public Testat(List<Aufgabe> aufgaben, String bewertung, String passwort, String name) {
         super(aufgaben);
         this.bewertung = bewertung;
         this.passwort = passwort;
+        this.name = name;
     }
 
     /**
@@ -72,6 +74,24 @@ public class Testat extends Aufgabensammlung {
      */
     public void setPasswort(String passwort) {
         this.passwort = passwort;
+    }
+
+    /**
+     * Gibt den Namen des Testats zurück
+     *
+     * @return Name des Testats
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Setzt den Namen des Testats
+     *
+     * @param name Bewertung des Testats
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

@@ -19,6 +19,8 @@ public abstract class Aufgabensammlung {
     @Id
     private long aufgabensammlungId;
     private List<Aufgabe> aufgaben;
+    private int gesamtzeit;
+    private int gesamtpunktzahl;
 
     /**
      * Leerer Konstruktor für Klasse Aufgabensammlung
@@ -34,6 +36,8 @@ public abstract class Aufgabensammlung {
      */
     public Aufgabensammlung(List<Aufgabe> aufgaben) {
         this.aufgaben = aufgaben;
+        aktualisiereGesamtpunktzahl();
+        aktualisierteGesamtzeit();
     }
 
     /**
@@ -52,6 +56,8 @@ public abstract class Aufgabensammlung {
      */
     public void setAufgaben(List<Aufgabe> aufgaben) {
         this.aufgaben = aufgaben;
+        aktualisiereGesamtpunktzahl();
+        aktualisierteGesamtzeit();
     }
 
     /**
@@ -61,6 +67,8 @@ public abstract class Aufgabensammlung {
      */
     public void addAufgabe(Aufgabe aufgabe) {
         aufgaben.add(aufgabe);
+        gesamtpunktzahl += aufgabe.getPunktewert();
+        gesamtzeit += aufgabe.getBearbeitungszeit();
     }
 
     /**
@@ -72,4 +80,41 @@ public abstract class Aufgabensammlung {
         return aufgaben.size();
     }
 
+    /**
+     * Gibt die gesamte Bearbeitungszeit der Aufgabensammlung zurück
+     *
+     * @return gesamte Bearbeitungszeit der Aufgabensammlung
+     */
+    public int getGesamtzeit() {
+        return gesamtzeit;
+    }
+
+    /**
+     * Hilfsmethode zum Aktualisieren der Gesamtzeit der Aufgabensammlung
+     */
+    private void aktualisierteGesamtzeit() {
+        gesamtzeit = 0;
+        for (Aufgabe a : getAufgaben()) {
+            gesamtzeit += a.getBearbeitungszeit();
+        }
+    }
+
+    /**
+     * Gibt gesamte Punktzahl der Aufgabensammlung zurück
+     *
+     * @return gesamte Punktzahl der Aufgabensammlung
+     */
+    public int getGesamtpunktzahl() {
+        return gesamtpunktzahl;
+    }
+
+    /**
+     * Hilfsmethode zum Aktualisieren der Gesamtpunktzahl der Aufgabensammlung
+     */
+    private void aktualisiereGesamtpunktzahl() {
+        gesamtpunktzahl = 0;
+        for (Aufgabe a : getAufgaben()) {
+            gesamtpunktzahl += a.getPunktewert();
+        }
+    }
 }

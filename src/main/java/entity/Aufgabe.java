@@ -20,11 +20,13 @@ public abstract class Aufgabe {
     private String javaDesign;
     //Datentyp ändern
     private String umlDesign;
-    private String kategorie;
+    private Kategorie kategorie;
     private String loesungshinweis;
     private int punktewert;
-    private int schwierigkeitsgrad;
+    private Schwierigkeitsgrad schwierigkeitsgrad;
     private String textbeschreibung;
+    private String name;
+    protected Aufgabentyp aufgabentyp;
 
     /**
      * Leerer Konstruktor für Klasse Aufgabe
@@ -45,7 +47,7 @@ public abstract class Aufgabe {
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung   Textbeschreibung der Aufgabe
      */
-    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, String kategorie, String loesungshinweis, int punktewert, int schwierigkeitsgrad, String textbeschreibung) {
+    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.javaDesign = javaDesign;
         this.umlDesign = umlDesign;
@@ -54,6 +56,7 @@ public abstract class Aufgabe {
         this.punktewert = punktewert;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.textbeschreibung = textbeschreibung;
+        this.name = name;
     }
 
     /**
@@ -115,7 +118,7 @@ public abstract class Aufgabe {
      *
      * @return Kategorie der Aufgabe
      */
-    public String getKategorie() {
+    public Kategorie getKategorie() {
         return kategorie;
     }
 
@@ -124,7 +127,7 @@ public abstract class Aufgabe {
      *
      * @param kategorie Kategorie der Aufgabe
      */
-    public void setKategorie(String kategorie) {
+    public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
     }
 
@@ -169,7 +172,7 @@ public abstract class Aufgabe {
      *
      * @return Schwierigkeitsgrad der Aufgabe
      */
-    public int getSchwierigkeitsgrad() {
+    public Schwierigkeitsgrad getSchwierigkeitsgrad() {
         return schwierigkeitsgrad;
     }
 
@@ -178,7 +181,7 @@ public abstract class Aufgabe {
      *
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      */
-    public void setSchwierigkeitsgrad(int schwierigkeitsgrad) {
+    public void setSchwierigkeitsgrad(Schwierigkeitsgrad schwierigkeitsgrad) {
         this.schwierigkeitsgrad = schwierigkeitsgrad;
     }
 
@@ -200,4 +203,30 @@ public abstract class Aufgabe {
         this.textbeschreibung = textbeschreibung;
     }
 
+    /**
+     * Gibt den Aufgabentyp der Aufgabe zurück
+     *
+     * @return Aufgabentyp der Aufgabe
+     */
+    public Aufgabentyp getAufgabentyp() {
+        return aufgabentyp;
+    }
+
+    /**
+     * Gibt den Namen der Aufgabe zurück
+     *
+     * @return Name der Aufgabe
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Setzt den Namen der Aufgabe
+     *
+     * @param name Name der Aufgabe
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }
