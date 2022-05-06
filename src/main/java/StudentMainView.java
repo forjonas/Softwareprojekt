@@ -42,7 +42,7 @@ public class StudentMainView implements ActionListener {
         abmeldenBtn=new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
         abmeldenBtn.setPreferredSize(new Dimension(70,30));
-        abmeldenBtn.setFont(new Zeichenstruktur().schriftKleinerButton());
+        abmeldenBtn.setFont(new views.Zeichenstruktur().schriftKleinerButton());
 
 
         tempCenterPnl.add(generiereTrainingBtn);
