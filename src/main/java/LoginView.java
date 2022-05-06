@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Ansicht implements ActionListener {
+public class LoginView extends JFrame implements ActionListener {
 
 
     private JFrame homeFrame ;
@@ -14,7 +14,7 @@ public class Ansicht implements ActionListener {
     private JButton einloggenBtn;
     private JPanel generalPnl;
 
-    private JLabel einlogenLbl=new JLabel("Einloggen",SwingConstants.CENTER);
+    private JLabel einloggenLbl =new JLabel("Einloggen",SwingConstants.CENTER);
     private JLabel usernameLbl=new JLabel("Benutzername:",SwingConstants.LEADING);
     private JLabel passwortLbl=new JLabel("Kennwort:",SwingConstants.LEADING);
 
@@ -23,9 +23,9 @@ public class Ansicht implements ActionListener {
 
     public static void main(String[] args)
     {
-        new Ansicht();
+        new LoginView();
     }
-    public Ansicht()
+    public LoginView()
     {
         homeFrame = new JFrame("Home");
         homeFrame.getContentPane().add(generalPnl =new JPanel());
@@ -47,6 +47,8 @@ public class Ansicht implements ActionListener {
 
         homeFrame.setSize(600,600);
         homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        homeFrame.setLocation((display.getSize().width - homeFrame.getSize().width) / 2, (display.getSize().height - homeFrame.getSize().height) / 2);
         homeFrame.setVisible(true);
     }
 
@@ -63,7 +65,7 @@ public class Ansicht implements ActionListener {
         tempPanel.setLayout(new java.awt.GridLayout(1,2));
         tempPanel2.setLayout(new java.awt.GridLayout(5,1,16,16));
 
-        tempPanel2.add(einlogenLbl);
+        tempPanel2.add(einloggenLbl);
 
         tempUsernamePanel.add(usernameLbl);
         tempUsernamePanel.add(usernameTxt);
