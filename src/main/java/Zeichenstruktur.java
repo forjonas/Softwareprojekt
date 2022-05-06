@@ -7,7 +7,7 @@ public class Zeichenstruktur {
     //Buttonstruktur
     public Font schriftKleinerButton()
     {
-        return new Font("Arial",Font.LAYOUT_LEFT_TO_RIGHT,7);
+        return new Font("Arial",Font.LAYOUT_LEFT_TO_RIGHT,8);
     }
     public Font schriftGrosserButton()
     {
