@@ -4,10 +4,15 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Die Hauptansicht des Dozenten
+ *
+ * @author Jannik Oehme
+ * @version 04.05.2022
+ */
 public class DozentAnsicht implements ActionListener {
 
-    /**---------------------Buttons Hauptmenü--------------------**/
+    //Buttons
     private JButton testatEinsehenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
@@ -16,7 +21,9 @@ public class DozentAnsicht implements ActionListener {
     private JButton aufgabenuebersichtBtn;
     private JButton trainingsDurchfuehrenBtn;
     private JButton testateDurchfuehrenBtn;
-    /**----------------------------------------------------------**/
+    //Panels
+    private JPanel North;
+    private JPanel Center;
     private JPanel dozentPnl;
     private JFrame homeFrame ;
 
@@ -25,8 +32,7 @@ public class DozentAnsicht implements ActionListener {
         new DozentAnsicht();
     }
 
-    public DozentAnsicht()
-    {
+    public DozentAnsicht(){
         homeFrame = new JFrame("Home");
         fuelleDozentFrame();
         homeFrame.setSize(1000,250);
@@ -34,40 +40,39 @@ public class DozentAnsicht implements ActionListener {
         homeFrame.setVisible(true);
     }
 
-    public void fuelleDozentFrame()
-    {
+    public void fuelleDozentFrame(){
+        //Buttons
         testatEinsehenBtn = new JButton("Testat Einsehen");
         testatEinsehenBtn.addActionListener(this);
-        testatEinsehenBtn.setPreferredSize(new Dimension(160, 80));
+
         trainingsEinsehenBtn = new JButton("Trainings Einsehen");
         trainingsEinsehenBtn.addActionListener(this);
-        trainingsEinsehenBtn.setPreferredSize(new Dimension(160, 80));
+
         testateErstellenBtn = new JButton("Testate Erstellen");
         testateErstellenBtn.addActionListener(this);
-        testateErstellenBtn.setPreferredSize(new Dimension(160, 80));
+
         testatuebersichtBtn = new JButton("Testat Übersicht");
         testatuebersichtBtn.addActionListener(this);
-        testatuebersichtBtn.setPreferredSize(new Dimension(160, 80));
+
         aufgabeErstellenBtn = new JButton("Aufgabe Erstellen");
         aufgabeErstellenBtn.addActionListener(this);
-        aufgabeErstellenBtn.setPreferredSize(new Dimension(160, 80));
+
         aufgabenuebersichtBtn = new JButton("Aufgaben Übersicht");
         aufgabenuebersichtBtn.addActionListener(this);
-        aufgabenuebersichtBtn.setPreferredSize(new Dimension(160, 80));
+
         trainingsDurchfuehrenBtn = new JButton("Trainings Durchführen");
         trainingsDurchfuehrenBtn.addActionListener(this);
-        trainingsDurchfuehrenBtn.setPreferredSize(new Dimension(160, 80));
+
         testateDurchfuehrenBtn = new JButton("Testate Durchführen");
         testateDurchfuehrenBtn.addActionListener(this);
-        testateDurchfuehrenBtn.setPreferredSize(new Dimension(160, 80));
-
+        //Panels
         dozentPnl = new JPanel();
-        JPanel North = new JPanel();
-        JPanel Center = new JPanel();
+        North = new JPanel();
+        Center = new JPanel();
 
         dozentPnl.setLayout(new BorderLayout());
         dozentPnl.setSize(700,700);
-
+        //Components Adden
         North.add(testatEinsehenBtn);
         North.add(testateDurchfuehrenBtn);
         North.add(testatuebersichtBtn);
@@ -82,9 +87,7 @@ public class DozentAnsicht implements ActionListener {
         dozentPnl.add(Center,BorderLayout.CENTER);
 
         homeFrame.add(dozentPnl);
-
     }
-
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -112,9 +115,7 @@ public class DozentAnsicht implements ActionListener {
         else if(e.getSource()==this.trainingsEinsehenBtn){
             trainingsEinsehen();
         }
-
     }
-
     private void trainingsEinsehen() {
 
     }

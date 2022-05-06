@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+/**
+ * Die Ansicht zur Passwort Abfrage
+ *
+ * @author Jannik Oehme
+ * @version 04.05.2022
+ */
 
 public class PasswortabfrageView implements ActionListener {
 
