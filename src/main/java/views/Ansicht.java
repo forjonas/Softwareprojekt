@@ -1,3 +1,5 @@
+package views;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -103,9 +105,9 @@ public class Ansicht implements ActionListener {
         dozentPnl.add(testatuebersicht);
         dozentPnl.add(testateErstellen);
         dozentPnl.add(trainingsEinsehen);
-        hauptmenueDozent.add(dozentPnl);
-        hauptmenueDozent.setSize(1000,1000);
-        hauptmenueDozent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        homeFrame.add(dozentPnl);
+        homeFrame.setSize(1000,1000);
+        homeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
 
     }
     public void testatEinsehen(){

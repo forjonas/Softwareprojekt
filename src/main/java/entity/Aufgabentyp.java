@@ -7,8 +7,5 @@ package entity;
  * @version 22.04.22
  */
 public enum Aufgabentyp {
-    MULTIPLECHOICEAUFGABE,
-    EINFACHANTWORTAUFGABE,
-    DESIGNAUFGABE,
-    PROGRAMMIERAUFGABE
+    MultipleChoice, Einfachantwort, Design, Programmieren
 }
