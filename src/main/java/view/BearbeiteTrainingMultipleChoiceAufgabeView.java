@@ -38,7 +38,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 	public BearbeiteTrainingMultipleChoiceAufgabeView() {
 		setTitle("Training Multiple Choice");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 435);
+		//setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -89,6 +89,8 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 		this.btnVoherigeAufgabeTraining.addActionListener(this);
 		this.btnNaechsteAufgabeTraining.addActionListener(this);
 		this.btnTrainingBeenden.addActionListener(this);
+
+		pack();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
