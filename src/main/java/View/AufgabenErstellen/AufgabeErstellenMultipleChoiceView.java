@@ -1,11 +1,15 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
+import entity.*;
+import persistence.DatabaseService;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Die View zur Erstellung einer Multiple Choice Aufgabe
@@ -23,10 +27,15 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
     JPanel southPnl;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    //JComboBoxen
+    JComboBox schwierigkeitCB;
+    JComboBox kategorienCB;
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
     //Labels
+    JLabel kategorieLbl;
+    JLabel schwierigkeitLbl;
     JLabel titelLbl;
     JLabel aufgabenTxtLbl;
     JLabel loesungsHinweisLbl;
@@ -67,12 +76,21 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         //Panels
         centerPnl = new JPanel();
-        FlowLayout fl = new FlowLayout();
-        centerPnl.setLayout(fl);
+        GridBagLayout gl = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth =3;
+        c.gridheight =6;
+        centerPnl.setLayout(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl.setLayout(bl);
+        //JComboboxen
+        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        kategorienCB = new JComboBox(kat);
+
+        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        schwierigkeitCB = new JComboBox(schw);
         //Buttons
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
@@ -86,44 +104,39 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
 
-
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20,75,100,100);
         loesungshinwTA.setLineWrap(true);
 
         schwierigkeitTA = new JTextArea();
-        schwierigkeitTA.setBounds(20,75,100,100);
         schwierigkeitTA.setLineWrap(true);
 
 
         bearbeitungsZeitTA = new JTextArea();
-        bearbeitungsZeitTA.setBounds(20,75,100,100);
         bearbeitungsZeitTA.setLineWrap(true);
 
         punkteTA = new JTextArea();
-        punkteTA.setBounds(20,75,100,100);
+
         punkteTA.setLineWrap(true);
 
         loesungTA = new JTextArea();
-        loesungTA.setBounds(20,75,100,100);
+
         loesungTA.setLineWrap(true);
 
         antwort1TA = new JTextArea();
-        antwort1TA.setBounds(20,75,100,100);
+
         antwort1TA.setLineWrap(true);
 
         antwort2TA = new JTextArea();
-        antwort2TA.setBounds(20,75,100,100);
         antwort2TA.setLineWrap(true);
 
         antwort3TA = new JTextArea();
-        antwort3TA.setBounds(20,75,100,100);
         antwort3TA.setLineWrap(true);
 
         antwort4TA = new JTextArea();
-        antwort4TA.setBounds(20,75,100,100);
         antwort4TA.setLineWrap(true);
         //Label
+        schwierigkeitLbl = new JLabel("Schwierigkeit");
+        kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
@@ -143,7 +156,9 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         centerPnl.add(loesungLbl);
         centerPnl.add(loesungTA);
         centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitTA);
+        centerPnl.add(schwierigkeitCB);
+        centerPnl.add(kategorieLbl);
+        centerPnl.add(kategorienCB);
         centerPnl.add(bearbeitungszeitLbl);
         centerPnl.add(bearbeitungsZeitTA);
         centerPnl.add(punkteLbl);
@@ -181,8 +196,38 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
-        //FUNKTIONALITÄT MISSING
+        String aufgTitel;
+        String aufText;
+        String loesungshinweis;
+        int bearbeitungsZeit;
+        int punkte;
+        Kategorie kat;
+        Schwierigkeitsgrad schw;
+        ArrayList<String> liste = new ArrayList<String>();
+        liste.add(antwort1TA.getText());
+        liste.add(antwort2TA.getText());
+        liste.add(antwort3TA.getText());
+        liste.add(antwort4TA.getText());
+
+        aufgTitel = titelTA.getText();
+        aufText = aufgabenTextTA.getText();
+        loesungshinweis = loesungshinwTA.getText();
+        bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
+        schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+        kat = (Kategorie) kategorienCB.getSelectedItem();
+        punkte = Integer.parseInt(punkteTA.getText());
+
+        createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,liste);
+
         AufgabeErstellenMultipleChoiceViewFrame.dispose();
         DozentAnsicht.main(null);
+    }
+
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten) {
+
+        DatabaseService ds = DatabaseService.getInstance();
+        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,null,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,antworten,null,null);
+        ds.persistObject(neueAufgabe);
+
     }
 }

@@ -2,12 +2,17 @@ package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
 import View.ImageFilter;
+import entity.Kategorie;
+import entity.Programmieraufgabe;
+import entity.Schwierigkeitsgrad;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 
 /**
@@ -31,7 +36,11 @@ public class AufgabeErstellenCodeView implements ActionListener {
     JButton speichernBtn;
     JButton codeHochladenBtn;
     JButton musterloesungHochladenBtn;
+    //JComboBoxen
+    JComboBox kategorienCB;
+    JComboBox schwierigkeitCB;
     //Labels
+    JLabel kategorieLbl;
     JLabel titelLbl;
     JLabel aufgabenTxtLbl;
     JLabel loesungsHinweisLbl;
@@ -43,12 +52,12 @@ public class AufgabeErstellenCodeView implements ActionListener {
    JTextArea titelTA;
     JTextArea aufgabenTextTA;
     JTextArea loesungshinwTA;
-    JTextArea schwierigkeitTA;
     JTextArea bearbeitungsZeitTA;
     JTextArea punkteTA;
     //Filechooser
     JFileChooser FCC;
-    File file;
+    File codeFile;
+    File loesungFile;
 
     public static void main(String[] args) {
         new AufgabeErstellenCodeView();
@@ -85,6 +94,13 @@ public class AufgabeErstellenCodeView implements ActionListener {
         titelTA.setLineWrap(true);
         titelTA.setBounds(20,75,250,200);
 
+        //ComboBoxes
+        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        kategorienCB = new JComboBox(kat);
+
+        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        schwierigkeitCB = new JComboBox(schw);
+
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
         aufgabenTextTA.setBounds(20,75,250,200);
@@ -92,10 +108,6 @@ public class AufgabeErstellenCodeView implements ActionListener {
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
-
-        schwierigkeitTA = new JTextArea();
-        schwierigkeitTA.setBounds(20,75,250,200);
-        schwierigkeitTA.setLineWrap(true);
 
         bearbeitungsZeitTA = new JTextArea();
         bearbeitungsZeitTA.setBounds(20,75,250,200);
@@ -105,6 +117,7 @@ public class AufgabeErstellenCodeView implements ActionListener {
         punkteTA.setBounds(20,75,250,200);
         punkteTA.setLineWrap(true);
 
+        kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
@@ -118,10 +131,13 @@ public class AufgabeErstellenCodeView implements ActionListener {
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
+        centerPnl.add(musterloesungHochladenBtn);
         centerPnl.add(codeHochladenBtn);
         centerPnl.add(musterloesungHochladenBtn);
+        centerPnl.add(kategorieLbl);
+        centerPnl.add(kategorienCB);
         centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitTA);
+        centerPnl.add(schwierigkeitCB);
         centerPnl.add(bearbeitungszeitLbl);
         centerPnl.add(bearbeitungsZeitTA);
         centerPnl.add(punkteLbl);
@@ -145,21 +161,33 @@ public class AufgabeErstellenCodeView implements ActionListener {
             speichern();
         }
         else if(e.getSource()== this.codeHochladenBtn){
-            codeHochladen();
+            codeFile = codeHochladen();
         }
         else if(e.getSource() == this.musterloesungHochladenBtn){
-            codeHochladen(); // Theoretisch geht das ist nicht ganz so schön aber wenn man den output differenziert müsste das gehen
+            loesungFile= loesungHochladen();
         }
     }
-    private File codeHochladen() { //HIER MUSS NOCH NE MENGE PASSIEREN https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
+    private File codeHochladen() {
         FCC = new JFileChooser((String) null);
         FCC.setAcceptAllFileFilterUsed(false);
         FCC.setFileFilter(new ImageFilter());
         int returnVal = FCC.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            file = FCC.getSelectedFile();
-            System.out.println(file.getName());
-            return file;
+            codeFile = FCC.getSelectedFile();
+            System.out.println(codeFile.getName());
+            return codeFile;
+        }
+        return null;
+    }
+    private File loesungHochladen() {
+        FCC = new JFileChooser((String) null);
+        FCC.setAcceptAllFileFilterUsed(false);
+        FCC.setFileFilter(new ImageFilter());
+        int returnVal = FCC.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            loesungFile = FCC.getSelectedFile();
+            System.out.println(loesungFile.getName());
+            return loesungFile;
         }
         return null;
     }
@@ -167,9 +195,34 @@ public class AufgabeErstellenCodeView implements ActionListener {
         AufgabeErstellenCodeViewFrame.dispose();
         AufgabeErstellenStartView.main(null);
     }
-    private File speichern() {
-        AufgabeErstellenCodeViewFrame.dispose();
-        DozentAnsicht.main(null);
-        return file;
+    private void speichern() {
+            String aufgTitel;
+            String aufText;
+            String loesungshinweis;
+            int bearbeitungsZeit;
+            int punkte;
+            Kategorie kat;
+            Schwierigkeitsgrad schw;
+
+            aufgTitel = titelTA.getText();
+            aufText = aufgabenTextTA.getText();
+            loesungshinweis = loesungshinwTA.getText();
+            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
+            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+            kat = (Kategorie) kategorienCB.getSelectedItem();
+            punkte = Integer.parseInt(punkteTA.getText());
+
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,loesungFile,codeFile);
+
+            AufgabeErstellenCodeViewFrame.dispose();
+            DozentAnsicht.main(null);
     }
-}
+
+        private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,File loesungFile,File codeFile) {
+
+            DatabaseService ds = DatabaseService.getInstance();
+            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeFile,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesungFile,null);
+            ds.persistObject(neueAufgabe);
+
+        }
+    }

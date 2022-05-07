@@ -1,7 +1,9 @@
 package entity;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+import java.io.File;
+import java.math.BigInteger;
 
 /**
  * Aufgabe mit Design als Antwort
@@ -40,9 +42,9 @@ public class Designaufgabe extends Aufgabe {
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
      */
-    public Designaufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
+    public Designaufgabe(int bearbeitungszeit, File javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, File musterloesung, String userloesung) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
-        this.musterloesung = musterloesung;
+        //this.musterloesung = musterloesung;
         this.userloesung = userloesung;
         this.aufgabentyp = Aufgabentyp.Design;
     }
