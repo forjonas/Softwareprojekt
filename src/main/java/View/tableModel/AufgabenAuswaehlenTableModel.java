@@ -1,9 +1,9 @@
 package View.tableModel;
 
-import entity.Aufgabe;
-import entity.Aufgabentyp;
-import entity.Kategorie;
-import entity.Schwierigkeitsgrad;
+import entity.aufgabe.Aufgabe;
+import entity.enums.Aufgabentyp;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.LinkedList;

@@ -6,18 +6,30 @@
              version="3.0">
     <persistence-unit name="default">
 
-        <class>entity.Benutzer</class>
-        <class>entity.Administrator</class>
-        <class>entity.Dozent</class>
-        <class>entity.Student</class>
-        <class>entity.Aufgabe</class>
-        <class>entity.Designaufgabe</class>
-        <class>entity.MultipleChoiceAufgabe</class>
-        <class>entity.Programmieraufgabe</class>
-        <class>entity.EinfachantwortAufgabe</class>
-        <class>entity.Aufgabensammlung</class>
-        <class>entity.Testat</class>
-        <class>entity.Training</class>
+        <class>entity.benutzer.Benutzer</class>
+        <class>entity.benutzer.Administrator</class>
+        <class>entity.benutzer.Dozent</class>
+        <class>entity.benutzer.Student</class>
+        <class>entity.aufgabe.Aufgabe</class>
+        <class>entity.aufgabe.Designaufgabe</class>
+        <class>entity.aufgabe.MultipleChoiceAufgabe</class>
+        <class>entity.aufgabe.Programmieraufgabe</class>
+        <class>entity.aufgabe.EinfachantwortAufgabe</class>
+        <class>entity.aufgabensammlung.Aufgabensammlung</class>
+        <class>entity.aufgabensammlung.Testat</class>
+        <class>entity.aufgabensammlung.TestatBearbeitung</class>
+        <class>entity.aufgabensammlung.Training</class>
+        <class>entity.loesung.Loesung</class>
+        <class>entity.loesung.musterloesung.Musterloesung</class>
+        <class>entity.loesung.musterloesung.MusterloesungDesignaufgabe</class>
+        <class>entity.loesung.musterloesung.MusterloesungEinfachantwort</class>
+        <class>entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe</class>
+        <class>entity.loesung.musterloesung.MusterloesungProgrammieraufgabe</class>
+        <class>entity.loesung.userloesung.Userloesung</class>
+        <class>entity.loesung.userloesung.UserloesungDesignaufgabe</class>
+        <class>entity.loesung.userloesung.UserloesungEinfachantwort</class>
+        <class>entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe</class>
+        <class>entity.loesung.userloesung.UserloesungProgrammieraufgabe</class>
 
         <properties>
             <!-- Passt der Driver? -->

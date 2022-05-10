@@ -1,6 +1,18 @@
 package persistence;
 
-import entity.*;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.aufgabensammlung.Training;
+import entity.benutzer.Administrator;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
+import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -8,7 +20,6 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Klasse, die sich um das Persistieren von Entitäten kümmer
@@ -82,6 +93,7 @@ public class DatabaseService<T> {
         return resultList;
     }
 
+    //Kommt weg wenn der Administrator gelöscht wird
     public synchronized List<Administrator> readAdministratorenFromDatabase() {
         TypedQuery<Administrator> query = em.createQuery("SELECT a FROM Administrator a", Administrator.class);
         List<Administrator> resultList = query.getResultList();
@@ -125,18 +137,25 @@ public class DatabaseService<T> {
         List<Aufgabensammlung> resultList = new LinkedList<Aufgabensammlung>();
         resultList.addAll(readTestateFromDatabase());
         resultList.addAll(readTrainingsFromDatabase());
+        resultList.addAll(readTestatBearbeitungenFromDatabase());
         return resultList;
     }
 
     public synchronized List<Training> readTrainingsFromDatabase() {
-        TypedQuery<Training> query = em.createQuery("SELECT a FROM Training a", Training.class);
+        TypedQuery<Training> query = em.createQuery("SELECT t FROM Training t", Training.class);
         List<Training> resultList = query.getResultList();
         return resultList;
     }
 
     public synchronized List<Testat> readTestateFromDatabase() {
-        TypedQuery<Testat> query = em.createQuery("SELECT a FROM Testat a", Testat.class);
+        TypedQuery<Testat> query = em.createQuery("SELECT t FROM Testat t", Testat.class);
         List<Testat> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<TestatBearbeitung> readTestatBearbeitungenFromDatabase() {
+        TypedQuery<TestatBearbeitung> query = em.createQuery("SELECT t FROM TestatBearbeitung t", TestatBearbeitung.class);
+        List<TestatBearbeitung> resultList = query.getResultList();
         return resultList;
     }
 

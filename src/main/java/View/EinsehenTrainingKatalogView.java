@@ -1,11 +1,12 @@
 package View;
 
-import View.tableModel.KorrigiereTestatTableModel;
+import View.tableModel.TrainingTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.Training;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -19,24 +20,24 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Ansicht in der aus einer Tabelle ein Testat zum Korrigieren ausgewählt werden kann.
+ * Ansicht, die eine tabellarische Übersicht der bearbeiteten Trainings zeigt,
+ * aus der Trainings zur Einsicht ausgewählt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 09.05.22
  */
-public class KorrigiereTestatKatalogView extends JFrame implements ActionListener {
+public class EinsehenTrainingKatalogView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableTestate;
-    private KorrigiereTestatTableModel korrigiereTestatTableModel;
+    private TrainingTableModel trainingsTableModel;
     private JButton btnZurueck;
-    private JButton btnKorrigieren;
+    private JButton btnEinsehen;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-
         Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -44,14 +45,14 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", null);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", null);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", null);
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, null);
+        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Aufgabentyp.Einfachantwort, null);
+        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort, null);
+        List<Training> trainingsliste = Arrays.asList(new Training[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(testatliste);
+                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(trainingsliste);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,9 +64,9 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     /**
      * Create the frame.
      */
-    public KorrigiereTestatKatalogView(List<Testat> testatListe) {
+    public EinsehenTrainingKatalogView(List<Training> trainingsliste) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Korrigiere Testat");
+        setTitle("Trainings einsehen");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -73,10 +74,11 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
+
         GridBagLayout gbl_panelNorth = new GridBagLayout();
         gbl_panelNorth.columnWidths = new int[]{0, 0, 0, 0};
         gbl_panelNorth.rowHeights = new int[]{0, 0};
-        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_panelNorth.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panelNorth.setLayout(gbl_panelNorth);
 
@@ -92,26 +94,26 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         panelLeftNorth.add(btnZurueck);
 
         JPanel panelRightNorth = new JPanel();
-        GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
-        gbc_panelCenterNorth.anchor = GridBagConstraints.EAST;
-        gbc_panelCenterNorth.fill = GridBagConstraints.VERTICAL;
-        gbc_panelCenterNorth.gridx = 1;
-        gbc_panelCenterNorth.gridy = 0;
-        panelNorth.add(panelRightNorth, gbc_panelCenterNorth);
+        GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
+        gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridy = 0;
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
-        btnKorrigieren = new JButton("Korrigieren");
-        panelRightNorth.add(btnKorrigieren);
+        btnEinsehen = new JButton("Einsehen");
+        panelRightNorth.add(btnEinsehen);
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        korrigiereTestatTableModel = new KorrigiereTestatTableModel(testatListe);
-        tableTestate.setModel(korrigiereTestatTableModel);
+        trainingsTableModel = new TrainingTableModel(trainingsliste);
+        tableTestate.setModel(trainingsTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);
 
-        btnKorrigieren.addActionListener(this);
+        btnEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
 
         super.pack();
@@ -126,8 +128,8 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
             System.out.println("zurück");
             dispose();
         }
-        if (e.getSource() == this.btnKorrigieren) {
-            System.out.println("korrigieren");
+        if (e.getSource() == this.btnEinsehen) {
+            System.out.println("einsehen");
         }
     }
 
