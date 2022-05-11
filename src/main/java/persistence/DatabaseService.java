@@ -8,7 +8,6 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Klasse, die sich um das Persistieren von Entitäten kümmer
@@ -155,6 +154,52 @@ public class DatabaseService<T> {
         for(Aufgabensammlung as: readAufgabensammlungFromDatabase())
             em.remove(as);
         em.getTransaction().commit();
+    }
+
+    /**Hier bin ich am rumprobieren, Martin Bergen */
+
+    public synchronized Benutzer readStudentnachBenutzernamen(String benutzername)
+    {
+        TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.benutzername='"+benutzername+"'", Student.class);
+        Benutzer benutzer = query.getSingleResult();
+        return benutzer;
+    }
+
+    public synchronized Benutzer readDozentnachBenutzernamen(String benutzername)
+    {
+        TypedQuery<Dozent> query = em.createQuery("SELECT s FROM Dozent s WHERE s.benutzername='"+benutzername+"'", Dozent.class);
+        Benutzer benutzer = query.getSingleResult();
+        return benutzer;
+    }
+
+    public synchronized  Aufgabe readAufgabeMitTyp(Aufgabentyp aufgabenTyp, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad)
+    {
+        switch (aufgabenTyp) {
+            case MultipleChoice: {
+                TypedQuery<MultipleChoiceAufgabe> query = em.createQuery("SELECT s FROM MultipleChoiceAufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", MultipleChoiceAufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Design:
+            {
+                TypedQuery<Designaufgabe> query = em.createQuery("SELECT s FROM Designaufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Designaufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Programmieren:
+            {
+                TypedQuery<Programmieraufgabe> query = em.createQuery("SELECT s FROM Programmieraufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Programmieraufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Einfachantwort:
+            {
+                TypedQuery<EinfachantwortAufgabe> query = em.createQuery("SELECT s FROM EinfachantwortAufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", EinfachantwortAufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            default:return null;
+        }
     }
 
 }

@@ -36,6 +36,8 @@ public class Training extends Aufgabensammlung {
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
      * @param aufgabentyp        Ausgewählter Aufgabentyp des Testats
      */
+
+
     public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, String kategorie, int schwierigkeitsgrad, Aufgabentyp aufgabentyp) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
@@ -43,7 +45,14 @@ public class Training extends Aufgabensammlung {
         this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.aufgabentyp = aufgabentyp;
     }
-
+    /** Änderung des Konstruktors, da die Liste mit Aufgaben bereits viele Informationen enthält - Martin Bergen */
+    public Training(List<Aufgabe> aufgaben,int bearbeitungsdauer,String kategorie, int schwierigkeitsgrad)
+    {
+        super(aufgaben);
+        this.bearbeitungszeit = bearbeitungsdauer;
+        this.kategorie = kategorie;
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
+    }
     /**
      * Gibt die Bearbeitungszeit des Trainings zurück
      *
