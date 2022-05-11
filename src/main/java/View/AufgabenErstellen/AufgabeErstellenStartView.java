@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed
  */
 public class AufgabeErstellenStartView implements ActionListener {
     JFrame AufgabeErstellenStartFrame;
@@ -19,7 +20,7 @@ public class AufgabeErstellenStartView implements ActionListener {
     JPanel southPnl;
     JButton zurueckBtn;
     JButton weiterBtn;
-    BorderLayout bl;
+    GridLayout gl = new GridLayout(3,1);
     JComboBox <String> DDM;
 
 
@@ -31,7 +32,7 @@ public class AufgabeErstellenStartView implements ActionListener {
 
         AufgabeErstellenStartFrame = new JFrame("Aufgabe Erstellen");
         AufgabeErstellenFrameFuellen();
-        AufgabeErstellenStartFrame.setSize(500, 500);
+        AufgabeErstellenStartFrame.setSize(100, 100);
         AufgabeErstellenStartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenStartFrame.pack();
         AufgabeErstellenStartFrame.setVisible(true);
@@ -39,9 +40,8 @@ public class AufgabeErstellenStartView implements ActionListener {
     private void AufgabeErstellenFrameFuellen() {
         //Panels
         centerPnl =new JPanel();
-        bl = new BorderLayout();
-        centerPnl.setLayout(bl);
-        centerPnl.setSize(50,50);
+        centerPnl.setLayout(gl);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         //Buttons
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
@@ -49,7 +49,7 @@ public class AufgabeErstellenStartView implements ActionListener {
         weiterBtn = new JButton("Weiter");
         weiterBtn.addActionListener(this);
         //DropDownMenu
-        String[] AufgabenTypen = {"UML","Code","Einfachantwort", "MultipleChoice"};
+        String[] AufgabenTypen = {"Designaufgabe","Programmieraufgabe","Einfachantwort", "MultipleChoiceaufgabe"};
         DDM = new JComboBox<>(AufgabenTypen);
         //Components Adden
         northPnl = new JPanel();
@@ -75,13 +75,13 @@ public class AufgabeErstellenStartView implements ActionListener {
     private void weiter() {
         String switcher = (String) DDM.getSelectedItem();
         switch(switcher) {
-            case "UML":AufgabeErstellenStartFrame.dispose();
+            case "Designaufgabe":AufgabeErstellenStartFrame.dispose();
                         AufgabeErstellenUmlView.main(null);
                         break;
-            case "Code":AufgabeErstellenStartFrame.dispose();
+            case "Programmieraufgabe":AufgabeErstellenStartFrame.dispose();
                         AufgabeErstellenCodeView.main(null);
                         break;
-            case "MultipleChoice":AufgabeErstellenStartFrame.dispose();
+            case "MultipleChoiceaufgabe":AufgabeErstellenStartFrame.dispose();
                                     AufgabeErstellenMultipleChoiceView.main(null);
                         break;
             case "Einfachantwort": AufgabeErstellenStartFrame.dispose() ;
@@ -94,5 +94,26 @@ public class AufgabeErstellenStartView implements ActionListener {
     private void zurueck() {
         AufgabeErstellenStartFrame.dispose();
         DozentAnsicht.main(null);
+    }
+
+    public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
+        if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
+            errorTest(testFrame);
+            return false;
+
+        }
+        else{
+            return true;
+
+        }
+    }
+    static void errorTest(Frame test){
+        //als JerrorMessage
+        JDialog jd = new JDialog();
+        jd.toFront();
+        JLabel errorLbl = new JLabel("Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0");
+        jd.setSize(800,100);
+        jd.add(errorLbl);
+        jd.setVisible(true);
     }
 }

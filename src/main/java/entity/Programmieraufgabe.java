@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.io.File;
+
 /**
  * Aufgabe mit Programmcode als Antwort
  *
@@ -38,7 +40,7 @@ public class Programmieraufgabe extends Aufgabe {
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
      */
-    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
+    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
@@ -46,7 +48,7 @@ public class Programmieraufgabe extends Aufgabe {
     }
 
     /**
-     * Gibt die Musterlösung der Aufgabe zurück
+     * Gibt die Musterlösung der Aufgabe zurück+
      *
      * @return Musterlösung der Aufgabe
      */

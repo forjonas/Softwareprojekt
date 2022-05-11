@@ -119,17 +119,17 @@ public class DozentAnsicht implements ActionListener {
         }
     }
     private void trainingsEinsehen() {
-
+        //Huh?
     }
 
     private void testateErstellen() {
-        System.out.println("b");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        TestatErstellenView.main(null);
     }
 
     private void testatuebersicht() {
-        System.out.println("c");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        TestatKatalogView.main(null);
     }
 
     private void aufgabeErstellen() {
@@ -138,21 +138,21 @@ public class DozentAnsicht implements ActionListener {
     }
 
     private void aufgabenuebersicht() {
-        System.out.println("e");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        AufgabenKatalogView.main(null);
     }
 
     private void trainingsDurchfuehren() {
-        System.out.println("f");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        new TrainingGenerierenView(homeFrame);
     }
 
     private void testateDurchfuehren() {
-        System.out.println("g");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        TestatKatalogView.main(null);
     }
     private void testatEinsehen(){
-        System.out.println("h");
-        //Hier Link zu der Main Deiner Klasse
+        homeFrame.dispose();
+        KorrigiereTestatKatalogView.main(null);
     }
 }

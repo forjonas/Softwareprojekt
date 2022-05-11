@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.File;
+
 /**
  * Abstrakte Superklasse für Aufgaben
  *
@@ -19,7 +21,7 @@ public abstract class Aufgabe {
     //Datentyp ändern
     private String javaDesign;
     //Datentyp ändern
-    private String umlDesign;
+    private File umlDesign;
     private Kategorie kategorie;
     private String loesungshinweis;
     private int punktewert;
@@ -47,7 +49,7 @@ public abstract class Aufgabe {
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung   Textbeschreibung der Aufgabe
      */
-    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
+    public Aufgabe(int bearbeitungszeit, String javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.javaDesign = javaDesign;
         this.umlDesign = umlDesign;
@@ -100,7 +102,7 @@ public abstract class Aufgabe {
      *
      * @return Uml-Design der Aufgabe
      */
-    public String getUmlDesign() {
+    public File getUmlDesign() {
         return umlDesign;
     }
 
@@ -109,7 +111,7 @@ public abstract class Aufgabe {
      *
      * @param umlDesign Uml-Design der Aufgabe
      */
-    public void setUmlDesign(String umlDesign) {
+    public void setUmlDesign(File umlDesign) {
         this.umlDesign = umlDesign;
     }
 

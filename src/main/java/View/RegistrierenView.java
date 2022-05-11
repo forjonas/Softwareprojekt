@@ -79,6 +79,5 @@ public class RegistrierenView implements ActionListener {
             einlogenView.setVisible(true);
             registrierenView.dispose();
         }
-
     }
 }
