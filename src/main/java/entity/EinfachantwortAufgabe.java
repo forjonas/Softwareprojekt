@@ -38,12 +38,14 @@ public class EinfachantwortAufgabe extends Aufgabe {
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
      */
-    public EinfachantwortAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
+    public EinfachantwortAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert,
+                                 Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
         this.aufgabentyp = Aufgabentyp.Einfachantwort;
     }
+
 
     /**
      * Gibt die Musterlösung der Aufgabe zurück

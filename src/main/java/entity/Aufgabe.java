@@ -47,7 +47,8 @@ public abstract class Aufgabe {
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung   Textbeschreibung der Aufgabe
      */
-    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
+    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis,
+                   int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.javaDesign = javaDesign;
         this.umlDesign = umlDesign;

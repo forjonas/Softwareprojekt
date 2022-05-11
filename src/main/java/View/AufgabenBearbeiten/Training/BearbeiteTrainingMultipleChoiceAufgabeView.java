@@ -1,5 +1,10 @@
 package View.AufgabenBearbeiten.Training;
 
+import app.TestatApp;
+import app.TrainingApp;
+import entity.MultipleChoiceAufgabe;
+import entity.Programmieraufgabe;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +20,14 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 	private JButton btnVoherigeAufgabeTraining;
 	private JButton btnNaechsteAufgabeTraining;
 	private JButton btnTrainingBeenden;
+
+
+	private TrainingApp trainingApp;
+	private MultipleChoiceAufgabe aufgabe; //Im Frame die Aufgabe
+	private String antwort1;
+	private String antwort2;
+	private String antwort3;
+	private String antwort4;
 
 	/**
 	 * Launch the application.
@@ -35,8 +48,9 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 	/**
 	 * Create the frame.
 	 */
-	public BearbeiteTrainingMultipleChoiceAufgabeView() {
-		setTitle("Training Multiple Choice");
+	public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingApp trainingApp, MultipleChoiceAufgabe aufgabe) {
+		this.aufgabe = aufgabe;
+		setTitle(aufgabe.getName()); //Name der Aufgabe);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -54,13 +68,20 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
 
-		JRadioButton button1 = new JRadioButton("Elon Musk");
+		// antwort1 = aufgabe.getAntwortmoeglichkeiten(1)(0));
+		JRadioButton button1 = new JRadioButton(antwort1);
 		panelCenter.add(button1);
-		JRadioButton button2 = new JRadioButton("Logan Murphy");
+
+		// antwort2 = aufgabe.getAntwortmoeglichkeiten(1)(1));
+		JRadioButton button2 = new JRadioButton(antwort2);
 		panelCenter.add(button2);
-		JRadioButton button3 = new JRadioButton("Tim Bernes Lee");
+
+		// antwort3 = aufgabe.getAntwortmoeglichkeiten(1)(2));
+		JRadioButton button3 = new JRadioButton(antwort3);
 		panelCenter.add(button3);
-		JRadioButton button4 = new JRadioButton(":)");
+
+		// antwort4 = aufgabe.getAntwortmoeglichkeiten(1)(3));
+		JRadioButton button4 = new JRadioButton(antwort4);
 		panelCenter.add(button4);
 
 		ButtonGroup bg = new ButtonGroup();
@@ -110,6 +131,10 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this,"Button Beenden");
+
+			//gucke welcher button ausgewählt ist und speicher diese in einer Datei (Userlösung)
+
+			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 1 gehen weiter zu 2
 
 		}
 

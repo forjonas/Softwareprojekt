@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+//import javax.swing.*;
+
 /**
  * Aufgabe mit Design als Antwort
  *
@@ -16,6 +18,7 @@ public class Designaufgabe extends Aufgabe {
     private String musterloesung;
     //Datentyp ändern
     private String userloesung;
+   // private ImageIcon iconBild;
 
     /**
      * Leerer Konstruktor für Klasse Designaufgabe
@@ -39,12 +42,14 @@ public class Designaufgabe extends Aufgabe {
      * @param name               Name der Aufgabe
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
+   //  * @param iconBild           ImageIcon der Aufgabe  //von Kristin hinzugefügt 10.05.22 (evt. unvollständig)
      */
-    public Designaufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
+    public Designaufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) { //, ImageIcon iconBild) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
         this.aufgabentyp = Aufgabentyp.Design;
+        //this.iconBild = iconBild;
     }
 
     /**
@@ -82,5 +87,13 @@ public class Designaufgabe extends Aufgabe {
     public void setUserloesung(String userloesung) {
         this.userloesung = userloesung;
     }
+/**
+    public ImageIcon getIconBild() {
+        return iconBild;
+    }
 
+    public void setIconBild(ImageIcon iconBild) {
+        this.iconBild = iconBild;
+    }
+ */
 }

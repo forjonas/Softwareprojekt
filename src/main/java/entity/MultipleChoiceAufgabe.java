@@ -1,6 +1,5 @@
 package entity;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.util.LinkedList;
@@ -46,7 +45,9 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param musterloesung         Musterlösung der Aufgabe
      * @param userloesung           Userlösung der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, List<String> antwortmoeglichkeiten, List<Boolean> musterloesung, List<Boolean> userloesung) {
+    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, String loesungshinweis,
+                                 int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, List<String> antwortmoeglichkeiten,
+                                 List<Boolean> musterloesung, List<Boolean> userloesung) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.musterloesung = musterloesung;
@@ -58,6 +59,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * Gibt die Antwortmöglichkeiten der Aufgabe zurück
      *
      * @return Antwortmöglichkeiten der Aufgabe
+     * @param i
      */
     public List<String> getAntwortmoeglichkeiten() {
         return antwortmoeglichkeiten;
