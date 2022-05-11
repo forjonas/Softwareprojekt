@@ -2,6 +2,8 @@ package entity.loesung.userloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.benutzer.Benutzer;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -29,12 +31,14 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
     /**
      * Konstruktor für eine Userlösung vom Typ Multiple-Choice
      *
-     * @param aufgabe          zur Lösung gehörende Aufgabe
-     * @param hinweisVerwendet gibt an, ob der Lösungshinweis verwendet wurde
-     * @param userloesung      Userlösung in Form einer Boolean-Liste
+     * @param aufgabe              zur Lösung gehörende Aufgabe
+     * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
+     * @param userloesung          Userlösung in Form einer Boolean-Liste
+     * @param userloesungErsteller Ersteller der Userlösung
+     * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
-    public UserloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, boolean hinweisVerwendet, List<Boolean> userloesung) {
-        super(aufgabe, hinweisVerwendet);
+    public UserloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, boolean hinweisVerwendet, List<Boolean> userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
+        super(aufgabe, hinweisVerwendet, userloesungErsteller, aufgabensammlung);
         this.userloesung = userloesung;
     }
 

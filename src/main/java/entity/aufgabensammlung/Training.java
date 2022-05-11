@@ -1,6 +1,7 @@
 package entity.aufgabensammlung;
 
 import entity.aufgabe.Aufgabe;
+import entity.benutzer.Benutzer;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
@@ -16,22 +17,29 @@ import java.util.List;
  */
 @Entity
 public class Training extends Aufgabensammlung {
-    @Id
+    //Sollte rausgenommen werden. Training hat bereits eine Id, da es von Aufgabensammlung ableitet
+    // und ein Id sollte auch nicht manuell gesetzt oder ausgelesen werden. Sie dient nur zur Persistenz in der Datenbank.
+    /*    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long trainingID;
+    private Long trainingID;*/
 
     private int bearbeitungszeit;
     private Kategorie kategorie;
     private Schwierigkeitsgrad schwierigkeitsgrad;
     private Aufgabentyp aufgabentyp;
+    @ManyToOne
+    @JoinColumn(name = "trainingsErsteller_benutzerid")
+    private Benutzer trainingsErsteller;
 
-    public Long getTrainingID() {
+
+
+/*    public Long getTrainingID() {
         return trainingID;
     }
 
     public void setTrainingID(Long trainingID) {
         this.trainingID = trainingID;
-    }
+    }*/
 
     /**
      * Leerer Konstruktor für Klasse Training
@@ -66,11 +74,13 @@ public class Training extends Aufgabensammlung {
      * @param kategorie          Ausgewählte Kategorie des Testats
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
      */
-    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad) {
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp, Benutzer trainingsErsteller) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
+        this.aufgabentyp = aufgabentyp;
+        this.trainingsErsteller = trainingsErsteller;
     }
 
     /**
@@ -143,6 +153,24 @@ public class Training extends Aufgabensammlung {
      */
     public void setAufgabentyp(Aufgabentyp aufgabentyp) {
         this.aufgabentyp = aufgabentyp;
+    }
+
+    /**
+     * Gibt den Ersteller des Trainings zurück
+     *
+     * @return Ersteller des Trainings
+     */
+    public Benutzer getTrainingsErsteller() {
+        return trainingsErsteller;
+    }
+
+    /**
+     * Setzt den Ersteller des Trainings
+     *
+     * @param trainingsErsteller Ersteller des Trainings
+     */
+    public void setTrainingsErsteller(Benutzer trainingsErsteller) {
+        this.trainingsErsteller = trainingsErsteller;
     }
 
 }

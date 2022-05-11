@@ -42,12 +42,12 @@ public class PersistenceTest {
         //readTestData();
         //Fancy Shit mit Enums: wenn auf den Bezeichner der Enums zugegriffen wird nur zB getAufgabentyp nutzen,
         //wenn man den Wert des Enums haben will noch .getCode() dahinter packen
-        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
+/*        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
         for(Aufgabe a:aufgaben){
             System.out.println(a.getAufgabentyp().getCode());
             System.out.println(a.getSchwierigkeitsgrad().getCode());
             System.out.println(a.getKategorie().getCode());
-        }
+        }*/
         System.out.println("Testprogramm terminiert");
     }
 
@@ -70,13 +70,11 @@ public class PersistenceTest {
         dozent2.addErstellteAufgabe(a3);
         dozent2.addErstellteAufgabe(a4);
 
-        //Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
-        //student1.addBearbeitetesTraining(training1);
+        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
+        student1.addBearbeitetesTraining(training1);
 
         Testat testat1 = new Testat(aufgabenListe, "Hallo1234", "Sommertestat", dozent1);
         dozent1.addErstelltesTestat(testat1);
-
-        //List<Aufgabensammlung> sammlungsliste = Arrays.asList(new Aufgabensammlung[]{testat1, training1});
 
         TestatBearbeitung t1 = new TestatBearbeitung(testat1);
         testat1.addBearbeitung(t1);
@@ -104,14 +102,23 @@ public class PersistenceTest {
         a2.setMusterloesung(ml2);
         a3.setMusterloesung(ml3);
         a4.setMusterloesung(ml4);
-        Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung");
-        Userloesung ul2 = new UserloesungDesignaufgabe((Designaufgabe) a2, false, "Lösung");
-        Userloesung ul3 = new UserloesungProgrammieraufgabe((Programmieraufgabe) a3, false, "Lösung");
-        Userloesung ul4 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, true, Arrays.asList(new Boolean[]{true, false, false}));
+        Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung", student1, testat1);
+        Userloesung ul2 = new UserloesungDesignaufgabe((Designaufgabe) a2, false, "Lösung", student1, testat1);
+        Userloesung ul3 = new UserloesungProgrammieraufgabe((Programmieraufgabe) a3, false, "Lösung", student1, testat1);
+        Userloesung ul4 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, true, Arrays.asList(new Boolean[]{true, false, false}), student1, testat1);
+        testat1.addUserloesung(ul1);
+        testat1.addUserloesung(ul2);
+        testat1.addUserloesung(ul3);
+        testat1.addUserloesung(ul4);
+        student1.addErstellteLoesung(ul1);
+        student1.addErstellteLoesung(ul2);
+        student1.addErstellteLoesung(ul3);
+        student1.addErstellteLoesung(ul4);
         a1.addUserloesung(ul1);
         a2.addUserloesung(ul2);
         a3.addUserloesung(ul3);
         a4.addUserloesung(ul4);
+
         List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
         ds.persistObjects(loesungsliste);
     }

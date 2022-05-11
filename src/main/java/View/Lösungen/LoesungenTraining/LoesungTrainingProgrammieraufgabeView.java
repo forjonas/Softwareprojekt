@@ -34,7 +34,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             naechsteAufgabe();
         } else if (e.getSource() == this.btnVorherigeAufgabe) {

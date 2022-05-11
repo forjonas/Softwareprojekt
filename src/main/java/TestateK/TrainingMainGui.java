@@ -1,7 +1,11 @@
 package TestateK;
 
 import app.TrainingApp;
-import entity.*;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.*;
+import entity.benutzer.*;
+import entity.enums.*;
+import entity.loesung.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -35,11 +39,11 @@ public class TrainingMainGui extends JFrame implements ActionListener {
 		List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
 		List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
 		List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-		Training training1 = new Training(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
+		Training training1 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 		Training training2 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 		Training training3 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 
-		List<Training> training1a = new ArrayList<Training>();
+		ArrayList<Training> training1a = new ArrayList<Training>();
 		training1a.add(training1);
 		training1a.add(training2);
 		training1a.add(training3);
@@ -128,8 +132,8 @@ public class TrainingMainGui extends JFrame implements ActionListener {
         	//Testat testat = new Testat(aufgabenListe1, null, "1234", "Somtestat");//neues Testat
         	
         	//this.tt1 = testatliste.get(0); //Testat an der Stelle 0-->IN MAIN INITALISIERT
-			TrainingApp app = new Training(train1); //TestatApp Testat uebergeben
-            app.zeigeAktuelleAufgabe(); //Die App soll die erste Aufgabe Zeigen usw. //!!! Butto wenn Testat 1 geklickt wird Testat App aufgerufen und die App zeigt testat1: Aufgabe1
+			//TrainingApp app = new Training(train1); //TestatApp Testat uebergeben
+            //app.zeigeAktuelleAufgabe(); //Die App soll die erste Aufgabe Zeigen usw. //!!! Butto wenn Testat 1 geklickt wird Testat App aufgerufen und die App zeigt testat1: Aufgabe1
             
         }
       
