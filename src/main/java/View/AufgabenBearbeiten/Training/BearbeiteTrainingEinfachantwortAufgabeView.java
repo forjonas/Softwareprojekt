@@ -4,13 +4,17 @@ import View.DozentAnsicht;
 import View.LoesungsHinweisView;
 import app.TestatApp;
 import app.TrainingApp;
-import entity.Designaufgabe;
-import entity.EinfachantwortAufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -37,6 +41,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     /**
      * Launch the application.
      */
+
+    /**
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -48,7 +54,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
                 }
             }
         });
-    }
+    }*/
 
     /**
      * Create the frame.
@@ -112,7 +118,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnLoesungshinweisTraining) {
             //this.dispose();
             //LoesungsHinweisView.main(null); //Alt von Jannik
-            JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
+            JOptionPane.showMessageDialog(this,aufgabe.getMusterloesung().getLoesungshinweis());
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
@@ -120,13 +126,15 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             //Button.nächste
 
+            /** Die Buffered und FileWriter brauchen try Catch. Lies die mal genau durch wie du das mit denen machst
             //Lese antworten und speicher diese in einer Datei (Userlösung)
             String textFieldValue = textArea.getText(); // read den input TextArea
             // String DName = EAM.rString();
             File DName = new File("AntwortAufgabe1.txt");
-            fw = new FileWriter(DName);
-            bw = new BufferedWriter(fw);
+            FileWriter fw = new FileWriter(DName);
+            BufferedWriter bw = new BufferedWriter(fw);
             bw.write(textFieldValue);  //bw schreibt txt Datei
+             */
 
             this.trainingApp.weiter();
 

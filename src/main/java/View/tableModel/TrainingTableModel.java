@@ -61,9 +61,9 @@ public class TrainingTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0: {
-                String vorname = trainingsliste.get(rowIndex).getTrainingsErsteller().getVorname();
-                String nachname = trainingsliste.get(rowIndex).getTrainingsErsteller().getNachname();
-                return vorname + " " + nachname;
+                //String vorname = trainingsliste.get(rowIndex).getTrainingsErsteller().getVorname();
+                //String nachname = trainingsliste.get(rowIndex).getTrainingsErsteller().getNachname();
+                //return vorname + " " + nachname;
             }
             case 1:
                 return trainingsliste.get(rowIndex).getGesamtzeit();

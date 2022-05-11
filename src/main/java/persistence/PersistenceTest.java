@@ -70,13 +70,13 @@ public class PersistenceTest {
         dozent2.addErstellteAufgabe(a3);
         dozent2.addErstellteAufgabe(a4);
 
-        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
-        student1.addBearbeitetesTraining(training1);
+        //Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
+        //student1.addBearbeitetesTraining(training1);
 
         Testat testat1 = new Testat(aufgabenListe, "Hallo1234", "Sommertestat", dozent1);
         dozent1.addErstelltesTestat(testat1);
 
-        List<Aufgabensammlung> sammlungsliste = Arrays.asList(new Aufgabensammlung[]{testat1, training1});
+        //List<Aufgabensammlung> sammlungsliste = Arrays.asList(new Aufgabensammlung[]{testat1, training1});
 
         TestatBearbeitung t1 = new TestatBearbeitung(testat1);
         testat1.addBearbeitung(t1);

@@ -1,13 +1,16 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.Aufgabe;
-import entity.Designaufgabe;
-import entity.EinfachantwortAufgabe;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -35,12 +38,12 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
     /**
      * Launch the application.
-     */
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(TestatApp testatApp, Designaufgabe aufgabe); //angepasst--> nötig?? Warum
+                    BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(testatApp, aufgabe); //angepasst--> nötig?? Warum
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -49,6 +52,9 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         });
     }
 
+     Zweck der Methode??~Martin Bergen
+
+    */
     /**
      * Create the frame.
      */
@@ -110,7 +116,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis());//Lösungshinweis eingefügt
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
@@ -118,12 +124,17 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
             //Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
 
+            /**
             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
             File DName = new File("AntwortAufgabe1.txt");
-            fw = new FileWriter(DName);
-            bw = new BufferedWriter(fw);
+            FileWriter fw = new FileWriter(DName);
+            BufferedWriter bw = new BufferedWriter(fw);
             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
             this.testatApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+             Wie genau bekommt man hier die docUpload variable
+             Wozu brauchst du FileWriter und BufferedWriter
+             */
 
         }
         if (e.getSource() == this.btnTestatBeenden) {

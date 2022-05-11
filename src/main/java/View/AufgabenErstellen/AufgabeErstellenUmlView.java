@@ -2,9 +2,9 @@ package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
 import View.ImageFilter;
-import entity.Designaufgabe;
-import entity.Kategorie;
-import entity.Schwierigkeitsgrad;
+import entity.aufgabe.Designaufgabe;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -226,7 +226,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,null,designFile,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesungFile,null);
+        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,null,"",kat, punkte,schw, aufText, aufgTitel,null,null);
         ds.persistObject(neueAufgabe);
 
     }

@@ -20,6 +20,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.LinkedList;
 import java.util.List;
+import entity.enums.*;
 
 /**
  * Klasse, die sich um das Persistieren und Laden von Entitäten kümmert

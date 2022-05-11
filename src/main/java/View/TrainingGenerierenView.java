@@ -1,6 +1,13 @@
 package View;
 
 import entity.*;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.Training;
+import entity.enums.Aufgabentyp;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -100,10 +107,10 @@ public class TrainingGenerierenView implements ActionListener {
         {
             if(trainingsdauer == Integer.parseInt(getValueCBox(dauerCBox)))
             {
-                training = new Training(aufgabenTraining,Integer.parseInt(getValueCBox(dauerCBox)),getValueCBox(kategorieCBox),schwierigkeitsgradSetzenInt());
+                training = new Training(aufgabenTraining,Integer.parseInt(getValueCBox(dauerCBox)),readKategorie(),schwierigkeitsgradSetzen());
                 System.out.println(aufgabenTraining);
             }else {
-                if(aufgabenTypSetzen()==Aufgabentyp.Programmieren)
+                if(aufgabenTypSetzen()== Aufgabentyp.Programmieren)
                 {
                     Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Programmieren, readKategorie(), schwierigkeitsgradSetzen());
                     while(aufgabenTraining.size()!=0){
@@ -240,7 +247,7 @@ public class TrainingGenerierenView implements ActionListener {
 
     public void createTestAufgaben()
     {
-        ds.persistObject(new Designaufgabe(3,"javaDesign","umlDesign",Kategorie.Java_Grundlagen,"Lösunghinweis",15,Schwierigkeitsgrad.Leicht,"text","name","musterlösung","loesung"));
-        ds.persistObject(new Programmieraufgabe(7,"javaDesign","UMLDesign",Kategorie.Java_Grundlagen,"Lösungshinweis",60,Schwierigkeitsgrad.Leicht,"text","name","loesung","userlösung"));
+        ds.persistObject(new Designaufgabe(3,"javaDesign","umlDesign",Kategorie.Java_Grundlagen,15,Schwierigkeitsgrad.Leicht,"text","name",null,null));
+        ds.persistObject(new Programmieraufgabe(7,"javaDesign","UMLDesign",Kategorie.Java_Grundlagen,60,Schwierigkeitsgrad.Leicht,"text","name",null,null));
     }
 }

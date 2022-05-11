@@ -2,8 +2,9 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TestatApp;
 import app.TrainingApp;
-import entity.MultipleChoiceAufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,8 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 	/**
 	 * Launch the application.
 	 */
+
+	/**
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,7 +46,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.

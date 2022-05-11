@@ -2,6 +2,9 @@ package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
 import entity.*;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
 import javax.print.DocFlavor;
@@ -87,7 +90,7 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
-        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
         //Buttons
         zurueckBtn = new JButton("Zurück");
@@ -230,7 +233,7 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,null,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,antworten,null,null);
+        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,null,null,kat, punkte,schw, aufText, aufgTitel,null,null);
         ds.persistObject(neueAufgabe);
 
     }

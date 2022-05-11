@@ -9,14 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import TestateK.Aufgabe;
-import TestateK.Designaufgabe;
-import TestateK.EinfachantwortAufgabe;
-import TestateK.MultipleChoiceAufgabe;
-import TestateK.Programmieraufgabe;
-import TestateK.Testat;
 import app.TestatApp;
 import entity.*;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.Testat;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +37,7 @@ public class TestateMainGui extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
+	/**
 	public static void main(String[] args) {
 
 		Aufgabe a1 = new EinfachantwortAufgabe();
@@ -50,11 +47,11 @@ public class TestateMainGui extends JFrame implements ActionListener {
 		List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
 		List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
 		List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-		Testat t1 = new Testat(aufgabenListe1, null, "Hallo1234", "Sommertestat");
-		Testat t2 = new Testat(aufgabenListe2, null, "asdf", "Wintertestat");
-		Testat t3 = new Testat(aufgabenListe3, null, "qwertz", "Herbsttestat");
+		Testat t1 = new Testat(aufgabenListe1, null, "Hallo1234", null);
+		Testat t2 = new Testat(aufgabenListe2, null, "asdf", null);
+		Testat t3 = new Testat(aufgabenListe3, null, "qwertz", null);
 		List<Testat> testatliste1 = new ArrayList<Testat>();
-		testatliste1.add(new Testat(t1, t2, t3, null));
+		testatliste1.add(new Testat(testatliste1, "t2", "", null));
 
 		//Arrays.asList(new Testat[]{t1, t2, t3}); //(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
 

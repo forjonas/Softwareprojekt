@@ -4,8 +4,8 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.EinfachantwortAufgabe;
-import entity.Training;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabensammlung.Training;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,8 +29,8 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        txtfMusterloesung.setText(aufgabe.getMusterloesung());
-        txtfUserLoesung.setText(aufgabe.getUserloesung());
+        //txtfMusterloesung.setText(aufgabe.getMusterloesung());
+        //txtfUserLoesung.setText(aufgabe.getUserloesung());
         this.pack();
         this.setVisible(true);
     }
@@ -39,7 +39,7 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             naechsteAufgabe();
         } else if (e.getSource() == this.btnVorherigeAufgabe) {

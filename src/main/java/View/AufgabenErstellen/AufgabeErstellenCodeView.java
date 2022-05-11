@@ -1,18 +1,16 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
-import View.ImageFilter;
-import entity.Kategorie;
-import entity.Programmieraufgabe;
-import entity.Schwierigkeitsgrad;
+import entity.benutzer.Dozent;
+import entity.enums.Kategorie;
+import entity.aufgabe.Programmieraufgabe;
+import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
 
 
 /**
@@ -203,7 +201,7 @@ public class AufgabeErstellenCodeView implements ActionListener {
         private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,String loesung, String codeText) {
 
             DatabaseService ds = DatabaseService.getInstance();
-            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeText,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesung,null);
+            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeText,null,kat, punkte,schw, aufText, aufgTitel,new Dozent(),null);
             ds.persistObject(neueAufgabe);
 
         }

@@ -1,8 +1,8 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.EinfachantwortAufgabe;
-import entity.MultipleChoiceAufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +34,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     /**
      * Launch the application.
      */
+    /**
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -45,7 +46,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
                 }
             }
         });
-    }
+    }*/
 
     /**
      * Create the frame.
@@ -121,7 +122,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis()); //Lösungshinweis bekommen
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
         if (e.getSource() == this.btnTestatBeenden) {
             JOptionPane.showMessageDialog(this, "Button Testat Beenden");

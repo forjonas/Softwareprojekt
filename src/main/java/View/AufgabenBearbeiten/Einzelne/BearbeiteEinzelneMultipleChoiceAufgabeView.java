@@ -1,9 +1,9 @@
 package View.AufgabenBearbeiten.Einzelne;
 
-import entity.Designaufgabe;
-import entity.EinfachantwortAufgabe;
-import entity.MultipleChoiceAufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import java.awt.*;
 
@@ -64,13 +64,13 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
 
-		JRadioButton button1 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten(0));
+		JRadioButton button1 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten().get(0));
 		panelCenter.add(button1);
-		JRadioButton button2 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten(1));
+		JRadioButton button2 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten().get(1));
 		panelCenter.add(button2);
-		JRadioButton button3 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten(2));
+		JRadioButton button3 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten().get(2));
 		panelCenter.add(button3);
-		JRadioButton button4 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten(3));
+		JRadioButton button4 = new JRadioButton(aufgabe.getAntwortmoeglichkeiten().get(3));
 		panelCenter.add(button4);
 
 
@@ -105,18 +105,20 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 		}
 		if (e.getSource() == this.btnLoesungshinweisEinzel) {
 			//JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-			JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
+			JOptionPane.showMessageDialog(this,aufgabe.getMusterloesung().getLoesungshinweis());
 		}
 		if (e.getSource() == this.btnAufgabeBeendenEinzel) {
 			JOptionPane.showMessageDialog(this,"Button Aufgabe Beenden");
 
-			//Lese antworten und speicher diese in einer Datei (Userlösung)
-			String textFieldValue = textArea.getText(); // read den input TextArea
-			// String DName = EAM.rString();
-			File DName = new File("AntwortAufgabe1.txt");
-			fw = new FileWriter(DName);
-			bw = new BufferedWriter(fw);
-			bw.write(textFieldValue);  //bw schreibt txt Datei
+			/**
+			 String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+			 File DName = new File("AntwortAufgabe1.txt");
+			 fw = new FileWriter(DName);
+			 bw = new BufferedWriter(fw);
+			 bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+			 this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+			 */
 
 			// this.dispose();
 			// DozentAnsicht.main(null); //eigentlich: studentView.main(null);

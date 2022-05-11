@@ -4,7 +4,7 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.MultipleChoiceAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 
 import javax.swing.*;
@@ -32,6 +32,7 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblAufgabentext;
 
 
+    /**
     public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
@@ -50,12 +51,13 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
         this.pack();
         this.setVisible(true);
     }
+     */
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
         }
     }
 

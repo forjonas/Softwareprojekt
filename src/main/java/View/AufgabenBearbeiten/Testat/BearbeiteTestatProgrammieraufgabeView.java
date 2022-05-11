@@ -1,8 +1,9 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.Designaufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     /**
      * Launch the application.
      */
+    /**
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -40,7 +42,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
                 }
             }
         });
-    }
+    }*/
 
     /**
      * Create the frame.
@@ -94,26 +96,28 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {//Bei der Buttonabfrage struktur kannst du auch eine if-else struktur einbauen, erspart runtime
         if (e.getSource() == this.btnBeendenTestst) {
             JOptionPane.showMessageDialog(this, "Button Beenden");
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis());//Lösungshinweis eingefügt
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
             //Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
-
+            /**
             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
             File DName = new File("AntwortAufgabe1.txt");
             fw = new FileWriter(DName);
             bw = new BufferedWriter(fw);
             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-            this.testatApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+            this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+            */
 
         }
         if (e.getSource() == this.btnTestatBeenden) {

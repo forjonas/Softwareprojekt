@@ -3,6 +3,12 @@ package View.Lösungen;
 import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
 import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufgabeView;
 import entity.*;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.aufgabensammlung.Training;
+import entity.enums.Aufgabentyp;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,18 +24,18 @@ public class LoesungsViewsTestklasse {
         BewertungMultipleChoiceAufgabeView bewertungMultipleChoiceAufgabeView = new BewertungMultipleChoiceAufgabeView();
         */
 
-        Aufgabe a1 = new EinfachantwortAufgabe(10," javaDesign", "umlDesign", Kategorie.Software_Engineering, "Test Test", 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", "Pi mal Daumen", "Peace");
-        Aufgabe a2 = new Designaufgabe(15," javaDesign", "umlDesign", Kategorie.Datenbanken, "Kein Lösungshinweis", 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", "Richtig", "RRRRichtig");
-        Aufgabe a3 = new Programmieraufgabe(5,null, null, Kategorie.Java_Programmierung, "for-Schleife", 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", "for(int i=0; i<5; i++) {\n\tSystem.out.println(\"Hello World!\");\n}", "Keine Ahnung");
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, "Char ist es nicht.", 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", Arrays.asList(new String[]{"char","int","double", "float"}), Arrays.asList(new Boolean[]{false, false, true, false}), Arrays.asList(new Boolean[]{false, true, false, false}));
+        Aufgabe a1 = new EinfachantwortAufgabe(10," javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null, null);
+        Aufgabe a2 = new Designaufgabe(15," javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null, null);
+        Aufgabe a3 = new Programmieraufgabe(5,null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, null);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, null);
         List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        Aufgabensammlung sammlung2 = new Training(aufgabenListe, 60, "Programmieren", 3, Aufgabentyp.Einfachantwort);
+        Aufgabensammlung sammlung2 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort);
 
         //Einzelaufgaben
         //LoesungEinzelneProgrammieraufgabeView loesungEinzelneProgrammieraufgabeView = new LoesungEinzelneProgrammieraufgabeView((Programmieraufgabe) a3);
         //LoesungEinzelneDesignaufgabeView loesungEinzelneDesignaufgabeView = new LoesungEinzelneDesignaufgabeView((Designaufgabe) a2);
-        LoesungEinzelneEinfachantwortaufgabeView loesungEinzelneEinfachantwortaufgabeView = new LoesungEinzelneEinfachantwortaufgabeView((EinfachantwortAufgabe) a1);
-        LoesungEinzelneMultipleChoiceAufgabeView loesungEinzelneMultipleChoiceAufgabeView = new LoesungEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4);
+        //LoesungEinzelneEinfachantwortaufgabeView loesungEinzelneEinfachantwortaufgabeView = new LoesungEinzelneEinfachantwortaufgabeView((EinfachantwortAufgabe) a1);
+        //LoesungEinzelneMultipleChoiceAufgabeView loesungEinzelneMultipleChoiceAufgabeView = new LoesungEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4);
 
 
         //Trainings

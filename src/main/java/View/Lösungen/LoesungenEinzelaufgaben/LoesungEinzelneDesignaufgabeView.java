@@ -4,7 +4,7 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.Designaufgabe;
+import entity.aufgabe.Designaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
         }
     }
 

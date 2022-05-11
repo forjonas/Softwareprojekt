@@ -1,10 +1,12 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
-import entity.Designaufgabe;
-import entity.EinfachantwortAufgabe;
-import entity.Kategorie;
-import entity.Schwierigkeitsgrad;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -188,7 +190,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,null,null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat,punkte,schw, aufText, aufgTitel,null,null);
         ds.persistObject(neueAufgabe);
 
     }

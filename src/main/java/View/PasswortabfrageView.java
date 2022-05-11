@@ -1,6 +1,6 @@
 package View;
 
-import entity.Testat;
+import entity.aufgabensammlung.Testat;
 
 import javax.swing.*;
 import javax.swing.border.Border;

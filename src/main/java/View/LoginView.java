@@ -1,8 +1,8 @@
 package View;
 
-import entity.Benutzer;
-import entity.Dozent;
-import entity.Student;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
 import persistence.DatabaseService;
 
 import javax.swing.*;

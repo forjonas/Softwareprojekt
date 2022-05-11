@@ -4,7 +4,7 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
         }
     }
 
