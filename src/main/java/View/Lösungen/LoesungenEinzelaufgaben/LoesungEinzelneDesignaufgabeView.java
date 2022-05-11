@@ -4,6 +4,7 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.Designaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblplaceholderUserloesung;
     private JLabel lblPlaceholderMusterloesung;
 
-    public LoesungEinzelneDesignaufgabeView() {
+    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);

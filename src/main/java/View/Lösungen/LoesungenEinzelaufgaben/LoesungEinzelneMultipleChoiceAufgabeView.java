@@ -4,10 +4,14 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.MultipleChoiceAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
@@ -20,10 +24,27 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JRadioButton btnMoeglichkeit2;
     private JRadioButton btnMoeglichkeit3;
     private JRadioButton btnMoeglichkeit4;
+    private JPanel panelMusterChoices;
+    private JRadioButton btnLoesung1;
+    private JRadioButton btnLoesung2;
+    private JRadioButton btnLoesung3;
+    private JRadioButton btnLoesung4;
+    private JLabel lblAufgabentext;
 
 
-    public LoesungEinzelneMultipleChoiceAufgabeView() {
+    public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        List<Boolean> userLoesungen = aufgabe.getUserloesung();
+        btnMoeglichkeit1.setSelected(userLoesungen.get(0));
+        btnMoeglichkeit2.setSelected(userLoesungen.get(1));
+        btnMoeglichkeit3.setSelected(userLoesungen.get(2));
+        btnMoeglichkeit4.setSelected(userLoesungen.get(3));
+        List<Boolean> musterLoesungen = aufgabe.getMusterloesung();
+        btnLoesung1.setSelected(musterLoesungen.get(0));
+        btnLoesung2.setSelected(musterLoesungen.get(1));
+        btnLoesung3.setSelected(musterLoesungen.get(2));
+        btnLoesung4.setSelected(musterLoesungen.get(3));
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         this.pack();

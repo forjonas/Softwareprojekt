@@ -4,6 +4,7 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.Programmieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JTextField txtfMusterloesung;
     private JPanel mainPanel;
 
-    public LoesungEinzelneProgrammieraufgabeView() {
+    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);

@@ -4,6 +4,8 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.EinfachantwortAufgabe;
+import entity.Training;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,12 +22,15 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
     private JButton btnVorherigeAufgabe;
     private JPanel panelMain;
 
-    public LoesungTrainingEinfachantwortaufgabeView() {
+    public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtfMusterloesung.setText(aufgabe.getMusterloesung());
+        txtfUserLoesung.setText(aufgabe.getUserloesung());
         this.pack();
         this.setVisible(true);
     }

@@ -4,6 +4,8 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.Aufgabe;
+import entity.EinfachantwortAufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,11 +22,17 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JPanel mainPanel;
     private JPanel panelUser;
     private JPanel panelMuster;
+    private JLabel lblUserloesung;
+    private JLabel lblMusterloesung;
+    private JLabel lblAufgabentext;
 
-    public LoesungEinzelneEinfachantwortaufgabeView() {
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtfMusterloesung.setText(aufgabe.getMusterloesung());
+        txtfUserLoesung.setText(aufgabe.getUserloesung());
         this.pack();
         this.setVisible(true);
     }
@@ -34,6 +42,8 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+
+                        //Hinweistext verändern
         }
     }
 
