@@ -1,7 +1,9 @@
-package entity;
+package entity.benutzer;
 
-import jakarta.persistence.DiscriminatorValue;
+import entity.benutzer.Benutzer;
 import jakarta.persistence.Entity;
+
+import java.io.Serializable;
 
 /**
  * Benutzer vom Typ Student
@@ -10,7 +12,7 @@ import jakarta.persistence.Entity;
  * @version 22.04.22
  */
 @Entity
-public class Student extends Benutzer {
+public class Student extends Benutzer implements Serializable {
 
     private int matrikelnummer;
 
@@ -54,6 +56,7 @@ public class Student extends Benutzer {
         this.matrikelnummer = matrikelnummer;
     }
 
+
     /**
      * Gibt den Studenten als String aus
      *
@@ -61,6 +64,6 @@ public class Student extends Benutzer {
      */
     @Override
     public String toString() {
-        return "Student"+super.toString()+", matrikelnummer='" + matrikelnummer + '\''+"}";
+        return "Student: {"+super.toString()+"}";
     }
 }

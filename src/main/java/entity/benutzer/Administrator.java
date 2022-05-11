@@ -1,7 +1,8 @@
-package entity;
+package entity.benutzer;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+
+import java.io.Serializable;
 
 /**
  * Benutzer vom Typ Administrator
@@ -9,8 +10,9 @@ import jakarta.persistence.Entity;
  * @author Jonas Herbst
  * @version 22.04.22
  */
+//Wird bald gelöscht werden
 @Entity
-public class Administrator extends Benutzer implements BenutzerMitDozentenrechten {
+public class Administrator extends Benutzer implements BenutzerMitDozentenrechten, Serializable {
 
     /**
      * Leerer Konstruktor für Klasse Administrator
@@ -39,6 +41,6 @@ public class Administrator extends Benutzer implements BenutzerMitDozentenrechte
      */
     @Override
     public String toString() {
-        return "Administrator"+super.toString()+"}";
+        return "Administrator: {"+super.toString()+"}";
     }
 }
