@@ -3,10 +3,9 @@ package entity.aufgabensammlung;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.benutzer.Dozent;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -23,12 +22,15 @@ public class Testat extends Aufgabensammlung {
     @ManyToOne(cascade = jakarta.persistence.CascadeType.PERSIST)
     @JoinColumn(name = "testatErsteller_benutzerid")
     private Dozent testatErsteller;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "testat")
+    private List<TestatBearbeitung> bearbeitungen;
 
     /**
      * Leerer Konstruktor für Klasse Testat
      */
     public Testat() {
         super();
+        bearbeitungen = new LinkedList<>();
         //Nothing to do
     }
 
@@ -42,6 +44,7 @@ public class Testat extends Aufgabensammlung {
      */
     public Testat(List<Aufgabe> aufgaben, String passwort, String name, Dozent testatErsteller) {
         super(aufgaben);
+        bearbeitungen = new LinkedList<>();
         this.passwort = passwort;
         this.name = name;
         this.testatErsteller = testatErsteller;
@@ -101,4 +104,30 @@ public class Testat extends Aufgabensammlung {
         this.testatErsteller = testatErsteller;
     }
 
+    /**
+     * Gibt die Testatbearbeitungen des Testats zurück
+     *
+     * @return Testatbearbeitungen des Testats
+     */
+    public List<TestatBearbeitung> getBearbeitungen() {
+        return bearbeitungen;
+    }
+
+    /**
+     * Fügt eine Testatbearbeitung zur Liste der Testatbearbeitungen des Testats hinzu
+     *
+     * @param bearbeitung Testatbearbeitung des Testats
+     */
+    public void addBearbeitung (TestatBearbeitung bearbeitung) {
+        this.bearbeitungen.add(bearbeitung);
+    }
+
+    /**
+     * Setzt die Testatbearbeitungen des Testats
+     *
+     * @param bearbeitungen Testatbearbeitungen des Testats
+     */
+    public void setBearbeitungen(List<TestatBearbeitung> bearbeitungen) {
+        this.bearbeitungen = bearbeitungen;
+    }
 }

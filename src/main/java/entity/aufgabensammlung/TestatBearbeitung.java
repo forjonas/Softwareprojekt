@@ -3,9 +3,7 @@ package entity.aufgabensammlung;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 /**
  * Von einem Benutzer bearbeitetes Testat
@@ -14,8 +12,14 @@ import jakarta.persistence.ManyToOne;
  * @version 09.05.22
  */
 @Entity
-public class TestatBearbeitung extends Testat {
+public class TestatBearbeitung {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long TestatBearbeitungsId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "testat_testatid")
+    private Testat testat;
     private int erreichtePunktzahl;
     @ManyToOne(cascade = jakarta.persistence.CascadeType.PERSIST)
     @JoinColumn(name = "testatBearbeiter_benutzerid")
@@ -28,7 +32,6 @@ public class TestatBearbeitung extends Testat {
      * Leerer Konstruktor für Klasse TestatBearbeitung
      */
     public TestatBearbeitung() {
-        super();
         //Nothing to do
     }
 
@@ -36,12 +39,12 @@ public class TestatBearbeitung extends Testat {
      * Konstruktor für Klasse TestatBearbeitung
      *
      * @param testat             Testat, auf dessen Grundlage die TestatBearbeitung erstellt wird
-     * @param erreichtePunktzahl Beim Bearbeiten vom Benutzer erreichte Punktzahl
+     * @param erreichtePunktzahl Beim Bearbeiten vom Benutzer erreichte Punktzahl (0 wenn es noch nicht bearbeitet wurde)
      * @param testatBearbeiter   Benutzer, der das Testat bearbeitet hat (null wenn es noch nicht bearbeitet wurde)
      * @param testatBewerter     Dozent, der das Testat bewertete hat (null wenn es noch nicht bewertet wurde)
      */
     public TestatBearbeitung(Testat testat, int erreichtePunktzahl, Benutzer testatBearbeiter, Dozent testatBewerter) {
-        super(testat.getAufgaben(), testat.getPasswort(), testat.getName(), testat.getTestatErsteller());
+        this.testat = testat;
         this.erreichtePunktzahl = erreichtePunktzahl;
         this.testatBearbeiter = testatBearbeiter;
         this.testatBewerter = testatBewerter;
@@ -53,7 +56,25 @@ public class TestatBearbeitung extends Testat {
      * @param testat Testat, auf dessen Grundlage die TestatBearbeitung erstellt wird
      */
     public TestatBearbeitung(Testat testat) {
-        super(testat.getAufgaben(), testat.getPasswort(), testat.getName(), testat.getTestatErsteller());
+        this.testat = testat;
+    }
+
+    /**
+     * Gibt das zur Testatbearbeitung gehörige Testat zurück
+     *
+     * @return zur Testatbearbeitung gehöriges Testat
+     */
+    public Testat getTestat() {
+        return testat;
+    }
+
+    /**
+     * Setzt das zur Testatbearbeitung gehörige Testat
+     *
+     * @param testat zur Testatbearbeitung gehöriges Testat
+     */
+    public void setTestat(Testat testat) {
+        this.testat = testat;
     }
 
     /**
@@ -120,4 +141,23 @@ public class TestatBearbeitung extends Testat {
         this.erreichtePunktzahl = erreichtePunktzahl;
         this.testatBewerter = testatBewerter;
     }
+
+    /**
+     * Gibt zurück, ob die Testatbearbeitung bereits bewertetet wurde
+     *
+     * @return Wahrheitswert, der angibt, ob die Testatbearbeitung bereits bewertetet wurde
+     */
+    public boolean isTestatBewertet() {
+        return this.testatBewerter != null;
+    }
+
+    /**
+     * Gibt zurück, ob die Testatbearbeitung bereits bearbeitet wurde
+     *
+     * @return Wahrheitswert, der angibt, ob die Testatbearbeitung bereits bearbeitet wurde
+     */
+    public boolean isTestatBearbeitet() {
+        return this.testatBearbeiter != null;
+    }
+
 }

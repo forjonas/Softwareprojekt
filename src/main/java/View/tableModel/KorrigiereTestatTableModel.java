@@ -1,6 +1,6 @@
 package View.tableModel;
 
-import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
  * @version 06.05.22
  */
 public class KorrigiereTestatTableModel extends AbstractTableModel {
-    private List<Testat> testatliste;
-    private String[] columnNames = {"Name", "Nutzer", "Zeit", "Erreichte Punktzahl", "Korrigiert"};
+    private List<TestatBearbeitung> testatbearbeitungsliste;
+    private String[] columnNames = {"Name", "Nutzer", "Dozent", "Zeit", "Erreichte Punktzahl", "Korrigiert"};
 
-    public KorrigiereTestatTableModel(List<Testat> testatliste) {
-        this.testatliste = testatliste;
+    public KorrigiereTestatTableModel(List<TestatBearbeitung> testatbearbeitungsliste) {
+        this.testatbearbeitungsliste = testatbearbeitungsliste;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return testatliste.size();
+        return testatbearbeitungsliste.size();
     }
 
     @Override
@@ -40,10 +40,10 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
             case 0:
             case 1:
             case 2:
-            case 4:
-                return String.class;
             case 3:
-                return Integer.class;
+            case 4:
+            case 5:
+                return String.class;
             default:
                 return null;
         }
@@ -53,20 +53,32 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return testatliste.get(rowIndex).getName();
-            case 1:
-                return "Nutzerbeziehung noch nicht implementiert";
-            case 2:
-                return testatliste.get(rowIndex).getGesamtzeit() + " Min";
+                return testatbearbeitungsliste.get(rowIndex).getTestat().getName();
+            case 1: {
+                String vorname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getVorname();
+                String nachname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getNachname();
+                return vorname + " " + nachname;
+            }
+            case 2: {
+                String vorname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getVorname();
+                String nachname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getNachname();
+                return vorname + " " + nachname;
+            }
             case 3:
-                return "Feature unimplementiert";
+                return testatbearbeitungsliste.get(rowIndex).getTestat().getGesamtzeit() + " Min";
             case 4: {
-                return "Feature unimplementiert";
-/*                if (testatliste.get(rowIndex).isKorrigiert()) {
+                if(testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
+                    return Integer.toString(testatbearbeitungsliste.get(rowIndex).getErreichtePunktzahl());
+                } else {
+                    return "Noch nicht korrigiert";
+                }
+            }
+            case 5: {
+                if(testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
                     return "Ja";
                 } else {
                     return "Nein";
-                }*/
+                }
             }
             default:
                 return null;

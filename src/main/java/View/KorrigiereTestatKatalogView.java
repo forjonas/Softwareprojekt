@@ -6,6 +6,9 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -36,7 +39,9 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
      * Launch the application.
      */
     public static void main(String[] args) {
-
+        Student student1 = new Student("BBirne", "bbb", "Bert", "Birne", 2222);
+        Student student2 = new Student("CClown", "ccc", "Chris", "Clown", 3333);
+        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -44,14 +49,21 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", null);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", null);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", null);
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
+        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent1);
+        TestatBearbeitung tb1 = new TestatBearbeitung(t1, 50, student1, dozent1);
+        TestatBearbeitung tb2 = new TestatBearbeitung(t1, 65, student2, dozent1);
+        TestatBearbeitung tb3 = new TestatBearbeitung(t2, 0, student1, null);
+        TestatBearbeitung tb4 = new TestatBearbeitung(t2, 0, student2, null);
+        System.out.println(tb1.isTestatBewertet());
+        System.out.println(tb2.isTestatBewertet());
+        System.out.println(tb3.isTestatBewertet());
+        System.out.println(tb4.isTestatBewertet());
+        List<TestatBearbeitung> testatbearbeitungsliste = Arrays.asList(new TestatBearbeitung[]{tb1, tb2, tb3, tb4, tb1, tb2, tb3, tb4, tb1, tb2, tb3, tb4});
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(testatliste);
+                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(testatbearbeitungsliste);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,7 +75,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     /**
      * Create the frame.
      */
-    public KorrigiereTestatKatalogView(List<Testat> testatListe) {
+    public KorrigiereTestatKatalogView(List<TestatBearbeitung> testatbearbeitungsliste) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Korrigiere Testat");
         contentPane = new JPanel();
@@ -106,7 +118,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        korrigiereTestatTableModel = new KorrigiereTestatTableModel(testatListe);
+        korrigiereTestatTableModel = new KorrigiereTestatTableModel(testatbearbeitungsliste);
         tableTestate.setModel(korrigiereTestatTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);

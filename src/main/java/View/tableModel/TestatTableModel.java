@@ -53,8 +53,11 @@ public class TestatTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0:
                 return testatliste.get(rowIndex).getName();
-            case 1:
-                return "Dozentenbeziehung noch nicht implementiert";
+            case 1: {
+                String vorname = testatliste.get(rowIndex).getTestatErsteller().getVorname();
+                String nachname = testatliste.get(rowIndex).getTestatErsteller().getNachname();
+                return vorname + " " + nachname;
+            }
             case 2:
                 return testatliste.get(rowIndex).getGesamtzeit() + " Min";
             case 3:

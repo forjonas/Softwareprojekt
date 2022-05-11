@@ -1,6 +1,8 @@
 package View.tableModel;
 
 import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Benutzer;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.List;
 public class BearbeiteTestatTableModel extends AbstractTableModel {
     private List<Testat> testatliste;
     private String[] columnNames = {"Name", "Dozent", "Zeit", "Maximalpunktzahl", "Bearbeitet"};
+    private Benutzer user;
 
-    public BearbeiteTestatTableModel(List<Testat> testatliste) {
+    public BearbeiteTestatTableModel(List<Testat> testatliste, Benutzer user) {
         this.testatliste = testatliste;
+        this.user = user;
     }
 
     @Override
@@ -54,21 +58,24 @@ public class BearbeiteTestatTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0:
                 return testatliste.get(rowIndex).getName();
-            case 1:
-                return "Dozentenbeziehung noch nicht implementiert";
+            case 1: {
+                String vorname = testatliste.get(rowIndex).getTestatErsteller().getVorname();
+                String nachname = testatliste.get(rowIndex).getTestatErsteller().getNachname();
+                return vorname + " " + nachname;
+            }
             case 2:
                 return testatliste.get(rowIndex).getGesamtzeit() + " Min";
             case 3:
                 return testatliste.get(rowIndex).getGesamtpunktzahl();
             case 4: {
-                return "Feature unimplementiert"; //Als Checkbox oder Wort gewünscht?
-/*                if (testatliste.get(rowIndex).isBearbeitet()) {
-                    return "Ja";
-                } else {
-                    return "Nein";
-                }*/
+                List<TestatBearbeitung> bearbeitungen = testatliste.get(rowIndex).getBearbeitungen();
+                for(TestatBearbeitung t: bearbeitungen) {
+                    if(t.getTestatBearbeiter() == user) {
+                        return "Ja";
+                    }
+                }
+                return "Nein";
             }
-
             default:
                 return null;
         }

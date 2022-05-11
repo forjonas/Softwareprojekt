@@ -22,10 +22,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Klasse, die sich um das Persistieren von Entitäten kümmer
+ * Klasse, die sich um das Persistieren und Laden von Entitäten kümmert
  *
  * @author Jonas Herbst
- * @version 29.04.22
+ * @version 10.05.22
  */
 public class DatabaseService<T> {
     private static DatabaseService ds;
@@ -137,7 +137,6 @@ public class DatabaseService<T> {
         List<Aufgabensammlung> resultList = new LinkedList<Aufgabensammlung>();
         resultList.addAll(readTestateFromDatabase());
         resultList.addAll(readTrainingsFromDatabase());
-        resultList.addAll(readTestatBearbeitungenFromDatabase());
         return resultList;
     }
 

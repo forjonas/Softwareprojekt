@@ -6,6 +6,9 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -44,14 +47,17 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", null);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", null);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", null);
+        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
+        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
+        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
+        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(testatliste);
+                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(testatliste, student1);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,7 +69,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     /**
      * Create the frame.
      */
-    public BearbeiteTestatKatalogView(List<Testat> testatListe) {
+    public BearbeiteTestatKatalogView(List<Testat> testatListe, Benutzer user) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite Testat");
         contentPane = new JPanel();
@@ -106,7 +112,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        bearbeiteTestatTableModel = new BearbeiteTestatTableModel(testatListe);
+        bearbeiteTestatTableModel = new BearbeiteTestatTableModel(testatListe, user);
         tableTestate.setModel(bearbeiteTestatTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);

@@ -30,15 +30,24 @@ public class PersistenceTest {
         DatabaseService ds = DatabaseService.getInstance();
         ds.clearDatabase();
         createTestData();
+        //Testet das Abfragen von Beziehungen aus der Datenbank
+/*        List<Training> trainings = ds.readTrainingsFromDatabase();
+        for(Training t: trainings) {
+            System.out.println("Training, erstellt von: "+t.getTrainingsErsteller().getNachname());
+            List<Aufgabe> aufgaben = t.getAufgaben();
+            for(Aufgabe a: aufgaben) {
+                System.out.println("Aufgabe: "+a.getName());
+            }
+        }*/
         //readTestData();
         //Fancy Shit mit Enums: wenn auf den Bezeichner der Enums zugegriffen wird nur zB getAufgabentyp nutzen,
         //wenn man den Wert des Enums haben will noch .getCode() dahinter packen
-/*        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
+        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
         for(Aufgabe a:aufgaben){
             System.out.println(a.getAufgabentyp().getCode());
             System.out.println(a.getSchwierigkeitsgrad().getCode());
             System.out.println(a.getKategorie().getCode());
-        }*/
+        }
         System.out.println("Testprogramm terminiert");
     }
 
@@ -70,7 +79,9 @@ public class PersistenceTest {
         List<Aufgabensammlung> sammlungsliste = Arrays.asList(new Aufgabensammlung[]{testat1, training1});
 
         TestatBearbeitung t1 = new TestatBearbeitung(testat1);
+        testat1.addBearbeitung(t1);
         TestatBearbeitung t2 = new TestatBearbeitung(testat1);
+        testat1.addBearbeitung(t2);
         student1.addBearbeitetesTestat(t1);
         t1.setTestatBearbeiter(student1);
         student2.addBearbeitetesTestat(t2);
@@ -80,6 +91,7 @@ public class PersistenceTest {
 
 
         ds.persistObjects(benutzerListe);
+        //Nicht mehr erforderlich, da Objekte über Beziehungen automatisch mit persistiert werden
 /*        ds.persistObjects(aufgabenListe);
         ds.persistObjects(sammlungsliste);
         ds.persistObjects(Arrays.asList(new TestatBearbeitung[]{t1, t2}));*/

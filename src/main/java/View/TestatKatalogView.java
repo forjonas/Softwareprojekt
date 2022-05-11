@@ -6,6 +6,7 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
+import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -44,9 +45,11 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", null);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", null);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", null);
+        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
+        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
+        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
+        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         EventQueue.invokeLater(new Runnable() {
             public void run() {
