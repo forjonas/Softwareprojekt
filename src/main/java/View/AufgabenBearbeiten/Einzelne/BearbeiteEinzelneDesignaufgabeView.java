@@ -1,5 +1,10 @@
 package View.AufgabenBearbeiten.Einzelne;
 
+import entity.Designaufgabe;
+import entity.EinfachantwortAufgabe;
+import entity.MultipleChoiceAufgabe;
+import entity.Programmieraufgabe;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,17 +19,23 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     private JButton btnLoesungshinweis;
     private JButton btnAufgabeBeenden;
     private JButton btnUpload;
-    ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
-
+    private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+    private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
+
+        EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
+        Designaufgabe a2 = new Designaufgabe();
+        Programmieraufgabe a3 = new Programmieraufgabe();
+        MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteEinzelneDesignaufgabeView frame = new BearbeiteEinzelneDesignaufgabeView();
+                    BearbeiteEinzelneDesignaufgabeView frame = new BearbeiteEinzelneDesignaufgabeView(a2);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -36,8 +47,9 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneDesignaufgabeView() {
-        setTitle("Einzel Design Aufgabe");
+    public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe) {
+        this.aufgabe = aufgabe;
+        setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
@@ -47,10 +59,10 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel("Aufgabe: Erstellen Sie das Diagramm in Enterprise Architect!");
+        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());//eingetragen
         panelNorth.add(lblNewLabel1);
 
-        JLabel lblNewLabel_2 = new JLabel (icon);
+        JLabel lblNewLabel_2 = new JLabel(icon);
         contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
 
         JPanel panelWest = new JPanel();
@@ -79,17 +91,30 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
-            JOptionPane.showMessageDialog(this,"Button Beenden");
+            JOptionPane.showMessageDialog(this, "Button Beenden");
 
         }
         if (e.getSource() == this.btnLoesungshinweis) {
-            JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+            //JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis());
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
-            JOptionPane.showMessageDialog(this,"Button Aufgabe Beenden");
+            JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
+
+            //Lese antworten und speicher diese in einer Datei (Userlösung)
+            String textFieldValue = textArea.getText(); // read den input TextArea
+            // String DName = EAM.rString();
+            File DName = new File("AntwortAufgabe1.txt");
+            fw = new FileWriter(DName);
+            bw = new BufferedWriter(fw);
+            bw.write(textFieldValue);  //bw schreibt txt Datei
+
+            // this.dispose();
+            // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+
         }
         if (e.getSource() == this.btnUpload) {
-            JOptionPane.showMessageDialog(this,"Upload Button");
+            JOptionPane.showMessageDialog(this, "Upload Button");
         }
     }
 }

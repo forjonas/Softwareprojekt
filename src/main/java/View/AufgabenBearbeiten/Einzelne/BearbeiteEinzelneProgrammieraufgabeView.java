@@ -1,5 +1,10 @@
 package View.AufgabenBearbeiten.Einzelne;
 
+import entity.Designaufgabe;
+import entity.EinfachantwortAufgabe;
+import entity.MultipleChoiceAufgabe;
+import entity.Programmieraufgabe;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +19,24 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 	private JButton btnLoesungshinweis;
 	private JButton btnAufgabeBeenden;
 	private JButton btnUpload;
-	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\JavaCode.png");
-
+	private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+	private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
 		/**
 		 * Launch the application.
 		 */
 		public static void main(String[] args) {
+
+
+			EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
+			Designaufgabe a2 = new Designaufgabe();
+			Programmieraufgabe a3 = new Programmieraufgabe();
+			MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+
+
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView();
+						BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView(a3);
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -35,8 +48,9 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 		/**
 		 * Create the frame.
 		 */
-		public BearbeiteEinzelneProgrammieraufgabeView() {
-			setTitle("Einzel Programmier Aufgabe");
+		public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+			this.aufgabe = aufgabe;
+			setTitle(aufgabe.getName()); //Name der Aufgabe
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 674, 435);
 			contentPane = new JPanel();
@@ -46,7 +60,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 
 			JPanel panelNorth = new JPanel();
 			contentPane.add(panelNorth, BorderLayout.NORTH);
-			JLabel lblNewLabel1 = new JLabel("Aufgabe: programmieren Sie den Code in eclipse!");
+			JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());//eingetragen
 			panelNorth.add(lblNewLabel1);
 
 			JLabel lblNewLabel_2 = new JLabel (icon);
@@ -82,10 +96,25 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 
 		}
 		if (e.getSource() == this.btnLoesungshinweis) {
-			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+			//JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+			JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
 		}
 		if (e.getSource() == this.btnAufgabeBeenden) {
 			JOptionPane.showMessageDialog(this,"Button Aufgabe Beenden");
+
+
+			//Lese antworten und speicher diese in einer Datei (Userlösung)
+			String textFieldValue = textArea.getText(); // read den input TextArea
+			// String DName = EAM.rString();
+			File DName = new File("AntwortAufgabe1.txt");
+			fw = new FileWriter(DName);
+			bw = new BufferedWriter(fw);
+			bw.write(textFieldValue);  //bw schreibt txt Datei
+
+			// this.dispose();
+			// DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+
+
 		}
 		if (e.getSource() == this.btnUpload) {
 			JOptionPane.showMessageDialog(this,"Upload Button");

@@ -1,5 +1,10 @@
 package View.AufgabenBearbeiten.Training;
 
+import app.TestatApp;
+import app.TrainingApp;
+import entity.Designaufgabe;
+import entity.Programmieraufgabe;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +12,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ *
+ * @author Kristin Kubisch
+ * @version 10.05.22
+ */
 public class BearbeiteTrainingDesignaufgabeView extends JFrame implements ActionListener {
 
 
@@ -19,6 +29,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	private JButton btnUpload;
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
 
+	private TrainingApp trainingApp;
+	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 	/**
 	 * Launch the application.
 	 */
@@ -26,7 +38,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BearbeiteTrainingDesignaufgabeView frame = new BearbeiteTrainingDesignaufgabeView();
+					BearbeiteTrainingDesignaufgabeView frame = new BearbeiteTrainingDesignaufgabeView(TestatApp testatApp, Designaufgabe aufgabe); //angepasst--> nötig?? Warum
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,8 +50,10 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	/**
 	 * Create the frame.
 	 */
-	public BearbeiteTrainingDesignaufgabeView() {
-		setTitle("Training Design Aufgabe");
+	public BearbeiteTrainingDesignaufgabeView(TrainingApp trainingApp, Designaufgabe aufgabe) {
+		this.aufgabe = aufgabe;
+		setTitle(aufgabe.getName()); //Name der Aufgabe
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -49,7 +63,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
-		JLabel lblNewLabel1 = new JLabel("Aufgabe: Erstellen Sie das Diagramm in Enterprise Architect!");
+		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
 		panelNorth.add(lblNewLabel1);
 
 		JLabel lblNewLabel_2 = new JLabel (icon);
@@ -96,16 +110,27 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
 		}
-		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-			JOptionPane.showMessageDialog(this,"Button Nächste");
+		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
+			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
+
+			String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+			File DName = new File("AntwortAufgabe1.txt");
+			fw = new FileWriter(DName);
+			bw = new BufferedWriter(fw);
+			bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
 
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this,"Button Beenden");
 
 		}
-		if (e.getSource() == this.btnUpload) {
-			JOptionPane.showMessageDialog(this,"Upload Button");
+		if (e.getSource() == this.btnUpload) {//angepasst
+			//Lese Datei und speicher diese in (Userlösung)
+			// Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
+			// lade das DocCode
+			// String docUpload = textArea.getText(); // lese den input eig. Bild
+			JOptionPane.showMessageDialog(this, "Upload Button");
 		}
 
 	}
