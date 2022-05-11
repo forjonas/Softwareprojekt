@@ -1,9 +1,12 @@
 package View;
 
+import View.AufgabenBearbeiten.Training.BearbeiteTrainingEinfachantwortAufgabeView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * Die View des Lösungshinweises
  *
@@ -20,22 +23,21 @@ public class LoesungsHinweisView implements ActionListener {
     JLabel hinweisText;
 
 
-
-
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new LoesungsHinweisView();
     }
-    public LoesungsHinweisView(){
+
+    LoesungsHinweisView() {
 
         LoesungshinwFrame = new JFrame("Lösungshinweis");
         fuelleLoesungshinweisFrame();
-        LoesungshinwFrame.setSize(1000,500);
+        LoesungshinwFrame.setSize(1000, 500);
         LoesungshinwFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         LoesungshinwFrame.setVisible(true);
 
     }
-    void fuelleLoesungshinweisFrame(){
+
+    void fuelleLoesungshinweisFrame() {
 
         hinweisText = new JLabel();
         hinweisText.setText(getLabelText());
@@ -59,13 +61,16 @@ public class LoesungsHinweisView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.zurueckAufgBtn){
+        if (e.getSource() == this.zurueckAufgBtn) {
             zurueckAufg();
         }
-
     }
 
     private void zurueckAufg() {
+
+       // LoesungshinwFrame.dispose();
+       // BearbeiteTrainingEinfachantwortAufgabeView.main(null);
+
         //Link zu der Aufgabe Brauche noch AufgabenViewKlasse muss dann mit den <T> dingern sein theoretisch
     }
 }

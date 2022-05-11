@@ -2,12 +2,17 @@ package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
 import View.ImageFilter;
+import entity.Kategorie;
+import entity.Programmieraufgabe;
+import entity.Schwierigkeitsgrad;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 
 /**
@@ -15,6 +20,7 @@ import java.io.File;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenCodeView implements ActionListener {
     JFrame AufgabeErstellenCodeViewFrame;
@@ -26,12 +32,16 @@ public class AufgabeErstellenCodeView implements ActionListener {
     JPanel southPnl;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(10,2);
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
-    JButton codeHochladenBtn;
-    JButton musterloesungHochladenBtn;
+    //JComboBoxen
+    JComboBox kategorienCB;
+    JComboBox schwierigkeitCB;
     //Labels
+    JLabel codeBeispiel;
+    JLabel kategorieLbl;
     JLabel titelLbl;
     JLabel aufgabenTxtLbl;
     JLabel loesungsHinweisLbl;
@@ -40,34 +50,35 @@ public class AufgabeErstellenCodeView implements ActionListener {
     JLabel punkteLbl;
     JLabel loesungLbl;
     //TextAreas
-   JTextArea titelTA;
+    JTextArea codeTA;
+    JTextArea titelTA;
     JTextArea aufgabenTextTA;
     JTextArea loesungshinwTA;
-    JTextArea schwierigkeitTA;
     JTextArea bearbeitungsZeitTA;
     JTextArea punkteTA;
-    //Filechooser
-    JFileChooser FCC;
-    File file;
+    JTextArea loesungTA;
 
     public static void main(String[] args) {
         new AufgabeErstellenCodeView();
     }
 
     AufgabeErstellenCodeView(){
-         AufgabeErstellenCodeViewFrame= new JFrame("MultipleChoice");
+         AufgabeErstellenCodeViewFrame= new JFrame("ProgrammierAufgabe");
         AufgabeErstellenCodeViewFuellen();
+        AufgabeErstellenCodeViewFrame.setSize(800, 800);
         AufgabeErstellenCodeViewFrame.pack();
-        AufgabeErstellenCodeViewFrame.setSize(500, 500);
         AufgabeErstellenCodeViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenCodeViewFrame.setVisible(true);
     }
     private void AufgabeErstellenCodeViewFuellen() {
-        centerPnl = new JPanel();
+        gl.setVgap(25);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
         AufgabeErstellenCodePnl = new JPanel();
         AufgabeErstellenCodePnl.setLayout(bl);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
@@ -75,27 +86,22 @@ public class AufgabeErstellenCodeView implements ActionListener {
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
 
-        codeHochladenBtn = new JButton("Code Hochladen");
-        codeHochladenBtn.addActionListener(this);
-
-        musterloesungHochladenBtn = new JButton("Musterlösung Hochladen");
-        musterloesungHochladenBtn.addActionListener(this);
-
         titelTA = new JTextArea();
         titelTA.setLineWrap(true);
         titelTA.setBounds(20,75,250,200);
 
-        aufgabenTextTA = new JTextArea();
+        //ComboBoxes
+        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        kategorienCB = new JComboBox(kat);
+
+        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        schwierigkeitCB = new JComboBox(schw);
+
+        aufgabenTextTA = new JTextArea(50,50);
         aufgabenTextTA.setLineWrap(true);
-        aufgabenTextTA.setBounds(20,75,250,200);
 
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
-
-        schwierigkeitTA = new JTextArea();
-        schwierigkeitTA.setBounds(20,75,250,200);
-        schwierigkeitTA.setLineWrap(true);
 
         bearbeitungsZeitTA = new JTextArea();
         bearbeitungsZeitTA.setBounds(20,75,250,200);
@@ -105,6 +111,16 @@ public class AufgabeErstellenCodeView implements ActionListener {
         punkteTA.setBounds(20,75,250,200);
         punkteTA.setLineWrap(true);
 
+        codeTA = new JTextArea();
+        codeTA.setBounds(20,75,250,200);
+        codeTA.setLineWrap(true);
+
+        loesungTA = new JTextArea();
+        loesungTA.setBounds(20,75,250,200);
+        loesungTA.setLineWrap(true);
+
+        codeBeispiel = new JLabel("Code Beispiel: ");
+        kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
@@ -118,10 +134,13 @@ public class AufgabeErstellenCodeView implements ActionListener {
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
-        centerPnl.add(codeHochladenBtn);
-        centerPnl.add(musterloesungHochladenBtn);
+        centerPnl.add(loesungTA);
+        centerPnl.add(codeBeispiel);
+        centerPnl.add(codeTA);
+        centerPnl.add(kategorieLbl);
+        centerPnl.add(kategorienCB);
         centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitTA);
+        centerPnl.add(schwierigkeitCB);
         centerPnl.add(bearbeitungszeitLbl);
         centerPnl.add(bearbeitungsZeitTA);
         centerPnl.add(punkteLbl);
@@ -144,32 +163,48 @@ public class AufgabeErstellenCodeView implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         }
-        else if(e.getSource()== this.codeHochladenBtn){
-            codeHochladen();
-        }
-        else if(e.getSource() == this.musterloesungHochladenBtn){
-            codeHochladen(); // Theoretisch geht das ist nicht ganz so schön aber wenn man den output differenziert müsste das gehen
-        }
     }
-    private File codeHochladen() { //HIER MUSS NOCH NE MENGE PASSIEREN https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
-        FCC = new JFileChooser((String) null);
-        FCC.setAcceptAllFileFilterUsed(false);
-        FCC.setFileFilter(new ImageFilter());
-        int returnVal = FCC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            file = FCC.getSelectedFile();
-            System.out.println(file.getName());
-            return file;
-        }
-        return null;
-    }
+
     private void zurueck() {
         AufgabeErstellenCodeViewFrame.dispose();
         AufgabeErstellenStartView.main(null);
     }
-    private File speichern() {
-        AufgabeErstellenCodeViewFrame.dispose();
-        DozentAnsicht.main(null);
-        return file;
+    private void speichern() {
+            String aufgTitel;
+            String aufText;
+            String loesungshinweis;
+            int bearbeitungsZeit;
+            int punkte;
+            Kategorie kat;
+            Schwierigkeitsgrad schw;
+            String codeText;
+            String loesung;
+
+            aufgTitel = titelTA.getText();
+            aufText = aufgabenTextTA.getText();
+            loesungshinweis = loesungshinwTA.getText();
+            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
+            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+            kat = (Kategorie) kategorienCB.getSelectedItem();
+            punkte = Integer.parseInt(punkteTA.getText());
+            codeText = codeTA.getText();
+            loesung = loesungTA.getText();
+
+            if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenCodeViewFrame)){
+
+                createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,loesung,codeText);
+
+            }
+
+            AufgabeErstellenCodeViewFrame.dispose();
+            DozentAnsicht.main(null);
     }
-}
+
+        private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,String loesung, String codeText) {
+
+            DatabaseService ds = DatabaseService.getInstance();
+            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeText,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesung,null);
+            ds.persistObject(neueAufgabe);
+
+        }
+    }

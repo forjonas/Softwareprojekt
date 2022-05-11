@@ -1,6 +1,10 @@
 package View;
 
+import entity.Testat;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
@@ -8,9 +12,12 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 04.05.2022
+ * @version 09.05.2022 Layout gefixed funktionalität geadded es fehlt noch die übergabe des testat objekts damit die pw abfrage
+ * richtig ist und der übergang in das TEstat gemacht werden kann
  */
 
 public class PasswortabfrageView implements ActionListener {
+    Testat ausgewTestat;
 
     JFrame PasswortabfrageFrame;
     JPanel PasswortabfragePnl;
@@ -18,56 +25,83 @@ public class PasswortabfrageView implements ActionListener {
     JButton sendenBtn;
     JButton zurückBtn;
     JLabel promptLbl;
+    JPanel centerPnl;
+    JPanel northPnl;
+    JPanel southPnl;
+    BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(1,2);
 
-    public static void main(String[] args) {
-        new PasswortabfrageView();
+    public static void main(String [] args) {
+        Testat test = new Testat();
+        test.setPasswort("asd");
+        new PasswortabfrageView(test);
     }
 
-    public PasswortabfrageView() {
+    public PasswortabfrageView(Testat test) {
+        ausgewTestat = test;
         PasswortabfrageFrame = new JFrame("Passwortabfrage");
         passwortabfragefüllen();
-        PasswortabfrageFrame.setSize(1000, 250);
+        PasswortabfrageFrame.setSize(300, 135);
         PasswortabfrageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         PasswortabfrageFrame.setVisible(true);
     }
 
     private void passwortabfragefüllen() {
+        centerPnl = new JPanel(gl);
+        southPnl = new JPanel();
+        northPnl = new JPanel();
+        PasswortabfragePnl = new JPanel(bl);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 25));
+
         promptLbl = new JLabel("Passwort: ");
 
         zurückBtn = new JButton("Zurück");
         zurückBtn.addActionListener(this);
 
-        PasswortabfragePnl = new JPanel();
         passwordField = new JPasswordField(15);
-        char[] pwdvalue = passwordField.getPassword();
 
         sendenBtn = new JButton("Senden");
         sendenBtn.addActionListener(this);
 
-        PasswortabfragePnl.add(zurückBtn);
-        PasswortabfrageFrame.add(promptLbl);
-        PasswortabfragePnl.add(passwordField);
-        PasswortabfragePnl.add(sendenBtn);
+        centerPnl.add(promptLbl);
+        centerPnl.add(passwordField);
 
+        southPnl.add(sendenBtn);
+
+        northPnl.add(zurückBtn);
+
+        PasswortabfragePnl.add(centerPnl, BorderLayout.CENTER);
+        PasswortabfragePnl.add(southPnl,BorderLayout.SOUTH);
+        PasswortabfragePnl.add(northPnl,BorderLayout.NORTH);
         PasswortabfrageFrame.add(PasswortabfragePnl);
-
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurückBtn) {
             zurück();
         } else if (e.getSource() == this.sendenBtn) {
             senden();
-
         }
 
     }
     private void zurück() {
-
+        PasswortabfrageFrame.dispose();
+        //Testat keine ahnung welche ansicht das ist
     }
 
     private void senden() {
+        char[] pwdvalue = passwordField.getPassword();
+        String pwdvalString = new String(pwdvalue);
+
+        if (pwdvalString.equalsIgnoreCase(ausgewTestat.getPasswort())){
+            //WeiterMachen
+        }
+        else{
+             JDialog jd = new JDialog(PasswortabfrageFrame,"Falsches Passwort");
+            JLabel wPWLbl = new JLabel("Falsches Passwort");
+            jd.setSize(100,100);
+            jd.add(wPWLbl);
+            jd.setVisible(true);
+        }
     }
 }
