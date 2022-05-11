@@ -121,6 +121,7 @@ public class PersistenceTest {
 
         List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
         ds.persistObjects(loesungsliste);
+
     }
 
     public static void readTestData() {
