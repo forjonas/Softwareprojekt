@@ -14,7 +14,7 @@ import java.io.File;
 @Entity
 public class Programmieraufgabe extends Aufgabe {
 
-    private File musterloesung;
+    private String musterloesung;
     private String userloesung;
 
     /**
@@ -40,7 +40,7 @@ public class Programmieraufgabe extends Aufgabe {
      * @param musterloesung      Musterlösung der Aufgabe
      * @param userloesung        Userlösung der Aufgabe
      */
-    public Programmieraufgabe(int bearbeitungszeit, File javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, File musterloesung, String userloesung) {
+    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, String musterloesung, String userloesung) {
         super(bearbeitungszeit, javaDesign, umlDesign, kategorie, loesungshinweis, punktewert, schwierigkeitsgrad, textbeschreibung, name);
         this.musterloesung = musterloesung;
         this.userloesung = userloesung;
@@ -52,7 +52,7 @@ public class Programmieraufgabe extends Aufgabe {
      *
      * @return Musterlösung der Aufgabe
      */
-    public File getMusterloesung() {
+    public String getMusterloesung() {
         return musterloesung;
     }
 
@@ -61,7 +61,7 @@ public class Programmieraufgabe extends Aufgabe {
      *
      * @param musterloesung Musterlösung der Aufgabe
      */
-    public void setMusterloesung(File musterloesung) {
+    public void setMusterloesung(String musterloesung) {
         this.musterloesung = musterloesung;
     }
 

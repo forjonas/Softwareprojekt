@@ -20,6 +20,7 @@ import java.util.ArrayList;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenCodeView implements ActionListener {
     JFrame AufgabeErstellenCodeViewFrame;
@@ -31,15 +32,15 @@ public class AufgabeErstellenCodeView implements ActionListener {
     JPanel southPnl;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(10,2);
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
-    JButton codeHochladenBtn;
-    JButton musterloesungHochladenBtn;
     //JComboBoxen
     JComboBox kategorienCB;
     JComboBox schwierigkeitCB;
     //Labels
+    JLabel codeBeispiel;
     JLabel kategorieLbl;
     JLabel titelLbl;
     JLabel aufgabenTxtLbl;
@@ -49,46 +50,41 @@ public class AufgabeErstellenCodeView implements ActionListener {
     JLabel punkteLbl;
     JLabel loesungLbl;
     //TextAreas
-   JTextArea titelTA;
+    JTextArea codeTA;
+    JTextArea titelTA;
     JTextArea aufgabenTextTA;
     JTextArea loesungshinwTA;
     JTextArea bearbeitungsZeitTA;
     JTextArea punkteTA;
-    //Filechooser
-    JFileChooser FCC;
-    File codeFile;
-    File loesungFile;
+    JTextArea loesungTA;
 
     public static void main(String[] args) {
         new AufgabeErstellenCodeView();
     }
 
     AufgabeErstellenCodeView(){
-         AufgabeErstellenCodeViewFrame= new JFrame("MultipleChoice");
+         AufgabeErstellenCodeViewFrame= new JFrame("ProgrammierAufgabe");
         AufgabeErstellenCodeViewFuellen();
+        AufgabeErstellenCodeViewFrame.setSize(800, 800);
         AufgabeErstellenCodeViewFrame.pack();
-        AufgabeErstellenCodeViewFrame.setSize(500, 500);
         AufgabeErstellenCodeViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenCodeViewFrame.setVisible(true);
     }
     private void AufgabeErstellenCodeViewFuellen() {
-        centerPnl = new JPanel();
+        gl.setVgap(25);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
         AufgabeErstellenCodePnl = new JPanel();
         AufgabeErstellenCodePnl.setLayout(bl);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
 
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
-
-        codeHochladenBtn = new JButton("Code Hochladen");
-        codeHochladenBtn.addActionListener(this);
-
-        musterloesungHochladenBtn = new JButton("Musterlösung Hochladen");
-        musterloesungHochladenBtn.addActionListener(this);
 
         titelTA = new JTextArea();
         titelTA.setLineWrap(true);
@@ -117,6 +113,15 @@ public class AufgabeErstellenCodeView implements ActionListener {
         punkteTA.setBounds(20,75,250,200);
         punkteTA.setLineWrap(true);
 
+        codeTA = new JTextArea();
+        codeTA.setBounds(20,75,250,200);
+        codeTA.setLineWrap(true);
+
+        loesungTA = new JTextArea();
+        loesungTA.setBounds(20,75,250,200);
+        loesungTA.setLineWrap(true);
+
+        codeBeispiel = new JLabel("Code Beispiel: ");
         kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
@@ -131,9 +136,9 @@ public class AufgabeErstellenCodeView implements ActionListener {
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
-        centerPnl.add(musterloesungHochladenBtn);
-        centerPnl.add(codeHochladenBtn);
-        centerPnl.add(musterloesungHochladenBtn);
+        centerPnl.add(loesungTA);
+        centerPnl.add(codeBeispiel);
+        centerPnl.add(codeTA);
         centerPnl.add(kategorieLbl);
         centerPnl.add(kategorienCB);
         centerPnl.add(schwierigketiLbl);
@@ -160,37 +165,8 @@ public class AufgabeErstellenCodeView implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         }
-        else if(e.getSource()== this.codeHochladenBtn){
-            codeFile = codeHochladen();
-        }
-        else if(e.getSource() == this.musterloesungHochladenBtn){
-            loesungFile= loesungHochladen();
-        }
     }
-    private File codeHochladen() {
-        FCC = new JFileChooser((String) null);
-        FCC.setAcceptAllFileFilterUsed(false);
-        FCC.setFileFilter(new ImageFilter());
-        int returnVal = FCC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            codeFile = FCC.getSelectedFile();
-            System.out.println(codeFile.getName());
-            return codeFile;
-        }
-        return null;
-    }
-    private File loesungHochladen() {
-        FCC = new JFileChooser((String) null);
-        FCC.setAcceptAllFileFilterUsed(false);
-        FCC.setFileFilter(new ImageFilter());
-        int returnVal = FCC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            loesungFile = FCC.getSelectedFile();
-            System.out.println(loesungFile.getName());
-            return loesungFile;
-        }
-        return null;
-    }
+
     private void zurueck() {
         AufgabeErstellenCodeViewFrame.dispose();
         AufgabeErstellenStartView.main(null);
@@ -203,6 +179,8 @@ public class AufgabeErstellenCodeView implements ActionListener {
             int punkte;
             Kategorie kat;
             Schwierigkeitsgrad schw;
+            String codeText;
+            String loesung;
 
             aufgTitel = titelTA.getText();
             aufText = aufgabenTextTA.getText();
@@ -211,17 +189,23 @@ public class AufgabeErstellenCodeView implements ActionListener {
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTA.getText());
+            codeText = codeTA.getText();
+            loesung = loesungTA.getText();
 
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,loesungFile,codeFile);
+            if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenCodeViewFrame)){
+
+                createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,loesung,codeText);
+
+            }
 
             AufgabeErstellenCodeViewFrame.dispose();
             DozentAnsicht.main(null);
     }
 
-        private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,File loesungFile,File codeFile) {
+        private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,String loesung, String codeText) {
 
             DatabaseService ds = DatabaseService.getInstance();
-            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeFile,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesungFile,null);
+            Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,codeText,null,kat, loesungshinweis, punkte,schw, aufText, aufgTitel,loesung,null);
             ds.persistObject(neueAufgabe);
 
         }

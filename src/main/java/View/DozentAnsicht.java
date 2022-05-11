@@ -119,7 +119,7 @@ public class DozentAnsicht implements ActionListener {
         }
     }
     private void trainingsEinsehen() {
-
+        //Huh?
     }
 
     private void testateErstellen() {
@@ -144,7 +144,7 @@ public class DozentAnsicht implements ActionListener {
 
     private void trainingsDurchfuehren() {
         homeFrame.dispose();
-        //Huh?
+        new TrainingGenerierenView(homeFrame);
     }
 
     private void testateDurchfuehren() {

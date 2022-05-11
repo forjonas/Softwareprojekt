@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenMultipleChoiceView implements ActionListener {
 
@@ -27,6 +28,7 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
     JPanel southPnl;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(13,1);
     //JComboBoxen
     JComboBox schwierigkeitCB;
     JComboBox kategorienCB;
@@ -64,23 +66,19 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         new AufgabeErstellenMultipleChoiceView();
     }
     AufgabeErstellenMultipleChoiceView(){
-        Dimension test = new Dimension(500,500);
         AufgabeErstellenMultipleChoiceViewFrame = new JFrame("MultipleChoice");
         AufgabeErstellenEinfachAntwortViewFuellen();
-        AufgabeErstellenMultipleChoiceViewFrame.setSize(500, 500);
+        AufgabeErstellenMultipleChoiceViewFrame.setSize(800, 800);
         AufgabeErstellenMultipleChoiceViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AufgabeErstellenMultipleChoiceViewFrame.setMinimumSize(test);
         AufgabeErstellenMultipleChoiceViewFrame.pack();
         AufgabeErstellenMultipleChoiceViewFrame.setVisible(true);
     }
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         //Panels
-        centerPnl = new JPanel();
-        GridBagLayout gl = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth =3;
-        c.gridheight =6;
-        centerPnl.setLayout(gl);
+        gl.setVgap(10);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         northPnl = new JPanel();
         southPnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl = new JPanel();
@@ -217,7 +215,13 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
         kat = (Kategorie) kategorienCB.getSelectedItem();
         punkte = Integer.parseInt(punkteTA.getText());
 
-        createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,liste);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenMultipleChoiceViewFrame)){
+
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,liste);
+
+        }
+
+
 
         AufgabeErstellenMultipleChoiceViewFrame.dispose();
         DozentAnsicht.main(null);

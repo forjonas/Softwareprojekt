@@ -19,7 +19,7 @@ public abstract class Aufgabe {
     private long aufgabenId;
     private int bearbeitungszeit;
     //Datentyp ändern
-    private File javaDesign;
+    private String javaDesign;
     //Datentyp ändern
     private File umlDesign;
     private Kategorie kategorie;
@@ -49,7 +49,7 @@ public abstract class Aufgabe {
      * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
      * @param textbeschreibung   Textbeschreibung der Aufgabe
      */
-    public Aufgabe(int bearbeitungszeit, File javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
+    public Aufgabe(int bearbeitungszeit, String javaDesign, File umlDesign, Kategorie kategorie, String loesungshinweis, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.javaDesign = javaDesign;
         this.umlDesign = umlDesign;
@@ -84,7 +84,7 @@ public abstract class Aufgabe {
      *
      * @return Java-Design der Aufgabe
      */
-    public File getJavaDesign() {
+    public String getJavaDesign() {
         return javaDesign;
     }
 
@@ -93,7 +93,7 @@ public abstract class Aufgabe {
      *
      * @param javaDesign Java-Design der Aufgabe
      */
-    public void setJavaDesign(File javaDesign) {
+    public void setJavaDesign(String javaDesign) {
         this.javaDesign = javaDesign;
     }
 

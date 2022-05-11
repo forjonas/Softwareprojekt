@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     //Frames
@@ -30,6 +31,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     JComboBox schwierigkeitCB;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(10,2);
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
@@ -59,15 +61,18 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
 
         AufgabeErstellenEinfachAntwortFrame = new JFrame("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
+        AufgabeErstellenEinfachAntwortFrame.setSize(800, 800);
         AufgabeErstellenEinfachAntwortFrame.pack();
-        AufgabeErstellenEinfachAntwortFrame.setSize(500, 500);
         AufgabeErstellenEinfachAntwortFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenEinfachAntwortFrame.setVisible(true);
     }
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        centerPnl = new JPanel();
+        gl.setVgap(25);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         AufgabeErstellenEinfachAntwortViewPnl = new JPanel();
         AufgabeErstellenEinfachAntwortViewPnl.setLayout(bl);
         //Buttons
@@ -169,6 +174,10 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
         kat = (Kategorie) kategorienCB.getSelectedItem();
         punkte = Integer.parseInt(punkteTA.getText());
+
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenEinfachAntwortFrame)){
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
+        }
 
         createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
 

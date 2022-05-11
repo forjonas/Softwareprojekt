@@ -18,6 +18,7 @@ import java.io.File;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenUmlView implements ActionListener {
     JFrame AufgabeErstellenUMLViewFrame;
@@ -28,6 +29,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
     JPanel southPnl;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(10,2);
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
@@ -60,18 +62,21 @@ public class AufgabeErstellenUmlView implements ActionListener {
     }
 
     AufgabeErstellenUmlView(){
-        AufgabeErstellenUMLViewFrame= new JFrame("MultipleChoice");
+        AufgabeErstellenUMLViewFrame= new JFrame("Design Aufgabe Erstellen");
         AufgabeErstellenUMLViewFuellen();
+        AufgabeErstellenUMLViewFrame.setSize(800, 800);
         AufgabeErstellenUMLViewFrame.pack();
-        AufgabeErstellenUMLViewFrame.setSize(500, 500);
         AufgabeErstellenUMLViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenUMLViewFrame.setVisible(true);
     }
     private void AufgabeErstellenUMLViewFuellen() {
         //Panels
-        centerPnl = new JPanel();
+        gl.setVgap(25);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         AufgabeErstellenUMLPnl = new JPanel();
         AufgabeErstellenUMLPnl.setLayout(bl);
         //Buttons
@@ -81,7 +86,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
 
-        UMLHochladenBtn = new JButton("Code Hochladen");
+        UMLHochladenBtn = new JButton("Design Hochladen");
         UMLHochladenBtn.addActionListener(this);
 
         musterloesungBtn = new JButton("Musterlösung Hochladen");
@@ -208,10 +213,13 @@ public class AufgabeErstellenUmlView implements ActionListener {
         kat = (Kategorie) kategorienCB.getSelectedItem();
         punkte = Integer.parseInt(punkteTA.getText());
 
-        createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
 
-        AufgabeErstellenUMLViewFrame.dispose();
-        DozentAnsicht.main(null);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenUMLViewFrame)){
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
+            AufgabeErstellenUMLViewFrame.dispose();
+            DozentAnsicht.main(null);
+        }
+
     }
 
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
