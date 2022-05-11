@@ -1,7 +1,14 @@
-package entity;
+package entity.aufgabensammlung;
 
-import jakarta.persistence.DiscriminatorValue;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.benutzer.Benutzer;
+import entity.enums.Aufgabentyp;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.List;
 
@@ -15,9 +22,12 @@ import java.util.List;
 public class Training extends Aufgabensammlung {
 
     private int bearbeitungszeit;
-    private String kategorie;
-    private int schwierigkeitsgrad;
+    private Kategorie kategorie;
+    private Schwierigkeitsgrad schwierigkeitsgrad;
     private Aufgabentyp aufgabentyp;
+    @ManyToOne(cascade = jakarta.persistence.CascadeType.PERSIST)
+    @JoinColumn(name = "trainingsersteller_benutzerid")
+    private Benutzer trainingsErsteller;
 
     /**
      * Leerer Konstruktor für Klasse Training
@@ -36,12 +46,13 @@ public class Training extends Aufgabensammlung {
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
      * @param aufgabentyp        Ausgewählter Aufgabentyp des Testats
      */
-    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, String kategorie, int schwierigkeitsgrad, Aufgabentyp aufgabentyp) {
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp, Benutzer trainingsErsteller) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.aufgabentyp = aufgabentyp;
+        this.trainingsErsteller = trainingsErsteller;
     }
 
     /**
@@ -67,7 +78,7 @@ public class Training extends Aufgabensammlung {
      *
      * @return Kategorie des Trainings
      */
-    public String getKategorie() {
+    public Kategorie getKategorie() {
         return kategorie;
     }
 
@@ -76,7 +87,7 @@ public class Training extends Aufgabensammlung {
      *
      * @param kategorie Kategorie des Trainings
      */
-    public void setKategorie(String kategorie) {
+    public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
     }
 
@@ -85,7 +96,7 @@ public class Training extends Aufgabensammlung {
      *
      * @return Schwierigkeitsgrad des Trainings
      */
-    public int getSchwierigkeitsgrad() {
+    public Schwierigkeitsgrad getSchwierigkeitsgrad() {
         return schwierigkeitsgrad;
     }
 
@@ -94,7 +105,7 @@ public class Training extends Aufgabensammlung {
      *
      * @param schwierigkeitsgrad Schwierigkeitsgrad des Trainings
      */
-    public void setSchwierigkeitsgrad(int schwierigkeitsgrad) {
+    public void setSchwierigkeitsgrad(Schwierigkeitsgrad schwierigkeitsgrad) {
         this.schwierigkeitsgrad = schwierigkeitsgrad;
     }
 
@@ -116,4 +127,21 @@ public class Training extends Aufgabensammlung {
         this.aufgabentyp = aufgabentyp;
     }
 
+    /**
+     * Gibt den Ersteller des Trainings zurück
+     *
+     * @return Ersteller des Trainings
+     */
+    public Benutzer getTrainingsErsteller() {
+        return trainingsErsteller;
+    }
+
+    /**
+     * Setzt den Ersteller des Trainings
+     *
+     * @param trainingsErsteller Ersteller des Trainings
+     */
+    public void setTrainingsErsteller(Benutzer trainingsErsteller) {
+        this.trainingsErsteller = trainingsErsteller;
+    }
 }

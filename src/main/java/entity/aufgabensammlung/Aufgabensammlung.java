@@ -1,5 +1,6 @@
-package entity;
+package entity.aufgabensammlung;
 
+import entity.aufgabe.Aufgabe;
 import jakarta.persistence.*;
 
 import java.util.LinkedList;
@@ -11,13 +12,14 @@ import java.util.List;
  * @author Jonas Herbst
  * @version 22.04.22
  */
-@Entity //Abstrakt nimmt er irgendwie nicht
+@Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Aufgabensammlung {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long aufgabensammlungId;
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Aufgabe> aufgaben;
     private int gesamtzeit;
     private int gesamtpunktzahl;
@@ -35,7 +37,8 @@ public abstract class Aufgabensammlung {
      * @param aufgaben Aufgaben, die in der Aufgabensammlung enthalten sind
      */
     public Aufgabensammlung(List<Aufgabe> aufgaben) {
-        this.aufgaben = aufgaben;
+        this.aufgaben = new LinkedList<Aufgabe>();
+        this.aufgaben.addAll(aufgaben);
         aktualisiereGesamtpunktzahl();
         aktualisierteGesamtzeit();
     }
