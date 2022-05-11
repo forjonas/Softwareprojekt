@@ -56,6 +56,7 @@ public class Student extends Benutzer implements Serializable {
         this.matrikelnummer = matrikelnummer;
     }
 
+
     /**
      * Gibt den Studenten als String aus
      *
