@@ -1,13 +1,16 @@
 package View.Lösungen.LoesungenTraining;
 
+import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LoesungTrainingDesignaufgabeView extends JFrame {
+public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionListener {
     private JTextField txtfAufgabentext;
     private JLabel lblplaceholderUserloesung;
     private JLabel lblPlaceholderMusterloesung;
@@ -20,7 +23,36 @@ public class LoesungTrainingDesignaufgabeView extends JFrame {
 
     public LoesungTrainingDesignaufgabeView() {
         this.setContentPane($$$getRootComponent$$$());
+        btnBeenden.addActionListener(this);
+        btnHinweis.addActionListener(this);
+        btnVorherigeAufgabe.addActionListener(this);
+        btnNaechsteAufgabe.addActionListener(this);
         this.pack();
+        this.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnBeenden) {
+            beenden();
+        } else if (e.getSource() == this.btnHinweis) {
+            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+        } else if (e.getSource() == this.btnNaechsteAufgabe) {
+            naechsteAufgabe();
+        } else if (e.getSource() == this.btnVorherigeAufgabe) {
+            vorherigeAufgabe();
+        }
+    }
+
+    private void beenden(){
+
+    }
+
+    private void naechsteAufgabe(){
+
+    }
+
+    private void vorherigeAufgabe(){
+
     }
 
     {

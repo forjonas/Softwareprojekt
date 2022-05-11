@@ -42,7 +42,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="61707" class="javax.swing.JRadioButton" binding="btnMöglichkeit1">
+          <component id="61707" class="javax.swing.JRadioButton" binding="btnMoeglichkeit1">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -52,7 +52,7 @@
               <text value="Userlösung1"/>
             </properties>
           </component>
-          <component id="523f1" class="javax.swing.JRadioButton" binding="btnMöglichkeit2">
+          <component id="523f1" class="javax.swing.JRadioButton" binding="btnMoeglichkeit2">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -60,7 +60,7 @@
               <text value="Userlösung2"/>
             </properties>
           </component>
-          <component id="7e085" class="javax.swing.JRadioButton" binding="btnMöglichkeit3">
+          <component id="7e085" class="javax.swing.JRadioButton" binding="btnMoeglichkeit3">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -69,7 +69,7 @@
               <text value="Userlösung3"/>
             </properties>
           </component>
-          <component id="9892b" class="javax.swing.JRadioButton" binding="btnMöglichkeit4">
+          <component id="9892b" class="javax.swing.JRadioButton" binding="btnMoeglichkeit4">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -111,4 +111,12 @@
       </hspacer>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="btnGrpUserloesungen">
+      <member id="61707"/>
+      <member id="523f1"/>
+      <member id="7e085"/>
+      <member id="9892b"/>
+    </group>
+  </buttonGroups>
 </form>
