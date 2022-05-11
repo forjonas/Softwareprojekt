@@ -1,14 +1,14 @@
-package View.AufgabenBearbeiten.Testat;
+package View;
 
-import View.tableModel.BearbeiteTestatTableModel;
+import View.tableModel.TrainingTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.Testat;
-import entity.benutzer.Benutzer;
+import entity.aufgabensammlung.Training;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -22,24 +22,24 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Ansicht in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
+ * Ansicht, die eine tabellarische Übersicht der bearbeiteten Trainings zeigt,
+ * aus der Trainings zur Einsicht ausgewählt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 09.05.22
  */
-public class BearbeiteTestatKatalogView extends JFrame implements ActionListener {
+public class EinsehenTrainingKatalogView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableTestate;
-    private BearbeiteTestatTableModel bearbeiteTestatTableModel;
+    private TrainingTableModel trainingsTableModel;
     private JButton btnZurueck;
-    private JButton btnBearbeiten;
+    private JButton btnEinsehen;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-
         Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -47,17 +47,17 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
+        Student student1 = new Student("CClown", "ccc", "Chris", "Clown", 3333);
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
-        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
+        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
+        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Aufgabentyp.Einfachantwort, dozent1);
+        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort, dozent2);
+        List<Training> trainingsliste = Arrays.asList(new Training[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(testatliste, student1);
+                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(trainingsliste);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -69,9 +69,9 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     /**
      * Create the frame.
      */
-    public BearbeiteTestatKatalogView(List<Testat> testatListe, Benutzer user) {
+    public EinsehenTrainingKatalogView(List<Training> trainingsliste) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Bearbeite Testat");
+        setTitle("Trainings einsehen");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -79,10 +79,11 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
+
         GridBagLayout gbl_panelNorth = new GridBagLayout();
         gbl_panelNorth.columnWidths = new int[]{0, 0, 0, 0};
         gbl_panelNorth.rowHeights = new int[]{0, 0};
-        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_panelNorth.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panelNorth.setLayout(gbl_panelNorth);
 
@@ -98,26 +99,26 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         panelLeftNorth.add(btnZurueck);
 
         JPanel panelRightNorth = new JPanel();
-        GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
-        gbc_panelCenterNorth.anchor = GridBagConstraints.EAST;
-        gbc_panelCenterNorth.fill = GridBagConstraints.VERTICAL;
-        gbc_panelCenterNorth.gridx = 1;
-        gbc_panelCenterNorth.gridy = 0;
-        panelNorth.add(panelRightNorth, gbc_panelCenterNorth);
+        GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
+        gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridy = 0;
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
-        btnBearbeiten = new JButton("Bearbeiten");
-        panelRightNorth.add(btnBearbeiten);
+        btnEinsehen = new JButton("Einsehen");
+        panelRightNorth.add(btnEinsehen);
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        bearbeiteTestatTableModel = new BearbeiteTestatTableModel(testatListe, user);
-        tableTestate.setModel(bearbeiteTestatTableModel);
+        trainingsTableModel = new TrainingTableModel(trainingsliste);
+        tableTestate.setModel(trainingsTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);
 
-        btnBearbeiten.addActionListener(this);
+        btnEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
 
         super.pack();
@@ -132,9 +133,8 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
             System.out.println("zurück");
             dispose();
         }
-        if (e.getSource() == this.btnBearbeiten) {
-            System.out.println("bearbeiten");
-            dispose();
+        if (e.getSource() == this.btnEinsehen) {
+            System.out.println("einsehen");
         }
     }
 

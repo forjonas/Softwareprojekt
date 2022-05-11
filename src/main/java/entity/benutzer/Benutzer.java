@@ -1,6 +1,12 @@
-package entity;
+package entity.benutzer;
 
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.aufgabensammlung.Training;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstrakte Superklasse für Benutzer
@@ -10,21 +16,28 @@ import jakarta.persistence.*;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Benutzer {
+public abstract class Benutzer implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "benutzerId")
     private long benutzerId;
     private String benutzername;
     private String passwort;
     private int berechtigungsstufe;
     private String vorname;
     private String nachname;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "trainingsErsteller")
+    private List<Training> bearbeiteteTrainings;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "testatBearbeiter")
+    private List<TestatBearbeitung> bearbeiteteTestate;
 
     /**
      * Leerer Konstruktor für Klasse Benutzer
      */
     public Benutzer() {
+        this.bearbeiteteTrainings = new LinkedList<Training>();
+        this.bearbeiteteTestate = new LinkedList<TestatBearbeitung>();
         //Nothing to do
     }
 
@@ -43,6 +56,8 @@ public abstract class Benutzer {
         this.berechtigungsstufe = berechtigungsstufe;
         this.vorname = vorname;
         this.nachname = nachname;
+        this.bearbeiteteTrainings = new LinkedList<Training>();
+        this.bearbeiteteTestate = new LinkedList<TestatBearbeitung>();
     }
 
     /**
@@ -136,18 +151,72 @@ public abstract class Benutzer {
     }
 
     /**
+     * Gibt die Liste der bearbeiteten Trainings des Benutzers zurück
+     *
+     * @return bearbeitete Trainings des Benutzers
+     */
+    public List<Training> getBearbeiteteTrainings() {
+        return bearbeiteteTrainings;
+    }
+
+    /**
+     * Fügt ein bearbeitetes Training des Benutzers zur Liste der bearbeiteten Trainings hinzu
+     *
+     * @param bearbeitetesTraining bearbeitetes Training des Benutzers
+     */
+    public void addBearbeitetesTraining(Training bearbeitetesTraining) {
+        this.bearbeiteteTrainings.add(bearbeitetesTraining);
+    }
+
+    /**
+     * Setzt die Liste der bearbeiteten Trainings des Benutzers
+     * --> vielleicht rausnehmen oder auf private setzen
+     *
+     * @param bearbeiteteTrainings bearbeitete Trainings des Benutzers
+     */
+    public void setBearbeiteteTrainings(List<Training> bearbeiteteTrainings) {
+        this.bearbeiteteTrainings = bearbeiteteTrainings;
+    }
+
+    /**
+     * Gibt die Liste der bearbeiteten Testate des Benutzers zurück
+     *
+     * @return bearbeitete Testate des Benutzers
+     */
+    public List<TestatBearbeitung> getBearbeiteteTestate() {
+        return bearbeiteteTestate;
+    }
+
+    /**
+     * Fügt ein bearbeitetes Testat des Benutzers zur Liste der bearbeiteten Testate hinzu
+     *
+     * @param bearbeitetesTestat bearbeitetes Testat des Benutzers
+     */
+    public void addBearbeitetesTestat(TestatBearbeitung bearbeitetesTestat) {
+        this.bearbeiteteTestate.add(bearbeitetesTestat);
+    }
+
+    /**
+     * Setzt die Liste der bearbeiteten Testate des Benutzers
+     * --> vielleicht rausnehmen oder auf private setzen
+     *
+     * @param bearbeiteteTestate bearbeitete Testate des Benutzers
+     */
+    public void setBearbeiteteTestate(List<TestatBearbeitung> bearbeiteteTestate) {
+        this.bearbeiteteTestate = bearbeiteteTestate;
+    }
+
+    /**
      * Gibt den Benutzer als String aus
      *
      * @return Benutzer als String
      */
     @Override
     public String toString() {
-        return "{" +
-                "benutzerId=" + benutzerId +
+        return "benutzerId=" + benutzerId +
                 ", benutzername='" + benutzername + '\'' +
-                ", passwort='" + passwort + '\'' +
-                ", berechtigungsstufe=" + berechtigungsstufe +
                 ", vorname='" + vorname + '\'' +
                 ", nachname='" + nachname + '\'';
     }
+
 }

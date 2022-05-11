@@ -1,6 +1,18 @@
 package persistence;
 
-import entity.*;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.aufgabensammlung.Training;
+import entity.benutzer.Administrator;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
+import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -8,13 +20,12 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Klasse, die sich um das Persistieren von Entitäten kümmer
+ * Klasse, die sich um das Persistieren und Laden von Entitäten kümmert
  *
  * @author Jonas Herbst
- * @version 29.04.22
+ * @version 10.05.22
  */
 public class DatabaseService<T> {
     private static DatabaseService ds;
@@ -82,6 +93,7 @@ public class DatabaseService<T> {
         return resultList;
     }
 
+    //Kommt weg wenn der Administrator gelöscht wird
     public synchronized List<Administrator> readAdministratorenFromDatabase() {
         TypedQuery<Administrator> query = em.createQuery("SELECT a FROM Administrator a", Administrator.class);
         List<Administrator> resultList = query.getResultList();
@@ -129,14 +141,20 @@ public class DatabaseService<T> {
     }
 
     public synchronized List<Training> readTrainingsFromDatabase() {
-        TypedQuery<Training> query = em.createQuery("SELECT a FROM Training a", Training.class);
+        TypedQuery<Training> query = em.createQuery("SELECT t FROM Training t", Training.class);
         List<Training> resultList = query.getResultList();
         return resultList;
     }
 
     public synchronized List<Testat> readTestateFromDatabase() {
-        TypedQuery<Testat> query = em.createQuery("SELECT a FROM Testat a", Testat.class);
+        TypedQuery<Testat> query = em.createQuery("SELECT t FROM Testat t", Testat.class);
         List<Testat> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public synchronized List<TestatBearbeitung> readTestatBearbeitungenFromDatabase() {
+        TypedQuery<TestatBearbeitung> query = em.createQuery("SELECT t FROM TestatBearbeitung t", TestatBearbeitung.class);
+        List<TestatBearbeitung> resultList = query.getResultList();
         return resultList;
     }
 
@@ -155,6 +173,52 @@ public class DatabaseService<T> {
         for(Aufgabensammlung as: readAufgabensammlungFromDatabase())
             em.remove(as);
         em.getTransaction().commit();
+    }
+
+    /**Hier bin ich am rumprobieren, Martin Bergen */
+
+    public synchronized Benutzer readStudentnachBenutzernamen(String benutzername)
+    {
+        TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.benutzername='"+benutzername+"'", Student.class);
+        Benutzer benutzer = query.getSingleResult();
+        return benutzer;
+    }
+
+    public synchronized Benutzer readDozentnachBenutzernamen(String benutzername)
+    {
+        TypedQuery<Dozent> query = em.createQuery("SELECT s FROM Dozent s WHERE s.benutzername='"+benutzername+"'", Dozent.class);
+        Benutzer benutzer = query.getSingleResult();
+        return benutzer;
+    }
+
+    public synchronized  Aufgabe readAufgabeMitTyp(Aufgabentyp aufgabenTyp, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad)
+    {
+        switch (aufgabenTyp) {
+            case MultipleChoice: {
+                TypedQuery<MultipleChoiceAufgabe> query = em.createQuery("SELECT s FROM MultipleChoiceAufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", MultipleChoiceAufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Design:
+            {
+                TypedQuery<Designaufgabe> query = em.createQuery("SELECT s FROM Designaufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Designaufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Programmieren:
+            {
+                TypedQuery<Programmieraufgabe> query = em.createQuery("SELECT s FROM Programmieraufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Programmieraufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            case Einfachantwort:
+            {
+                TypedQuery<EinfachantwortAufgabe> query = em.createQuery("SELECT s FROM EinfachantwortAufgabe s WHERE s.kategorie= :kat AND s.schwierigkeitsgrad= :schwierigkeitsgrad", EinfachantwortAufgabe.class).setParameter("kat",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+                Aufgabe aufgabe = query.getSingleResult();
+                return aufgabe;
+            }
+            default:return null;
+        }
     }
 
 }
