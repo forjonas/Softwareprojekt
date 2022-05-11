@@ -1,7 +1,13 @@
 package View.AufgabenBearbeiten.Einzelne;
 
 import View.tableModel.AufgabeTableModel;
-import entity.*;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.aufgabe.MultipleChoiceAufgabe;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -35,10 +41,10 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
      */
     public static void main(String[] args) {
 
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, null, Kategorie.Software_Engineering, "Test Test", 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", "Pi mal Daumen", "Peace");
-        Aufgabe a2 = new Designaufgabe(15, null, null, Kategorie.Datenbanken, "Kein Lösungshinweis", 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null, "RRRRichtig");
-        Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, null, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, "Keine Ahnung");
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, null, Kategorie.Java_Programmierung, "Char ist es nicht.", 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", Arrays.asList(new String[]{"char", "int", "double"}), Arrays.asList(new Boolean[]{false, true, false}), Arrays.asList(new Boolean[]{false, true, false}));
+        Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
+        Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
+        Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
         List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4});
         EventQueue.invokeLater(new Runnable() {
             public void run() {

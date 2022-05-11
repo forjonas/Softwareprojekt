@@ -1,108 +1,142 @@
 package View.AufgabenBearbeiten.Training;
 
+import View.DozentAnsicht;
+import View.LoesungsHinweisView;
+import app.TestatApp;
+import app.TrainingApp;
+import entity.Designaufgabe;
+import entity.EinfachantwortAufgabe;
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+/**
+ *
+ * @author Kristin Kubisch
+ * @version 10.05.22
+ */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
-	private JPanel contentPane;
-	private JTextArea textArea;
-	private JButton btnBeendenTraining;
-	private JButton btnLoesungshinweisTraining;
-	private JButton btnVoherigeAufgabeTraining;
-	private JButton btnNaechsteAufgabeTraining;
-	private JButton btnTrainingBeenden;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BearbeiteTrainingEinfachantwortAufgabeView frame = new BearbeiteTrainingEinfachantwortAufgabeView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JPanel contentPane;
+    private JTextArea textArea;
+    private JButton btnBeendenTraining;
+    private JButton btnLoesungshinweisTraining;
+    private JButton btnVoherigeAufgabeTraining;
+    private JButton btnNaechsteAufgabeTraining;
+    private JButton btnTrainingBeenden;
 
-	/**
-	 * Create the frame.
-	 */
-	public BearbeiteTrainingEinfachantwortAufgabeView() {
-		setTitle("Training Einfachantwort");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 435);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+    private TrainingApp trainingApp;
+    private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
 
+    //private TestatApp testatApp;
 
-		JPanel panelNorth = new JPanel();
-		contentPane.add(panelNorth, BorderLayout.NORTH);
-		JLabel lblNewLabel1 = new JLabel("Frage: Wer ist der Erfinder des World Wide Webs? Schreiben Sie ihre Antwort auf!");
-		panelNorth.add(lblNewLabel1);
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    BearbeiteTrainingEinfachantwortAufgabeView frame = new BearbeiteTrainingEinfachantwortAufgabeView(TrainingApp trainingApp, EinfachantwortAufgabe aufgabe);//angepasst
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-
-		JPanel panelCenter= new JPanel();
-		contentPane.add(panelCenter, BorderLayout.CENTER);
-		textArea = new JTextArea(18, 50);
-		panelCenter.add(textArea);
+    /**
+     * Create the frame.
+     */
+    public BearbeiteTrainingEinfachantwortAufgabeView(TrainingApp trainingApp, EinfachantwortAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 674, 435);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout(0, 0));
 
 
-		JPanel panelWest = new JPanel();
-		contentPane.add(panelWest, BorderLayout.WEST);
-		JLabel lblNewLabel_1 = new JLabel("Antwort:");
-		panelWest.add(lblNewLabel_1);
+        JPanel panelNorth = new JPanel();
+        contentPane.add(panelNorth, BorderLayout.NORTH);
+        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());
+        panelNorth.add(lblNewLabel1);
 
 
-		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		contentPane.add(panelSouth, BorderLayout.SOUTH);
+        JPanel panelCenter = new JPanel();
+        contentPane.add(panelCenter, BorderLayout.CENTER);
+        textArea = new JTextArea(18, 50);
+        panelCenter.add(textArea);
 
-		btnBeendenTraining = new JButton("Beenden");
-		panelSouth.add(btnBeendenTraining);
-		btnLoesungshinweisTraining = new JButton("Loesungshinweis");
-		panelSouth.add(btnLoesungshinweisTraining);
-		btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
-		panelSouth.add(btnVoherigeAufgabeTraining);
-		btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
-		panelSouth.add(btnNaechsteAufgabeTraining);
-		btnTrainingBeenden = new JButton("Training Beenden");
-		panelSouth.add(btnTrainingBeenden);
 
-		this.btnBeendenTraining.addActionListener(this);
-		this.btnLoesungshinweisTraining.addActionListener(this);
-		this.btnVoherigeAufgabeTraining.addActionListener(this);
-		this.btnNaechsteAufgabeTraining.addActionListener(this);
-		this.btnTrainingBeenden.addActionListener(this);
-	}
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == this.btnBeendenTraining) {
-				JOptionPane.showMessageDialog(this,"Button Beenden");
+        JPanel panelWest = new JPanel();
+        contentPane.add(panelWest, BorderLayout.WEST);
+        JLabel lblNewLabel_1 = new JLabel("Antwort:");
+        panelWest.add(lblNewLabel_1);
 
-			}
-			if (e.getSource() == this.btnLoesungshinweisTraining) {
-				JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-			}
-			if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-				JOptionPane.showMessageDialog(this,"Button Vorherige");
-			}
-			if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-				JOptionPane.showMessageDialog(this,"Button Nächste");
 
-			}
-			if (e.getSource() == this.btnTrainingBeenden) {
-				JOptionPane.showMessageDialog(this,"Button Beenden");
+        JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-			}
+        btnBeendenTraining = new JButton("Beenden");
+        panelSouth.add(btnBeendenTraining);
+        btnLoesungshinweisTraining = new JButton("Loesungshinweis");
+        panelSouth.add(btnLoesungshinweisTraining);
+        btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
+        panelSouth.add(btnVoherigeAufgabeTraining);
+        btnNaechsteAufgabeTraining = new JButton("weiter");
+        panelSouth.add(btnNaechsteAufgabeTraining);
+        btnTrainingBeenden = new JButton("Training Beenden");
+        panelSouth.add(btnTrainingBeenden);
 
-		}
-	}
+        this.btnBeendenTraining.addActionListener(this);
+        this.btnLoesungshinweisTraining.addActionListener(this);
+        this.btnVoherigeAufgabeTraining.addActionListener(this);
+        this.btnNaechsteAufgabeTraining.addActionListener(this);
+        this.btnTrainingBeenden.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnBeendenTraining) {
+           // this.dispose();
+           // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+        }
+        if (e.getSource() == this.btnLoesungshinweisTraining) {
+            //this.dispose();
+            //LoesungsHinweisView.main(null); //Alt von Jannik
+            JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
+        }
+        if (e.getSource() == this.btnVoherigeAufgabeTraining) {
+            JOptionPane.showMessageDialog(this, "Button Vorherige");
+        }
+        if (e.getSource() == this.btnNaechsteAufgabeTraining) {
+            //Button.nächste
+
+            //Lese antworten und speicher diese in einer Datei (Userlösung)
+            String textFieldValue = textArea.getText(); // read den input TextArea
+            // String DName = EAM.rString();
+            File DName = new File("AntwortAufgabe1.txt");
+            fw = new FileWriter(DName);
+            bw = new BufferedWriter(fw);
+            bw.write(textFieldValue);  //bw schreibt txt Datei
+
+            this.trainingApp.weiter();
+
+            JOptionPane.showMessageDialog(this, "Button Nächste");
+
+        }
+        if (e.getSource() == this.btnTrainingBeenden) {
+           // this.dispose();
+           // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+        }
+
+    }
+}

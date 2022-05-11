@@ -1,5 +1,11 @@
 package View.AufgabenBearbeiten.Training;
 
+import app.TestatApp;
+import app.TrainingApp;
+import entity.Designaufgabe;
+import entity.MultipleChoiceAufgabe;
+import entity.Programmieraufgabe;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -18,7 +24,8 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 	private JButton btnTrainingBeenden;
 	private JButton btnUpload;
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\JavaCode.png");
-
+	private TrainingApp trainingApp;
+	private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
 	/**
 	 * Launch the application.
 	 */
@@ -38,8 +45,9 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 	/**
 	 * Create the frame.
 	 */
-	public BearbeiteTrainingProgrammieraufgabeView() {
-		setTitle("Training Programmier Aufgabe");
+	public BearbeiteTrainingProgrammieraufgabeView(TrainingApp trainingApp, Programmieraufgabe aufgabe) {
+		this.aufgabe = aufgabe;
+		setTitle(aufgabe.getName()); //Name der Aufgabe
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
@@ -49,7 +57,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
-		JLabel lblNewLabel1 = new JLabel("Aufgabe: programmieren Sie den Code in eclipse!");
+		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
 		panelNorth.add(lblNewLabel1);
 
 		JLabel lblNewLabel_2 = new JLabel (icon);
@@ -91,21 +99,33 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
-			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+			//JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+			JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
 		}
-		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-			JOptionPane.showMessageDialog(this,"Button Nächste");
+		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
+			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
+
+			String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+			File DName = new File("AntwortAufgabe1.txt");
+			fw = new FileWriter(DName);
+			bw = new BufferedWriter(fw);
+			bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
 
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this,"Button Beenden");
 
 		}
-		if (e.getSource() == this.btnUpload) {
-			JOptionPane.showMessageDialog(this,"Upload Button");
+		if (e.getSource() == this.btnUpload) {//angepasst
+			//Lese Datei und speicher diese in (Userlösung)
+			// Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
+			// lade das DocCode
+			// String docUpload = textArea.getText(); // lese den input eig. Bild
+			JOptionPane.showMessageDialog(this, "Upload Button");
 		}
 
 	}

@@ -34,6 +34,7 @@ public class DozentAnsicht implements ActionListener {
         new DozentAnsicht();
     }
 
+
     public DozentAnsicht(){
         homeFrame = new JFrame("Home");
         fuelleDozentFrame();
