@@ -97,12 +97,10 @@ public class AufgabeErstellenCodeView implements ActionListener {
         Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
 
-        aufgabenTextTA = new JTextArea();
+        aufgabenTextTA = new JTextArea(50,50);
         aufgabenTextTA.setLineWrap(true);
-        aufgabenTextTA.setBounds(20,75,250,200);
 
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
 
         bearbeitungsZeitTA = new JTextArea();

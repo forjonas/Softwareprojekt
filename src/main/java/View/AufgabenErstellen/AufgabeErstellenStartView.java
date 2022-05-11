@@ -108,6 +108,7 @@ public class AufgabeErstellenStartView implements ActionListener {
         }
     }
     static void errorTest(Frame test){
+        //als JerrorMessage
         JDialog jd = new JDialog();
         jd.toFront();
         JLabel errorLbl = new JLabel("Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0");

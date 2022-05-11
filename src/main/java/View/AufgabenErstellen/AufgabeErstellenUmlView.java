@@ -217,6 +217,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenUMLViewFrame)){
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
             AufgabeErstellenUMLViewFrame.dispose();
+
             DozentAnsicht.main(null);
         }
 
