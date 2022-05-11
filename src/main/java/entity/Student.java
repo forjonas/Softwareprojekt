@@ -54,6 +54,7 @@ public class Student extends Benutzer {
         this.matrikelnummer = matrikelnummer;
     }
 
+
     /**
      * Gibt den Studenten als String aus
      *
