@@ -2,6 +2,7 @@ package entity.benutzer;
 
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
+import entity.loesung.userloesung.Userloesung;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -31,6 +32,8 @@ public abstract class Benutzer implements Serializable {
     private List<Training> bearbeiteteTrainings;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "testatBearbeiter")
     private List<TestatBearbeitung> bearbeiteteTestate;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "userloesungErsteller")
+    private List<Userloesung> erstellteLoesungen;
 
     /**
      * Leerer Konstruktor für Klasse Benutzer
@@ -38,6 +41,7 @@ public abstract class Benutzer implements Serializable {
     public Benutzer() {
         this.bearbeiteteTrainings = new LinkedList<Training>();
         this.bearbeiteteTestate = new LinkedList<TestatBearbeitung>();
+        this.erstellteLoesungen = new LinkedList<Userloesung>();
         //Nothing to do
     }
 
@@ -58,6 +62,7 @@ public abstract class Benutzer implements Serializable {
         this.nachname = nachname;
         this.bearbeiteteTrainings = new LinkedList<Training>();
         this.bearbeiteteTestate = new LinkedList<TestatBearbeitung>();
+        this.erstellteLoesungen = new LinkedList<Userloesung>();
     }
 
     /**
@@ -204,6 +209,34 @@ public abstract class Benutzer implements Serializable {
      */
     public void setBearbeiteteTestate(List<TestatBearbeitung> bearbeiteteTestate) {
         this.bearbeiteteTestate = bearbeiteteTestate;
+    }
+
+    /**
+     * Gibt die Liste der erstellten Lösungen des Benutzers zurück
+     *
+     * @return erstellte Lösungen des Benutzers
+     */
+    public List<Userloesung> getErstellteLoesungen() {
+        return erstellteLoesungen;
+    }
+
+    /**
+     * Fügt eine erstellten Lösung des Benutzers zur Liste der erstellten Lösungen hinzu
+     *
+     * @param erstellteLoesung erstellte Lösung des Benutzers
+     */
+    public void addErstellteLoesung(Userloesung erstellteLoesung) {
+        this.erstellteLoesungen.add(erstellteLoesung);
+    }
+
+    /**
+     * Setzt die Liste dererstellten Lösungen des Benutzers
+     * --> vielleicht rausnehmen oder auf private setzen
+     *
+     * @param erstellteLoesungen erstellte Lösungen des Benutzers
+     */
+    public void setErstellteLoesungen(List<Userloesung> erstellteLoesungen) {
+        this.erstellteLoesungen = erstellteLoesungen;
     }
 
     /**

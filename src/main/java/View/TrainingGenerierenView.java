@@ -5,6 +5,8 @@ import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Training;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
@@ -107,7 +109,8 @@ public class TrainingGenerierenView implements ActionListener {
         {
             if(trainingsdauer == Integer.parseInt(getValueCBox(dauerCBox)))
             {
-                training = new Training(aufgabenTraining,Integer.parseInt(getValueCBox(dauerCBox)),readKategorie(),schwierigkeitsgradSetzen());
+                //Kompiliert nicht mehr wegen geändertem Konstruktor
+                //training = new Training(aufgabenTraining, Integer.parseInt(getValueCBox(dauerCBox)), readKategorie(), schwierigkeitsgradSetzen());
                 System.out.println(aufgabenTraining);
             }else {
                 if(aufgabenTypSetzen()== Aufgabentyp.Programmieren)
