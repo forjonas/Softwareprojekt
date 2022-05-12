@@ -1,11 +1,11 @@
 package TestateK;
 
 import app.TrainingApp;
-import entity.*;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Training;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
+import entity.aufgabensammlung.*;
+import entity.benutzer.*;
+import entity.enums.*;
+import entity.loesung.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,12 +39,12 @@ public class TrainingMainGui extends JFrame implements ActionListener {
 		List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
 		List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
 		List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-		//Training training1 = new Training(aufgabenListe1,20, Kategorie.Software_Engineering,2, Aufgabentyp.Einfachantwort);
+		Training training1 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 		Training training2 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 		Training training3 = new Training(); //(aufgabenListe1,20,Kategorie.Software_Engineering,2,Aufgabentyp.Einfachantwort);
 
-		List<Training> training1a = new ArrayList<Training>();
-		//training1a.add(training1);
+		ArrayList<Training> training1a = new ArrayList<Training>();
+		training1a.add(training1);
 		training1a.add(training2);
 		training1a.add(training3);
 		training1a.add(null);
@@ -55,8 +55,8 @@ public class TrainingMainGui extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//TrainingMainGui frame = new TrainingMainGui(training1a);// Liste mit Testaten(und Aufgaben) an Konstruktor TestateMainGui() uebergeben
-					//frame.setVisible(true);
+					TrainingMainGui frame = new TrainingMainGui(training1a);// Liste mit Testaten(und Aufgaben) an Konstruktor TestateMainGui() uebergeben
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

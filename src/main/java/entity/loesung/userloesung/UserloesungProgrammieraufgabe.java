@@ -2,6 +2,8 @@ package entity.loesung.userloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.benutzer.Benutzer;
 import jakarta.persistence.*;
 
 /**
@@ -26,12 +28,14 @@ public class UserloesungProgrammieraufgabe extends Userloesung {
     /**
      * Konstruktor für eine Userlösung vom Typ Programmieren
      *
-     * @param aufgabe          zur Lösung gehörende Aufgabe
-     * @param hinweisVerwendet gibt an, ob der Lösungshinweis verwendet wurde
-     * @param userloesung      Userlösung in Form von Text, genauer Programmcode
+     * @param aufgabe              zur Lösung gehörende Aufgabe
+     * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
+     * @param userloesung          Userlösung in Form von Text, genauer Programmcode
+     * @param userloesungErsteller Ersteller der Userlösung
+     * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
-    public UserloesungProgrammieraufgabe(Programmieraufgabe aufgabe, boolean hinweisVerwendet, String userloesung) {
-        super(aufgabe, hinweisVerwendet);
+    public UserloesungProgrammieraufgabe(Programmieraufgabe aufgabe, boolean hinweisVerwendet, String userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
+        super(aufgabe, hinweisVerwendet, userloesungErsteller, aufgabensammlung);
         this.userloesung = userloesung;
     }
 
