@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
+import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +21,15 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblPlaceholderMusterloesung;
 
     public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe) {
+        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());            //Placeholder
         this.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 

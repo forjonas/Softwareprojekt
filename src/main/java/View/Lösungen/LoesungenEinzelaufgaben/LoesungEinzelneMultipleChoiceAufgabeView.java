@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,16 +33,19 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblAufgabentext;
 
 
-    /**
+
     public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
+        MusterloesungMultipleChoiceAufgabe mLMCA = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        List<Boolean> userLoesungen = aufgabe.getUserloesung();
+        /*List<Boolean> userLoesungen = aufgabe.getUserloesung();
         btnMoeglichkeit1.setSelected(userLoesungen.get(0));
         btnMoeglichkeit2.setSelected(userLoesungen.get(1));
         btnMoeglichkeit3.setSelected(userLoesungen.get(2));
         btnMoeglichkeit4.setSelected(userLoesungen.get(3));
-        List<Boolean> musterLoesungen = aufgabe.getMusterloesung();
+        */
+
+        List<Boolean> musterLoesungen = mLMCA.getMusterloesung();       //Zunächst NUR 4 Optionen unterstützt
         btnLoesung1.setSelected(musterLoesungen.get(0));
         btnLoesung2.setSelected(musterLoesungen.get(1));
         btnLoesung3.setSelected(musterLoesungen.get(2));
@@ -49,9 +53,11 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         this.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
-     */
+
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
