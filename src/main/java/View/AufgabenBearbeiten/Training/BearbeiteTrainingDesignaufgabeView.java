@@ -2,8 +2,8 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TestatApp;
 import app.TrainingApp;
-import entity.Designaufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +34,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	/**
 	 * Launch the application.
 	 */
+
+	/**
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,6 +48,9 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			}
 		});
 	}
+	 Die Main-Methode wird nicht funktionieren wenn Sie keine deklarierten Instanzen enthält, du erstellst hier eine View ohne deklarierte Instanzen, daher wird das nicht funktionieren
+
+	 */
 
 	/**
 	 * Create the frame.
@@ -113,6 +118,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
 			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
 
+			/**
 			String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
 			File DName = new File("AntwortAufgabe1.txt");
 			fw = new FileWriter(DName);
@@ -120,6 +126,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
 			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
 
+			 */
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this,"Button Beenden");

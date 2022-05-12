@@ -1,7 +1,11 @@
-package entity;
+package entity.aufgabensammlung;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import entity.aufgabe.Aufgabe;
+import entity.benutzer.Benutzer;
+import entity.enums.Aufgabentyp;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -13,11 +17,29 @@ import java.util.List;
  */
 @Entity
 public class Training extends Aufgabensammlung {
+    //Sollte rausgenommen werden. Training hat bereits eine Id, da es von Aufgabensammlung ableitet
+    // und ein Id sollte auch nicht manuell gesetzt oder ausgelesen werden. Sie dient nur zur Persistenz in der Datenbank.
+    /*    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long trainingID;*/
 
     private int bearbeitungszeit;
-    private String kategorie;
-    private int schwierigkeitsgrad;
+    private Kategorie kategorie;
+    private Schwierigkeitsgrad schwierigkeitsgrad;
     private Aufgabentyp aufgabentyp;
+    @ManyToOne
+    @JoinColumn(name = "trainingsErsteller_benutzerid")
+    private Benutzer trainingsErsteller;
+
+
+
+/*    public Long getTrainingID() {
+        return trainingID;
+    }
+
+    public void setTrainingID(Long trainingID) {
+        this.trainingID = trainingID;
+    }*/
 
     /**
      * Leerer Konstruktor für Klasse Training
@@ -36,12 +58,29 @@ public class Training extends Aufgabensammlung {
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
      * @param aufgabentyp        Ausgewählter Aufgabentyp des Testats
      */
-    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, String kategorie, int schwierigkeitsgrad, Aufgabentyp aufgabentyp) {
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.aufgabentyp = aufgabentyp;
+    }
+
+    /**
+     * Konstruktor für Klasse Training
+     *
+     * @param aufgaben           Aufgaben, die im Training enthalten sind
+     * @param bearbeitungszeit   Ausgewählte Bearbeitungszeit des Trainings
+     * @param kategorie          Ausgewählte Kategorie des Testats
+     * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
+     */
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp, Benutzer trainingsErsteller) {
+        super(aufgaben);
+        this.bearbeitungszeit = bearbeitungszeit;
+        this.kategorie = kategorie;
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
+        this.aufgabentyp = aufgabentyp;
+        this.trainingsErsteller = trainingsErsteller;
     }
 
     /**
@@ -67,7 +106,7 @@ public class Training extends Aufgabensammlung {
      *
      * @return Kategorie des Trainings
      */
-    public String getKategorie() {
+    public Kategorie getKategorie() {
         return kategorie;
     }
 
@@ -76,7 +115,7 @@ public class Training extends Aufgabensammlung {
      *
      * @param kategorie Kategorie des Trainings
      */
-    public void setKategorie(String kategorie) {
+    public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
     }
 
@@ -85,7 +124,7 @@ public class Training extends Aufgabensammlung {
      *
      * @return Schwierigkeitsgrad des Trainings
      */
-    public int getSchwierigkeitsgrad() {
+    public Schwierigkeitsgrad getSchwierigkeitsgrad() {
         return schwierigkeitsgrad;
     }
 
@@ -94,7 +133,7 @@ public class Training extends Aufgabensammlung {
      *
      * @param schwierigkeitsgrad Schwierigkeitsgrad des Trainings
      */
-    public void setSchwierigkeitsgrad(int schwierigkeitsgrad) {
+    public void setSchwierigkeitsgrad(Schwierigkeitsgrad schwierigkeitsgrad) {
         this.schwierigkeitsgrad = schwierigkeitsgrad;
     }
 
@@ -114,6 +153,24 @@ public class Training extends Aufgabensammlung {
      */
     public void setAufgabentyp(Aufgabentyp aufgabentyp) {
         this.aufgabentyp = aufgabentyp;
+    }
+
+    /**
+     * Gibt den Ersteller des Trainings zurück
+     *
+     * @return Ersteller des Trainings
+     */
+    public Benutzer getTrainingsErsteller() {
+        return trainingsErsteller;
+    }
+
+    /**
+     * Setzt den Ersteller des Trainings
+     *
+     * @param trainingsErsteller Ersteller des Trainings
+     */
+    public void setTrainingsErsteller(Benutzer trainingsErsteller) {
+        this.trainingsErsteller = trainingsErsteller;
     }
 
 }

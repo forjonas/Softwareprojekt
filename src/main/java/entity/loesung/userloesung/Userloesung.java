@@ -1,9 +1,12 @@
 package entity.loesung.userloesung;
 
 import entity.aufgabe.Aufgabe;
+import entity.aufgabensammlung.Aufgabensammlung;
+import entity.benutzer.Benutzer;
 import entity.loesung.Loesung;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 /**
@@ -16,10 +19,16 @@ import jakarta.persistence.ManyToOne;
 public abstract class Userloesung extends Loesung {
     private boolean hinweisVerwendet;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    //Aus irgend einem Grund findet er diese Zeile nicht, obwohl sie in der Datenbank existiert
+    //Aus irgend einem Grund findet er in dieser Klasse die ganzen Spalten für JoinColumn nicht, obwohl sie in der Datenbank existiert
     //Es funktioniert aber auch ohne
-    //@JoinColumn(name = "aufgabe_aufgabenid")
+    //JoinColumn(name = "aufgabe_aufgabenid")
     protected Aufgabe aufgabe;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    //@JoinColumn(name = "userloesungErsteller_benutzerid")
+    private Benutzer userloesungErsteller;
+    @ManyToOne
+    //@JoinColumn(name = "aufgabensammlung_aufgabesammlungid")
+    private Aufgabensammlung aufgabensammlung;
 
     /**
      * Leerer Konstruktor für Klasse Userlösung
@@ -32,13 +41,17 @@ public abstract class Userloesung extends Loesung {
     /**
      * Konstruktor für Klasse Userlösung
      *
-     * @param aufgabe          zur Lösung gehörende Aufgabe
-     * @param hinweisVerwendet gibt an, ob der Lösungshinweis verwendet wurde
+     * @param aufgabe              zur Lösung gehörende Aufgabe
+     * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
+     * @param userloesungErsteller Ersteller der Userlösung
+     * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
-    public Userloesung(Aufgabe aufgabe, boolean hinweisVerwendet) {
+    public Userloesung(Aufgabe aufgabe, boolean hinweisVerwendet, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
         super();
         this.aufgabe = aufgabe;
         this.hinweisVerwendet = hinweisVerwendet;
+        this.userloesungErsteller = userloesungErsteller;
+        this.aufgabensammlung = aufgabensammlung;
     }
 
     /**
@@ -74,5 +87,41 @@ public abstract class Userloesung extends Loesung {
      * @return zur Lösung gehörende Aufgabe
      */
     public abstract void setAufgabe(Aufgabe aufgabe) throws Exception;
+
+    /**
+     * Gibt den Benutzer, der die Userlösung erstellt hat zurück
+     *
+     * @return Benutzer, der die Userlösung erstellt hat
+     */
+    public Benutzer getUserloesungErsteller() {
+        return userloesungErsteller;
+    }
+
+    /**
+     * Setzt den Benutzer, der die Userlösung erstellt hat
+     *
+     * @param userloesungErsteller Benutzer, der die Userlösung erstellt hat
+     */
+    public void setUserloesungErsteller(Benutzer userloesungErsteller) {
+        this.userloesungErsteller = userloesungErsteller;
+    }
+
+    /**
+     * Gibt die Aufabensammlung, in deren Kontext die Userlösung erstellt wurde, zurück
+     *
+     * @return Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
+     */
+    public Aufgabensammlung getAufgabensammlung() {
+        return aufgabensammlung;
+    }
+
+    /**
+     * Setzt die Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
+     *
+     * @param aufgabensammlung Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
+     */
+    public void setAufgabensammlung(Aufgabensammlung aufgabensammlung) {
+        this.aufgabensammlung = aufgabensammlung;
+    }
 
 }

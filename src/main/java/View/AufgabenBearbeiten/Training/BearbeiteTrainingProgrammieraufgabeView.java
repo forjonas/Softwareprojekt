@@ -2,9 +2,10 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TestatApp;
 import app.TrainingApp;
-import entity.Designaufgabe;
-import entity.MultipleChoiceAufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import java.awt.*;
 
@@ -26,9 +27,13 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\JavaCode.png");
 	private TrainingApp trainingApp;
 	private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
-	/**
+
+
+    /**
 	 * Launch the application.
 	 */
+
+	/**
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,6 +47,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 		});
 	}
 
+	 */
 	/**
 	 * Create the frame.
 	 */
@@ -100,7 +106,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
 			//JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-			JOptionPane.showMessageDialog(this,aufgabe.getLoesungshinweis());
+			JOptionPane.showMessageDialog(this,aufgabe.getMusterloesung().getLoesungshinweis());
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
@@ -108,12 +114,15 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
 			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
 
-			String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-			File DName = new File("AntwortAufgabe1.txt");
-			fw = new FileWriter(DName);
-			bw = new BufferedWriter(fw);
-			bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+			/**
+			 String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+			 File DName = new File("AntwortAufgabe1.txt");
+			 fw = new FileWriter(DName);
+			 bw = new BufferedWriter(fw);
+			 bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+			 this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+			 */
 
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {

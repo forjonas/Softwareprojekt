@@ -1,13 +1,18 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame {
+public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements ActionListener {
 
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
@@ -17,10 +22,35 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame {
     private JPanel mainPanel;
     private JPanel panelUser;
     private JPanel panelMuster;
+    private JLabel lblUserloesung;
+    private JLabel lblMusterloesung;
+    private JLabel lblAufgabentext;
 
-    public LoesungEinzelneEinfachantwortaufgabeView() {
+    /**
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
+        btnBeenden.addActionListener(this);
+        btnHinweis.addActionListener(this);
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtfMusterloesung.setText(aufgabe.getMusterloesung());
+        txtfUserLoesung.setText(aufgabe.getUserloesung());
         this.pack();
+        this.setVisible(true);
+    }
+    */
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnBeenden) {
+            beenden();
+        } else if (e.getSource() == this.btnHinweis) {
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+
+                        //Hinweistext verändern
+        }
+    }
+
+    private void beenden(){
+
     }
 
     {

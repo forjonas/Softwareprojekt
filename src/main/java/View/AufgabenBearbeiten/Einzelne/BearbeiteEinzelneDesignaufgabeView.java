@@ -1,9 +1,9 @@
 package View.AufgabenBearbeiten.Einzelne;
 
-import entity.Designaufgabe;
-import entity.EinfachantwortAufgabe;
-import entity.MultipleChoiceAufgabe;
-import entity.Programmieraufgabe;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.Programmieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -96,18 +96,20 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         }
         if (e.getSource() == this.btnLoesungshinweis) {
             //JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis());
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
 
-            //Lese antworten und speicher diese in einer Datei (Userlösung)
-            String textFieldValue = textArea.getText(); // read den input TextArea
-            // String DName = EAM.rString();
-            File DName = new File("AntwortAufgabe1.txt");
-            fw = new FileWriter(DName);
-            bw = new BufferedWriter(fw);
-            bw.write(textFieldValue);  //bw schreibt txt Datei
+            /**
+             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+             File DName = new File("AntwortAufgabe1.txt");
+             fw = new FileWriter(DName);
+             bw = new BufferedWriter(fw);
+             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+             this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+             */
 
             // this.dispose();
             // DozentAnsicht.main(null); //eigentlich: studentView.main(null);

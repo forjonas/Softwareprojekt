@@ -1,7 +1,7 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.EinfachantwortAufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +29,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     /**
      * Launch the application.
      */
+    /**
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -40,7 +41,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
                 }
             }
         });
-    }
+    }*/
 
     /**
      * Create the frame.
@@ -107,7 +108,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getLoesungshinweis()); //Lösungshinweis bekommen
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
         if (e.getSource() == this.btnTestatBeenden) {
             JOptionPane.showMessageDialog(this, "Button Testat Beenden");
@@ -120,12 +121,15 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             JOptionPane.showMessageDialog(this, "Button Nächste");
 
             //Lese antworten und speicher diese in einer Datei (Userlösung)
-            String textFieldValue = textArea.getText(); // read den input TextArea
-            // String DName = EAM.rString();
-            File DName = new File("AntwortAufgabe1.txt");
-            fw = new FileWriter(DName);
-            bw = new BufferedWriter(fw);
-            bw.write(textFieldValue);  //bw schreibt txt Datei
+            /**
+             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
+             File DName = new File("AntwortAufgabe1.txt");
+             fw = new FileWriter(DName);
+             bw = new BufferedWriter(fw);
+             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
+             this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
+
+             */
 
             this.testatApp.weiter(); //Waren z.b. bei Aufgabe 1 gehen weiter zu 2
 

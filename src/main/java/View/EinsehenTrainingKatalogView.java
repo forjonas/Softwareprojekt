@@ -50,9 +50,9 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         Student student1 = new Student("CClown", "ccc", "Chris", "Clown", 3333);
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
-        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Aufgabentyp.Einfachantwort, dozent1);
-        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort, dozent2);
+        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort);
+        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Aufgabentyp.Einfachantwort);
+        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort);
         List<Training> trainingsliste = Arrays.asList(new Training[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         EventQueue.invokeLater(new Runnable() {
             public void run() {

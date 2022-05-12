@@ -1,6 +1,13 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
+import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +18,7 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 05.05.2022
+ *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     //Frames
@@ -20,12 +28,17 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     JPanel centerPnl;
     JPanel northPnl;
     JPanel southPnl;
+    //JComboboxen
+    JComboBox kategorienCB;
+    JComboBox schwierigkeitCB;
     //Layouts
     BorderLayout bl = new BorderLayout();
+    GridLayout gl = new GridLayout(10,2);
     //Buttons
     JButton zurueckBtn;
     JButton speichernBtn;
     //Labels
+    JLabel kategorieLbl;
     JLabel titelLbl;
     JLabel aufgabenTxtLbl;
     JLabel loesungsHinweisLbl;
@@ -50,15 +63,18 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
 
         AufgabeErstellenEinfachAntwortFrame = new JFrame("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
+        AufgabeErstellenEinfachAntwortFrame.setSize(800, 800);
         AufgabeErstellenEinfachAntwortFrame.pack();
-        AufgabeErstellenEinfachAntwortFrame.setSize(500, 500);
         AufgabeErstellenEinfachAntwortFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AufgabeErstellenEinfachAntwortFrame.setVisible(true);
     }
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        centerPnl = new JPanel();
+        gl.setVgap(25);
+        gl.setHgap(25);
+        centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         AufgabeErstellenEinfachAntwortViewPnl = new JPanel();
         AufgabeErstellenEinfachAntwortViewPnl.setLayout(bl);
         //Buttons
@@ -80,10 +96,6 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
 
-        schwierigkeitTA = new JTextArea();
-        schwierigkeitTA.setBounds(20,75,250,200);
-        schwierigkeitTA.setLineWrap(true);
-
         bearbeitungsZeitTA = new JTextArea();
         bearbeitungsZeitTA.setBounds(20,75,250,200);
         bearbeitungsZeitTA.setLineWrap(true);
@@ -95,7 +107,14 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         loesungTA = new JTextArea();
         loesungTA.setBounds(20,75,250,200);
         loesungTA.setLineWrap(true);
+        //ComboBoxes
+        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        kategorienCB = new JComboBox(kat);
+
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        schwierigkeitCB = new JComboBox(schw);
         //Label
+        kategorieLbl = new JLabel("Kategorie: ");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
@@ -111,7 +130,9 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         centerPnl.add(loesungLbl);
         centerPnl.add(loesungTA);
         centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitTA);
+        centerPnl.add(schwierigkeitCB);
+        centerPnl.add(kategorieLbl);
+        centerPnl.add(kategorienCB);
         centerPnl.add(bearbeitungszeitLbl);
         centerPnl.add(bearbeitungsZeitTA);
         centerPnl.add(punkteLbl);
@@ -140,8 +161,37 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
-        //FUNKTIONALITÄT MISSING
+        String aufgTitel;
+        String aufText;
+        String loesungshinweis;
+        int bearbeitungsZeit;
+        int punkte;
+        Kategorie kat;
+        Schwierigkeitsgrad schw;
+
+        aufgTitel = titelTA.getText();
+        aufText = aufgabenTextTA.getText();
+        loesungshinweis = loesungshinwTA.getText();
+        bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
+        schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+        kat = (Kategorie) kategorienCB.getSelectedItem();
+        punkte = Integer.parseInt(punkteTA.getText());
+
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenEinfachAntwortFrame)){
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
+        }
+
+        createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
+
         AufgabeErstellenEinfachAntwortFrame.dispose();
         DozentAnsicht.main(null);
+    }
+
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
+
+        DatabaseService ds = DatabaseService.getInstance();
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat,punkte,schw, aufText, aufgTitel,null,null);
+        ds.persistObject(neueAufgabe);
+
     }
 }

@@ -1,6 +1,7 @@
 package entity.aufgabensammlung;
 
 import entity.aufgabe.Aufgabe;
+import entity.loesung.userloesung.Userloesung;
 import jakarta.persistence.*;
 
 import java.util.LinkedList;
@@ -23,12 +24,15 @@ public abstract class Aufgabensammlung {
     private List<Aufgabe> aufgaben;
     private int gesamtzeit;
     private int gesamtpunktzahl;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "aufgabensammlung")
+    private List<Userloesung> userloesungen;
 
     /**
      * Leerer Konstruktor für Klasse Aufgabensammlung
      */
     public Aufgabensammlung() {
         this.aufgaben = new LinkedList<Aufgabe>();
+        this.userloesungen = new LinkedList<Userloesung>();
     }
 
     /**
@@ -39,6 +43,7 @@ public abstract class Aufgabensammlung {
     public Aufgabensammlung(List<Aufgabe> aufgaben) {
         this.aufgaben = new LinkedList<Aufgabe>();
         this.aufgaben.addAll(aufgaben);
+        this.userloesungen = new LinkedList<Userloesung>();
         aktualisiereGesamtpunktzahl();
         aktualisierteGesamtzeit();
     }
@@ -53,6 +58,17 @@ public abstract class Aufgabensammlung {
     }
 
     /**
+     * Fügt eine Aufgabe zur Liste der Aufgaben hinzu
+     *
+     * @param aufgabe Aufgabe, die hinzugefügt werden soll
+     */
+    public void addAufgabe(Aufgabe aufgabe) {
+        aufgaben.add(aufgabe);
+        gesamtpunktzahl += aufgabe.getPunktewert();
+        gesamtzeit += aufgabe.getBearbeitungszeit();
+    }
+
+    /**
      * Setzt die Liste der Aufgaben
      *
      * @param aufgaben Liste der Aufgaben
@@ -64,14 +80,30 @@ public abstract class Aufgabensammlung {
     }
 
     /**
-     * Fügt eine Aufgabe zur Liste der Aufgaben hinzu
+     * Gibt die Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden, zurück
      *
-     * @param aufgabe Aufgabe, die hinzugefügt werden soll
+     * @return Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden
      */
-    public void addAufgabe(Aufgabe aufgabe) {
-        aufgaben.add(aufgabe);
-        gesamtpunktzahl += aufgabe.getPunktewert();
-        gesamtzeit += aufgabe.getBearbeitungszeit();
+    public List<Userloesung> getUserloesungen() {
+        return userloesungen;
+    }
+
+    /**
+     * Fügt eine Userlösung zur Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden, hinzu
+     *
+     * @param userloesung Userlösung, die hinzugefügt werden soll
+     */
+    public void addUserloesung(Userloesung userloesung) {
+        this.userloesungen.add(userloesung);
+    }
+
+    /**
+     * Setzt die Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden
+     *
+     * @param userloesungen Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden
+     */
+    public void setUserloesungen(List<Userloesung> userloesungen) {
+        this.userloesungen = userloesungen;
     }
 
     /**

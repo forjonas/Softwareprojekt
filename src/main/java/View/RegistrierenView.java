@@ -1,6 +1,6 @@
 package View;
 
-import entity.Student;
+import entity.benutzer.Student;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -151,6 +151,5 @@ public class RegistrierenView implements ActionListener {
             einlogenView.setVisible(true);
             registrierenView.dispose();
         }
-
     }
 }

@@ -1,28 +1,68 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
-public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame {
+public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
     private JPanel mainPanel;
     private JButton btnHinweis;
     private JButton btnBeenden;
     private JTextField txtfAufgabentext;
     private JPanel panelUserChoices;
-    private JRadioButton btnMöglichkeit1;
-    private JRadioButton btnMöglichkeit2;
-    private JRadioButton btnMöglichkeit3;
-    private JRadioButton btnMöglichkeit4;
+    private JRadioButton btnMoeglichkeit1;
+    private JRadioButton btnMoeglichkeit2;
+    private JRadioButton btnMoeglichkeit3;
+    private JRadioButton btnMoeglichkeit4;
+    private JPanel panelMusterChoices;
+    private JRadioButton btnLoesung1;
+    private JRadioButton btnLoesung2;
+    private JRadioButton btnLoesung3;
+    private JRadioButton btnLoesung4;
+    private JLabel lblAufgabentext;
 
 
-    public LoesungEinzelneMultipleChoiceAufgabeView() {
+    /**
+    public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        List<Boolean> userLoesungen = aufgabe.getUserloesung();
+        btnMoeglichkeit1.setSelected(userLoesungen.get(0));
+        btnMoeglichkeit2.setSelected(userLoesungen.get(1));
+        btnMoeglichkeit3.setSelected(userLoesungen.get(2));
+        btnMoeglichkeit4.setSelected(userLoesungen.get(3));
+        List<Boolean> musterLoesungen = aufgabe.getMusterloesung();
+        btnLoesung1.setSelected(musterLoesungen.get(0));
+        btnLoesung2.setSelected(musterLoesungen.get(1));
+        btnLoesung3.setSelected(musterLoesungen.get(2));
+        btnLoesung4.setSelected(musterLoesungen.get(3));
+        btnBeenden.addActionListener(this);
+        btnHinweis.addActionListener(this);
         this.pack();
+        this.setVisible(true);
+    }
+     */
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnBeenden) {
+            beenden();
+        } else if (e.getSource() == this.btnHinweis) {
+            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+        }
+    }
+
+    private void beenden(){
+
     }
 
     {
@@ -53,21 +93,21 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame {
         panelUserChoices = new JPanel();
         panelUserChoices.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panelUserChoices, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnMöglichkeit1 = new JRadioButton();
-        btnMöglichkeit1.setEnabled(true);
-        btnMöglichkeit1.setSelected(false);
-        btnMöglichkeit1.setText("Userlösung1");
-        panelUserChoices.add(btnMöglichkeit1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnMöglichkeit2 = new JRadioButton();
-        btnMöglichkeit2.setText("Userlösung2");
-        panelUserChoices.add(btnMöglichkeit2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnMöglichkeit3 = new JRadioButton();
-        btnMöglichkeit3.setSelected(false);
-        btnMöglichkeit3.setText("Userlösung3");
-        panelUserChoices.add(btnMöglichkeit3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnMöglichkeit4 = new JRadioButton();
-        btnMöglichkeit4.setText("Userlösung4");
-        panelUserChoices.add(btnMöglichkeit4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnMoeglichkeit1 = new JRadioButton();
+        btnMoeglichkeit1.setEnabled(true);
+        btnMoeglichkeit1.setSelected(false);
+        btnMoeglichkeit1.setText("Userlösung1");
+        panelUserChoices.add(btnMoeglichkeit1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnMoeglichkeit2 = new JRadioButton();
+        btnMoeglichkeit2.setText("Userlösung2");
+        panelUserChoices.add(btnMoeglichkeit2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnMoeglichkeit3 = new JRadioButton();
+        btnMoeglichkeit3.setSelected(false);
+        btnMoeglichkeit3.setText("Userlösung3");
+        panelUserChoices.add(btnMoeglichkeit3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnMoeglichkeit4 = new JRadioButton();
+        btnMoeglichkeit4.setText("Userlösung4");
+        panelUserChoices.add(btnMoeglichkeit4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnHinweis = new JButton();
         btnHinweis.setText("Lösungshinweis anzeigen");
         mainPanel.add(btnHinweis, new GridConstraints(3, 3, 1, 2, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
