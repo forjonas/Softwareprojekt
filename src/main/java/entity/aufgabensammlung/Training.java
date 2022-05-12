@@ -16,15 +16,17 @@ import java.util.List;
  */
 @Entity
 public class Training extends Aufgabensammlung {
+    /**
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long trainingID;
-
+    */
     private int bearbeitungszeit;
     private Kategorie kategorie;
     private Schwierigkeitsgrad schwierigkeitsgrad;
     private Aufgabentyp aufgabentyp;
 
+    /**
     public Long getTrainingID() {
         return trainingID;
     }
