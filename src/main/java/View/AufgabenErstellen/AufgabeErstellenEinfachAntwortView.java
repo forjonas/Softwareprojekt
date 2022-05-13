@@ -1,18 +1,20 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
-import entity.aufgabe.Designaufgabe;
+import View.ImageFilter;
 import entity.aufgabe.EinfachantwortAufgabe;
+import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 /**
  * Die View zur Erstellung einer Einfachantwort Aufgabe
  *
@@ -20,55 +22,64 @@ import java.awt.event.ActionListener;
  * @version 05.05.2022
  *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
-public class AufgabeErstellenEinfachAntwortView implements ActionListener {
+public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
+    private Dozent doz;
     //Frames
-    JFrame AufgabeErstellenEinfachAntwortFrame;
-    JPanel AufgabeErstellenEinfachAntwortViewPnl;
+    private JPanel AufgabeErstellenEinfachAntwortViewPnl;
     //Panels
-    JPanel centerPnl;
-    JPanel northPnl;
-    JPanel southPnl;
+    private JPanel centerPnl;
+    private JPanel northPnl;
+    private JPanel southPnl;
     //JComboboxen
-    JComboBox kategorienCB;
-    JComboBox schwierigkeitCB;
+    private JComboBox kategorienCB;
+    private JComboBox schwierigkeitCB;
     //Layouts
-    BorderLayout bl = new BorderLayout();
-    GridLayout gl = new GridLayout(10,2);
+    private BorderLayout bl = new BorderLayout();
+    private GridLayout gl = new GridLayout(10,2);
     //Buttons
-    JButton zurueckBtn;
-    JButton speichernBtn;
+    private JButton zurueckBtn;
+    private JButton speichernBtn;
+    private JButton bspBildBtn;
+
     //Labels
-    JLabel kategorieLbl;
-    JLabel titelLbl;
-    JLabel aufgabenTxtLbl;
-    JLabel loesungsHinweisLbl;
-    JLabel schwierigketiLbl;
-    JLabel bearbeitungszeitLbl;
-    JLabel punkteLbl;
-    JLabel loesungLbl;
+    private JLabel bspBildLbl;
+    private JLabel kategorieLbl;
+    private JLabel titelLbl;
+    private JLabel aufgabenTxtLbl;
+    private JLabel loesungsHinweisLbl;
+    private JLabel schwierigketiLbl;
+    private JLabel bearbeitungszeitLbl;
+    private JLabel punkteLbl;
+    private JLabel loesungLbl;
     //TextAreas
-    JTextArea titelTA;
-    JTextArea aufgabenTextTA;
-    JTextArea loesungshinwTA;
-    JTextArea schwierigkeitTA;
-    JTextArea bearbeitungsZeitTA;
-    JTextArea punkteTA;
-    JTextArea loesungTA;
+    private JTextField titelTF;
+    private JTextArea aufgabenTextTA;
+    private JTextArea loesungshinwTA;
+    private JTextField bearbeitungsZeitTF;
+    private JTextField punkteTF;
+    private JTextArea loesungTA;
+    private JFrame aufgabeErstellenStartViewFrame;
+    private File bspBild;
+    private JFileChooser FC;
 
     public static void main(String[] args) {
-        new AufgabeErstellenEinfachAntwortView();
+        new AufgabeErstellenEinfachAntwortView(null);
     }
 
-    AufgabeErstellenEinfachAntwortView(){
-
-        AufgabeErstellenEinfachAntwortFrame = new JFrame("Einfach Antwort");
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame){
+        this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
+        this.setName("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
-        AufgabeErstellenEinfachAntwortFrame.setSize(800, 800);
-        AufgabeErstellenEinfachAntwortFrame.pack();
-        AufgabeErstellenEinfachAntwortFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AufgabeErstellenEinfachAntwortFrame.setVisible(true);
+        this.pack();
+        this.setMinimumSize(new Dimension(1500,900));
+        this.setSize(1500,900);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
     }
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
+        doz = new Dozent();
         gl.setVgap(25);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);
@@ -78,15 +89,18 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         AufgabeErstellenEinfachAntwortViewPnl = new JPanel();
         AufgabeErstellenEinfachAntwortViewPnl.setLayout(bl);
         //Buttons
+        bspBildBtn = new JButton("Beispiel Bild Hochladen");
+        bspBildBtn.addActionListener(this);
+
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
 
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
         //Text Areas
-        titelTA = new JTextArea();
-        titelTA.setLineWrap(true);
-        titelTA.setBounds(20,75,250,200);
+        titelTF = new JTextField();
+
+        titelTF.setBounds(20,75,250,200);
 
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
@@ -96,13 +110,13 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
 
-        bearbeitungsZeitTA = new JTextArea();
-        bearbeitungsZeitTA.setBounds(20,75,250,200);
-        bearbeitungsZeitTA.setLineWrap(true);
+        bearbeitungsZeitTF = new JTextField();
+        bearbeitungsZeitTF.setBounds(20,75,250,200);
 
-        punkteTA = new JTextArea();
-        punkteTA.setBounds(20,75,250,200);
-        punkteTA.setLineWrap(true);
+
+        punkteTF = new JTextField();
+        punkteTF.setBounds(20,75,250,200);
+
 
         loesungTA = new JTextArea();
         loesungTA.setBounds(20,75,250,200);
@@ -114,6 +128,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
         //Label
+        bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
         kategorieLbl = new JLabel("Kategorie: ");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
@@ -124,7 +139,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
         //Components Adden
         centerPnl.add(titelLbl);
-        centerPnl.add(titelTA);
+        centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
@@ -133,10 +148,12 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         centerPnl.add(schwierigkeitCB);
         centerPnl.add(kategorieLbl);
         centerPnl.add(kategorienCB);
+        centerPnl.add(bspBildLbl);
+        centerPnl.add(bspBildBtn);
         centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTA);
+        centerPnl.add(bearbeitungsZeitTF);
         centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTA);
+        centerPnl.add(punkteTF);
         centerPnl.add(loesungsHinweisLbl);
         centerPnl.add(loesungshinwTA);
 
@@ -146,7 +163,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         AufgabeErstellenEinfachAntwortViewPnl.add(centerPnl,BorderLayout.CENTER);
         AufgabeErstellenEinfachAntwortViewPnl.add(northPnl,BorderLayout.NORTH);
         AufgabeErstellenEinfachAntwortViewPnl.add(southPnl,BorderLayout.SOUTH);
-        AufgabeErstellenEinfachAntwortFrame.add(AufgabeErstellenEinfachAntwortViewPnl);
+        this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -155,43 +172,76 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         }
+        else if(e.getSource() == this.bspBildBtn){
+            bspBild=bspBildHochladen();
+        }
     }
     private void zurueck() {
-        AufgabeErstellenEinfachAntwortFrame.dispose();
-        //AufgabeErstellenStartView.main(null);
+        this.dispose();
+        aufgabeErstellenStartViewFrame.setVisible(true);
     }
     private void speichern() {
-        String aufgTitel;
-        String aufText;
-        String loesungshinweis;
-        int bearbeitungsZeit;
-        int punkte;
-        Kategorie kat;
-        Schwierigkeitsgrad schw;
+        String aufgTitel = null;
+        String aufText = null;
+        String loesungshinweis = null;
+        int bearbeitungsZeit = 0;
+        int punkte = 0;
+        Kategorie kat = null;
+        Schwierigkeitsgrad schw = null;
+        String loesung = null;
 
-        aufgTitel = titelTA.getText();
-        aufText = aufgabenTextTA.getText();
-        loesungshinweis = loesungshinwTA.getText();
-        bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
-        schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-        kat = (Kategorie) kategorienCB.getSelectedItem();
-        punkte = Integer.parseInt(punkteTA.getText());
-
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenEinfachAntwortFrame)){
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
+        try {
+            aufgTitel = titelTF.getText();
+            aufText = aufgabenTextTA.getText();
+            loesungshinweis = loesungshinwTA.getText();
+            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
+            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+            kat = (Kategorie) kategorienCB.getSelectedItem();
+            punkte = Integer.parseInt(punkteTF.getText());
+            loesung = loesungTA.getText();
         }
-
-        createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
-
-        AufgabeErstellenEinfachAntwortFrame.dispose();
-        //DozentAnsicht.main(null);
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,
+                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,doz,loesung);
+            this.dispose();
+            DozentAnsicht.main(null);
+        }
+    }
+    private File bspBildHochladen() {
+        FC = new JFileChooser((String) null);
+        FC.setAcceptAllFileFilterUsed(false);
+        FC.setFileFilter(new ImageFilter());
+        int returnVal = FC.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            bspBild = FC.getSelectedFile();
+            System.out.println(bspBild.getName());
+            return bspBild;
+        }
+        return null;
     }
 
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz,String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat,punkte,schw, aufText, aufgTitel,null,null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat,punkte,schw, aufText, aufgTitel,doz,null);
+        doz.addErstellteAufgabe(neueAufgabe);
+        MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe,loesungshinweis,loesung);
+        try {
+            neueAufgabe.setMusterloesung(mlp);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Musterlösung setzten fehlgeschlagen",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         ds.persistObject(neueAufgabe);
+        ds.persistObject(mlp);
+
 
     }
 }
