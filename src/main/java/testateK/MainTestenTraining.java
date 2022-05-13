@@ -25,9 +25,9 @@ public class MainTestenTraining {
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
 
-        Training training1 = new Training (aufgabenListe1, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
-        Training training2 = new Training (aufgabenListe2, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
-        Training training3 = new Training (aufgabenListe3, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
+        Training training1 = new Training (aufgabenListe1, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
+        Training training2 = new Training (aufgabenListe2, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
+        Training training3 = new Training (aufgabenListe3, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
 
         java.util.List<Training> trainingliste = Arrays.asList(new Training[]{training1, training2, training3,});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
