@@ -22,14 +22,12 @@ public class AufgabeErstellenStartView implements ActionListener {
     JButton weiterBtn;
     GridLayout gl = new GridLayout(3,1);
     JComboBox <String> DDM;
+    JFrame dozentframe;
 
 
-    public static void main(String[] args) {
-        new AufgabeErstellenStartView();
-    }
-
-    public AufgabeErstellenStartView() {
-
+    public AufgabeErstellenStartView(JFrame dozentframe)
+    {
+        this.dozentframe=dozentframe;
         AufgabeErstellenStartFrame = new JFrame("Aufgabe Erstellen");
         AufgabeErstellenFrameFuellen();
         AufgabeErstellenStartFrame.setSize(100, 100);
@@ -88,12 +86,12 @@ public class AufgabeErstellenStartView implements ActionListener {
                                     AufgabeErstellenEinfachAntwortView.main(null);
                         break;
             default:    AufgabeErstellenStartFrame.dispose();
-                        DozentAnsicht.main(null);
+                        //DozentAnsicht.main(null);
         }
     }
     private void zurueck() {
         AufgabeErstellenStartFrame.dispose();
-        DozentAnsicht.main(null);
+        //DozentAnsicht.main(null);
     }
 
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {

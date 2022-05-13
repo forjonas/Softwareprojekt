@@ -29,7 +29,7 @@ public class LoesungsViewsTestklasse {
         Aufgabe a3 = new Programmieraufgabe(5,null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, null);
         Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, null);
         List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        Aufgabensammlung sammlung2 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, Aufgabentyp.Einfachantwort);
+        Aufgabensammlung sammlung2 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
 
         //Einzelaufgaben
         //LoesungEinzelneProgrammieraufgabeView loesungEinzelneProgrammieraufgabeView = new LoesungEinzelneProgrammieraufgabeView((Programmieraufgabe) a3);

@@ -12,10 +12,9 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class RegistrierenView implements ActionListener {
+public class RegistrierenView extends JFrame implements ActionListener {
 
     DatabaseService ds = DatabaseService.getInstance();
-    private JFrame registrierenView;
     private JFrame einlogenView;
     private JPanel registrierePnl;
     private JButton registrierenBtn;
@@ -39,8 +38,8 @@ public class RegistrierenView implements ActionListener {
 
     public RegistrierenView(JFrame hauptmenueView)
     {
-        registrierenView = new JFrame("Home");
-        registrierenView.getContentPane().add(registrierePnl =new JPanel(new BorderLayout()));
+        this.setName("Home");
+        this.getContentPane().add(registrierePnl =new JPanel(new BorderLayout()));
 
         einlogenView=hauptmenueView;
 
@@ -53,12 +52,13 @@ public class RegistrierenView implements ActionListener {
 
         fuelleRegistrierenFrame();
 
-        einlogenView.setVisible(false);
-        registrierenView.setSize(600,600);
-        registrierenView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+
+        this.setSize(600,600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
-        registrierenView.setLocation((display.getSize().width - registrierenView.getSize().width) / 2, (display.getSize().height - registrierenView.getSize().height) / 2);
-        registrierenView.setVisible(true);
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
+        einlogenView.setVisible(false);
     }
 
     public void fuelleRegistrierenFrame()
@@ -101,7 +101,7 @@ public class RegistrierenView implements ActionListener {
         registrierePnl.add(tempButtonPnl,BorderLayout.SOUTH);
         registrierePnl.setBorder(BorderFactory.createEmptyBorder(20,80,30,80));
 
-        registrierenView.add(registrierePnl);
+        this.add(registrierePnl);
     }
 
     public boolean checkPasswort()
@@ -135,6 +135,7 @@ public class RegistrierenView implements ActionListener {
             Student student = new Student(usernameTxt.getText(),new String(passwortTxt.getPassword()),vornameTxt.getText(),nachnameTxt.getText(),Integer.parseInt(matrikelTxt.getText()));
             ds.persistObject(student);
             System.out.println("check");
+            new StudentMainView(student);
         }
 
     }
@@ -144,12 +145,11 @@ public class RegistrierenView implements ActionListener {
 
         if(e.getSource() == this.registrierenBtn){
             addStudent();
-            new StudentMainView();
-            registrierenView.dispose();
+            this.dispose();
         }
         else if(e.getSource() == this.zurueckBtn){
             einlogenView.setVisible(true);
-            registrierenView.dispose();
+            this.dispose();
         }
     }
 }

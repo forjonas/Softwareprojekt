@@ -165,7 +165,7 @@ public class AufgabeErstellenCodeView implements ActionListener {
 
     private void zurueck() {
         AufgabeErstellenCodeViewFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        //AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
             String aufgTitel;
@@ -195,7 +195,7 @@ public class AufgabeErstellenCodeView implements ActionListener {
             }
 
             AufgabeErstellenCodeViewFrame.dispose();
-            DozentAnsicht.main(null);
+            //DozentAnsicht.main(null);
     }
 
         private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,String loesung, String codeText) {

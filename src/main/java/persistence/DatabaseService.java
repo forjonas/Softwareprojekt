@@ -382,7 +382,7 @@ public class DatabaseService<T> {
 
     public synchronized Benutzer readStudentnachBenutzernamen(String benutzername) {
         TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s WHERE s.benutzername='" + benutzername + "'", Student.class);
-        Benutzer benutzer = query.getSingleResult();
+        Student benutzer = query.getSingleResult();
         return benutzer;
     }
 
