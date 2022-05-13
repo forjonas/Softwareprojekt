@@ -1,6 +1,7 @@
 package View.AufgabenBearbeiten.Testat;
 
 import View.tableModel.BearbeiteTestatTableModel;
+import app.TestatApp;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
@@ -134,6 +135,10 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         }
         if (e.getSource() == this.btnBearbeiten) {
             System.out.println("bearbeiten");
+            /** zum denken (Kristin)
+             * TestatApp testatApp = new TestatApp(t1, ds);
+             * testatApp.zeigeAktuelleAufgabe();
+             */
             dispose();
         }
     }

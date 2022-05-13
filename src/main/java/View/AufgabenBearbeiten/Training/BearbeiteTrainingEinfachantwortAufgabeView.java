@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Training;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.DozentAnsicht;
 import View.LoesungsHinweisView;
 import app.TestatApp;
@@ -7,6 +8,7 @@ import app.TrainingApp;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabensammlung.TestatBearbeitung;
 
 
 import java.awt.*;
@@ -18,13 +20,15 @@ import java.io.FileWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
- *
  * @author Kristin Kubisch
- * @version 10.05.22
+ * @version: 10.05.22
+ * @version2: 13.05.22
  */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
+    //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
     private JButton btnBeendenTraining;
@@ -35,45 +39,32 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
     private TrainingApp trainingApp;
     private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
-
-    //private TestatApp testatApp;
-
-    /**
-     * Launch the application.
-     */
-
-    /**
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteTrainingEinfachantwortAufgabeView frame = new BearbeiteTrainingEinfachantwortAufgabeView(TrainingApp trainingApp, EinfachantwortAufgabe aufgabe);//angepasst
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }*/
+    private String antwort;
 
     /**
      * Create the frame.
      */
     public BearbeiteTrainingEinfachantwortAufgabeView(TrainingApp trainingApp, EinfachantwortAufgabe aufgabe) {
         this.aufgabe = aufgabe;
+        this.trainingApp = trainingApp;
+
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 674, 435);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
-
+        setContentPane(contentPane);
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());
-        panelNorth.add(lblNewLabel1);
+
+        JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
+        panelNorth.add(lblTextbeschreibung);
+
+        /**
+         * Optionales Bild hinzufügen
+         */
 
 
         JPanel panelCenter = new JPanel();
@@ -107,43 +98,43 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         this.btnVoherigeAufgabeTraining.addActionListener(this);
         this.btnNaechsteAufgabeTraining.addActionListener(this);
         this.btnTrainingBeenden.addActionListener(this);
+
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+        super.setVisible(true);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeendenTraining) {
-           // this.dispose();
-           // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+            this.dispose();
+            BearbeiteTestatKatalogView.main(null);
+
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
-            //this.dispose();
-            //LoesungsHinweisView.main(null); //Alt von Jannik
-            JOptionPane.showMessageDialog(this,aufgabe.getMusterloesung().getLoesungshinweis());
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            //Button.nächste
 
-            /** Die Buffered und FileWriter brauchen try Catch. Lies die mal genau durch wie du das mit denen machst
-            //Lese antworten und speicher diese in einer Datei (Userlösung)
-            String textFieldValue = textArea.getText(); // read den input TextArea
-            // String DName = EAM.rString();
-            File DName = new File("AntwortAufgabe1.txt");
-            FileWriter fw = new FileWriter(DName);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(textFieldValue);  //bw schreibt txt Datei
+            antwort = textArea.getText();
+            trainingApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+            trainingApp.weiter(); //testatApp.testat
+            /**
+             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
              */
-
             this.trainingApp.weiter();
-
-            JOptionPane.showMessageDialog(this, "Button Nächste");
 
         }
         if (e.getSource() == this.btnTrainingBeenden) {
-           // this.dispose();
-           // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
+            this.dispose();
+            trainingApp.printTest();
+            BearbeiteTestatKatalogView.main(null);
+
         }
 
     }
