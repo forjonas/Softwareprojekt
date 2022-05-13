@@ -25,21 +25,29 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JButton trainingsDurchfuehrenBtn;
     private JButton testateDurchfuehrenBtn;
     //Panels
-    private JPanel North;
-    private JPanel Center;
+    private JPanel centerPnl;
     private JPanel dozentPnl;
-    private Dozent dozent;
+    GridLayout gl = new GridLayout(2,4);
+    Dozent doz;
 
-    public DozentAnsicht(Dozent dozent){
-        this.dozent=dozent;
-        this.setName("Home");
-        fuelleDozentFrame();
-        this.setSize(1000,250);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+    public static void main(String[] args)
+    {
+        new DozentAnsicht();
     }
 
+
+    public DozentAnsicht(){
+        this.setName("Home");
+        fuelleDozentFrame();
+        this.setMinimumSize(new Dimension(1500,900));
+        this.setSize(1500,900);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
+    }
     public void fuelleDozentFrame(){
+        doz = new Dozent();
         //Buttons
         testatEinsehenBtn = new JButton("Testat Einsehen");
         testatEinsehenBtn.addActionListener(this);
@@ -65,25 +73,20 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         testateDurchfuehrenBtn = new JButton("Testate Durchführen");
         testateDurchfuehrenBtn.addActionListener(this);
         //Panels
-        dozentPnl = new JPanel();
-        North = new JPanel();
-        Center = new JPanel();
+        dozentPnl = new JPanel(gl);
+        centerPnl = new JPanel(gl);
 
-        dozentPnl.setLayout(new BorderLayout());
-        dozentPnl.setSize(700,700);
         //Components Adden
-        North.add(testatEinsehenBtn);
-        North.add(testateDurchfuehrenBtn);
-        North.add(testatuebersichtBtn);
-        North.add(testateErstellenBtn);
 
-        Center.add(trainingsDurchfuehrenBtn);
-        Center.add(trainingsEinsehenBtn);
-        Center.add(aufgabenuebersichtBtn);
-        Center.add(aufgabeErstellenBtn);
-
-        dozentPnl.add(North,BorderLayout.NORTH);
-        dozentPnl.add(Center,BorderLayout.CENTER);
+        dozentPnl.add(testatEinsehenBtn);
+        dozentPnl.add(testateDurchfuehrenBtn);
+        dozentPnl.add(testatuebersichtBtn);
+        dozentPnl.add(testateErstellenBtn);
+        dozentPnl.add(trainingsDurchfuehrenBtn);
+        dozentPnl.add(trainingsEinsehenBtn);
+        dozentPnl.add(aufgabenuebersichtBtn);
+        dozentPnl.add(aufgabeErstellenBtn);
+        dozentPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
 
         this.add(dozentPnl);
     }
@@ -120,36 +123,36 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     }
 
     private void testateErstellen() {
-        this.dispose();
-        TestatErstellenView.main(null);
+        this.setVisible(false);
+        //new TestatErstellenView(this);
     }
 
     private void testatuebersicht() {
-        this.dispose();
-        TestatKatalogView.main(null);
+        this.setVisible(false);
+        //new TestatKatalogView(this);
     }
 
     private void aufgabeErstellen() {
-        this.dispose();
+        this.setVisible(false);
         new AufgabeErstellenStartView(this);
     }
 
     private void aufgabenuebersicht() {
-        this.dispose();
-        AufgabenKatalogView.main(null);
+        this.setVisible(false);
+        //new AufgabenKatalogView(this);
     }
 
     private void trainingsDurchfuehren() {
-        this.dispose();
+        this.setVisible(false);
         new TrainingGenerierenView(this);
     }
 
     private void testateDurchfuehren() {
-        this.dispose();
-        TestatKatalogView.main(null);
+        this.setVisible(false);
+       // new TestatKatalogView(this);
     }
     private void testatEinsehen(){
-        this.dispose();
-        KorrigiereTestatKatalogView.main(null);
+        this.setVisible(false);
+       // new KorrigiereTestatKatalogView(this);
     }
 }

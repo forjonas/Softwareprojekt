@@ -4,6 +4,8 @@ import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,39 +21,67 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JPanel mainPanel;
+    private final Programmieraufgabe aufgabe;
 
-    public LoesungTrainingProgrammieraufgabeView() {
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+        this.aufgabe = aufgabe;
+        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtfMusterloesung.setText(mLP.getMusterloesung());
         this.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
+            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
+            this.dispose();
             naechsteAufgabe();
         } else if (e.getSource() == this.btnVorherigeAufgabe) {
+            this.dispose();
             vorherigeAufgabe();
         }
     }
 
     private void beenden(){
-
+        ControllerLoesungenTraining.getInstance().beendeLoesungTraining();
     }
 
-    private void naechsteAufgabe(){
+    private void naechsteAufgabe() {
+        try {
+            ControllerLoesungenTraining.getInstance().naechsteAufgabe();
+        } catch (Exception ignored){
 
+        }
     }
 
     private void vorherigeAufgabe(){
+        try {
+            ControllerLoesungenTraining.getInstance().vorherigeAufgabe();
+        } catch (Exception ignored) {
+        }
+    }
 
+    public void versteckeNaechsteAufgabe() {
+        this.btnNaechsteAufgabe.setVisible(false);
+        this.update(this.getGraphics());
+    }
+
+    public void versteckeVorherigeAufgabe(){
+        this.btnVorherigeAufgabe.setVisible(false);
+        this.update(this.getGraphics());
     }
 
     {
