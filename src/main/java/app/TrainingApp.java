@@ -48,7 +48,7 @@ public class TrainingApp {
         aufgabenListe1.add(a4);
 
 
-        Training training = new Training(aufgabenListe1, 10, null, null, Aufgabentyp.MultipleChoice);
+        Training training = new Training(aufgabenListe1, 10, null, null, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
         TrainingApp app = new TrainingApp(training);
         app.zeigeAktuelleAufgabe();
     }

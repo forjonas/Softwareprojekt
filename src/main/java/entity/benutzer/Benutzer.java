@@ -174,6 +174,15 @@ public abstract class Benutzer implements Serializable {
     }
 
     /**
+     * Entfernt ein bearbeitetes Training des Benutzers aus der Liste der bearbeiteten Trainings
+     *
+     * @param bearbeitetesTraining bearbeitetes Training des Benutzers
+     */
+    public void removeBearbeitetesTraining(Training bearbeitetesTraining) {
+        this.bearbeiteteTrainings.remove(bearbeitetesTraining);
+    }
+
+    /**
      * Setzt die Liste der bearbeiteten Trainings des Benutzers
      * --> vielleicht rausnehmen oder auf private setzen
      *
@@ -202,6 +211,15 @@ public abstract class Benutzer implements Serializable {
     }
 
     /**
+     * Entfernt ein bearbeitetes Testat des Benutzers aus der Liste der bearbeiteten Testate
+     *
+     * @param bearbeitetesTestat bearbeitetes Testat des Benutzers
+     */
+    public void removeBearbeitetesTestat(TestatBearbeitung bearbeitetesTestat) {
+        this.bearbeiteteTestate.remove(bearbeitetesTestat);
+    }
+
+    /**
      * Setzt die Liste der bearbeiteten Testate des Benutzers
      * --> vielleicht rausnehmen oder auf private setzen
      *
@@ -227,6 +245,15 @@ public abstract class Benutzer implements Serializable {
      */
     public void addErstellteLoesung(Userloesung erstellteLoesung) {
         this.erstellteLoesungen.add(erstellteLoesung);
+    }
+
+    /**
+     * Entfernt eine erstellten Lösung aus der Liste der erstellten Lösungen
+     *
+     * @param erstellteLoesung erstellte Lösung des Benutzers
+     */
+    public void removeErstellteLoesung(Userloesung erstellteLoesung) {
+        this.erstellteLoesungen.remove(erstellteLoesung);
     }
 
     /**
