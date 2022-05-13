@@ -21,12 +21,11 @@ import java.awt.event.ActionListener;
 
 import static java.lang.Integer.parseInt;
 
-public class TrainingGenerierenView implements ActionListener {
+public class TrainingGenerierenView extends JFrame implements ActionListener {
 
     /**------Attribute------ */
 
     persistence.DatabaseService ds = DatabaseService.getInstance();
-    private JFrame trainingGenerierenView;
     private JPanel trainingGenerierenPnl;
     Training training;
 
@@ -57,7 +56,6 @@ public class TrainingGenerierenView implements ActionListener {
     {
         JPanel tempAufgabenTyp = new JPanel((new GridLayout(4,1,4,4)));
         studentMainViewTest=studentMainView;
-        trainingGenerierenView=new JFrame();
         trainingGenerierenPnl=new JPanel(new BorderLayout());
         JPanel tempCenterPnl= new JPanel(new GridLayout(7,2,16,16));
 
@@ -71,7 +69,7 @@ public class TrainingGenerierenView implements ActionListener {
         tempAufgabenTyp.add(aufgabenTypMCCBox);
         tempAufgabenTyp.add(aufgabenTypUMLCBox);
 
-        createTestAufgaben();
+        //createTestAufgaben();
 
         trainingStartenBtn = new JButton("Training Generieren");
         trainingStartenBtn.addActionListener(this);
@@ -88,11 +86,13 @@ public class TrainingGenerierenView implements ActionListener {
         tempCenterPnl.add(new JLabel(""));          tempCenterPnl.add(trainingStartenBtn);
 
         trainingGenerierenPnl.add(tempCenterPnl,BorderLayout.CENTER);
-        trainingGenerierenView.add(trainingGenerierenPnl);
+        this.add(trainingGenerierenPnl);
 
-        trainingGenerierenView.setSize(600,600);
-        trainingGenerierenView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
-        trainingGenerierenView.setVisible(true);
+        this.setSize(600,600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
     }
 
 
@@ -110,7 +110,7 @@ public class TrainingGenerierenView implements ActionListener {
             if(trainingsdauer == Integer.parseInt(getValueCBox(dauerCBox)))
             {
                 //Kompiliert nicht mehr wegen geändertem Konstruktor
-                //training = new Training(aufgabenTraining, Integer.parseInt(getValueCBox(dauerCBox)), readKategorie(), schwierigkeitsgradSetzen());
+                //training = new Training(aufgabenTraining, trainingsdauer, readKategorie(), schwierigkeitsgradSetzen());
                 System.out.println(aufgabenTraining);
             }else {
                 if(aufgabenTypSetzen()== Aufgabentyp.Programmieren)
@@ -239,10 +239,10 @@ public class TrainingGenerierenView implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==this.zurueckStudentViewBtn){
-            trainingGenerierenView.dispose();
+            this.dispose();
             studentMainViewTest.setVisible(true);
         }else if(e.getSource()==this.trainingStartenBtn){
-            trainingGenerierenView.setVisible(false);
+            this.setVisible(false);
             createNewTraining();
         }
     }

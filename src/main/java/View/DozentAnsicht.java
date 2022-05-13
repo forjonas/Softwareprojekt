@@ -1,6 +1,7 @@
 package View;
 
 import View.AufgabenErstellen.AufgabeErstellenStartView;
+import entity.benutzer.Dozent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
  * @author Jannik Oehme
  * @version 04.05.2022
  */
-public class DozentAnsicht implements ActionListener {
+public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
     private JButton testatEinsehenBtn;
@@ -27,20 +28,15 @@ public class DozentAnsicht implements ActionListener {
     private JPanel North;
     private JPanel Center;
     private JPanel dozentPnl;
-    private JFrame homeFrame ;
+    private Dozent dozent;
 
-    public static void main(String[] args)
-    {
-        new DozentAnsicht();
-    }
-
-
-    public DozentAnsicht(){
-        homeFrame = new JFrame("Home");
+    public DozentAnsicht(Dozent dozent){
+        this.dozent=dozent;
+        this.setName("Home");
         fuelleDozentFrame();
-        homeFrame.setSize(1000,250);
-        homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        homeFrame.setVisible(true);
+        this.setSize(1000,250);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
     public void fuelleDozentFrame(){
@@ -89,7 +85,7 @@ public class DozentAnsicht implements ActionListener {
         dozentPnl.add(North,BorderLayout.NORTH);
         dozentPnl.add(Center,BorderLayout.CENTER);
 
-        homeFrame.add(dozentPnl);
+        this.add(dozentPnl);
     }
     @Override
     public void actionPerformed(ActionEvent e)
@@ -124,36 +120,36 @@ public class DozentAnsicht implements ActionListener {
     }
 
     private void testateErstellen() {
-        homeFrame.dispose();
+        this.dispose();
         TestatErstellenView.main(null);
     }
 
     private void testatuebersicht() {
-        homeFrame.dispose();
+        this.dispose();
         TestatKatalogView.main(null);
     }
 
     private void aufgabeErstellen() {
-        homeFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        this.dispose();
+        new AufgabeErstellenStartView(this);
     }
 
     private void aufgabenuebersicht() {
-        homeFrame.dispose();
+        this.dispose();
         AufgabenKatalogView.main(null);
     }
 
     private void trainingsDurchfuehren() {
-        homeFrame.dispose();
-        new TrainingGenerierenView(homeFrame);
+        this.dispose();
+        new TrainingGenerierenView(this);
     }
 
     private void testateDurchfuehren() {
-        homeFrame.dispose();
+        this.dispose();
         TestatKatalogView.main(null);
     }
     private void testatEinsehen(){
-        homeFrame.dispose();
+        this.dispose();
         KorrigiereTestatKatalogView.main(null);
     }
 }

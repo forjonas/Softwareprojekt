@@ -194,7 +194,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
     }
     private void zurueck() {
         AufgabeErstellenUMLViewFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        //AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
         String aufgTitel;
@@ -218,7 +218,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
             AufgabeErstellenUMLViewFrame.dispose();
 
-            DozentAnsicht.main(null);
+            //DozentAnsicht.main(null);
         }
 
     }

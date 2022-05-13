@@ -158,7 +158,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
     }
     private void zurueck() {
         AufgabeErstellenEinfachAntwortFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        //AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
         String aufgTitel;
@@ -184,7 +184,7 @@ public class AufgabeErstellenEinfachAntwortView implements ActionListener {
         createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
 
         AufgabeErstellenEinfachAntwortFrame.dispose();
-        DozentAnsicht.main(null);
+        //DozentAnsicht.main(null);
     }
 
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {

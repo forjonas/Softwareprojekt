@@ -194,7 +194,7 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
 
     private void zurueck() {
         AufgabeErstellenMultipleChoiceViewFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        //AufgabeErstellenStartView.main(null);
     }
     private void speichern() {
         String aufgTitel;
@@ -227,7 +227,7 @@ public class AufgabeErstellenMultipleChoiceView implements ActionListener {
 
 
         AufgabeErstellenMultipleChoiceViewFrame.dispose();
-        DozentAnsicht.main(null);
+        //DozentAnsicht.main(null);
     }
 
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten) {
