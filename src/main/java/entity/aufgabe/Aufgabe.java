@@ -20,7 +20,7 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Aufgabe {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -299,6 +299,15 @@ public abstract class Aufgabe {
     }
 
     /**
+     * Entfernt eine Aufgabensammlung aus der Liste der Aufgabensammlungen, in denen die Aufgabe verwendet wird
+     *
+     * @param verwendung Aufgabensammlung in der die Aufgabe verwendet wird
+     */
+    public void removeVerwendung(Aufgabensammlung verwendung) {
+        verwendungen.remove(verwendung);
+    }
+
+    /**
      * Setzt die Aufgabensammlungen, in denen die Aufgabe verwendet wird
      * @param verwendungen Aufgabensammlungen, in denen die Aufgabe verwendet wird
      */
@@ -337,6 +346,15 @@ public abstract class Aufgabe {
      * @param userloesung eine Userlösung der Aufgabe
      */
     public abstract void addUserloesung(Userloesung userloesung) throws Exception;
+
+    /**
+     * Entfernt eine Userlösung aus der Liste der Userlösungen der Aufgabe
+     *
+     * @param userloesung eine Userlösung der Aufgabe
+     */
+    public void removeUserloesung(Userloesung userloesung) {
+        this.userloesungen.remove(userloesung);
+    }
 
     /**
      * Setzt die Liste der Userlösungen der Aufgabe

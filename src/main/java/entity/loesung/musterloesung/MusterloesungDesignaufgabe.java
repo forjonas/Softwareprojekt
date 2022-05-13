@@ -2,6 +2,7 @@ package entity.loesung.musterloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.*;
 
 /**
@@ -61,10 +62,14 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if (aufgabe.getClass() == Designaufgabe.class) {
-            this.aufgabe = aufgabe;
+        if(aufgabe == null) {
+            this.aufgabe = null;
         } else {
-            throw new Exception("MusterloesungDesignaufgabe kann nur eine Aufgabe vom Typ Design erhalten");
+            if (aufgabe.getClass() == Designaufgabe.class) {
+                this.aufgabe = aufgabe;
+            } else {
+                throw new Exception("MusterloesungDesignaufgabe kann nur eine Aufgabe vom Typ Design erhalten");
+            }
         }
     }
 }

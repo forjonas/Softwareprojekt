@@ -71,6 +71,15 @@ public class Dozent extends Benutzer implements Serializable {
     }
 
     /**
+     * Entfernt ein bewertetes Testat des Dozenten aus der Liste der bewerteten Testate
+     *
+     * @param bewertetesTestat bewertetes Testat des Dozenten
+     */
+    public void removeBewertetesTestat(TestatBearbeitung bewertetesTestat) {
+        this.bewerteteTestate.remove(bewertetesTestat);
+    }
+
+    /**
      * Setzt die Liste der bewerteten Testate des Dozenten
      * --> vielleicht rausnehmen oder auf private setzen
      *
@@ -99,6 +108,15 @@ public class Dozent extends Benutzer implements Serializable {
     }
 
     /**
+     * Entfernt ein erstelltes Testat des Dozenten aus der Liste der erstellten Testate
+     *
+     * @param erstelltesTestat erstelltes Testat des Dozenten
+     */
+    public void removeErstelltesTestat(Testat erstelltesTestat) {
+        this.erstellteTestate.remove(erstelltesTestat);
+    }
+
+    /**
      * Setzt die Liste der erstellten Testate des Dozenten
      * --> vielleicht rausnehmen oder auf private setzen
      *
@@ -124,6 +142,15 @@ public class Dozent extends Benutzer implements Serializable {
      */
     public void addErstellteAufgabe(Aufgabe erstellteAufgabe) {
         this.erstellteAufgaben.add(erstellteAufgabe);
+    }
+
+    /**
+     * Entfernt eine erstellte Aufgabe des Dozenten aus der Liste der erstellten Aufgaben
+     *
+     * @param erstellteAufgabe erstellte Aufgabe des Dozenten
+     */
+    public void removeErstellteAufgabe(Aufgabe erstellteAufgabe) {
+        this.erstellteAufgaben.remove(erstellteAufgabe);
     }
 
     /**

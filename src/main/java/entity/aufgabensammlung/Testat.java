@@ -123,6 +123,15 @@ public class Testat extends Aufgabensammlung {
     }
 
     /**
+     * Entfernt eine Testatbearbeitung aus der Liste der Testatbearbeitungen des Testats
+     *
+     * @param bearbeitung Testatbearbeitung des Testats
+     */
+    public void removeBearbeitung (TestatBearbeitung bearbeitung) {
+        this.bearbeitungen.remove(bearbeitung);
+    }
+
+    /**
      * Setzt die Testatbearbeitungen des Testats
      *
      * @param bearbeitungen Testatbearbeitungen des Testats

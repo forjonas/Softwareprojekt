@@ -12,6 +12,7 @@ import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 import jakarta.persistence.Entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -76,10 +77,14 @@ public class EinfachantwortAufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if (musterloesung.getClass() == MusterloesungEinfachantwort.class) {
-            this.musterloesung = musterloesung;
+        if(musterloesung == null) {
+            this.musterloesung = null;
         } else {
-            throw new Exception("Einfachantwortaufgabe kann nur eine Musterlösung vom Typ Einfachantwortaufgabe erhalten");
+            if (musterloesung.getClass() == MusterloesungEinfachantwort.class) {
+                this.musterloesung = musterloesung;
+            } else {
+                throw new Exception("Einfachantwortaufgabe kann nur eine Musterlösung vom Typ Einfachantwortaufgabe erhalten");
+            }
         }
     }
 
@@ -104,11 +109,17 @@ public class EinfachantwortAufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if (userloesungen.size() > 0) {
-            if (userloesungen.get(0).getClass() == UserloesungEinfachantwort.class) {
-                this.userloesungen = userloesungen;
+        if(userloesungen == null) {
+            this.userloesungen = null;
+        } else {
+            if (userloesungen.size() > 0) {
+                if (userloesungen.get(0).getClass() == UserloesungEinfachantwort.class) {
+                    this.userloesungen = userloesungen;
+                } else {
+                    throw new Exception("Einfachantwortaufgabe kann nur Userlösungen vom Typ Einfachantwortaufgabe erhalten");
+                }
             } else {
-                throw new Exception("Einfachantwortaufgabe kann nur Userlösungen vom Typ Einfachantwortaufgabe erhalten");
+                this.userloesungen = new LinkedList<Userloesung>();
             }
         }
     }
