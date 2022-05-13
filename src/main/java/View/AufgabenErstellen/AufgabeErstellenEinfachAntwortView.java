@@ -19,8 +19,7 @@ import java.io.File;
  * Die View zur Erstellung einer Einfachantwort Aufgabe
  *
  * @author Jannik Oehme
- * @version 05.05.2022
- *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
+ * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
     private Dozent doz;
@@ -35,7 +34,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JComboBox schwierigkeitCB;
     //Layouts
     private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10,2);
+    private GridLayout gl = new GridLayout(10, 2);
     //Buttons
     private JButton zurueckBtn;
     private JButton speichernBtn;
@@ -66,18 +65,19 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         new AufgabeErstellenEinfachAntwortView(null);
     }
 
-    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame){
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame) {
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
         this.pack();
-        this.setMinimumSize(new Dimension(1500,900));
-        this.setSize(1500,900);
+        this.setMinimumSize(new Dimension(1500, 900));
+        this.setSize(1500, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         doz = new Dozent();
         gl.setVgap(25);
@@ -100,32 +100,32 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         //Text Areas
         titelTF = new JTextField();
 
-        titelTF.setBounds(20,75,250,200);
+        titelTF.setBounds(20, 75, 250, 200);
 
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
-        aufgabenTextTA.setBounds(20,75,250,200);
+        aufgabenTextTA.setBounds(20, 75, 250, 200);
 
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20,75,250,200);
+        loesungshinwTA.setBounds(20, 75, 250, 200);
         loesungshinwTA.setLineWrap(true);
 
         bearbeitungsZeitTF = new JTextField();
-        bearbeitungsZeitTF.setBounds(20,75,250,200);
+        bearbeitungsZeitTF.setBounds(20, 75, 250, 200);
 
 
         punkteTF = new JTextField();
-        punkteTF.setBounds(20,75,250,200);
+        punkteTF.setBounds(20, 75, 250, 200);
 
 
         loesungTA = new JTextArea();
-        loesungTA.setBounds(20,75,250,200);
+        loesungTA.setBounds(20, 75, 250, 200);
         loesungTA.setLineWrap(true);
         //ComboBoxes
-        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
-        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
         //Label
         bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
@@ -135,7 +135,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
         bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
         punkteLbl = new JLabel("Punkte: ");
-        loesungLbl= new JLabel("Lösung");
+        loesungLbl = new JLabel("Lösung");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
         //Components Adden
         centerPnl.add(titelLbl);
@@ -160,26 +160,28 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         northPnl.add(zurueckBtn);
         southPnl.add(speichernBtn);
 
-        AufgabeErstellenEinfachAntwortViewPnl.add(centerPnl,BorderLayout.CENTER);
-        AufgabeErstellenEinfachAntwortViewPnl.add(northPnl,BorderLayout.NORTH);
-        AufgabeErstellenEinfachAntwortViewPnl.add(southPnl,BorderLayout.SOUTH);
+        AufgabeErstellenEinfachAntwortViewPnl.add(centerPnl, BorderLayout.CENTER);
+        AufgabeErstellenEinfachAntwortViewPnl.add(northPnl, BorderLayout.NORTH);
+        AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
             zurueck();
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
-        }
-        else if(e.getSource() == this.bspBildBtn){
-            bspBild=bspBildHochladen();
+        } else if (e.getSource() == this.bspBildBtn) {
+            bspBild = bspBildHochladen();
         }
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -199,25 +201,25 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
             loesung = loesungTA.getText();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Eine Eingabe entsprach nicht dem nötigen Datentyp",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,doz,loesung);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
             this.dispose();
             DozentAnsicht.main(null);
         }
     }
+
     private File bspBildHochladen() {
         FC = new JFileChooser((String) null);
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             bspBild = FC.getSelectedFile();
             System.out.println(bspBild.getName());
             return bspBild;
@@ -225,12 +227,12 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         return null;
     }
 
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz,String loesung) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,null,null,kat,punkte,schw, aufText, aufgTitel,doz,null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe,loesungshinweis,loesung);
+        MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {

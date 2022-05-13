@@ -19,27 +19,26 @@ import java.io.File;
  * Die View zur Erstellung einer UML Aufgabe
  *
  * @author Jannik Oehme
- * @version 05.05.2022
- *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
+ * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private Dozent doz;
     //Panels
     private JPanel AufgabeErstellenUMLPnl;
-    private  JPanel centerPnl;
+    private JPanel centerPnl;
     private JPanel northPnl;
     private JPanel southPnl;
     //Layouts
-    private  BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10,2);
+    private BorderLayout bl = new BorderLayout();
+    private GridLayout gl = new GridLayout(10, 2);
     //Buttons
-    private  JButton zurueckBtn;
+    private JButton zurueckBtn;
     private JButton speichernBtn;
-    private  JButton UMLHochladenBtn;
+    private JButton UMLHochladenBtn;
     private JButton musterloesungBtn;
     //JComboboxen
-    private  JComboBox kategorienCB;
-    private  JComboBox schwierigkeitCB;
+    private JComboBox kategorienCB;
+    private JComboBox schwierigkeitCB;
     //Labels
     private JLabel titelLbl;
     private JLabel aufgabenTxtLbl;
@@ -47,7 +46,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private JLabel schwierigketiLbl;
     private JLabel kategorienLbl;
     private JLabel bearbeitungszeitLbl;
-    private  JLabel punkteLbl;
+    private JLabel punkteLbl;
     //TextAreas
     private JTextField titelTF;
     private JTextArea aufgabenTextTA;
@@ -56,26 +55,27 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private JTextField punkteTF;
     //Files
     private JFileChooser FC;
-    private  File designFile;
-    private  File loesungFile;
+    private File designFile;
+    private File loesungFile;
     private JFrame aufgabeErstellenStartViewFrame;
 
     public static void main(String[] args) {
         new AufgabeErstellenUmlView(null);
     }
 
-    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame){
+    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame) {
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Design Aufgabe Erstellen");
         AufgabeErstellenUMLViewFuellen();
         this.pack();
-        this.setMinimumSize(new Dimension(1500,900));
-        this.setSize(1500,900);
+        this.setMinimumSize(new Dimension(1500, 900));
+        this.setSize(1500, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     private void AufgabeErstellenUMLViewFuellen() {
         doz = new Dozent();
         //Panels
@@ -113,10 +113,10 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         punkteTF = new JTextField();
 
         //ComboBoxes
-        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
-        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
 
         //Labels
@@ -148,22 +148,21 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         northPnl.add(zurueckBtn);
         southPnl.add(speichernBtn);
 
-        AufgabeErstellenUMLPnl.add(centerPnl,BorderLayout.CENTER);
-        AufgabeErstellenUMLPnl.add(northPnl,BorderLayout.NORTH);
-        AufgabeErstellenUMLPnl.add(southPnl,BorderLayout.SOUTH);
+        AufgabeErstellenUMLPnl.add(centerPnl, BorderLayout.CENTER);
+        AufgabeErstellenUMLPnl.add(northPnl, BorderLayout.NORTH);
+        AufgabeErstellenUMLPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenUMLPnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
             zurueck();
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
-        }
-        else if(e.getSource()== this.UMLHochladenBtn){
+        } else if (e.getSource() == this.UMLHochladenBtn) {
             designFile = UMLHochladen();
-        }
-        else if(e.getSource() == this.musterloesungBtn){
+        } else if (e.getSource() == this.musterloesungBtn) {
             loesungFile = loesungHochladen();
         }
     }
@@ -173,7 +172,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             designFile = FC.getSelectedFile();
             System.out.println(designFile.getName());
             return designFile;
@@ -186,18 +185,20 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             designFile = FC.getSelectedFile();
             System.out.println(designFile.getName());
             return designFile;
         }
         return null;
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
 
     }
+
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -215,26 +216,26 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Eine Eingabe entsprach nicht dem nötigen Datentyp",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,doz);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz);
             this.dispose();
             DozentAnsicht.main(null);
         }
     }
+
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,null,"a",kat, punkte,schw, aufText, aufgTitel,doz,null);
+        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, "a", kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe,loesungshinweis,loesungFile);
+        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungFile);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {

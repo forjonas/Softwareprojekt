@@ -45,8 +45,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      *      * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
-     * @param javaDesign            JavaDesign der Aufgabe
-     * @param umlDesign             UmlDesign der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
      * @param kategorie             Kategorie der Aufgabe
      * @param punktewert            Punktewert der Aufgabe
      * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
@@ -56,8 +55,8 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param antwortmoeglichkeiten Antwortmöglichkeiten der Aufgabe
      * @param musterloesung         Musterlösung der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten, MusterloesungMultipleChoiceAufgabe musterloesung) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
+    public MultipleChoiceAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten, MusterloesungMultipleChoiceAufgabe musterloesung) {
+        super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.aufgabentyp = Aufgabentyp.MultipleChoice;
     }
@@ -66,8 +65,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * Konstruktor für Klasse MultipleChoiceAufgabe
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
-     * @param javaDesign            JavaDesign der Aufgabe
-     * @param umlDesign             UmlDesign der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
      * @param kategorie             Kategorie der Aufgabe
      * @param punktewert            Punktewert der Aufgabe
      * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
@@ -76,8 +74,8 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      * @param antwortmoeglichkeiten Antwortmöglichkeiten der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
+    public MultipleChoiceAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten) {
+        super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.aufgabentyp = Aufgabentyp.MultipleChoice;
     }

@@ -35,38 +35,36 @@ public class Programmieraufgabe extends Aufgabe {
     /**
      * Konstruktor für Klasse Programmieraufgabe
      *
-     * @param bearbeitungszeit   Bearbeitungszeit der Aufgabe
-     * @param javaDesign         JavaDesign der Aufgabe
-     * @param umlDesign          UmlDesign der Aufgabe
-     * @param kategorie          Kategorie der Aufgabe
-     * @param punktewert         Punktewert der Aufgabe
-     * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
-     * @param textbeschreibung   Textbeschreibung der Aufgabe
-     * @param name               Name der Aufgabe
-     * @param aufgabenErsteller  Dozent, der die Aufgabe erstellt hat
-     * @param musterloesung      Musterlösung der Aufgabe
+     * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
+     * @param kategorie             Kategorie der Aufgabe
+     * @param punktewert            Punktewert der Aufgabe
+     * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
+     * @param textbeschreibung      Textbeschreibung der Aufgabe
+     * @param name                  Name der Aufgabe
+     * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
+     * @param musterloesung         Musterlösung der Aufgabe
      */
-    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungProgrammieraufgabe musterloesung) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
+    public Programmieraufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungProgrammieraufgabe musterloesung) {
+        super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
         this.aufgabentyp = Aufgabentyp.Programmieren;
     }
 
     /**
      * Konstruktor für Klasse Programmieraufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
-     *      * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
+     * * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
-     * @param bearbeitungszeit   Bearbeitungszeit der Aufgabe
-     * @param javaDesign         JavaDesign der Aufgabe
-     * @param umlDesign          UmlDesign der Aufgabe
-     * @param kategorie          Kategorie der Aufgabe
-     * @param punktewert         Punktewert der Aufgabe
-     * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
-     * @param textbeschreibung   Textbeschreibung der Aufgabe
-     * @param name               Name der Aufgabe
-     * @param aufgabenErsteller  Dozent, der die Aufgabe erstellt hat
+     * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
+     * @param kategorie             Kategorie der Aufgabe
+     * @param punktewert            Punktewert der Aufgabe
+     * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
+     * @param textbeschreibung      Textbeschreibung der Aufgabe
+     * @param name                  Name der Aufgabe
+     * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Programmieraufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
-        super(bearbeitungszeit, javaDesign, umlDesign, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
+    public Programmieraufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
+        super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
         this.aufgabentyp = Aufgabentyp.Programmieren;
     }
 
@@ -77,7 +75,7 @@ public class Programmieraufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if(musterloesung == null) {
+        if (musterloesung == null) {
             this.musterloesung = null;
         } else {
             if (musterloesung.getClass() == MusterloesungProgrammieraufgabe.class) {
@@ -109,7 +107,7 @@ public class Programmieraufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if(userloesungen == null) {
+        if (userloesungen == null) {
             this.userloesungen = null;
         } else {
             if (userloesungen.size() > 0) {
