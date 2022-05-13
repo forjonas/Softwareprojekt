@@ -1,25 +1,19 @@
-package testateTestenK;
+package testateK;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import app.TestatApp;
+//import app.TrainingApp;
+import app.TrainingApp;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
+        import entity.aufgabensammlung.Training;
+        import entity.benutzer.Student;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import persistence.DatabaseService;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainTestenTestate {
+public class MainTestenTraining {
 
     public static void main(String[] args) {
 
@@ -30,25 +24,22 @@ public class MainTestenTestate {
         java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1});
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+
+        Training training1 = new Training (aufgabenListe1, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
+        Training training2 = new Training (aufgabenListe2, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
+        Training training3 = new Training (aufgabenListe3, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
+
+        java.util.List<Training> trainingliste = Arrays.asList(new Training[]{training1, training2, training3,});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
         DatabaseService ds = DatabaseService.getInstance();
-
-        //Ich bekomme TestatApp testat = new TestatApp(testat1, database);
-        //testat1.zeigeAufgabe;
 
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
 
-                    TestatApp testatApp = new TestatApp(t1, ds);
-                    testatApp.zeigeAktuelleAufgabe();
+                    TrainingApp trainingApp = new TrainingApp(training1, ds);
+                    trainingApp.zeigeAktuelleAufgabe();
 
                 } catch (Exception e) {
                     e.printStackTrace();
