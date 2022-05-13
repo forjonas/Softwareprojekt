@@ -18,10 +18,13 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JButton btnNaechsteAufgabe;
     private JButton btnHinweis;
     private JButton btnBeenden;
+    private final EinfachantwortAufgabe aufgabe;
 
     public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungEinfachantwort mLEA = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
@@ -39,7 +42,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

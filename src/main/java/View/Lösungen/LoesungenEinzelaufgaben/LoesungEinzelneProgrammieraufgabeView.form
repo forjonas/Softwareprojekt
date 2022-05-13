@@ -35,7 +35,9 @@
             <preferred-size width="200" height="250"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="623f9" class="javax.swing.JTextField" binding="txtfMusterloesung">
         <constraints>
@@ -44,7 +46,9 @@
             <preferred-size width="200" height="250"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <hspacer id="4f174">
         <constraints>

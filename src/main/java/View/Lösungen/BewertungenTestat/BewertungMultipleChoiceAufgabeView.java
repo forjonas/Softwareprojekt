@@ -27,10 +27,13 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JButton btnNaechsteAufgabe;
     private JButton btnHinweis;
     private JButton btnBeenden;
+    private final MultipleChoiceAufgabe aufgabe;
 
     public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungMultipleChoiceAufgabe mLMCA = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
@@ -52,7 +55,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

@@ -31,12 +31,15 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JRadioButton btnLoesung3;
     private JRadioButton btnLoesung4;
     private JLabel lblAufgabentext;
+    private final MultipleChoiceAufgabe aufgabe;
 
 
 
     public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungMultipleChoiceAufgabe mLMCA = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         /*List<Boolean> userLoesungen = aufgabe.getUserloesung();
         btnMoeglichkeit1.setSelected(userLoesungen.get(0));
@@ -61,9 +64,10 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
+            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
     }
 

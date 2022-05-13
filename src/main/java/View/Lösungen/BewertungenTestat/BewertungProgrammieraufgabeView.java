@@ -18,10 +18,13 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JButton btnVorherigeAufgabe;
     private JButton btnHinweis;
     private JButton btnNaechsteAufgabe;
+    private Programmieraufgabe aufgabe;
 
     public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungProgrammieraufgabe mLPA = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
@@ -39,7 +42,7 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

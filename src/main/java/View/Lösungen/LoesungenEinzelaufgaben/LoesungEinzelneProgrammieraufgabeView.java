@@ -19,10 +19,13 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JTextField txtfUserloesung;
     private JTextField txtfMusterloesung;
     private JPanel mainPanel;
+    private final Programmieraufgabe aufgabe;
 
     public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
@@ -35,9 +38,10 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
+            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
     }
 

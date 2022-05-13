@@ -21,17 +21,20 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
     private JButton btnNaechsteAufgabe;
     private JButton btnVorherigeAufgabe;
     private JPanel mainPanel;
+    private final Designaufgabe aufgabe;
 
 
     public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
+        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -44,7 +47,7 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

@@ -33,6 +33,9 @@ public class ControllerLoesungenTraining {
                 try {
                     LoesungTrainingEinfachantwortaufgabeView lTEV = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe);
                     lTEV.versteckeVorherigeAufgabe();
+                    if (training.getAnzahlAufgaben() == 1) {
+                        lTEV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
@@ -41,6 +44,9 @@ public class ControllerLoesungenTraining {
                     assert aufgabe instanceof Programmieraufgabe;
                     LoesungTrainingProgrammieraufgabeView lTPV = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe);
                     lTPV.versteckeVorherigeAufgabe();
+                    if (training.getAnzahlAufgaben() == 1) {
+                        lTPV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
@@ -49,6 +55,9 @@ public class ControllerLoesungenTraining {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
                     LoesungTrainingMultipleChoiceAufgabeView lTMCV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
                     lTMCV.versteckeVorherigeAufgabe();
+                    if (training.getAnzahlAufgaben() == 1) {
+                        lTMCV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
@@ -57,6 +66,9 @@ public class ControllerLoesungenTraining {
                     assert aufgabe instanceof Designaufgabe;
                     LoesungTrainingDesignaufgabeView lDV = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe);
                     lDV.versteckeVorherigeAufgabe();
+                    if (training.getAnzahlAufgaben() == 1) {
+                        lDV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }

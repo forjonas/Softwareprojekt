@@ -52,7 +52,9 @@
             <preferred-size width="200" height="350"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="bc3d0" class="javax.swing.JTextField" binding="txtfMusterloesung">
         <constraints>
@@ -61,7 +63,9 @@
             <preferred-size width="200" height="350"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="baeac" class="javax.swing.JButton" binding="btnVorherigeAufgabe">
         <constraints>

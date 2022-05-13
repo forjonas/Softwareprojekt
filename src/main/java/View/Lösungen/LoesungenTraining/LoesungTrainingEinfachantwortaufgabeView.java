@@ -22,10 +22,13 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
     private JButton btnNaechsteAufgabe;
     private JButton btnVorherigeAufgabe;
     private JPanel panelMain;
+    private final EinfachantwortAufgabe aufgabe;
 
     public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
@@ -44,7 +47,7 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

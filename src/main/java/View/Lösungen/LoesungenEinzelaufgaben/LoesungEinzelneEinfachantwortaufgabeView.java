@@ -26,11 +26,14 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JLabel lblUserloesung;
     private JLabel lblMusterloesung;
     private JLabel lblAufgabentext;
+    private final EinfachantwortAufgabe aufgabe;
 
 
     public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
@@ -45,15 +48,10 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
+            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            /*
-            LoesungsHinweisView hinweisView = new LoesungsHinweisView();
-            hinweisView.
-
-                        //Hinweistext verändern
-
-             */
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
     }
 

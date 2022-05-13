@@ -32,6 +32,9 @@ public class ControllerBewertungenTestate {
                 try {
                     BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe);
                     bEV.versteckeVorherigeAufgabe();
+                    if (testat.getAnzahlAufgaben() == 1) {
+                        bEV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
@@ -40,22 +43,31 @@ public class ControllerBewertungenTestate {
                     assert aufgabe instanceof Programmieraufgabe;
                     BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe);
                     bPV.versteckeVorherigeAufgabe();
+                    if (testat.getAnzahlAufgaben() == 1) {
+                        bPV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
             case MultipleChoice: {
                 try {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView lTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
-                    lTMCV.versteckeVorherigeAufgabe();
+                    BewertungMultipleChoiceAufgabeView bTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
+                    bTMCV.versteckeVorherigeAufgabe();
+                    if (testat.getAnzahlAufgaben() == 1) {
+                        bTMCV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }
             case Design: {
                 try {
                     assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView lDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe);
-                    lDV.versteckeVorherigeAufgabe();
+                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe);
+                    bDV.versteckeVorherigeAufgabe();
+                    if (testat.getAnzahlAufgaben() == 1) {
+                        bDV.versteckeNaechsteAufgabe();
+                    }
                 } catch (Exception ignored) {
                 }
             }

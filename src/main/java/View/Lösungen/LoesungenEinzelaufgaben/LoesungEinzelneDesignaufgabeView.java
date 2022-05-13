@@ -1,11 +1,11 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
-import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,16 +17,20 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
-    private JLabel lblplaceholderUserloesung;
+    private JLabel lblPlaceholderUserloesung;
     private JLabel lblPlaceholderMusterloesung;
+    private final Designaufgabe aufgabe;
 
-    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe) {
+    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());            //Placeholder
+        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());            //Placeholder
+        lblPlaceholderUserloesung.setText(userloesungDesignaufgabe.getUserloesung());
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -35,9 +39,10 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
+            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
     }
 
@@ -76,9 +81,9 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         mainPanel.add(btnHinweis, new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         mainPanel.add(spacer2, new GridConstraints(1, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        lblplaceholderUserloesung = new JLabel();
-        lblplaceholderUserloesung.setText("Placeholder Userlösung");
-        mainPanel.add(lblplaceholderUserloesung, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lblPlaceholderUserloesung = new JLabel();
+        lblPlaceholderUserloesung.setText("Placeholder Userlösung");
+        mainPanel.add(lblPlaceholderUserloesung, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         mainPanel.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         lblPlaceholderMusterloesung = new JLabel();

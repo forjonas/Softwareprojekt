@@ -18,16 +18,19 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JLabel lblPlaceholderMusterloesung;
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
+    private final Designaufgabe aufgabe;
 
     public BewertungDesignaufgabeView(Designaufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
+        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -40,7 +43,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

@@ -168,7 +168,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
                     } else if (userIstDozent(usernameTxt.getText())) {
                         Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(usernameTxt.getText());
                         checkPasswort(dozent);
-                        new DozentAnsicht(dozent);
+                        //new DozentAnsicht(dozent);
                         this.dispose();
                         return;
                     } else {

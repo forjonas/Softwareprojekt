@@ -21,10 +21,13 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JPanel mainPanel;
+    private final Programmieraufgabe aufgabe;
 
     public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+        this.aufgabe = aufgabe;
         MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
+        this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
@@ -42,7 +45,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            //LoesungsHinweisView hinweisView = new LoesungsHinweisView();
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
