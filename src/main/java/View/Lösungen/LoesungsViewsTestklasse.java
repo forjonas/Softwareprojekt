@@ -28,16 +28,16 @@ public class LoesungsViewsTestklasse {
 
     public static void main(String[] args) throws Exception {
 
-        Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null, null);
+        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null, null);
         MusterloesungEinfachantwort mLE = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Hier könnte ihr Lösungshinweis stehen.", "Musterlösungen sind eine Lüge.");
         a1.setMusterloesung(mLE);
-        Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null, null);
+        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null, null);
         //MusterloesungDesignaufgabe mlD = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Hier könnte ihr Lösungshinweis stehen.", "Lösungshinweise sind eine Lüge.");
         //a2.setMusterloesung(mlD);
-        Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, null);
+        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, null);
         MusterloesungProgrammieraufgabe mLP = new MusterloesungProgrammieraufgabe((Programmieraufgabe) a3, "Hier könnte ihr Lösungshinweis stehen.", "public static void main(String[] args){}");
         a3.setMusterloesung(mLP);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, null, null);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, null, null);
         MusterloesungMultipleChoiceAufgabe mLMCA = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Hier könnte ihr Lösungshinweis stehen.", Arrays.asList(false, true, false, false));
         a4.setMusterloesung(mLMCA);
 

@@ -9,7 +9,6 @@ import entity.loesung.musterloesung.Musterloesung;
 import entity.loesung.userloesung.Userloesung;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,9 +27,7 @@ public abstract class Aufgabe {
     private long aufgabenId;
     private int bearbeitungszeit;
     //Datentyp ändern
-    private String javaDesign;
-    //Datentyp ändern
-    private String umlDesign;
+    private String aufgabenstellungsbild;
     private Kategorie kategorie;
     private int punktewert;
     private Schwierigkeitsgrad schwierigkeitsgrad;
@@ -59,19 +56,17 @@ public abstract class Aufgabe {
     /**
      * Konstruktor für Klasse Aufgabe
      *
-     * @param bearbeitungszeit   Bearbeitungszeit der Aufgabe
-     * @param javaDesign         JavaDesign der Aufgabe
-     * @param umlDesign          UmlDesign der Aufgabe
-     * @param kategorie          Kategorie der Aufgabe
-     * @param punktewert         Punktewert der Aufgabe
-     * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
-     * @param textbeschreibung   Textbeschreibung der Aufgabe
-     * @param aufgabenErsteller  Dozent, der die Aufgabe erstellt hat
+     * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
+     * @param kategorie             Kategorie der Aufgabe
+     * @param punktewert            Punktewert der Aufgabe
+     * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
+     * @param textbeschreibung      Textbeschreibung der Aufgabe
+     * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, Musterloesung musterloesung) {
+    public Aufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, Musterloesung musterloesung) {
         this.bearbeitungszeit = bearbeitungszeit;
-        this.javaDesign = javaDesign;
-        this.umlDesign = umlDesign;
+        this.aufgabenstellungsbild = aufgabenstellungsbild;
         this.kategorie = kategorie;
         this.punktewert = punktewert;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
@@ -87,19 +82,17 @@ public abstract class Aufgabe {
      * Konstruktor für Klasse Aufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
      * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
-     * @param bearbeitungszeit   Bearbeitungszeit der Aufgabe
-     * @param javaDesign         JavaDesign der Aufgabe
-     * @param umlDesign          UmlDesign der Aufgabe
-     * @param kategorie          Kategorie der Aufgabe
-     * @param punktewert         Punktewert der Aufgabe
-     * @param schwierigkeitsgrad Schwierigkeitsgrad der Aufgabe
-     * @param textbeschreibung   Textbeschreibung der Aufgabe
-     * @param aufgabenErsteller  Dozent, der die Aufgabe erstellt hat
+     * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
+     * @param kategorie             Kategorie der Aufgabe
+     * @param punktewert            Punktewert der Aufgabe
+     * @param schwierigkeitsgrad    Schwierigkeitsgrad der Aufgabe
+     * @param textbeschreibung      Textbeschreibung der Aufgabe
+     * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Aufgabe(int bearbeitungszeit, String javaDesign, String umlDesign, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
+    public Aufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
         this.bearbeitungszeit = bearbeitungszeit;
-        this.javaDesign = javaDesign;
-        this.umlDesign = umlDesign;
+        this.aufgabenstellungsbild = aufgabenstellungsbild;
         this.kategorie = kategorie;
         this.punktewert = punktewert;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
@@ -129,39 +122,21 @@ public abstract class Aufgabe {
     }
 
     /**
-     * Gibt das Java-Design der Aufgabe zurück
+     * Gibt das Bild, das Teil der Aufgabenstellung ist zurück
      *
-     * @return Java-Design der Aufgabe
+     * @return Bild, das Teil der Aufgabenstellung ist
      */
-    public String getJavaDesign() {
-        return javaDesign;
+    public String getAufgabenstellungsbild() {
+        return aufgabenstellungsbild;
     }
 
     /**
-     * Setzt das Java-Design der Aufgabe
+     * Setzt das Bild, das Teil der Aufgabenstellung ist
      *
-     * @param javaDesign Java-Design der Aufgabe
+     * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
      */
-    public void setJavaDesign(String javaDesign) {
-        this.javaDesign = javaDesign;
-    }
-
-    /**
-     * Gibt das Uml-Design der Aufgabe zurück
-     *
-     * @return Uml-Design der Aufgabe
-     */
-    public String getUmlDesign() {
-        return umlDesign;
-    }
-
-    /**
-     * Setzt das Uml-Design der Aufgabe
-     *
-     * @param umlDesign Uml-Design der Aufgabe
-     */
-    public void setUmlDesign(String umlDesign) {
-        this.umlDesign = umlDesign;
+    public void setAufgabenstellungsbild(String aufgabenstellungsbild) {
+        this.aufgabenstellungsbild = aufgabenstellungsbild;
     }
 
     /**
@@ -283,6 +258,7 @@ public abstract class Aufgabe {
 
     /**
      * Gibt die Aufgabensammlungen, in denen die Aufgabe verwendet wird, zurück
+     *
      * @return Aufgabensammlungen, in denen die Aufgabe verwendet wird
      */
     public List<Aufgabensammlung> getVerwendungen() {
@@ -309,6 +285,7 @@ public abstract class Aufgabe {
 
     /**
      * Setzt die Aufgabensammlungen, in denen die Aufgabe verwendet wird
+     *
      * @param verwendungen Aufgabensammlungen, in denen die Aufgabe verwendet wird
      */
     public void setVerwendungen(List<Aufgabensammlung> verwendungen) {

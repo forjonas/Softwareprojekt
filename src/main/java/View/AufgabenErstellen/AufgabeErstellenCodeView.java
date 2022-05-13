@@ -20,26 +20,25 @@ import java.io.File;
  * Die View zur Erstellung einer Code Aufgabe
  *
  * @author Jannik Oehme
- * @version 05.05.2022
- *  @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
+ * @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
-    private  Dozent doz;
+    private Dozent doz;
     //Panels
-    private  JPanel AufgabeErstellenCodePnl;
-    private  JPanel centerPnl;
+    private JPanel AufgabeErstellenCodePnl;
+    private JPanel centerPnl;
     private JPanel northPnl;
-    private  JPanel southPnl;
+    private JPanel southPnl;
     //Layouts
     private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10,2);
+    private GridLayout gl = new GridLayout(10, 2);
     //Buttons
     private JButton codeHochBtn;
     private JButton zurueckBtn;
-    private  JButton speichernBtn;
+    private JButton speichernBtn;
     //JComboBoxen
     private JComboBox kategorienCB;
-    private  JComboBox schwierigkeitCB;
+    private JComboBox schwierigkeitCB;
     //Labels
     private JLabel codeBspHochLbl;
     private JLabel codeBeispiel;
@@ -56,7 +55,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JTextArea codeTA;
     private JTextField titelTF;
     private JTextArea aufgabenTextTA;
-    private  JTextArea loesungshinwTA;
+    private JTextArea loesungshinwTA;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
     private JTextArea loesungTA;
@@ -69,20 +68,21 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         new AufgabeErstellenCodeView(null);
     }
 
-    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame){
+    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame) {
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("ProgrammierAufgabe");
         AufgabeErstellenCodeViewFuellen();
         this.pack();
 
-        this.setMinimumSize(new Dimension(1500,900));
-        this.setSize(1500,900);
+        this.setMinimumSize(new Dimension(1500, 900));
+        this.setSize(1500, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     private void AufgabeErstellenCodeViewFuellen() {
         doz = new Dozent();
         gl.setVgap(25);
@@ -106,13 +106,13 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         titelTF = new JTextField();
 
         //ComboBoxes
-        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
-        Schwierigkeitsgrad [] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
 
-        aufgabenTextTA = new JTextArea(50,50);
+        aufgabenTextTA = new JTextArea(50, 50);
         aufgabenTextTA.setLineWrap(true);
 
         loesungshinwTA = new JTextArea();
@@ -136,7 +136,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
         bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
         punkteLbl = new JLabel("Punkte: ");
-        loesungLbl= new JLabel("Lösung");
+        loesungLbl = new JLabel("Lösung");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
 
         centerPnl.add(titelLbl);
@@ -163,28 +163,29 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         northPnl.add(zurueckBtn);
         southPnl.add(speichernBtn);
 
-        AufgabeErstellenCodePnl.add(centerPnl,BorderLayout.CENTER);
-        AufgabeErstellenCodePnl.add(northPnl,BorderLayout.NORTH);
-        AufgabeErstellenCodePnl.add(southPnl,BorderLayout.SOUTH);
+        AufgabeErstellenCodePnl.add(centerPnl, BorderLayout.CENTER);
+        AufgabeErstellenCodePnl.add(northPnl, BorderLayout.NORTH);
+        AufgabeErstellenCodePnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenCodePnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
             zurueck();
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
-        }
-        else if(e.getSource() ==this.codeHochBtn){
+        } else if (e.getSource() == this.codeHochBtn) {
             codeBspHochladen();
         }
     }
+
     private File codeBspHochladen() {
         FC = new JFileChooser((String) null);
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             codeBspFile = FC.getSelectedFile();
             System.out.println(codeBspFile.getName());
             return codeBspFile;
@@ -196,68 +197,67 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     private void speichern() {
-            String aufgTitel = null;
-            String aufText = null;
-            String loesungshinweis = null;
-            int bearbeitungsZeit = 0;
-            int punkte = 0;
-            Kategorie kat = null;
-            Schwierigkeitsgrad schw = null;
-            String codeText = null;
-            String loesung = null;
+        String aufgTitel = null;
+        String aufText = null;
+        String loesungshinweis = null;
+        int bearbeitungsZeit = 0;
+        int punkte = 0;
+        Kategorie kat = null;
+        Schwierigkeitsgrad schw = null;
+        String codeText = null;
+        String loesung = null;
 
-            try {
-                aufgTitel = titelTF.getText();
-                aufText = aufgabenTextTA.getText();
-                loesungshinweis = loesungshinwTA.getText();
-                bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
-                schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-                kat = (Kategorie) kategorienCB.getSelectedItem();
-                punkte = Integer.parseInt(punkteTF.getText());
-                codeText = codeTA.getText();
-                loesung = loesungTA.getText();
-            }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(this,
-                        "Eine Eingabe entsprach nicht dem nötigen Datentyp",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-            if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
+        try {
+            aufgTitel = titelTF.getText();
+            aufText = aufgabenTextTA.getText();
+            loesungshinweis = loesungshinwTA.getText();
+            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
+            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+            kat = (Kategorie) kategorienCB.getSelectedItem();
+            punkte = Integer.parseInt(punkteTF.getText());
+            codeText = codeTA.getText();
+            loesung = loesungTA.getText();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
 
-                createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,loesung,codeText,doz);
-                this.dispose();
-                DozentAnsicht.main(null);
-            }
-    }
-
-        private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw,String loesung, String codeText,Dozent doz) {
-
-            DatabaseService ds = DatabaseService.getInstance();
-            Programmieraufgabe neueAufgabe = new Programmieraufgabe(
-                    bearbeitungsZeit,
-                    codeText,
-                    null,
-                    kat,
-                    punkte,
-                    schw,
-                    aufText,
-                    aufgTitel,
-                    doz,
-                    null);
-            MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe,loesungshinweis,loesung);
-            doz.addErstellteAufgabe(neueAufgabe);
-            try {
-                neueAufgabe.setMusterloesung(mlp);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,
-                        "Musterlösung setzten fehlgeschlagen",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-            ds.persistObject(neueAufgabe);
-            ds.persistObject(mlp);
-
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung, codeText, doz);
+            this.dispose();
+            DozentAnsicht.main(null);
         }
     }
+
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung, String codeText, Dozent doz) {
+
+        DatabaseService ds = DatabaseService.getInstance();
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(
+                bearbeitungsZeit,
+                codeText,
+                kat,
+                punkte,
+                schw,
+                aufText,
+                aufgTitel,
+                doz,
+                null);
+        MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
+        doz.addErstellteAufgabe(neueAufgabe);
+        try {
+            neueAufgabe.setMusterloesung(mlp);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Musterlösung setzten fehlgeschlagen",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        ds.persistObject(neueAufgabe);
+        ds.persistObject(mlp);
+
+    }
+}
