@@ -33,7 +33,7 @@ public class PersistenceTest {
         //ds.clearDatabase();
         //deleteTestData();
         //testRelations();
-        //readTestData();
+        //readTestData(65);
 
         System.out.println("Testprogramm terminiert");
     }
@@ -57,7 +57,7 @@ public class PersistenceTest {
         dozent2.addErstellteAufgabe(a3);
         dozent2.addErstellteAufgabe(a4);
 
-        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
+        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), student1);
         student1.addBearbeitetesTraining(training1);
         for(Aufgabe a : aufgabenListe) {
             a.addVerwendung(training1);
