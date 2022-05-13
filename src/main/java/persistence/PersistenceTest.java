@@ -89,11 +89,11 @@ public class PersistenceTest {
         ds.persistObjects(Arrays.asList(new TestatBearbeitung[]{t1, t2}));*/
 
         Musterloesung ml1 = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Lösungshinweis", "Lösung");
-        Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", "Lösung");
+        //Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", "Lösung");
         Musterloesung ml3 = new MusterloesungProgrammieraufgabe((Programmieraufgabe) a3, "Lösungshinweis", "Lösung");
         Musterloesung ml4 = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Lösungshinweis", Arrays.asList(new Boolean[]{true, false, false}));
         a1.setMusterloesung(ml1);
-        a2.setMusterloesung(ml2);
+        //a2.setMusterloesung(ml2);
         a3.setMusterloesung(ml3);
         a4.setMusterloesung(ml4);
         Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung", student1, testat1);
@@ -113,8 +113,8 @@ public class PersistenceTest {
         a3.addUserloesung(ul3);
         a4.addUserloesung(ul4);
 
-        List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
-        ds.persistObjects(loesungsliste);
+        //List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
+       // ds.persistObjects(loesungsliste);
 
     }
 
