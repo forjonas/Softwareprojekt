@@ -38,6 +38,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     private JComboBox<String> schwierigkeitCBox;
     private JComboBox<String> aufgabenTypCBox;
 
+
     private JCheckBox aufgabenTypMCCBox = new JCheckBox("Multiple Choice");
     private JCheckBox aufgabenTypUMLCBox = new JCheckBox("UML");
     private JCheckBox aufgabenTypCodeCBox = new JCheckBox("Code");

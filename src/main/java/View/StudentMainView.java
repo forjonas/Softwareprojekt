@@ -18,6 +18,9 @@ public class StudentMainView extends JFrame implements ActionListener {
 
     /**------Attribute Ende------ */
 
+    public static void main(String[] args)
+    {new StudentMainView(new Student());}
+
     public StudentMainView(Student student)//ID für individuelle Angabe
     {
         studentPnl= new JPanel();

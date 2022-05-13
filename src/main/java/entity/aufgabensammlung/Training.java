@@ -74,6 +74,22 @@ public class Training extends Aufgabensammlung {
     }
 
     /**
+     * Konstruktor für Klasse Training - ohne Aufgabentyp-> sehe den Sinn nicht~Martin Bergen
+     *
+     * @param aufgaben           Aufgaben, die im Training enthalten sind
+     * @param bearbeitungszeit   Ausgewählte Bearbeitungszeit des Trainings
+     * @param kategorie          Ausgewählte Kategorie des Testats
+     * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
+     */
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Benutzer trainingsErsteller) {
+        super(aufgaben);
+        this.bearbeitungszeit = bearbeitungszeit;
+        this.kategorie = kategorie;
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
+        this.trainingsErsteller = trainingsErsteller;
+    }
+
+    /**
      * Gibt die Bearbeitungszeit des Trainings zurück
      *
      * @return Bearbeitungszeit des Trainings
