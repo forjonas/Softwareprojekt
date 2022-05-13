@@ -62,10 +62,14 @@ public class MusterloesungEinfachantwort extends Musterloesung {
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if (aufgabe.getClass() == EinfachantwortAufgabe.class) {
-            this.aufgabe = aufgabe;
+        if(aufgabe == null) {
+            this.aufgabe = null;
         } else {
-            throw new Exception("MusterloesungEinfachantwort kann nur eine Aufgabe vom Typ Einfachantwort erhalten");
+            if (aufgabe.getClass() == EinfachantwortAufgabe.class) {
+                this.aufgabe = aufgabe;
+            } else {
+                throw new Exception("MusterloesungEinfachantwort kann nur eine Aufgabe vom Typ Einfachantwort erhalten");
+            }
         }
     }
 

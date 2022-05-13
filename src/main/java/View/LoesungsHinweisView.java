@@ -27,7 +27,7 @@ public class LoesungsHinweisView implements ActionListener {
         new LoesungsHinweisView();
     }
 
-    LoesungsHinweisView() {
+    public LoesungsHinweisView() {
 
         LoesungshinwFrame = new JFrame("Lösungshinweis");
         fuelleLoesungshinweisFrame();

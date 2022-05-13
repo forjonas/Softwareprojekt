@@ -62,10 +62,14 @@ public class MusterloesungProgrammieraufgabe extends Musterloesung {
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if (aufgabe.getClass() == Programmieraufgabe.class) {
-            this.aufgabe = aufgabe;
+        if(aufgabe == null) {
+            this.aufgabe = null;
         } else {
-            throw new Exception("MusterloesungProgrammieraufgabe kann nur eine Aufgabe vom Typ Programmieren erhalten");
+            if (aufgabe.getClass() == Programmieraufgabe.class) {
+                this.aufgabe = aufgabe;
+            } else {
+                throw new Exception("MusterloesungProgrammieraufgabe kann nur eine Aufgabe vom Typ Programmieren erhalten");
+            }
         }
     }
 

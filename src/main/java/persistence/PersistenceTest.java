@@ -22,32 +22,19 @@ import java.util.List;
  * Klasse zum Testen der Persistenz und des OR-Mappers
  *
  * @author Jonas Herbst
- * @version 28.04.22
+ * @version 13.05.22
  */
 public class PersistenceTest {
     public static void main(String[] args) throws Exception {
         System.out.println("Methode zum Testen der Persistenz");
         DatabaseService ds = DatabaseService.getInstance();
-        ds.clearDatabase();
+
         createTestData();
-        //Testet das Abfragen von Beziehungen aus der Datenbank
-/*        List<Training> trainings = ds.readTrainingsFromDatabase();
-        for(Training t: trainings) {
-            System.out.println("Training, erstellt von: "+t.getTrainingsErsteller().getNachname());
-            List<Aufgabe> aufgaben = t.getAufgaben();
-            for(Aufgabe a: aufgaben) {
-                System.out.println("Aufgabe: "+a.getName());
-            }
-        }*/
-        //readTestData();
-        //Fancy Shit mit Enums: wenn auf den Bezeichner der Enums zugegriffen wird nur zB getAufgabentyp nutzen,
-        //wenn man den Wert des Enums haben will noch .getCode() dahinter packen
-/*        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
-        for(Aufgabe a:aufgaben){
-            System.out.println(a.getAufgabentyp().getCode());
-            System.out.println(a.getSchwierigkeitsgrad().getCode());
-            System.out.println(a.getKategorie().getCode());
-        }*/
+        //ds.clearDatabase();
+        //deleteTestData();
+        //testRelations();
+        //readTestData(65);
+
         System.out.println("Testprogramm terminiert");
     }
 
@@ -70,16 +57,23 @@ public class PersistenceTest {
         dozent2.addErstellteAufgabe(a3);
         dozent2.addErstellteAufgabe(a4);
 
-        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Aufgabentyp.Einfachantwort, student1);
+        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), student1);
         student1.addBearbeitetesTraining(training1);
+        for(Aufgabe a : aufgabenListe) {
+            a.addVerwendung(training1);
+        }
 
         Testat testat1 = new Testat(aufgabenListe, "Hallo1234", "Sommertestat", dozent1);
         dozent1.addErstelltesTestat(testat1);
+        for(Aufgabe a : aufgabenListe) {
+            a.addVerwendung(testat1);
+        }
 
         TestatBearbeitung t1 = new TestatBearbeitung(testat1);
         testat1.addBearbeitung(t1);
         TestatBearbeitung t2 = new TestatBearbeitung(testat1);
         testat1.addBearbeitung(t2);
+
         student1.addBearbeitetesTestat(t1);
         t1.setTestatBearbeiter(student1);
         student2.addBearbeitetesTestat(t2);
@@ -95,11 +89,11 @@ public class PersistenceTest {
         ds.persistObjects(Arrays.asList(new TestatBearbeitung[]{t1, t2}));*/
 
         Musterloesung ml1 = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Lösungshinweis", "Lösung");
-        Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", "Lösung");
+        //Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", "Lösung");
         Musterloesung ml3 = new MusterloesungProgrammieraufgabe((Programmieraufgabe) a3, "Lösungshinweis", "Lösung");
         Musterloesung ml4 = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Lösungshinweis", Arrays.asList(new Boolean[]{true, false, false}));
         a1.setMusterloesung(ml1);
-        a2.setMusterloesung(ml2);
+        //a2.setMusterloesung(ml2);
         a3.setMusterloesung(ml3);
         a4.setMusterloesung(ml4);
         Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung", student1, testat1);
@@ -119,8 +113,70 @@ public class PersistenceTest {
         a3.addUserloesung(ul3);
         a4.addUserloesung(ul4);
 
-        List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
-        ds.persistObjects(loesungsliste);
+        //List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
+       // ds.persistObjects(loesungsliste);
+
+    }
+
+    public static void deleteTestData() throws Exception {
+        DatabaseService ds = DatabaseService.getInstance();
+        List<Dozent> dozenten = ds.readDozentenFromDatabase();
+        for(Dozent d :  dozenten) {
+            ds.saveDeleteDozentFromDatabase(d);
+        }
+        List<Student> studenten = ds.readStudentenFromDatabase();
+        for(Student s :  studenten) {
+            ds.saveDeleteStudentFromDatabase(s);
+        }
+        List<Userloesung> userloesungen = ds.readUserloesungenFromDatabse();
+        for (Userloesung ul : userloesungen) {
+            ds.saveDeleteUserloesungFromDatabase(ul);
+        }
+        List<Musterloesung> musterloesungen = ds.readMusterloesungenFromDatabse();
+        for (Musterloesung ml : musterloesungen) {
+            ds.saveDeleteMusterloesungFromDatabase(ml);
+        }
+        List<TestatBearbeitung> testatBearbeitungen = ds.readTestatBearbeitungenFromDatabase();
+        for (TestatBearbeitung tb : testatBearbeitungen) {
+            ds.saveDeleteTestatBearbeitungFromDatabase(tb);
+        }
+        List<Testat> testate = ds.readTestateFromDatabase();
+        for (Testat testat : testate) {
+            ds.saveDeleteTestatFromDatabase(testat);
+        }
+        List<Training> trainings = ds.readTrainingsFromDatabase();
+        for (Training training : trainings) {
+            ds.saveDeleteTrainingFromDatabase(training);
+        }
+        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
+        for (Aufgabe aufgabe : aufgaben) {
+            ds.saveDeleteAufgabeFromDatabase(aufgabe);
+        }
+
+    }
+
+    public static void testRelations() throws Exception {
+        DatabaseService ds = DatabaseService.getInstance();
+        List<Training> trainings = ds.readTrainingsFromDatabase();
+        for (Training t : trainings) {
+            System.out.println("Training, erstellt von: " + t.getTrainingsErsteller().getNachname());
+            List<Aufgabe> aufgaben = t.getAufgaben();
+            for (Aufgabe a : aufgaben) {
+                System.out.println("Aufgabe: " + a.getName());
+            }
+        }
+    }
+
+    public static void testEnums() {
+        //Fancy Zeug mit Enums: wenn auf den Bezeichner der Enums zugegriffen wird nur zB getAufgabentyp nutzen,
+        //wenn man den Wert des Enums haben will noch .getCode() dahinter packen
+        DatabaseService ds = DatabaseService.getInstance();
+        List<Aufgabe> aufgaben = ds.readAufgabenFromDatabase();
+        for (Aufgabe a : aufgaben) {
+            System.out.println(a.getAufgabentyp().getCode());
+            System.out.println(a.getSchwierigkeitsgrad().getCode());
+            System.out.println(a.getKategorie().getCode());
+        }
     }
 
     public static void readTestData() {

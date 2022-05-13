@@ -1,6 +1,7 @@
 package entity.loesung.userloesung;
 
 import entity.aufgabe.Aufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.benutzer.Benutzer;
@@ -65,10 +66,14 @@ public class UserloesungProgrammieraufgabe extends Userloesung {
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if (aufgabe.getClass() == Programmieraufgabe.class) {
-            this.aufgabe = aufgabe;
+        if (aufgabe == null) {
+            this.aufgabe = null;
         } else {
-            throw new Exception("UserloesungProgrammieraufgabe kann nur eine Aufgabe vom Typ Programmieren erhalten");
+            if (aufgabe.getClass() == Programmieraufgabe.class) {
+                this.aufgabe = aufgabe;
+            } else {
+                throw new Exception("UserloesungProgrammieraufgabe kann nur eine Aufgabe vom Typ Programmieren erhalten");
+            }
         }
     }
 

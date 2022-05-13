@@ -7,9 +7,11 @@ import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -105,10 +107,14 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if (musterloesung.getClass() == MusterloesungMultipleChoiceAufgabe.class) {
-            this.musterloesung = musterloesung;
+        if(musterloesung == null) {
+            this.musterloesung = null;
         } else {
-            throw new Exception("MultipleChoiceAufgabe kann nur eine Musterlösung vom Typ MultipleChoiceAufgabe erhalten");
+            if (musterloesung.getClass() == MusterloesungMultipleChoiceAufgabe.class) {
+                this.musterloesung = musterloesung;
+            } else {
+                throw new Exception("MultipleChoiceAufgabe kann nur eine Musterlösung vom Typ MultipleChoiceAufgabe erhalten");
+            }
         }
     }
 
@@ -133,11 +139,17 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if (userloesungen.size() > 0) {
-            if (userloesungen.get(0).getClass() == UserloesungMultipleChoiceAufgabe.class) {
-                this.userloesungen = userloesungen;
+        if(userloesungen == null) {
+            this.userloesungen = null;
+        } else {
+            if (userloesungen.size() > 0) {
+                if (userloesungen.get(0).getClass() == UserloesungMultipleChoiceAufgabe.class) {
+                    this.userloesungen = userloesungen;
+                } else {
+                    throw new Exception("MultipleChoiceAufgabe kann nur Userlösungen vom Typ MultipleChoiceAufgabe erhalten");
+                }
             } else {
-                throw new Exception("MultipleChoiceAufgabe kann nur Userlösungen vom Typ MultipleChoiceAufgabe erhalten");
+                this.userloesungen = new LinkedList<Userloesung>();
             }
         }
     }
