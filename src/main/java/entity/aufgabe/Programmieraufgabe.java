@@ -5,11 +5,14 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
+import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
+import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 import jakarta.persistence.Entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -74,10 +77,14 @@ public class Programmieraufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if (musterloesung.getClass() == MusterloesungProgrammieraufgabe.class) {
-            this.musterloesung = musterloesung;
+        if(musterloesung == null) {
+            this.musterloesung = null;
         } else {
-            throw new Exception("Programmieraufgabe kann nur eine Musterlösung vom Typ Programmieraufgabe erhalten");
+            if (musterloesung.getClass() == MusterloesungProgrammieraufgabe.class) {
+                this.musterloesung = musterloesung;
+            } else {
+                throw new Exception("Programmieraufgabe kann nur eine Musterlösung vom Typ Programmieraufgabe erhalten");
+            }
         }
     }
 
@@ -102,11 +109,17 @@ public class Programmieraufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if (userloesungen.size() > 0) {
-            if (userloesungen.get(0).getClass() == UserloesungProgrammieraufgabe.class) {
-                this.userloesungen = userloesungen;
+        if(userloesungen == null) {
+            this.userloesungen = null;
+        } else {
+            if (userloesungen.size() > 0) {
+                if (userloesungen.get(0).getClass() == UserloesungProgrammieraufgabe.class) {
+                    this.userloesungen = userloesungen;
+                } else {
+                    throw new Exception("Programmieraufgabe kann nur Userlösungen vom Typ Programmieraufgabe erhalten");
+                }
             } else {
-                throw new Exception("Programmieraufgabe kann nur Userlösungen vom Typ Programmieraufgabe erhalten");
+                this.userloesungen = new LinkedList<Userloesung>();
             }
         }
     }
