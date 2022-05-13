@@ -1,11 +1,13 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
+import entity.benutzer.Dozent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * Die Start View zur aufgaben Erstellung
  *
@@ -13,35 +15,40 @@ import java.awt.event.ActionListener;
  * @version 05.05.2022
  *  @version 09.05.2022 Layout gefixed
  */
-public class AufgabeErstellenStartView implements ActionListener {
-    JFrame AufgabeErstellenStartFrame;
-    JPanel centerPnl;
-    JPanel northPnl;
-    JPanel southPnl;
-    JButton zurueckBtn;
-    JButton weiterBtn;
-    GridLayout gl = new GridLayout(3,1);
-    JComboBox <String> DDM;
+public class AufgabeErstellenStartView extends JFrame implements ActionListener {
+    private JPanel centerPnl;
+    private JPanel northPnl;
+    private JPanel southPnl;
+    private JButton zurueckBtn;
+    private JButton weiterBtn;
+    private GridLayout gl = new GridLayout(3,1);
+    private JComboBox <String> DDM;
+    private JFrame dozentAnsichtFrame;
+    Dozent doz;
 
 
     public static void main(String[] args) {
-        new AufgabeErstellenStartView();
+        new AufgabeErstellenStartView(null);
     }
 
-    public AufgabeErstellenStartView() {
-
-        AufgabeErstellenStartFrame = new JFrame("Aufgabe Erstellen");
+    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame) {
+        this.dozentAnsichtFrame = dozentAnsichtFrame;
+        this.setName("Aufgabe Erstellen");
         AufgabeErstellenFrameFuellen();
-        AufgabeErstellenStartFrame.setSize(100, 100);
-        AufgabeErstellenStartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AufgabeErstellenStartFrame.pack();
-        AufgabeErstellenStartFrame.setVisible(true);
+        this.pack();
+        this.setMinimumSize(new Dimension(1500,900));
+        this.setSize(1500,900);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
     }
     private void AufgabeErstellenFrameFuellen() {
+        doz = new Dozent();
         //Panels
         centerPnl =new JPanel();
         centerPnl.setLayout(gl);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 400, 300, 400));
         //Buttons
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
@@ -59,9 +66,9 @@ public class AufgabeErstellenStartView implements ActionListener {
         southPnl.add(weiterBtn);
 
         centerPnl.add(DDM);
-        AufgabeErstellenStartFrame.add(centerPnl,BorderLayout.CENTER);
-        AufgabeErstellenStartFrame.add(northPnl,BorderLayout.NORTH);
-        AufgabeErstellenStartFrame.add(southPnl,BorderLayout.SOUTH);
+        this.add(centerPnl,BorderLayout.CENTER);
+        this.add(northPnl,BorderLayout.NORTH);
+        this.add(southPnl,BorderLayout.SOUTH);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -71,49 +78,41 @@ public class AufgabeErstellenStartView implements ActionListener {
             weiter();
         }
     }
-
     private void weiter() {
         String switcher = (String) DDM.getSelectedItem();
         switch(switcher) {
-            case "Designaufgabe":AufgabeErstellenStartFrame.dispose();
-                        AufgabeErstellenUmlView.main(null);
+            case "Designaufgabe":this.setVisible(false);
+                        new AufgabeErstellenUmlView(this);
                         break;
-            case "Programmieraufgabe":AufgabeErstellenStartFrame.dispose();
-                        AufgabeErstellenCodeView.main(null);
+            case "Programmieraufgabe":this.setVisible(false);
+                        new AufgabeErstellenCodeView(this);
                         break;
-            case "MultipleChoiceaufgabe":AufgabeErstellenStartFrame.dispose();
-                                    AufgabeErstellenMultipleChoiceView.main(null);
+            case "MultipleChoiceaufgabe":this.setVisible(false);
+                        new AufgabeErstellenMultipleChoiceView(this);
                         break;
-            case "Einfachantwort": AufgabeErstellenStartFrame.dispose() ;
-                                    AufgabeErstellenEinfachAntwortView.main(null);
+            case "Einfachantwort": this.setVisible(false); ;
+                        new AufgabeErstellenEinfachAntwortView(this);
                         break;
-            default:    AufgabeErstellenStartFrame.dispose();
-                        DozentAnsicht.main(null);
+            default:    this.setVisible(false);
+
+
         }
     }
     private void zurueck() {
-        AufgabeErstellenStartFrame.dispose();
+        this.dispose();
         DozentAnsicht.main(null);
     }
 
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
         if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
-            errorTest(testFrame);
+            JOptionPane.showMessageDialog(testFrame,
+                    "Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
-
         }
         else{
             return true;
-
         }
-    }
-    static void errorTest(Frame test){
-        //als JerrorMessage
-        JDialog jd = new JDialog();
-        jd.toFront();
-        JLabel errorLbl = new JLabel("Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0");
-        jd.setSize(800,100);
-        jd.add(errorLbl);
-        jd.setVisible(true);
     }
 }

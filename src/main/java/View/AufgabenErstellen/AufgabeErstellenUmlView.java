@@ -3,8 +3,10 @@ package View.AufgabenErstellen;
 import View.DozentAnsicht;
 import View.ImageFilter;
 import entity.aufgabe.Designaufgabe;
+import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -20,56 +22,62 @@ import java.io.File;
  * @version 05.05.2022
  *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
-public class AufgabeErstellenUmlView implements ActionListener {
-    JFrame AufgabeErstellenUMLViewFrame;
+public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
+    private Dozent doz;
     //Panels
-    JPanel AufgabeErstellenUMLPnl;
-    JPanel centerPnl;
-    JPanel northPnl;
-    JPanel southPnl;
+    private JPanel AufgabeErstellenUMLPnl;
+    private  JPanel centerPnl;
+    private JPanel northPnl;
+    private JPanel southPnl;
     //Layouts
-    BorderLayout bl = new BorderLayout();
-    GridLayout gl = new GridLayout(10,2);
+    private  BorderLayout bl = new BorderLayout();
+    private GridLayout gl = new GridLayout(10,2);
     //Buttons
-    JButton zurueckBtn;
-    JButton speichernBtn;
-    JButton UMLHochladenBtn;
-    JButton musterloesungBtn;
+    private  JButton zurueckBtn;
+    private JButton speichernBtn;
+    private  JButton UMLHochladenBtn;
+    private JButton musterloesungBtn;
     //JComboboxen
-    JComboBox kategorienCB;
-    JComboBox schwierigkeitCB;
+    private  JComboBox kategorienCB;
+    private  JComboBox schwierigkeitCB;
     //Labels
-    JLabel titelLbl;
-    JLabel aufgabenTxtLbl;
-    JLabel loesungsHinweisLbl;
-    JLabel schwierigketiLbl;
-    JLabel kategorienLbl;
-    JLabel bearbeitungszeitLbl;
-    JLabel punkteLbl;
+    private JLabel titelLbl;
+    private JLabel aufgabenTxtLbl;
+    private JLabel loesungsHinweisLbl;
+    private JLabel schwierigketiLbl;
+    private JLabel kategorienLbl;
+    private JLabel bearbeitungszeitLbl;
+    private  JLabel punkteLbl;
     //TextAreas
-    JTextArea titelTA;
-    JTextArea aufgabenTextTA;
-    JTextArea loesungshinwTA;
-    JTextArea bearbeitungsZeitTA;
-    JTextArea punkteTA;
+    private JTextField titelTF;
+    private JTextArea aufgabenTextTA;
+    private JTextArea loesungshinwTA;
+    private JTextField bearbeitungsZeitTF;
+    private JTextField punkteTF;
     //Files
-    JFileChooser FC;
-    File designFile;
-    File loesungFile;
+    private JFileChooser FC;
+    private  File designFile;
+    private  File loesungFile;
+    private JFrame aufgabeErstellenStartViewFrame;
 
     public static void main(String[] args) {
-        new AufgabeErstellenUmlView();
+        new AufgabeErstellenUmlView(null);
     }
 
-    AufgabeErstellenUmlView(){
-        AufgabeErstellenUMLViewFrame= new JFrame("Design Aufgabe Erstellen");
+    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame){
+        this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
+        this.setName("Design Aufgabe Erstellen");
         AufgabeErstellenUMLViewFuellen();
-        AufgabeErstellenUMLViewFrame.setSize(800, 800);
-        AufgabeErstellenUMLViewFrame.pack();
-        AufgabeErstellenUMLViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AufgabeErstellenUMLViewFrame.setVisible(true);
+        this.pack();
+        this.setMinimumSize(new Dimension(1500,900));
+        this.setSize(1500,900);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
+        this.setVisible(true);
     }
     private void AufgabeErstellenUMLViewFuellen() {
+        doz = new Dozent();
         //Panels
         gl.setVgap(25);
         gl.setHgap(25);
@@ -92,25 +100,18 @@ public class AufgabeErstellenUmlView implements ActionListener {
         musterloesungBtn = new JButton("Musterlösung Hochladen");
         musterloesungBtn.addActionListener(this);
         //TextAreas
-        titelTA = new JTextArea();
-        titelTA.setLineWrap(true);
-        titelTA.setBounds(20,75,250,200);
+        titelTF = new JTextField();
 
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
-        aufgabenTextTA.setBounds(20,75,250,200);
 
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20,75,250,200);
         loesungshinwTA.setLineWrap(true);
 
-        bearbeitungsZeitTA = new JTextArea();
-        bearbeitungsZeitTA.setBounds(20,75,250,200);
-        bearbeitungsZeitTA.setLineWrap(true);
+        bearbeitungsZeitTF = new JTextField();
 
-        punkteTA = new JTextArea();
-        punkteTA.setBounds(20,75,250,200);
-        punkteTA.setLineWrap(true);
+        punkteTF = new JTextField();
+
         //ComboBoxes
         Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
@@ -128,7 +129,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
         //ComponentsAdden
         centerPnl.add(titelLbl);
-        centerPnl.add(titelTA);
+        centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(kategorienLbl);
@@ -138,9 +139,9 @@ public class AufgabeErstellenUmlView implements ActionListener {
         centerPnl.add(schwierigketiLbl);
         centerPnl.add(schwierigkeitCB);
         centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTA);
+        centerPnl.add(bearbeitungsZeitTF);
         centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTA);
+        centerPnl.add(punkteTF);
         centerPnl.add(loesungsHinweisLbl);
         centerPnl.add(loesungshinwTA);
 
@@ -150,7 +151,7 @@ public class AufgabeErstellenUmlView implements ActionListener {
         AufgabeErstellenUMLPnl.add(centerPnl,BorderLayout.CENTER);
         AufgabeErstellenUMLPnl.add(northPnl,BorderLayout.NORTH);
         AufgabeErstellenUMLPnl.add(southPnl,BorderLayout.SOUTH);
-        AufgabeErstellenUMLViewFrame.add(AufgabeErstellenUMLPnl);
+        this.add(AufgabeErstellenUMLPnl);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -193,40 +194,57 @@ public class AufgabeErstellenUmlView implements ActionListener {
         return null;
     }
     private void zurueck() {
-        AufgabeErstellenUMLViewFrame.dispose();
-        AufgabeErstellenStartView.main(null);
+        this.dispose();
+        aufgabeErstellenStartViewFrame.setVisible(true);
+
     }
     private void speichern() {
-        String aufgTitel;
-        String aufText;
-        String loesungshinweis;
-        int bearbeitungsZeit;
-        int punkte;
-        Kategorie kat;
-        Schwierigkeitsgrad schw;
+        String aufgTitel = null;
+        String aufText = null;
+        String loesungshinweis = null;
+        int bearbeitungsZeit = 0;
+        int punkte = 0;
+        Kategorie kat = null;
+        Schwierigkeitsgrad schw = null;
 
-        aufgTitel = titelTA.getText();
-        aufText = aufgabenTextTA.getText();
-        loesungshinweis = loesungshinwTA.getText();
-        bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTA.getText());
-        schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-        kat = (Kategorie) kategorienCB.getSelectedItem();
-        punkte = Integer.parseInt(punkteTA.getText());
-
-
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, AufgabeErstellenUMLViewFrame)){
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw);
-            AufgabeErstellenUMLViewFrame.dispose();
-
-            DozentAnsicht.main(null);
+        try {
+            aufgTitel = titelTF.getText();
+            aufText = aufgabenTextTA.getText();
+            loesungshinweis = loesungshinwTA.getText();
+            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
+            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
+            kat = (Kategorie) kategorienCB.getSelectedItem();
+            punkte = Integer.parseInt(punkteTF.getText());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,
+                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,doz);
+            this.dispose();
+            DozentAnsicht.main(null);
+        }
     }
-
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte,Kategorie kat,Schwierigkeitsgrad schw) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,null,"",kat, punkte,schw, aufText, aufgTitel,null,null);
+        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,null,"a",kat, punkte,schw, aufText, aufgTitel,doz,null);
+        doz.addErstellteAufgabe(neueAufgabe);
+        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe,loesungshinweis,loesungFile);
+        try {
+            neueAufgabe.setMusterloesung(mlp);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Musterlösung setzten fehlgeschlagen",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        ds.persistObject(neueAufgabe);
+        ds.persistObject(mlp);
         ds.persistObject(neueAufgabe);
 
     }

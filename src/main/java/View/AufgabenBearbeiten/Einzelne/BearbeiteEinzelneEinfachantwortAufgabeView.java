@@ -1,7 +1,5 @@
 package View.AufgabenBearbeiten.Einzelne;
 
-import TestateK.TestateMainGui;
-import entity.*;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -13,9 +11,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Kristin Kubisch
@@ -23,7 +18,6 @@ import java.util.List;
  */
 public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
-    //private EinfachantwortAufgabe aufgabe;
     private JPanel contentPane;
     private JTextArea textArea;
     private JButton btnBeendenEinzel;
@@ -59,36 +53,36 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe) {
 
         this.aufgabe = aufgabe;
-        setTitle("Einzelne Einfachantwort");
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
-
+// Frame festlegen
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //eingetragen
+        JLabel lblNewLabel1 = new JLabel("Hier steht ein Text");//(aufgabe.getTextbeschreibung()); //eingetragen
         panelNorth.add(lblNewLabel1);
-
+// Textbeschreibung
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
         textArea = new JTextArea(18, 50);
         panelCenter.add(textArea);
-
+//Antwortmöglichkeit
 
         JPanel panelWest = new JPanel();
         contentPane.add(panelWest, BorderLayout.WEST);
         JLabel lblNewLabel_1 = new JLabel("Antwort:");
         panelWest.add(lblNewLabel_1);
-
+//Antwort Label
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
-
+// im BorderLayout Panel mit FlowLayout
 
         btnBeendenEinzel = new JButton("Beenden");
         panelSouth.add(btnBeendenEinzel);
@@ -96,11 +90,12 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         panelSouth.add(btnLoesungshinweisEinzel);
         btnAufgabeBeendenEinzel = new JButton("Aufgabe Beenden");
         panelSouth.add(btnAufgabeBeendenEinzel);
+//im Panel Panel die Buttons
 
         this.btnBeendenEinzel.addActionListener(this);
         this.btnLoesungshinweisEinzel.addActionListener(this);
         this.btnAufgabeBeendenEinzel.addActionListener(this);
-
+//addActionListener
     }
 
     @Override
@@ -114,19 +109,6 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         }
         if (e.getSource() == this.btnAufgabeBeendenEinzel) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
-
-            /**
-             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-             File DName = new File("AntwortAufgabe1.txt");
-             fw = new FileWriter(DName);
-             bw = new BufferedWriter(fw);
-             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-             this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
-
-             */
-
-            // this.dispose();
-            // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
 
         }
 

@@ -75,10 +75,14 @@ public class Designaufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if (musterloesung.getClass() == MusterloesungDesignaufgabe.class) {
-            this.musterloesung = musterloesung;
+        if(musterloesung == null) {
+            this.musterloesung = null;
         } else {
-            throw new Exception("Designaufgabe kann nur eine Musterlösung vom Typ Designaufgabe erhalten");
+            if (musterloesung.getClass() == MusterloesungDesignaufgabe.class) {
+                this.musterloesung = musterloesung;
+            } else {
+                throw new Exception("Designaufgabe kann nur eine Musterlösung vom Typ Designaufgabe erhalten");
+            }
         }
     }
 
@@ -103,11 +107,17 @@ public class Designaufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if (userloesungen.size() > 0) {
-            if (userloesungen.get(0).getClass() == UserloesungDesignaufgabe.class) {
-                this.userloesungen = userloesungen;
+        if(userloesungen == null) {
+            this.userloesungen = null;
+        } else {
+            if (userloesungen.size() > 0) {
+                if (userloesungen.get(0).getClass() == UserloesungDesignaufgabe.class) {
+                    this.userloesungen = userloesungen;
+                } else {
+                    throw new Exception("Designaufgabe kann nur Userlösungen vom Typ Designaufgabe erhalten");
+                }
             } else {
-                throw new Exception("Designaufgabe kann nur Userlösungen vom Typ Designaufgabe erhalten");
+                this.userloesungen = new LinkedList<Userloesung>();
             }
         }
     }

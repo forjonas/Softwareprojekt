@@ -76,7 +76,8 @@ public class TrainingTableModel extends AbstractTableModel {
             case 5:
                 return trainingsliste.get(rowIndex).getSchwierigkeitsgrad();
             case 6:
-                return trainingsliste.get(rowIndex).getAufgabentyp();
+                //return trainingsliste.get(rowIndex).getAufgabentyp();
+                return null;
             default:
                 return null;
         }

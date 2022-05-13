@@ -1,11 +1,13 @@
 package View.AufgabenBearbeiten.Training;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import app.TestatApp;
 import app.TrainingApp;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.TestatBearbeitung;
 
 import java.awt.*;
 
@@ -18,44 +20,29 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 
 
 	private JPanel contentPane;
+	private JTextArea textArea;
 	private JButton btnBeendenTraining;
 	private JButton btnLoesungshinweisTraining;
 	private JButton btnVoherigeAufgabeTraining;
 	private JButton btnNaechsteAufgabeTraining;
 	private JButton btnTrainingBeenden;
 	private JButton btnUpload;
-	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\JavaCode.png");
+
 	private TrainingApp trainingApp;
-	private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
+	private Programmieraufgabe aufgabe;
+	private String antwort;
 
 
-    /**
-	 * Launch the application.
-	 */
-
-	/**
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BearbeiteTrainingProgrammieraufgabeView frame = new BearbeiteTrainingProgrammieraufgabeView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	 */
 	/**
 	 * Create the frame.
 	 */
 	public BearbeiteTrainingProgrammieraufgabeView(TrainingApp trainingApp, Programmieraufgabe aufgabe) {
 		this.aufgabe = aufgabe;
+		this.trainingApp = trainingApp;
+
 		setTitle(aufgabe.getName()); //Name der Aufgabe
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 435);
+		//setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -66,13 +53,19 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
 		panelNorth.add(lblNewLabel1);
 
-		JLabel lblNewLabel_2 = new JLabel (icon);
-		contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
+		/**
+		 * Optionales Bild hinzufügen
+		 */
+
+		JPanel panelCenter = new JPanel();
+		contentPane.add(panelCenter, BorderLayout.CENTER);
+		textArea = new JTextArea(18, 50);
+		panelCenter.add(textArea);
 
 		JPanel panelWest = new JPanel();
 		contentPane.add(panelWest, BorderLayout.WEST);
-		btnUpload = new JButton("Upload");
-		panelWest.add(btnUpload);
+		JLabel lblNewLabel_1 = new JLabel("Antwort:");
+		panelWest.add(lblNewLabel_1);
 
 
 		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -96,45 +89,41 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 		this.btnTrainingBeenden.addActionListener(this);
 		this.btnUpload.addActionListener(this);
 
+		super.pack();
+		Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+		super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+		super.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnBeendenTraining) {
-			JOptionPane.showMessageDialog(this,"Button Beenden");
+			this.dispose();
+			BearbeiteTestatKatalogView.main(null);
 
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
-			//JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-			JOptionPane.showMessageDialog(this,aufgabe.getMusterloesung().getLoesungshinweis());
+			JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-			JOptionPane.showMessageDialog(this,"Button Vorherige");
+			JOptionPane.showMessageDialog(this, "Button Vorherige");
 		}
-		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
-			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
+		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
 
+			antwort = textArea.getText();
+			trainingApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+			trainingApp.weiter(); //testatApp.testat
 			/**
-			 String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-			 File DName = new File("AntwortAufgabe1.txt");
-			 fw = new FileWriter(DName);
-			 bw = new BufferedWriter(fw);
-			 bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-			 this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
-
+			 * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
 			 */
+			this.trainingApp.weiter();
 
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
-			JOptionPane.showMessageDialog(this,"Button Beenden");
+			this.dispose();
+			trainingApp.printTest();
+			BearbeiteTestatKatalogView.main(null);
 
-		}
-		if (e.getSource() == this.btnUpload) {//angepasst
-			//Lese Datei und speicher diese in (Userlösung)
-			// Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
-			// lade das DocCode
-			// String docUpload = textArea.getText(); // lese den input eig. Bild
-			JOptionPane.showMessageDialog(this, "Upload Button");
 		}
 
 	}

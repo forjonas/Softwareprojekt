@@ -1,9 +1,9 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.TestatBearbeitung;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,37 +12,27 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Kristin Kubisch
+ * @version 10.05.22
+ * @version2 13.05.22
+ */
 public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
 
+
+    //Frame Elemente
     private JPanel contentPane;
-    private JButton btnBeendenTestst;
+    private JTextArea textArea;
+    private JButton btnBeendenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
-    private JButton btnUpload;
-    ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\JavaCode.png");
 
     private TestatApp testatApp;
     private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
-
-
-    /**
-     * Launch the application.
-     */
-    /**
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView(TestatApp testatApp, Designaufgabe aufgabe); //angepasst--> nötig?? Warum
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }*/
+    private TestatBearbeitung bearbeitet;
+    private String antwort;
 
     /**
      * Create the frame.
@@ -50,36 +40,47 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     public BearbeiteTestatProgrammieraufgabeView(TestatApp testatApp, Programmieraufgabe aufgabe) { //angepasst
 
         this.aufgabe = aufgabe;
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        this.testatApp = testatApp;
 
+        setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 674, 435);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout(0, 0));
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
-        panelNorth.add(lblNewLabel1);
+        JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
+        panelNorth.add(lblTextbeschreibung);
 
-        JLabel lblNewLabel_2 = new JLabel(icon);
-        contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
+        /**
+         * Optionales Bild hinzufügen
+         */
+
+        JPanel panelCenter = new JPanel();
+        contentPane.add(panelCenter, BorderLayout.CENTER);
+        textArea = new JTextArea(18, 50);
+        panelCenter.add(textArea);
+
 
         JPanel panelWest = new JPanel();
         contentPane.add(panelWest, BorderLayout.WEST);
-        btnUpload = new JButton("Upload");
-        panelWest.add(btnUpload);
+        JLabel lblNewLabel_1 = new JLabel("Antwort:");
+        panelWest.add(lblNewLabel_1);
 
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-        btnBeendenTestst = new JButton("Beenden");
-        panelSouth.add(btnBeendenTestst);
+
+        btnBeendenTestat = new JButton("Beenden");
+        panelSouth.add(btnBeendenTestat);
+
         btnLoesungshinweisTestat = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTestat);
+
         btnVoherigeAufgabeTestat = new JButton("Vorherige Aufgabe");
         panelSouth.add(btnVoherigeAufgabeTestat);
         btnNaechsteAufgabeTestat = new JButton("N\u00E4chste Aufgabe");
@@ -87,49 +88,48 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         btnTestatBeenden = new JButton("Testat Beenden");
         panelSouth.add(btnTestatBeenden);
 
-        this.btnBeendenTestst.addActionListener(this);
+        this.btnBeendenTestat.addActionListener(this);
         this.btnLoesungshinweisTestat.addActionListener(this);
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
         this.btnTestatBeenden.addActionListener(this);
-        this.btnUpload.addActionListener(this);
+
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+        super.setVisible(true);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {//Bei der Buttonabfrage struktur kannst du auch eine if-else struktur einbauen, erspart runtime
-        if (e.getSource() == this.btnBeendenTestst) {
-            JOptionPane.showMessageDialog(this, "Button Beenden");
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnBeendenTestat) {
+            this.dispose();
+            testatApp.printTest();
+            BearbeiteTestatKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+        }
+        if (e.getSource() == this.btnTestatBeenden) {
+            this.dispose();
+            testatApp.printTest();
+            BearbeiteTestatKatalogView.main(null);
+
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+
         }
-        if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
-            //Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
+        if (e.getSource() == this.btnNaechsteAufgabeTestat) {
+
+            antwort = textArea.getText();
+            testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+            testatApp.weiter(); //testatApp.testat
             /**
-            String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-            File DName = new File("AntwortAufgabe1.txt");
-            fw = new FileWriter(DName);
-            bw = new BufferedWriter(fw);
-            bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-            this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
-
-            */
+             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
+             */
 
         }
-        if (e.getSource() == this.btnTestatBeenden) {
-            JOptionPane.showMessageDialog(this, "Button Testat Beenden");
-        }
-        if (e.getSource() == this.btnUpload) { //angepasst
-            //Lese Datei und speicher diese in (Userlösung)
-            // Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
-            // lade das DocCode
-            // String docUpload = textArea.getText(); // lese den input eig. Bild
-            JOptionPane.showMessageDialog(this, "Upload Button");
-        }
-
     }
 }

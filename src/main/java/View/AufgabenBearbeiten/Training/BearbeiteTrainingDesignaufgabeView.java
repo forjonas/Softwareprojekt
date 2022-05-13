@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Training;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import app.TestatApp;
 import app.TrainingApp;
 import entity.aufgabe.Designaufgabe;
@@ -31,36 +32,18 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 	private TrainingApp trainingApp;
 	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BearbeiteTrainingDesignaufgabeView frame = new BearbeiteTrainingDesignaufgabeView(TestatApp testatApp, Designaufgabe aufgabe); //angepasst--> nötig?? Warum
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	 Die Main-Methode wird nicht funktionieren wenn Sie keine deklarierten Instanzen enthält, du erstellst hier eine View ohne deklarierte Instanzen, daher wird das nicht funktionieren
-
-	 */
+	private String antwort;
 
 	/**
 	 * Create the frame.
 	 */
 	public BearbeiteTrainingDesignaufgabeView(TrainingApp trainingApp, Designaufgabe aufgabe) {
 		this.aufgabe = aufgabe;
-		setTitle(aufgabe.getName()); //Name der Aufgabe
+		this.trainingApp = trainingApp;
 
+		setTitle(aufgabe.getName()); //Name der Aufgabe
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 435);
+		//setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -101,42 +84,34 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		this.btnTrainingBeenden.addActionListener(this);
 		this.btnUpload.addActionListener(this);
 
+		super.pack();
+		Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+		super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+		super.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnBeendenTraining) {
-			JOptionPane.showMessageDialog(this,"Button Beenden");
-
+			trainingApp.printTest();
+			this.dispose();
+			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
-			JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
+			JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
-			//Lese Datei und speicher diese in (Userlösung) //HIER NICHT????
-
-			/**
-			String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-			File DName = new File("AntwortAufgabe1.txt");
-			fw = new FileWriter(DName);
-			bw = new BufferedWriter(fw);
-			bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-			this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
-
-			 */
+			trainingApp.weiter();
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
-			JOptionPane.showMessageDialog(this,"Button Beenden");
-
+			trainingApp.printTest();
+			this.dispose();
+			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
 		}
-		if (e.getSource() == this.btnUpload) {//angepasst
-			//Lese Datei und speicher diese in (Userlösung)
-			// Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
-			// lade das DocCode
-			// String docUpload = textArea.getText(); // lese den input eig. Bild
+		if (e.getSource() == this.btnUpload) {
 			JOptionPane.showMessageDialog(this, "Upload Button");
 		}
 

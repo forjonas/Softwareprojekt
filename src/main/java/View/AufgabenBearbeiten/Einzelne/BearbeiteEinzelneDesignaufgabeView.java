@@ -101,19 +101,6 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         if (e.getSource() == this.btnAufgabeBeenden) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
 
-            /**
-             String textFieldValue = docUpload; //übergebe den docUpload vom Upload Button
-             File DName = new File("AntwortAufgabe1.txt");
-             fw = new FileWriter(DName);
-             bw = new BufferedWriter(fw);
-             bw.write(textFieldValue);  //bw schreibt txt Datei --> eig. Bild
-             this.trainingApp.weiter(); //Waren z.b. bei Aufgabe 3 gehen weiter zu 4
-
-             */
-
-            // this.dispose();
-            // DozentAnsicht.main(null); //eigentlich: studentView.main(null);
-
         }
         if (e.getSource() == this.btnUpload) {
             JOptionPane.showMessageDialog(this, "Upload Button");
