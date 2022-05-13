@@ -68,10 +68,14 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if (aufgabe.getClass() == MultipleChoiceAufgabe.class) {
-            this.aufgabe = aufgabe;
+        if(aufgabe == null) {
+            this.aufgabe = null;
         } else {
-            throw new Exception("UserloesungMultipleChoiceAufgabe kann nur eine Aufgabe vom Typ MultipleChoice erhalten");
+            if (aufgabe.getClass() == MultipleChoiceAufgabe.class) {
+                this.aufgabe = aufgabe;
+            } else {
+                throw new Exception("UserloesungMultipleChoiceAufgabe kann nur eine Aufgabe vom Typ MultipleChoice erhalten");
+            }
         }
     }
 

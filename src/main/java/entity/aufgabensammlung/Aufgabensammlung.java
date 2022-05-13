@@ -14,13 +14,17 @@ import java.util.List;
  * @version 22.04.22
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Aufgabensammlung {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long aufgabensammlungId;
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "aufgabensammlung_aufgabe",
+            joinColumns = @JoinColumn(name = "aufgabensammlung_id"),
+            inverseJoinColumns = @JoinColumn(name = "aufgabe_id"))
     private List<Aufgabe> aufgaben;
     private int gesamtzeit;
     private int gesamtpunktzahl;
@@ -69,6 +73,15 @@ public abstract class Aufgabensammlung {
     }
 
     /**
+     * Entfernt eine Aufgabe aus der Liste der Aufgaben
+     *
+     * @param aufgabe Aufgabe, die entfernt werden soll
+     */
+    public void removeAufgabe(Aufgabe aufgabe) {
+        aufgaben.remove(aufgabe);
+    }
+
+    /**
      * Setzt die Liste der Aufgaben
      *
      * @param aufgaben Liste der Aufgaben
@@ -95,6 +108,15 @@ public abstract class Aufgabensammlung {
      */
     public void addUserloesung(Userloesung userloesung) {
         this.userloesungen.add(userloesung);
+    }
+
+    /**
+     * Entfernt eine Userlösung aus der Liste der Userlösungen, die im Kontext dieser Aufgabensammlung erstellt wurden
+     *
+     * @param userloesung Userlösung, die entfernt werden soll
+     */
+    public void removeUserloesung(Userloesung userloesung) {
+        this.userloesungen.remove(userloesung);
     }
 
     /**
@@ -152,4 +174,5 @@ public abstract class Aufgabensammlung {
             gesamtpunktzahl += a.getPunktewert();
         }
     }
+
 }
