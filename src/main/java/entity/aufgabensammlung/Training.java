@@ -7,6 +7,7 @@ import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import jakarta.persistence.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,35 +18,22 @@ import java.util.List;
  */
 @Entity
 public class Training extends Aufgabensammlung {
-    //Sollte rausgenommen werden. Training hat bereits eine Id, da es von Aufgabensammlung ableitet
-    // und ein Id sollte auch nicht manuell gesetzt oder ausgelesen werden. Sie dient nur zur Persistenz in der Datenbank.
-    /*    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long trainingID;*/
 
     private int bearbeitungszeit;
     private Kategorie kategorie;
     private Schwierigkeitsgrad schwierigkeitsgrad;
-    private Aufgabentyp aufgabentyp;
+    @ElementCollection
+    private List<Aufgabentyp> aufgabentypen;
     @ManyToOne
     @JoinColumn(name = "trainingsErsteller_benutzerid")
     private Benutzer trainingsErsteller;
-
-
-
-/*    public Long getTrainingID() {
-        return trainingID;
-    }
-
-    public void setTrainingID(Long trainingID) {
-        this.trainingID = trainingID;
-    }*/
 
     /**
      * Leerer Konstruktor für Klasse Training
      */
     public Training() {
         super();
+        this.aufgabentypen = new LinkedList<Aufgabentyp>();
         //Nothing to do
     }
 
@@ -56,14 +44,15 @@ public class Training extends Aufgabensammlung {
      * @param bearbeitungszeit   Ausgewählte Bearbeitungszeit des Trainings
      * @param kategorie          Ausgewählte Kategorie des Testats
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
-     * @param aufgabentyp        Ausgewählter Aufgabentyp des Testats
+     * @param aufgabentypen      Ausgewählte Aufgabentypen des Testats
      */
-    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp) {
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, List<Aufgabentyp> aufgabentypen) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
-        this.aufgabentyp = aufgabentyp;
+        this.aufgabentypen = new LinkedList<Aufgabentyp>();
+        this.aufgabentypen.addAll(aufgabentypen);
     }
 
     /**
@@ -74,12 +63,13 @@ public class Training extends Aufgabensammlung {
      * @param kategorie          Ausgewählte Kategorie des Testats
      * @param schwierigkeitsgrad Ausgewählter Schwierigkeitsgrad des Testats
      */
-    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, Aufgabentyp aufgabentyp, Benutzer trainingsErsteller) {
+    public Training(List<Aufgabe> aufgaben, int bearbeitungszeit, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad, List<Aufgabentyp> aufgabentypen, Benutzer trainingsErsteller) {
         super(aufgaben);
         this.bearbeitungszeit = bearbeitungszeit;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;
-        this.aufgabentyp = aufgabentyp;
+        this.aufgabentypen = new LinkedList<Aufgabentyp>();
+        this.aufgabentypen.addAll(aufgabentypen);
         this.trainingsErsteller = trainingsErsteller;
     }
 
@@ -138,21 +128,21 @@ public class Training extends Aufgabensammlung {
     }
 
     /**
-     * Gibt den Aufgabentyp des Trainings zurück
+     * Gibt die Aufgabentypen des Trainings zurück
      *
-     * @return Aufgabentyp des Trainings
+     * @return Aufgabentypen des Trainings
      */
-    public Aufgabentyp getAufgabentyp() {
-        return aufgabentyp;
+    public List<Aufgabentyp> getAufgabentypen() {
+        return aufgabentypen;
     }
 
     /**
-     * Setzt den Aufgabentyp des Trainings
+     * Setzt die Aufgabentypen des Trainings
      *
-     * @param aufgabentyp Aufgabentyp des Trainings
+     * @param aufgabentypen Aufgabentypen des Trainings
      */
-    public void setAufgabentyp(Aufgabentyp aufgabentyp) {
-        this.aufgabentyp = aufgabentyp;
+    public void setAufgabentypen(List<Aufgabentyp> aufgabentypen) {
+        this.aufgabentypen = aufgabentypen;
     }
 
     /**
