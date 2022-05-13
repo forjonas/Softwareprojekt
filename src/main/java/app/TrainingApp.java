@@ -22,9 +22,9 @@ import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version 10.05.22
+ * @version: 10.05.22
+ * @version2: 13.05.22
  */
-
 
 public class TrainingApp {
 
