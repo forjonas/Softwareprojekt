@@ -210,7 +210,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
@@ -230,7 +230,16 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(
+                bearbeitungsZeit,
+                "asd", // Eigentlich bspBild
+                kat,
+                punkte,
+                schw,
+                aufText,
+                aufgTitel,
+                doz,
+                null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {

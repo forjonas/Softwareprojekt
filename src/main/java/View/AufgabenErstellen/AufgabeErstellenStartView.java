@@ -100,7 +100,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     }
     private void zurueck() {
         this.dispose();
-        DozentAnsicht.main(null);
+        dozentAnsichtFrame.setVisible(true);
     }
 
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {

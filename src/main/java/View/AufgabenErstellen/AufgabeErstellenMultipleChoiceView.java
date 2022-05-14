@@ -307,7 +307,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, doz, loesung);
 
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
@@ -397,14 +397,15 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         DatabaseService ds = DatabaseService.getInstance();
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,
-                null,
+                "Null", //Eigentlich beispielBild
                 kat,
                 punkte,
                 schw,
                 aufText,
                 aufgTitel,
                 doz,
-                antworten, null);
+                antworten,
+                null);
 
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp

@@ -196,7 +196,6 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
-
     }
 
     private void speichern() {
@@ -226,14 +225,22 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz);
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, "a", kat, punkte, schw, aufText, aufgTitel, doz, null);
+        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,
+                "a", //Eigentlich designFile
+                kat,
+                punkte,
+                schw,
+                aufText,
+                aufgTitel,
+                doz,
+                null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungFile);
         try {

@@ -29,14 +29,11 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JPanel dozentPnl;
     GridLayout gl = new GridLayout(2,4);
     Dozent doz;
+    private JFrame homeview;
 
-    public static void main(String[] args)
-    {
-        new DozentAnsicht();
-    }
-
-
-    public DozentAnsicht(){
+    public DozentAnsicht(JFrame homeview, Dozent doz){
+        this.doz = doz;
+        this.homeview = homeview;
         this.setName("Home");
         fuelleDozentFrame();
         this.setMinimumSize(new Dimension(1500,900));
@@ -47,7 +44,6 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void fuelleDozentFrame(){
-        doz = new Dozent();
         //Buttons
         testatEinsehenBtn = new JButton("Testat Einsehen");
         testatEinsehenBtn.addActionListener(this);
@@ -149,10 +145,10 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-       // new TestatKatalogView(this);
+        //new TestatKatalogView(this);
     }
     private void testatEinsehen(){
         this.setVisible(false);
-       // new KorrigiereTestatKatalogView(this);
+       //new KorrigiereTestatKatalogView(this);
     }
 }

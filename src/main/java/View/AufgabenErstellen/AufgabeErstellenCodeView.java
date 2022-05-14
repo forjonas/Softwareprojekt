@@ -52,7 +52,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JLabel loesungLbl;
 
     //TextAreas
-    private JTextArea codeTA;
+    //private JTextArea codeTA;
     private JTextField titelTF;
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
@@ -122,14 +122,14 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
 
         punkteTF = new JTextField();
 
-        codeTA = new JTextArea();
-        codeTA.setLineWrap(true);
+        //codeTA = new JTextArea();
+        //codeTA.setLineWrap(true);
 
         loesungTA = new JTextArea();
         loesungTA.setLineWrap(true);
 
         codeBspHochLbl = new JLabel("Optionales Java Design ");
-        codeBeispiel = new JLabel("Code Beispiel: ");
+        //codeBeispiel = new JLabel("Code Beispiel: ");
         kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
@@ -145,8 +145,8 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
         centerPnl.add(loesungTA);
-        centerPnl.add(codeBeispiel);
-        centerPnl.add(codeTA);
+        //centerPnl.add(codeBeispiel);
+        //centerPnl.add(codeTA);
         centerPnl.add(kategorieLbl);
         centerPnl.add(kategorienCB);
         centerPnl.add(schwierigketiLbl);
@@ -206,7 +206,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         int punkte = 0;
         Kategorie kat = null;
         Schwierigkeitsgrad schw = null;
-        String codeText = null;
+        //String codeText = null;
         String loesung = null;
 
         try {
@@ -217,7 +217,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
-            codeText = codeTA.getText();
+            //codeText = codeTA.getText();
             loesung = loesungTA.getText();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
@@ -227,18 +227,18 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         }
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
 
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung, codeText, doz);
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung,/**codeText,**/doz);
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
+
         }
     }
 
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung, String codeText, Dozent doz) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung, /**String codeText,**/Dozent doz) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(
-                bearbeitungsZeit,
-                codeText,
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,
+                "asd", // Eigentlich codeBEispFile
                 kat,
                 punkte,
                 schw,
