@@ -4,6 +4,7 @@ import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,8 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JButton trainingsDurchfuehrenBtn;
     private JButton testateDurchfuehrenBtn;
     //Panels
-    private JPanel dozentPnl;
+    private JPanel centerPnl;
+    private JPanel dozentMainPanel;
     GridLayout gl = new GridLayout(2,4);
     Dozent doz;
     private JFrame homeview;
@@ -72,21 +74,24 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         testateDurchfuehrenBtn = new JButton("Testate Durchführen");
         testateDurchfuehrenBtn.addActionListener(this);
         //Panels
-        dozentPnl = new JPanel(gl);
+        centerPnl = new JPanel(gl);
+        dozentMainPanel = new JPanel(new BorderLayout());
 
         //Components Adden
 
-        dozentPnl.add(testatEinsehenBtn);
-        dozentPnl.add(testateDurchfuehrenBtn);
-        dozentPnl.add(testatuebersichtBtn);
-        dozentPnl.add(testateErstellenBtn);
-        dozentPnl.add(trainingsDurchfuehrenBtn);
-        dozentPnl.add(trainingsEinsehenBtn);
-        dozentPnl.add(aufgabenuebersichtBtn);
-        dozentPnl.add(aufgabeErstellenBtn);
-        dozentPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
+        centerPnl.add(testatEinsehenBtn);
+        centerPnl.add(testateDurchfuehrenBtn);
+        centerPnl.add(testatuebersichtBtn);
+        centerPnl.add(testateErstellenBtn);
+        centerPnl.add(trainingsDurchfuehrenBtn);
+        centerPnl.add(trainingsEinsehenBtn);
+        centerPnl.add(aufgabenuebersichtBtn);
+        centerPnl.add(aufgabeErstellenBtn);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
+        dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
+        dozentMainPanel.add(abmeldenBtn, BorderLayout.SOUTH);
 
-        this.add(dozentPnl);
+        this.add(dozentMainPanel);
     }
     @Override
     public void actionPerformed(ActionEvent e)
