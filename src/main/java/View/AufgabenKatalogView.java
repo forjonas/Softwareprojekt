@@ -1,20 +1,27 @@
 package View;
 
+import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.AufgabeTableModel;
+import View.tableModel.BearbeiteAufgabeTableModel;
+import app.TestatApp;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabensammlung.Testat;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -31,21 +38,22 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnErstellen;
+    private Dozent aktuellerBenutzer;
+    private List<Aufgabe> aufgabenliste;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-
-        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
-        List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4});
+        Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
+        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        Dozent dozent3 = (Dozent) DatabaseService.getInstance().readDozentnachBenutzernamen("PPanzer");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(aufgabenListe);
+                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent1);
+                    AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
+                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent3);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -54,10 +62,30 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         });
     }
 
+    private List<Aufgabe> getTestData() {
+        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
+        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
+        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
+        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a5 = new EinfachantwortAufgabe();
+        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
+        List<Aufgabe> aufgabenListe2 = new LinkedList<Aufgabe>(aufgabenListe1);
+        return aufgabenListe1;
+    }
+
     /**
      * Create the frame.
      */
-    public AufgabenKatalogView(List<Aufgabe> aufgabenliste) {
+    public AufgabenKatalogView(Dozent aktuellerBenutzer) {
+        this.aktuellerBenutzer = aktuellerBenutzer;
+        DatabaseService ds = DatabaseService.getInstance();
+        aufgabenliste = ds.readAufgabenFromDatabase();
+        //Test
+        //aufgabenliste = getTestData();
+        //aufgabenliste = new LinkedList<Aufgabe>();
+        aufgabenliste = new LinkedList<Aufgabe>(aufgabenliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Aufgabenkatalog");
         contentPane = new JPanel();
@@ -130,14 +158,58 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
-            System.out.println("zurück");
-            dispose();
+            zurueckButtonLogik();
         }
         if (e.getSource() == this.btnErstellen) {
-            System.out.println("erstellen");
+            erstellenButtonLogik();
         }
         if (e.getSource() == this.btnLoeschen) {
-            System.out.println("löschen");
+            loeschenButtonLogik();
+        }
+    }
+
+    private void zurueckButtonLogik() {
+        if (aktuellerBenutzer.getClass() == Dozent.class) {
+            new DozentAnsicht();
+            //Noch nicht implementiert in meinem Branch
+            //new DozentAnsicht((Dozent) aktuellerBenutzer);
+        } else {
+            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
+        }
+        dispose();
+    }
+
+    private void erstellenButtonLogik() {
+        //In meinem Branch noch nicht implementiert
+        //new AufgabeErstellenStartView(aktuellerBenutzer);
+        new AufgabeErstellenStartView(null);
+        dispose();
+    }
+
+    private void loeschenButtonLogik() {
+        if (aufgabenliste.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Löschen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int selectedRow = tableAufgaben.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe zum Löschen ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+            } else {
+                boolean loeschenGewuenscht = false;
+                Aufgabe aufgabe = aufgabenliste.get(selectedRow);
+                if (!aufgabe.darfDozentAufgabeLoeschen(aktuellerBenutzer)) {
+                    JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, diese Aufgabe zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
+                } else if (aufgabe.getVerwendungen().size() > 0) {
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                } else {
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                }
+                if(loeschenGewuenscht) {
+                    aufgabenliste.remove(aufgabe);
+                    aufgabeTableModel.fireTableDataChanged();
+                    DatabaseService.getInstance().saveDeleteAufgabeFromDatabase(aufgabe);
+                    JOptionPane.showMessageDialog(this, "Die ausgewählte Aufgabe wurde gelöscht", "Aufgabe gelöscht", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
     }
 

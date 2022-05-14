@@ -96,6 +96,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         this.btnLoesungshinweisEinzel.addActionListener(this);
         this.btnAufgabeBeendenEinzel.addActionListener(this);
 
+        super.setVisible(true);
     }
 
     @Override

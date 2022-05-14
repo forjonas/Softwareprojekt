@@ -96,6 +96,8 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         this.btnLoesungshinweisEinzel.addActionListener(this);
         this.btnAufgabeBeendenEinzel.addActionListener(this);
 //addActionListener
+
+        super.setVisible(true);
     }
 
     @Override

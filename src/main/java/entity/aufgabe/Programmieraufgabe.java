@@ -29,7 +29,7 @@ public class Programmieraufgabe extends Aufgabe {
      */
     public Programmieraufgabe() {
         super();
-        //Nothing to do
+        this.aufgabentyp = Aufgabentyp.Programmieren;
     }
 
     /**

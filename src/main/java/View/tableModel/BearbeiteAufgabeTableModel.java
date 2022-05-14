@@ -1,31 +1,22 @@
 package View.tableModel;
 
 import entity.aufgabe.Aufgabe;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.LinkedList;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
- * TabelModel für die Tabelle der Aufgaben bei der Auswahl von Aufgaben für ein Testat
+ * TabelModel für die Tabelle, aus der einzelne Aufgaben zur Bearbeitung ausgewählt werden können
  *
  * @author Jonas Herbst
  * @version 04.05.22
  */
-public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
+public class BearbeiteAufgabeTableModel extends AbstractTableModel {
     private List<Aufgabe> aufgabenliste;
-    private List<Boolean> auswahlliste;
-    private final String[] COLUMN_NAMES = {"Name", "Kategorie", "Bearbeitungszeit", "Aufgabentyp", "Schwierigkeit", "Punkte", "Ausgewählt"};
+    private final String[] COLUMN_NAMES = {"Name", "Kategorie", "Bearbeitungszeit", "Aufgabentyp", "Schwierigkeit", "Punkte"};
 
-    public AufgabenAuswaehlenTableModel(List<Aufgabe> aufgabenliste) {
+    public BearbeiteAufgabeTableModel(List<Aufgabe> aufgabenliste) {
         this.aufgabenliste = aufgabenliste;
-        this.auswahlliste = new LinkedList<Boolean>();
-        for (Aufgabe a : aufgabenliste) {
-            auswahlliste.add(false);
-        }
     }
 
     @Override
@@ -54,8 +45,6 @@ public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
                 return String.class;
             case 5:
                 return Integer.class;
-            case 6:
-                return Boolean.class;
             default:
                 return null;
         }
@@ -65,37 +54,35 @@ public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0: {
-                if (aufgabenliste.get(rowIndex).getName() == null) {
+                if(aufgabenliste.get(rowIndex).getName() == null) {
                     return "Fehler, Name ist Null";
                 } else {
                     return aufgabenliste.get(rowIndex).getName();
                 }
             }
-
             case 1: {
-                if (aufgabenliste.get(rowIndex).getKategorie() == null) {
+                if(aufgabenliste.get(rowIndex).getKategorie() == null) {
                     return "Fehler, Kategorie ist Null";
                 } else {
                     return aufgabenliste.get(rowIndex).getKategorie().getCode();
                 }
             }
-
             case 2: {
-                if (aufgabenliste.get(rowIndex).getBearbeitungszeit() == 0) {
+                if(aufgabenliste.get(rowIndex).getBearbeitungszeit() == 0) {
                     return "Fehler, Beabreitungszeit ist 0";
                 } else {
                     return aufgabenliste.get(rowIndex).getBearbeitungszeit() + " Min";
                 }
             }
             case 3: {
-                if (aufgabenliste.get(rowIndex).getAufgabentyp() == null) {
+                if(aufgabenliste.get(rowIndex).getAufgabentyp() == null) {
                     return "Fehler, Aufgabentyp ist Null";
                 } else {
                     return aufgabenliste.get(rowIndex).getAufgabentyp().getCode();
                 }
             }
             case 4: {
-                if (aufgabenliste.get(rowIndex).getSchwierigkeitsgrad() == null) {
+                if(aufgabenliste.get(rowIndex).getSchwierigkeitsgrad() == null) {
                     return "Fehler, Schwierigkeitsgrad ist Null";
                 } else {
                     return aufgabenliste.get(rowIndex).getSchwierigkeitsgrad().getCode();
@@ -103,31 +90,13 @@ public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
             }
             case 5:
                 return aufgabenliste.get(rowIndex).getPunktewert();
-            case 6:
-                return auswahlliste.get(rowIndex);
             default:
                 return null;
         }
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
-        switch (col) {
-            case 6:
-                auswahlliste.set(row, (Boolean) value);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public boolean isCellEditable(int row, int col) {
-        switch (col) {
-            case 6:
-                return true;
-            default:
-                return false;
-        }
+        return false;
     }
 }

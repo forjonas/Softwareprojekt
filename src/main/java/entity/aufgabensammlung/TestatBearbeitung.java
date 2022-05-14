@@ -160,4 +160,21 @@ public class TestatBearbeitung {
         return this.testatBearbeiter != null;
     }
 
+    /**
+     * Gibt zurück, ob der übergebene Dozent die Testatbearbeitung bewerten darf
+     *
+     * @param dozent Dozent, für den überprüft wird, ob er die Testatbearbeitung bewerten darf
+     * @return Wahrheitswert, der angibt, ob der übergebene Dozent die Testatbearbeitung bewerten darf
+     */
+    public boolean darfDozentTestatBearbeitungBewerten(Dozent dozent) {
+        boolean leereTestatbearbeitung = (this.getTestat() == null || this.getTestat().getTestatErsteller() == null || this.getTestat().getAnzahlAufgaben() == 0);
+        if(!leereTestatbearbeitung) {
+            boolean selbstErstellt = (this.getTestat().getTestatErsteller() == dozent);
+            boolean isAdmin = (dozent.getBenutzername() == "admin");
+            return (selbstErstellt || isAdmin);
+        } else {
+            return true;
+        }
+    }
+
 }

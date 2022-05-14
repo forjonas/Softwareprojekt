@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TestatTableModel extends AbstractTableModel {
     private List<Testat> testatliste;
-    private String[] columnNames = {"Name", "Dozent", "Zeit", "Punktzahl"};
+    private final String[] COLUMN_NAMES = {"Name", "Dozent", "Zeit", "Punktzahl"};
 
     public TestatTableModel(List<Testat> testatliste) {
         this.testatliste = testatliste;
@@ -21,7 +21,7 @@ public class TestatTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int col) {
-        return columnNames[col];
+        return COLUMN_NAMES[col];
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TestatTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnNames.length;
+        return COLUMN_NAMES.length;
     }
 
     @Override
@@ -51,15 +51,31 @@ public class TestatTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0:
-                return testatliste.get(rowIndex).getName();
-            case 1: {
-                String vorname = testatliste.get(rowIndex).getTestatErsteller().getVorname();
-                String nachname = testatliste.get(rowIndex).getTestatErsteller().getNachname();
-                return vorname + " " + nachname;
+            case 0: {
+                if (testatliste.get(rowIndex).getName() == null) {
+                    return "Fehler, Name ist Null";
+                } else {
+                    return testatliste.get(rowIndex).getName();
+                }
             }
-            case 2:
-                return testatliste.get(rowIndex).getGesamtzeit() + " Min";
+            case 1: {
+                if (testatliste.get(rowIndex).getTestatErsteller() == null) {
+                    return "Fehler, Dozent ist Null";
+                } else if (testatliste.get(rowIndex).getTestatErsteller().getVorname() == null || testatliste.get(rowIndex).getTestatErsteller().getNachname() == null) {
+                    return "Fehler, Name des Dozenten ist Null";
+                } else {
+                    String vorname = testatliste.get(rowIndex).getTestatErsteller().getVorname();
+                    String nachname = testatliste.get(rowIndex).getTestatErsteller().getNachname();
+                    return vorname + " " + nachname;
+                }
+            }
+            case 2: {
+                if (testatliste.get(rowIndex).getGesamtzeit() == 0) {
+                    return "Fehler, Gesamtzeit ist 0";
+                } else {
+                    return testatliste.get(rowIndex).getGesamtzeit() + " Min";
+                }
+            }
             case 3:
                 return testatliste.get(rowIndex).getGesamtpunktzahl();
             default:

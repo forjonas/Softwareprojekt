@@ -1,5 +1,6 @@
 package View;
 
+import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.TestatTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
@@ -10,6 +11,7 @@ import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +19,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -33,11 +36,37 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnErstellen;
+    private Dozent aktuellerBenutzer;
+    private List<Testat> testatliste;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
+        Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
+        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Dozent dozent3 = new Dozent();
+                    List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
+                    for(Dozent dozent: dozenten) {
+                        if(dozent.getBenutzername().equals("PZwegat")){
+                            dozent3 = dozent;
+                        }
+                    }
+                    //TestatKatalogView frame = new TestatKatalogView(dozent1);
+                    //TestatKatalogView frame = new TestatKatalogView(dozent2);
+                    TestatKatalogView frame = new TestatKatalogView(dozent3);
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private List<Testat> getTestData() {
         Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -50,23 +79,21 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TestatKatalogView frame = new TestatKatalogView(testatliste);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Testat t4 = new Testat();
+        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t4});
+        return testatliste;
     }
 
     /**
      * Create the frame.
      */
-    public TestatKatalogView(List<Testat> testatListe) {
+    public TestatKatalogView(Dozent aktuellerBenutzer) {
+        this.aktuellerBenutzer = aktuellerBenutzer;
+        testatliste = DatabaseService.getInstance().readTestateFromDatabase();
+        //Test
+        //testatliste = new LinkedList<Testat>();
+        //testatliste = getTestData();
+        testatliste = new LinkedList<Testat>(testatliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testatkatalog");
         contentPane = new JPanel();
@@ -121,7 +148,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        testatTableModel = new TestatTableModel(testatListe);
+        testatTableModel = new TestatTableModel(testatliste);
         tableTestate.setModel(testatTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);
@@ -139,14 +166,56 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
-            System.out.println("zurück");
-            dispose();
+            zurueckButtonLogik();
         }
         if (e.getSource() == this.btnErstellen) {
-            System.out.println("erstellen");
+            erstellenButtonLogik();
         }
         if (e.getSource() == this.btnLoeschen) {
-            System.out.println("löschen");
+            loeschenButtonLogik();
+        }
+    }
+
+    private void zurueckButtonLogik() {
+        if (aktuellerBenutzer.getClass() == Dozent.class) {
+            new DozentAnsicht();
+            //Noch nicht implementiert in meinem Branch
+            //new DozentAnsicht((Dozent) aktuellerBenutzer);
+        } else {
+            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
+        }
+        dispose();
+    }
+
+    private void erstellenButtonLogik() {
+        new TestatErstellenView(aktuellerBenutzer);
+        dispose();
+    }
+
+    private void loeschenButtonLogik() {
+        if (testatliste.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine Testate zum Löschen", "Keine Testate", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int selectedRow = tableTestate.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Es wurde kein Testat zum Löschen ausgewählt", "Kein Testat ausgewählt", JOptionPane.WARNING_MESSAGE);
+            } else {
+                boolean loeschenGewuenscht = false;
+                Testat testat = testatliste.get(selectedRow);
+                if (!testat.darfDozentTestatLoeschen(aktuellerBenutzer)) {
+                    JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, dieses Testat zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
+                } else if (testat.getBearbeitungen() != null && testat.getBearbeitungen().size() > 0) {
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?\nAchtung! Es gibt zu ihm Testatbearbeitungen, die beim Löschen ebenfalls gelöscht werden.", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                } else {
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                }
+                if (loeschenGewuenscht) {
+                    testatliste.remove(testat);
+                    testatTableModel.fireTableDataChanged();
+                    DatabaseService.getInstance().saveDeleteTestatFromDatabase(testat);
+                    JOptionPane.showMessageDialog(this, "Das ausgewählte Testat wurde gelöscht", "Testat gelöscht", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
     }
 

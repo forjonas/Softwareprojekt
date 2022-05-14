@@ -340,4 +340,17 @@ public abstract class Aufgabe {
      */
     public abstract void setUserloesungen(List<Userloesung> userloesungen) throws Exception;
 
+    /**
+     * Gibt zurück, ob der übergebene Dozent die Aufgabe löschen darf
+     *
+     * @param dozent Dozent, für den überprüft wird, ob er die Aufgabe löschen darf
+     * @return Wahrheitswert, der angibt, ob der übergebene Dozent die Aufgabe löschen darf
+     */
+    public boolean darfDozentAufgabeLoeschen(Dozent dozent) {
+        boolean selbstErstellt = (this.aufgabenErsteller == dozent);
+        boolean leereAufgabe = (this.aufgabenErsteller == null);
+        boolean isAdmin = (dozent.getBenutzername() == "admin");
+        return (selbstErstellt || leereAufgabe || isAdmin);
+    }
+
 }

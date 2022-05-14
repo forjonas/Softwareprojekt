@@ -2,6 +2,7 @@ package entity.aufgabensammlung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Aufgabensammlung;
+import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import jakarta.persistence.*;
 
@@ -139,4 +140,34 @@ public class Testat extends Aufgabensammlung {
     public void setBearbeitungen(List<TestatBearbeitung> bearbeitungen) {
         this.bearbeitungen = bearbeitungen;
     }
+
+    /**
+     * Gibt zurück, ob das Testat bereits vom übergebenen Benutzer bearbeitet wurde
+     *
+     * @param benutzer Benutzer, für den überprüft wird, ob er das Testat bearbeitet hat
+     * @return Wahrheitswert, der angibtm ob der übergebene Benutzer das Testat bearbeitet hat
+     */
+    public boolean isTestatVonUserBearbeitetWorden(Benutzer benutzer) {
+        List<TestatBearbeitung> bearbeitungen = this.getBearbeitungen();
+        for (TestatBearbeitung t : bearbeitungen) {
+            if (t.getTestatBearbeiter() == benutzer) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gibt zurück, ob der übergebene Dozent das Testat löschen darf
+     *
+     * @param dozent Dozent, für den überprüft wird, ob er das Testat löschen darf
+     * @return Wahrheitswert, der angibt, ob der übergebene Dozent das Testat löschen darf
+     */
+    public boolean darfDozentTestatLoeschen(Dozent dozent) {
+        boolean selbstErstellt = (this.testatErsteller == dozent);
+        boolean leeresTestat = (this.testatErsteller == null);
+        boolean isAdmin = (dozent.getBenutzername() == "admin");
+        return (selbstErstellt || leeresTestat || isAdmin);
+    }
+
 }

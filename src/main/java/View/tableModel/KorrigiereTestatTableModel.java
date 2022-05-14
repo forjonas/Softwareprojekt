@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class KorrigiereTestatTableModel extends AbstractTableModel {
     private List<TestatBearbeitung> testatbearbeitungsliste;
-    private String[] columnNames = {"Name", "Nutzer", "Dozent", "Zeit", "Erreichte Punktzahl", "Korrigiert"};
+    private final String[] COLUMN_NAMES = {"Name", "Bearbeiter", "Dozent", "Zeit", "Erreichte Punktzahl", "Korrigiert"};
 
     public KorrigiereTestatTableModel(List<TestatBearbeitung> testatbearbeitungsliste) {
         this.testatbearbeitungsliste = testatbearbeitungsliste;
@@ -21,7 +21,7 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int col) {
-        return columnNames[col];
+        return COLUMN_NAMES[col];
     }
 
     @Override
@@ -31,7 +31,7 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnNames.length;
+        return COLUMN_NAMES.length;
     }
 
     @Override
@@ -52,29 +52,57 @@ public class KorrigiereTestatTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0:
-                return testatbearbeitungsliste.get(rowIndex).getTestat().getName();
+            case 0: {
+                if (testatbearbeitungsliste.get(rowIndex).getTestat() == null) {
+                    return "Fehler, Testat ist Null";
+                } else if (testatbearbeitungsliste.get(rowIndex).getTestat().getName() == null) {
+                    return "Fehler, Name des Testats ist Null";
+                } else {
+                    return testatbearbeitungsliste.get(rowIndex).getTestat().getName();
+                }
+            }
             case 1: {
-                String vorname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getVorname();
-                String nachname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getNachname();
-                return vorname + " " + nachname;
+                if (testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter() == null) {
+                    return "Fehler, Testatbearbeiter ist Null";
+                } else if (testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getVorname() == null || testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getNachname() == null) {
+                    return "Fehler, Name des Testatbearbeiters ist Null";
+                } else {
+                    String vorname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getVorname();
+                    String nachname = testatbearbeitungsliste.get(rowIndex).getTestatBearbeiter().getNachname();
+                    return vorname + " " + nachname;
+                }
             }
             case 2: {
-                String vorname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getVorname();
-                String nachname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getNachname();
-                return vorname + " " + nachname;
+                if (testatbearbeitungsliste.get(rowIndex).getTestat() == null) {
+                    return "Fehler, Testat ist Null";
+                } else if (testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller() == null) {
+                    return "Fehler, Dozent ist Null";
+                } else if (testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getVorname() == null || testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getNachname() == null) {
+                    return "Fehler, Name des Dozenten ist Null";
+                } else {
+                    String vorname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getVorname();
+                    String nachname = testatbearbeitungsliste.get(rowIndex).getTestat().getTestatErsteller().getNachname();
+                    return vorname + " " + nachname;
+                }
             }
-            case 3:
-                return testatbearbeitungsliste.get(rowIndex).getTestat().getGesamtzeit() + " Min";
+            case 3: {
+                if (testatbearbeitungsliste.get(rowIndex).getTestat() == null) {
+                    return "Fehler, Testat ist Null";
+                } else if (testatbearbeitungsliste.get(rowIndex).getTestat().getGesamtzeit() == 0) {
+                    return "Fehler, Bearbeitungszeit ist 0";
+                } else {
+                    return testatbearbeitungsliste.get(rowIndex).getTestat().getGesamtzeit() + " Min";
+                }
+            }
             case 4: {
-                if(testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
+                if (testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
                     return Integer.toString(testatbearbeitungsliste.get(rowIndex).getErreichtePunktzahl());
                 } else {
                     return "Noch nicht korrigiert";
                 }
             }
             case 5: {
-                if(testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
+                if (testatbearbeitungsliste.get(rowIndex).isTestatBewertet()) {
                     return "Ja";
                 } else {
                     return "Nein";

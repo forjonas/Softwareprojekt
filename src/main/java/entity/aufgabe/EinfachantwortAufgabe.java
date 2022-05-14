@@ -29,7 +29,7 @@ public class EinfachantwortAufgabe extends Aufgabe {
      */
     public EinfachantwortAufgabe() {
         super();
-        //Nothing to do
+        this.aufgabentyp = Aufgabentyp.Einfachantwort;
     }
 
     /**

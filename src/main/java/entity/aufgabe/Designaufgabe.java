@@ -27,7 +27,7 @@ public class Designaufgabe extends Aufgabe {
      */
     public Designaufgabe() {
         super();
-        //Nothing to do
+        this.aufgabentyp = Aufgabentyp.Design;
     }
 
     /**

@@ -88,6 +88,8 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         this.btnLoesungshinweis.addActionListener(this);
         this.btnAufgabeBeenden.addActionListener(this);
         this.btnUpload.addActionListener(this);
+
+        super.setVisible(true);
     }
 
     @Override
