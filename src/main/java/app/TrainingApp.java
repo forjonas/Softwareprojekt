@@ -7,6 +7,7 @@ import View.AufgabenBearbeiten.Training.BearbeiteTrainingProgrammieraufgabeView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
+import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
@@ -32,14 +33,15 @@ public class TrainingApp {
     private int index;
     private JFrame aktuellerFrame;
     private DatabaseService database;
+    private Benutzer benutzer;
     //zwischenspeichern der AntwortenListe
     public List<Object> usereingaben = new ArrayList<>();
 
 
-    public TrainingApp(Training training, DatabaseService database) {
+    public TrainingApp(Training training, Benutzer benutzer) {
         this.index = 0;
         this.training = training;
-        this.database = database; //Muss DatabaseService mit übergeben(dahin speichern)
+        this.benutzer = benutzer; //Muss DatabaseService mit übergeben(dahin speichern)
 
     }
 

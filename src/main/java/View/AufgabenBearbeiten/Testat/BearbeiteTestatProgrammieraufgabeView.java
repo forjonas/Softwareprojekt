@@ -4,6 +4,8 @@ import app.TestatApp;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +34,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private TestatApp testatApp;
     private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
-    private String antwort;
+    private UserloesungProgrammieraufgabe u1;
 
     /**
      * Create the frame.
@@ -123,8 +125,10 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
-            antwort = textArea.getText();
-            testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+            u1 = new UserloesungProgrammieraufgabe();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
             /**
              * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren

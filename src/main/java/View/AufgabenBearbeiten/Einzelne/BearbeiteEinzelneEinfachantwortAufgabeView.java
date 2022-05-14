@@ -4,6 +4,7 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 
@@ -23,8 +24,8 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     private JButton btnBeendenEinzel;
     private JButton btnLoesungshinweisEinzel;
     private JButton btnAufgabeBeendenEinzel;
-    private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
-
+    private final EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
+    private UserloesungEinfachantwort u1;
 
     /**
      * Launch the application.
@@ -109,6 +110,12 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         }
         if (e.getSource() == this.btnAufgabeBeendenEinzel) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
+
+            u1 = new UserloesungEinfachantwort();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+
+          //  View.weiter(u1,aufgabe,benutzer);
 
         }
 

@@ -1,3 +1,4 @@
+
 package testateK;
 
 //import app.TrainingApp;
@@ -46,5 +47,4 @@ public class MainTestenTraining {
                 }
             }
         });
-    }
-}
+ 
