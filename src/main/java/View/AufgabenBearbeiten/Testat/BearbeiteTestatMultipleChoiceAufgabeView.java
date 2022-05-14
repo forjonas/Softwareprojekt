@@ -4,10 +4,15 @@ import app.TestatApp;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,9 +31,16 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
 
+    JRadioButton button1;
+    JRadioButton button2;
+    JRadioButton button3;
+    JRadioButton button4;
+
     private TestatApp testatApp;
     private MultipleChoiceAufgabe aufgabe; //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
+    private UserloesungMultipleChoiceAufgabe u1;
+
     private String antwort1;
     private String antwort2;
     private String antwort3;
@@ -62,21 +74,29 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
 
-        antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
-        JRadioButton button1 = new JRadioButton(antwort1);
-        panelCenter.add(button1);
+        int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
-        JRadioButton button2 = new JRadioButton(antwort2);
-        panelCenter.add(button2);
+        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
 
-        antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
-        JRadioButton button3 = new JRadioButton(antwort3);
-        panelCenter.add(button3);
+            if (i == 0) {
+                antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
+                button1 = new JRadioButton(antwort1);
+                panelCenter.add(button1);
+            } else if (i == 1) {
+                antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
+                button2 = new JRadioButton(antwort2);
+                panelCenter.add(button2);
+            } else if (i == 2) {
+                antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
+                button3 = new JRadioButton(antwort3);
+                panelCenter.add(button3);
 
-        antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
-        JRadioButton button4 = new JRadioButton(antwort4);
-        panelCenter.add(button4);
+            } else if (i == 3) {
+                antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
+                button4 = new JRadioButton(antwort4);
+                panelCenter.add(button4);
+            }
+        }
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(button1);
@@ -133,12 +153,44 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
-            //antwort = textArea.getText();
-            //testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
-            testatApp.weiter(); //testatApp.testat
-            /**
-             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-             */
+            u1 = new UserloesungMultipleChoiceAufgabe();
+            List<Boolean> u3 = new ArrayList<Boolean>();
+
+            u3.add(false);
+            u3.add(false);
+            u3.add(false);
+            u3.add(false);
+
+            if (button1.isSelected()) {
+                u3.set(0, true);
+            } else if (button2.isSelected()) {
+                u3.set(1, true);
+            } else if (button3.isSelected()) {
+                u3.set(2, true);
+            } else if (button4.isSelected()) {
+                u3.set(3, true);
+            }
+
+            u1.setUserloesung(u3);
+            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+            testatApp.weiter();
+
+/**
+ * boolean[] arr = new boolean[aufgabe.getAntwortmoeglichkeiten().size()];//Array größe von antworten
+ *             arr[0] = false;
+ *             arr[1] = false;
+ *             arr[2] = false;
+ *             arr[3] = false;
+ *             if (button1.isSelected()) {
+ *                 arr[0] = true;
+ *             } else if (button2.isSelected()) {
+ *                 arr[1] = true;
+ *             } else if (button3.isSelected()) {
+ *                 arr[2] = true;
+ *             } else if (button4.isSelected()) {
+ *                 arr[3] = true;
+ *             }
+ */
 
         }
     }

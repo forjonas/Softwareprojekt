@@ -4,6 +4,7 @@ import View.DozentAnsicht;
 import app.TestatApp;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private TestatApp testatApp;
     private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
-    private String antwort;
+    private UserloesungEinfachantwort u1;//anpassen zu Userlösung//ist nur String
 
     /**
      * Create the frame.
@@ -43,7 +44,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       //setBounds(100, 100, 674, 435);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -125,8 +126,10 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
-            antwort = textArea.getText();
-            testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+            u1 = new UserloesungEinfachantwort();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
             /**
              * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren

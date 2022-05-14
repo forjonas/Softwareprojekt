@@ -8,6 +8,7 @@ import entity.*;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
@@ -16,6 +17,7 @@ import entity.loesung.musterloesung.Musterloesung;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
+import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -32,23 +34,27 @@ import java.util.List;
 public class TestatApp {
 
     private Testat testat;
-    //private Testat TestatBearbeitung;
+    private TestatBearbeitung bearbeitet;
     private int index;
     private JFrame aktuellerFrame;
     private DatabaseService database;
-    private TestatBearbeitung bearbeitet;
-    //zwischenspeichern der AntwortenListe
-    public List<Object> usereingaben = new ArrayList<>();
+    private Benutzer benutzer;
+    //zwischenspeichern der Usereingaben/lösungen
+    public List<Userloesung> usereingaben = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
 
-    public TestatApp(Testat testat, DatabaseService database) { //Konstruktor: bekomme das Testat mit
+    public TestatApp(Testat testat, Benutzer benutzer) { //Konstruktor: bekomme das Testat mit
         this.index = 0;
         this.testat = testat;
-        this.database = database; //Muss DatabaseService mit übergeben(dahin speichern)
-        this.bearbeitet = new TestatBearbeitung(testat, 0, null, null);
+        this.benutzer = benutzer; //Muss DatabaseService mit übergeben(dahin speichern)
+        this.bearbeitet = new TestatBearbeitung(testat);
     }
 
     public void zeigeAktuelleAufgabe() { //Aufgaben anzeigen
         Aufgabe aufgabe = testat.getAufgaben().get(this.index); //Aufgabe an Position bekommen
+
+
+        //if index = 0 erstelle TestatBearbeitung -->TestatBearbeitung Objekt initaliesiere ich mit dem Testat
+
 
         if (this.aktuellerFrame != null) { //Alte (aktuelle) Ansicht der Aufgabe weg (Fenster schließen)
             // Userlösung.persist
@@ -102,6 +108,9 @@ public class TestatApp {
     }
 
     public void printTest() {
+
+        DatabaseService ds1 = database.getInstance();
+        ds1.persistObjects(usereingaben);
         System.out.println(usereingaben);
 
         // nimm usereingaben Liste und

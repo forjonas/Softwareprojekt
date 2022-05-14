@@ -1,4 +1,4 @@
-package testateK;
+package TestateK;
 
 //import app.TrainingApp;
 import app.TrainingApp;
@@ -32,13 +32,11 @@ public class MainTestenTraining {
         java.util.List<Training> trainingliste = Arrays.asList(new Training[]{training1, training2, training3,});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
-        DatabaseService ds = DatabaseService.getInstance();
-
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
 
-                    TrainingApp trainingApp = new TrainingApp(training1, ds);
+                    TrainingApp trainingApp = new TrainingApp(training1, student1);
                     trainingApp.zeigeAktuelleAufgabe();
 
                 } catch (Exception e) {
