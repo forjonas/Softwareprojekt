@@ -59,11 +59,9 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private File loesungFile;
     private JFrame aufgabeErstellenStartViewFrame;
 
-    public static void main(String[] args) {
-        new AufgabeErstellenUmlView(null);
-    }
 
-    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame) {
+    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Design Aufgabe Erstellen");
         AufgabeErstellenUMLViewFuellen();

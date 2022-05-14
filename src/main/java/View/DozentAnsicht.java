@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
+    private JButton abmeldenBtn;
     private JButton testatEinsehenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
@@ -25,7 +26,6 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JButton trainingsDurchfuehrenBtn;
     private JButton testateDurchfuehrenBtn;
     //Panels
-    private JPanel centerPnl;
     private JPanel dozentPnl;
     GridLayout gl = new GridLayout(2,4);
     Dozent doz;
@@ -45,6 +45,9 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     }
     public void fuelleDozentFrame(){
         //Buttons
+        abmeldenBtn = new JButton("Abmelden");
+        abmeldenBtn.addActionListener(this);
+
         testatEinsehenBtn = new JButton("Testat Einsehen");
         testatEinsehenBtn.addActionListener(this);
 
@@ -70,7 +73,6 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         testateDurchfuehrenBtn.addActionListener(this);
         //Panels
         dozentPnl = new JPanel(gl);
-        centerPnl = new JPanel(gl);
 
         //Components Adden
 
@@ -113,7 +115,16 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         else if(e.getSource()==this.trainingsEinsehenBtn){
             trainingsEinsehen();
         }
+        else if(e.getSource() == this.abmeldenBtn){
+            abmelden();
     }
+    }
+
+    private void abmelden() {
+        this.dispose();
+        new LoginView();
+    }
+
     private void trainingsEinsehen() {
         //Huh?
     }
@@ -130,7 +141,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void aufgabeErstellen() {
         this.setVisible(false);
-        new AufgabeErstellenStartView(this);
+        new AufgabeErstellenStartView(this,doz);
     }
 
     private void aufgabenuebersicht() {

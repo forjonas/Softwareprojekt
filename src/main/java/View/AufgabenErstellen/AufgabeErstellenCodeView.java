@@ -64,11 +64,8 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JFileChooser FC;
     private JFrame aufgabeErstellenStartViewFrame;
 
-    public static void main(String[] args) {
-        new AufgabeErstellenCodeView(null);
-    }
-
-    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame) {
+    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("ProgrammierAufgabe");
         AufgabeErstellenCodeViewFuellen();
@@ -84,7 +81,6 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     }
 
     private void AufgabeErstellenCodeViewFuellen() {
-        doz = new Dozent();
         gl.setVgap(25);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);

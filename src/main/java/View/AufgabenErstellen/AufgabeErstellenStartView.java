@@ -26,12 +26,8 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     private JFrame dozentAnsichtFrame;
     Dozent doz;
 
-
-    public static void main(String[] args) {
-        new AufgabeErstellenStartView(null);
-    }
-
-    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame) {
+    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame,Dozent doz) {
+        this.doz = doz;
         this.dozentAnsichtFrame = dozentAnsichtFrame;
         this.setName("Aufgabe Erstellen");
         AufgabeErstellenFrameFuellen();
@@ -82,16 +78,16 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         String switcher = (String) DDM.getSelectedItem();
         switch(switcher) {
             case "Designaufgabe":this.setVisible(false);
-                        new AufgabeErstellenUmlView(this);
+                        new AufgabeErstellenUmlView(this,doz);
                         break;
             case "Programmieraufgabe":this.setVisible(false);
-                        new AufgabeErstellenCodeView(this);
+                        new AufgabeErstellenCodeView(this,doz);
                         break;
             case "MultipleChoiceaufgabe":this.setVisible(false);
-                        new AufgabeErstellenMultipleChoiceView(this);
+                        new AufgabeErstellenMultipleChoiceView(this,doz);
                         break;
             case "Einfachantwort": this.setVisible(false); ;
-                        new AufgabeErstellenEinfachAntwortView(this);
+                        new AufgabeErstellenEinfachAntwortView(this,doz);
                         break;
             default:    this.setVisible(false);
 

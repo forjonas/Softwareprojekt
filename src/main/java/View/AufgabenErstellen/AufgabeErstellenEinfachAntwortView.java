@@ -61,11 +61,8 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private File bspBild;
     private JFileChooser FC;
 
-    public static void main(String[] args) {
-        new AufgabeErstellenEinfachAntwortView(null);
-    }
-
-    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame) {
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
@@ -79,7 +76,6 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        doz = new Dozent();
         gl.setVgap(25);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);
