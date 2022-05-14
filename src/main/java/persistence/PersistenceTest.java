@@ -29,7 +29,7 @@ public class PersistenceTest {
         System.out.println("Methode zum Testen der Persistenz");
         DatabaseService ds = DatabaseService.getInstance();
 
-        createTestData();
+        //createTestData();
         //ds.clearDatabase();
         //deleteTestData();
         //testRelations();
@@ -47,25 +47,25 @@ public class PersistenceTest {
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
         List<Benutzer> benutzerListe = Arrays.asList(new Benutzer[]{student1, student2, student3, dozent1, dozent2});
 
-        Aufgabe a1 = new EinfachantwortAufgabe(10, " javaDesign", "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent2);
-        Aufgabe a2 = new Designaufgabe(15, " javaDesign", "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent2);
-        Aufgabe a3 = new Programmieraufgabe(5, null, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent2);
+        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent2);
+        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
         List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         dozent2.addErstellteAufgabe(a1);
         dozent2.addErstellteAufgabe(a2);
         dozent2.addErstellteAufgabe(a3);
         dozent2.addErstellteAufgabe(a4);
 
-        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), student1);
+        Training training1 = new Training(aufgabenListe, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[]{Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), student1);
         student1.addBearbeitetesTraining(training1);
-        for(Aufgabe a : aufgabenListe) {
+        for (Aufgabe a : aufgabenListe) {
             a.addVerwendung(training1);
         }
 
         Testat testat1 = new Testat(aufgabenListe, "Hallo1234", "Sommertestat", dozent1);
         dozent1.addErstelltesTestat(testat1);
-        for(Aufgabe a : aufgabenListe) {
+        for (Aufgabe a : aufgabenListe) {
             a.addVerwendung(testat1);
         }
 
@@ -114,18 +114,18 @@ public class PersistenceTest {
         a4.addUserloesung(ul4);
 
         //List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
-       // ds.persistObjects(loesungsliste);
+        // ds.persistObjects(loesungsliste);
 
     }
 
     public static void deleteTestData() throws Exception {
         DatabaseService ds = DatabaseService.getInstance();
         List<Dozent> dozenten = ds.readDozentenFromDatabase();
-        for(Dozent d :  dozenten) {
+        for (Dozent d : dozenten) {
             ds.saveDeleteDozentFromDatabase(d);
         }
         List<Student> studenten = ds.readStudentenFromDatabase();
-        for(Student s :  studenten) {
+        for (Student s : studenten) {
             ds.saveDeleteStudentFromDatabase(s);
         }
         List<Userloesung> userloesungen = ds.readUserloesungenFromDatabse();

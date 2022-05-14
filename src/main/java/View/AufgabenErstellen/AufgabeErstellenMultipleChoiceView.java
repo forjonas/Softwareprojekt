@@ -20,8 +20,7 @@ import java.util.ArrayList;
  * Die View zur Erstellung einer Multiple Choice Aufgabe
  *
  * @author Jannik Oehme
- * @version 05.05.2022
- *  @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
+ * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  */
 public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
     private Dozent doz;
@@ -32,7 +31,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JPanel southPnl;
     //Layouts
     private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(15,1);
+    private GridLayout gl = new GridLayout(15, 1);
     //JComboBoxen
     private JComboBox schwierigkeitCB;
     private JComboBox kategorienCB;
@@ -50,7 +49,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JLabel loesungsHinweisLbl;
     private JLabel schwierigketiLbl;
     private JLabel bearbeitungszeitLbl;
-    private  JLabel punkteLbl;
+    private JLabel punkteLbl;
     private JLabel loesungLbl;
     private JLabel antwort1Lbl;
     private JLabel antwort2Lbl;
@@ -76,19 +75,21 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     public static void main(String[] args) {
         new AufgabeErstellenMultipleChoiceView(null);
     }
-    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame){
+
+    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame) {
 
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("MultipleChoice");
         AufgabeErstellenEinfachAntwortViewFuellen();
         this.pack();
-        this.setMinimumSize(new Dimension(1500,900));
-        this.setSize(1500,900);
+        this.setMinimumSize(new Dimension(1500, 900));
+        this.setSize(1500, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         doz = new Dozent();
         //Panels
@@ -101,14 +102,14 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         AufgabeErstellenMultipleChoicePnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl.setLayout(bl);
         //JComboboxen
-        Integer[] anz = { 1,2,3,4};
+        Integer[] anz = {1, 2, 3, 4};
         anzCB = new JComboBox(anz);
         anzCB.addActionListener(this);
 
-        Kategorie[] kat = {Kategorie.Java_Programmierung,Kategorie.Datenbanken,Kategorie.Software_Engineering,Kategorie.Java_Grundlagen,};
+        Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
-        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht,Schwierigkeitsgrad.Schwer,Schwierigkeitsgrad.Mittel};
+        Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
         //Buttons
         bspBildBtn = new JButton("Beispiel Bild Hochladen");
@@ -153,7 +154,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
         bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
         punkteLbl = new JLabel("Punkte: ");
-        loesungLbl= new JLabel("Lösung (Hier Nummer der richtigen Antwort eingeben");
+        loesungLbl = new JLabel("Lösung (Hier Nummer der richtigen Antwort eingeben");
         aufgabenTxtLbl = new JLabel("Aufgaben Text: ");
         antwort1Lbl = new JLabel("Antwort 1:");
         antwort2Lbl = new JLabel("Antwort 2:");
@@ -202,51 +203,67 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         northPnl.add(zurueckBtn);
         southPnl.add(speichernBtn);
 
-        AufgabeErstellenMultipleChoicePnl.add(centerPnl,BorderLayout.CENTER);
-        AufgabeErstellenMultipleChoicePnl.add(northPnl,BorderLayout.NORTH);
-        AufgabeErstellenMultipleChoicePnl.add(southPnl,BorderLayout.SOUTH);
+        AufgabeErstellenMultipleChoicePnl.add(centerPnl, BorderLayout.CENTER);
+        AufgabeErstellenMultipleChoicePnl.add(northPnl, BorderLayout.NORTH);
+        AufgabeErstellenMultipleChoicePnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenMultipleChoicePnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
             zurueck();
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
-        }
-        else if(e.getSource() == this.anzCB){
+        } else if (e.getSource() == this.anzCB) {
             switchMC();
-        }
-        else if(e.getSource()== this.bspBildBtn){
+        } else if (e.getSource() == this.bspBildBtn) {
             bspBildHochladen();
         }
     }
+
     private void switchMC() {
-        int switcher = (Integer)anzCB.getSelectedItem();
-        switch(switcher) {
+        int switcher = (Integer) anzCB.getSelectedItem();
+        switch (switcher) {
             case 1:
-                antwort1TF.setVisible(true); antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(false); antwort2Lbl.setVisible(false);
-                antwort3TF.setVisible(false); antwort3Lbl.setVisible(false);
-                antwort4TF.setVisible(false); antwort4Lbl.setVisible(false);
+                antwort1TF.setVisible(true);
+                antwort1Lbl.setVisible(true);
+                antwort2TF.setVisible(false);
+                antwort2Lbl.setVisible(false);
+                antwort3TF.setVisible(false);
+                antwort3Lbl.setVisible(false);
+                antwort4TF.setVisible(false);
+                antwort4Lbl.setVisible(false);
                 break;
             case 2:
-                antwort1TF.setVisible(true); antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true); antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(false); antwort3Lbl.setVisible(false);
-                antwort4TF.setVisible(false); antwort4Lbl.setVisible(false);
+                antwort1TF.setVisible(true);
+                antwort1Lbl.setVisible(true);
+                antwort2TF.setVisible(true);
+                antwort2Lbl.setVisible(true);
+                antwort3TF.setVisible(false);
+                antwort3Lbl.setVisible(false);
+                antwort4TF.setVisible(false);
+                antwort4Lbl.setVisible(false);
                 break;
             case 3:
-                antwort1TF.setVisible(true); antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true); antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(true); antwort3Lbl.setVisible(true);
-                antwort4TF.setVisible(false); antwort4Lbl.setVisible(false);
+                antwort1TF.setVisible(true);
+                antwort1Lbl.setVisible(true);
+                antwort2TF.setVisible(true);
+                antwort2Lbl.setVisible(true);
+                antwort3TF.setVisible(true);
+                antwort3Lbl.setVisible(true);
+                antwort4TF.setVisible(false);
+                antwort4Lbl.setVisible(false);
                 break;
             case 4:
-                antwort1TF.setVisible(true); antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true); antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(true); antwort3Lbl.setVisible(true);
-                antwort4TF.setVisible(true); antwort4Lbl.setVisible(true);
+                antwort1TF.setVisible(true);
+                antwort1Lbl.setVisible(true);
+                antwort2TF.setVisible(true);
+                antwort2Lbl.setVisible(true);
+                antwort3TF.setVisible(true);
+                antwort3Lbl.setVisible(true);
+                antwort4TF.setVisible(true);
+                antwort4Lbl.setVisible(true);
                 break;
             default:
         }
@@ -257,6 +274,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -278,16 +296,15 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             punkte = Integer.parseInt(punkteTF.getText());
             loesungsText = loesungTF.getText();
             loesung = getLoesung(loesungsText);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Eine Eingabe entsprach nicht dem nötigen DatenTyp",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this)&& aufgTitel != null){
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte,kat,schw,listefinal,doz,loesung);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, doz, loesung);
 
             this.dispose();
             DozentAnsicht.main(null);
@@ -297,40 +314,41 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private ArrayList<Boolean> getLoesung(String loesungText) {
         int switcher = Integer.parseInt(loesungText);
         ArrayList<Boolean> loesung = new ArrayList<Boolean>();
-        switch(switcher) {
+        switch (switcher) {
             case 1:
-                    loesung.add(true);
-                    loesung.add(false);
-                    loesung.add(false);
-                    loesung.add(false);
-                    return loesung;
+                loesung.add(true);
+                loesung.add(false);
+                loesung.add(false);
+                loesung.add(false);
+                return loesung;
             case 2:
-                    loesung.add(false);
-                    loesung.add(true);
-                    loesung.add(false);
-                    loesung.add(false);
-                    return loesung;
+                loesung.add(false);
+                loesung.add(true);
+                loesung.add(false);
+                loesung.add(false);
+                return loesung;
             case 3:
-                    loesung.add(false);
-                    loesung.add(false);
-                    loesung.add(true);
-                    loesung.add(false);
-                    return loesung;
+                loesung.add(false);
+                loesung.add(false);
+                loesung.add(true);
+                loesung.add(false);
+                return loesung;
             case 4:
-                    loesung.add(false);
-                    loesung.add(false);
-                    loesung.add(false);
-                    loesung.add(true);
-                    return loesung;
+                loesung.add(false);
+                loesung.add(false);
+                loesung.add(false);
+                loesung.add(true);
+                return loesung;
 
-            default: return loesung;
+            default:
+                return loesung;
         }
     }
 
     private ArrayList<String> mcSpeichern() {
         ArrayList<String> liste = new ArrayList<String>();
-        int switcher = (Integer)anzCB.getSelectedItem();
-        switch(switcher) {
+        int switcher = (Integer) anzCB.getSelectedItem();
+        switch (switcher) {
             case 1:
                 liste.add(antwort1TF.getText());
                 return liste;
@@ -353,12 +371,13 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         }
         return liste;
     }
+
     private File bspBildHochladen() {
         FC = new JFileChooser((String) null);
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             bspBild = FC.getSelectedFile();
             System.out.println(bspBild.getName());
             return bspBild;
@@ -374,11 +393,10 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                                         Kategorie kat,
                                         Schwierigkeitsgrad schw,
                                         ArrayList<String> antworten,
-                                        Dozent doz,ArrayList<Boolean>loesung) {
+                                        Dozent doz, ArrayList<Boolean> loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,
-                null,
                 null,
                 kat,
                 punkte,
@@ -386,11 +404,11 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                 aufText,
                 aufgTitel,
                 doz,
-                antworten, null );
+                antworten, null);
 
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp
-                = new MusterloesungMultipleChoiceAufgabe(neueAufgabe,loesungshinweis,loesung);
+                = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
