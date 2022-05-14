@@ -61,11 +61,8 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private File bspBild;
     private JFileChooser FC;
 
-    public static void main(String[] args) {
-        new AufgabeErstellenEinfachAntwortView(null);
-    }
-
-    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame) {
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
@@ -79,7 +76,6 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        doz = new Dozent();
         gl.setVgap(25);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);
@@ -210,7 +206,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
@@ -230,7 +226,16 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(
+                bearbeitungsZeit,
+                "asd", // Eigentlich bspBild
+                kat,
+                punkte,
+                schw,
+                aufText,
+                aufgTitel,
+                doz,
+                null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {

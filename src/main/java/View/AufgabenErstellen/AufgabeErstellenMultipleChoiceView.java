@@ -71,13 +71,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private File bspBild;
     private JFileChooser FC;
 
-
-    public static void main(String[] args) {
-        new AufgabeErstellenMultipleChoiceView(null);
-    }
-
-    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame) {
-
+    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("MultipleChoice");
         AufgabeErstellenEinfachAntwortViewFuellen();
@@ -91,7 +86,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     }
 
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        doz = new Dozent();
         //Panels
         gl.setVgap(10);
         gl.setHgap(25);
@@ -307,7 +301,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, doz, loesung);
 
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
@@ -397,14 +391,15 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         DatabaseService ds = DatabaseService.getInstance();
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,
-                null,
+                "Null", //Eigentlich beispielBild
                 kat,
                 punkte,
                 schw,
                 aufText,
                 aufgTitel,
                 doz,
-                antworten, null);
+                antworten,
+                null);
 
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp
