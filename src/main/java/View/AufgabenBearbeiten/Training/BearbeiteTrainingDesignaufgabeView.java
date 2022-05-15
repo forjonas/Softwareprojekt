@@ -1,38 +1,45 @@
 package View.AufgabenBearbeiten.Training;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import app.TestatApp;
 import app.TrainingApp;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /**
- *
  * @author Kristin Kubisch
- * @version 10.05.22
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
  */
 public class BearbeiteTrainingDesignaufgabeView extends JFrame implements ActionListener {
 
 
 	private JPanel contentPane;
-	private JButton btnBeendenTraining;
+	private JButton btnAbbrechenTraining;
 	private JButton btnLoesungshinweisTraining;
 	private JButton btnVoherigeAufgabeTraining;
 	private JButton btnNaechsteAufgabeTraining;
 	private JButton btnTrainingBeenden;
+
 	private JButton btnUpload;
+
+	private JTextArea textArea;
+
+	private File geuploadet;
+
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
 
 	private TrainingApp trainingApp;
 	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
-	private String antwort;
+	private UserloesungDesignaufgabe u1;
 
 	/**
 	 * Create the frame.
@@ -54,9 +61,22 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
 		panelNorth.add(lblNewLabel1);
 
-		JLabel lblNewLabel_2 = new JLabel (icon);
-		contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
+		/**
+		 * Optionales Bild hinzufügen
+		 */
 
+		JPanel panelCenter = new JPanel();
+		contentPane.add(panelCenter, BorderLayout.CENTER);
+		textArea = new JTextArea(18, 50);
+		panelCenter.add(textArea);
+
+		/**
+		 JPanel panelCenter = new JPanel();
+		 contentPane.add(panelCenter, BorderLayout.CENTER);
+		 JLabel lblNewLabel_2 = new JLabel(); //Button daraus machen
+		 panelCenter.add(lblNewLabel_2);
+		 //Wenn auf Button-- Bild auswählen-- Bild anzeigen
+		 */
 		JPanel panelWest = new JPanel();
 		contentPane.add(panelWest, BorderLayout.WEST);
 		btnUpload = new JButton("Upload");
@@ -66,8 +86,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-		btnBeendenTraining = new JButton("Beenden");
-		panelSouth.add(btnBeendenTraining);
+		btnAbbrechenTraining = new JButton("Abbrechen");
+		panelSouth.add(btnAbbrechenTraining);
 		btnLoesungshinweisTraining = new JButton("Loesungshinweis");
 		panelSouth.add(btnLoesungshinweisTraining);
 		btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
@@ -77,7 +97,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		btnTrainingBeenden = new JButton("Testat Beenden");
 		panelSouth.add(btnTrainingBeenden);
 
-		this.btnBeendenTraining.addActionListener(this);
+		this.btnAbbrechenTraining.addActionListener(this);
 		this.btnLoesungshinweisTraining.addActionListener(this);
 		this.btnVoherigeAufgabeTraining.addActionListener(this);
 		this.btnNaechsteAufgabeTraining.addActionListener(this);
@@ -92,8 +112,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.btnBeendenTraining) {
-			trainingApp.printTest();
+		if (e.getSource() == this.btnAbbrechenTraining) {
+			trainingApp.printPersistenz();
 			this.dispose();
 			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
 		}
@@ -104,10 +124,22 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
-			trainingApp.weiter();
+			u1 = new UserloesungDesignaufgabe();
+			String u2 = textArea.getText();
+			u1.setUserloesung(u2);
+			trainingApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+			trainingApp.weiter(); //testatApp.testat
+
+			/**
+			 u1 = new UserloesungDesignaufgabe();
+			 Icon u2 = icon.getImage();
+			 u1.setUserloesung(u2);
+			 testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+			 testatApp.weiter(); //testatApp.testat
+			 */
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
-			trainingApp.printTest();
+			trainingApp.printPersistenz();
 			this.dispose();
 			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
 		}

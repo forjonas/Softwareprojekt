@@ -1,24 +1,33 @@
-package View.AufgabenBearbeiten.Testat;
+package testateK;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import app.TestatApp;
-import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
-import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+
+
+
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JSplitPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
-/**
- * @author Kristin Kubisch
- * @version 10.05.22
- * @version2 13.05.22
- */
-public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
-
+public class EinfachantwortView extends JFrame implements ActionListener {
 
     //Frame Elemente
     private JPanel contentPane;
@@ -30,29 +39,27 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private JButton btnTestatBeenden;
 
     private TestatApp testatApp;
-    private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
+    private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
-    private UserloesungProgrammieraufgabe u1;
+    private UserloesungEinfachantwort u1;
 
     /**
      * Create the frame.
      */
-    public BearbeiteTestatProgrammieraufgabeView(TestatApp testatApp, Programmieraufgabe aufgabe) { //angepasst
+    public EinfachantwortView() {
 
-        this.aufgabe = aufgabe;
-        this.testatApp = testatApp;
-
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle("Test1"); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
+
+        JLabel lblTextbeschreibung = new JLabel("Test2"); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
 
         /**
@@ -98,6 +105,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
+
     }
 
     @Override
@@ -108,28 +116,37 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+            JOptionPane.showMessageDialog(this, "Test3"); //Lösungshinweis bekommen
         }
-
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            testatApp.zrueck();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-
-            u1 = new UserloesungProgrammieraufgabe();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
-            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatApp.weiter(); //testatApp.testat
-
+            JOptionPane.showMessageDialog(this, "Test3");
         }
         if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printPersistenz();
-            BearbeiteTestatKatalogView.main(null);
-
+            JOptionPane.showMessageDialog(this, "Test3");
         }
     }
+
+
+
+
+    public static void main(String[] args) {
+
+
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+
+                    EinfachantwortView testatApp = new EinfachantwortView();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }
+

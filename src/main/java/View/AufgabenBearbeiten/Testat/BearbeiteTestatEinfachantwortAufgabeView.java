@@ -1,9 +1,9 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.DozentAnsicht;
 import app.TestatApp;
-import entity.aufgabe.EinfachantwortAufgabe;
+import entity.aufgabe.*;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.enums.Aufgabentyp;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -17,13 +17,14 @@ import javax.swing.border.EmptyBorder;
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
+ * @version3: 16.05.22
  */
 public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
     //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
-    private JButton btnBeendenTestat;
+    private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
@@ -32,7 +33,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private TestatApp testatApp;
     private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
-    private UserloesungEinfachantwort u1;//anpassen zu Userlösung//ist nur String
+    private UserloesungEinfachantwort u1;
 
     /**
      * Create the frame.
@@ -76,8 +77,8 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnBeendenTestat = new JButton("Beenden");
-        panelSouth.add(btnBeendenTestat);
+        btnAbbrechenTestat = new JButton("Abbrechen");
+        panelSouth.add(btnAbbrechenTestat);
 
         btnLoesungshinweisTestat = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTestat);
@@ -89,7 +90,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         btnTestatBeenden = new JButton("Testat Beenden");
         panelSouth.add(btnTestatBeenden);
 
-        this.btnBeendenTestat.addActionListener(this);
+        this.btnAbbrechenTestat.addActionListener(this);
         this.btnLoesungshinweisTestat.addActionListener(this);
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
@@ -104,8 +105,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenTestat) {
-            testatApp.printTest();
+        if (e.getSource() == this.btnAbbrechenTestat) {
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
 
@@ -113,15 +113,17 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printTest();
-            //testatApp.finish()
-            BearbeiteTestatKatalogView.main(null);
-
-        }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+            testatApp.zrueck();
+
+            /**
+             * zeige alte Userlösung
+             * Editiere alte Userlösung
+             * halte diese neue Userlösung in der Liste
+             *
+             */
+
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
@@ -131,10 +133,11 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             u1.setUserloesung(u2);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
-            /**
-             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-             */
-
+        }
+        if (e.getSource() == this.btnTestatBeenden) {
+            this.dispose();
+            testatApp.printPersistenz();
+            BearbeiteTestatKatalogView.main(null);
         }
     }
 }

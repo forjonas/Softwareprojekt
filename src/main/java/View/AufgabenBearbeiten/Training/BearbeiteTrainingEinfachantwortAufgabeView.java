@@ -1,22 +1,14 @@
 package View.AufgabenBearbeiten.Training;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import View.DozentAnsicht;
-import View.LoesungsHinweisView;
-import app.TestatApp;
 import app.TrainingApp;
-import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,13 +17,16 @@ import javax.swing.border.EmptyBorder;
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
+ * @version3: 16.05.22
+ * <p>
+ * Schnittstelle um ein Training auszuführen
  */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
     //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
-    private JButton btnBeendenTraining;
+    private JButton btnAbbrechenTraining;
     private JButton btnLoesungshinweisTraining;
     private JButton btnVoherigeAufgabeTraining;
     private JButton btnNaechsteAufgabeTraining;
@@ -39,7 +34,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
     private TrainingApp trainingApp;
     private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
-    private String antwort;
+    private UserloesungEinfachantwort u1;
 
     /**
      * Create the frame.
@@ -82,18 +77,18 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-        btnBeendenTraining = new JButton("Beenden");
-        panelSouth.add(btnBeendenTraining);
+        btnAbbrechenTraining = new JButton("Beenden");
+        panelSouth.add(btnAbbrechenTraining);
         btnLoesungshinweisTraining = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTraining);
         btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
         panelSouth.add(btnVoherigeAufgabeTraining);
-        btnNaechsteAufgabeTraining = new JButton("weiter");
+        btnNaechsteAufgabeTraining = new JButton("Naechste Aufgabe");
         panelSouth.add(btnNaechsteAufgabeTraining);
         btnTrainingBeenden = new JButton("Training Beenden");
         panelSouth.add(btnTrainingBeenden);
 
-        this.btnBeendenTraining.addActionListener(this);
+        this.btnAbbrechenTraining.addActionListener(this);
         this.btnLoesungshinweisTraining.addActionListener(this);
         this.btnVoherigeAufgabeTraining.addActionListener(this);
         this.btnNaechsteAufgabeTraining.addActionListener(this);
@@ -108,7 +103,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenTraining) {
+        if (e.getSource() == this.btnAbbrechenTraining) {
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
 
@@ -120,22 +115,16 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
             JOptionPane.showMessageDialog(this, "Button Vorherige");
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-
-            antwort = textArea.getText();
-            trainingApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
+            u1 = new UserloesungEinfachantwort();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            trainingApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             trainingApp.weiter(); //testatApp.testat
-            /**
-             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-             */
-            this.trainingApp.weiter();
-
         }
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
-            trainingApp.printTest();
+            trainingApp.printPersistenz();
             BearbeiteTestatKatalogView.main(null);
-
         }
-
     }
 }

@@ -1,11 +1,9 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.ImageFilter;
 import app.TestatApp;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,19 +17,20 @@ import javax.swing.border.EmptyBorder;
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
+ * @version3: 16.05.22
  */
 public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JButton btnBeendenTestat;
+    private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
+
     private JButton btnUpload;
 
     private JTextArea textArea;
-
 
     private File geuploadet;
 
@@ -49,7 +48,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         this.aufgabe = aufgabe;
         this.testatApp = testatApp;
-//FESTE ANGABEN WEG!!!
+        //FESTE ANGABEN WEG!!!
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setBounds(100, 100, 674, 435);
@@ -60,14 +59,12 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-
         JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
         panelNorth.add(lblNewLabel1);
 
         /**
          * Optionales Bild hinzufügen
          */
-
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -90,8 +87,8 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-        btnBeendenTestat = new JButton("Beenden");
-        panelSouth.add(btnBeendenTestat);
+        btnAbbrechenTestat = new JButton("Abbrechen");
+        panelSouth.add(btnAbbrechenTestat);
         btnLoesungshinweisTestat = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTestat);
         btnVoherigeAufgabeTestat = new JButton("Vorherige Aufgabe");
@@ -101,7 +98,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         btnTestatBeenden = new JButton("Testat Beenden");
         panelSouth.add(btnTestatBeenden);
 
-        this.btnBeendenTestat.addActionListener(this);
+        this.btnAbbrechenTestat.addActionListener(this);
         this.btnLoesungshinweisTestat.addActionListener(this);
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
@@ -116,8 +113,8 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenTestat) {
-            testatApp.printTest();
+        if (e.getSource() == this.btnAbbrechenTestat) {
+            testatApp.printPersistenz();
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
         }
@@ -125,24 +122,17 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
         }
 
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printTest();
-            BearbeiteTestatKatalogView.main(null);
-        }
-
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+            testatApp.zrueck();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
-
 
             u1 = new UserloesungDesignaufgabe();
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
-
 
             /**
              u1 = new UserloesungDesignaufgabe();
@@ -151,41 +141,40 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
              testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
              testatApp.weiter(); //testatApp.testat
              */
+        }
 
-            //antwort bei Upload drücken initalisiert
-
-            //testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
-            //testatApp.weiter(); //testatApp.testat
-            /**
-             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-             */
+        if (e.getSource() == this.btnTestatBeenden) {
+            testatApp.printPersistenz();
+            this.dispose();
+            BearbeiteTestatKatalogView.main(null);
         }
 
         if (e.getSource() == this.btnUpload) { //angepasst
+            JOptionPane.showMessageDialog(this, "Upload Button");
 
             /**
-            private File codeBspHochladen() {
-                FC = new JFileChooser((String) null);
-                FC.setAcceptAllFileFilterUsed(false);
-                FC.setFileFilter(new ImageFilter());
-                int returnVal = FC.showOpenDialog(null);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    codeBspFile = FC.getSelectedFile();
-                    System.out.println(codeBspFile.getName());
-                    return codeBspFile;
-                }
-                return null;
-            }
+             private File codeBspHochladen() {
+             FC = new JFileChooser((String) null);
+             FC.setAcceptAllFileFilterUsed(false);
+             FC.setFileFilter(new ImageFilter());
+             int returnVal = FC.showOpenDialog(null);
+             if (returnVal == JFileChooser.APPROVE_OPTION) {
+             codeBspFile = FC.getSelectedFile();
+             System.out.println(codeBspFile.getName());
+             return codeBspFile;
+             }
+             return null;
+             }
              */
 
-
-            // Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
-            // lade das DocCode
-            //Lese Datei und speicher diese in antwort
-            // antwort = getDatei();
-            // String docUpload = textArea.getText(); // lese den input eig. Bild
-            //lblNewLabel_2.setIcon(docUpload);  //Oder austauschen mit File
-
+            /**
+             Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
+             lade das DocCode
+             Lese Datei und speicher diese in antwort
+             antwort = getDatei();
+             String docUpload = textArea.getText(); // lese den input eig. Bild
+             lblNewLabel_2.setIcon(docUpload);  //Oder austauschen mit File
+             */
         }
 
     }
