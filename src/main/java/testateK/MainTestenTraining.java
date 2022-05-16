@@ -24,7 +24,7 @@ public class MainTestenTraining {
         //Aufgabe a4 = new MultipleChoiceAufgabe(2, "javaDesign", "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double", "Test"}));
         //java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1});
         //java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
-       // java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
+        // java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
 
         //Training training1 = new Training (aufgabenListe1, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
         //Training training2 = new Training (aufgabenListe2, 10 ,Kategorie.Software_Engineering,Schwierigkeitsgrad.Leicht, Aufgabentyp.MultipleChoice);
@@ -47,4 +47,6 @@ public class MainTestenTraining {
                 }
             }
         });
+    }
+}
  

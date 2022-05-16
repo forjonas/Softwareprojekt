@@ -135,7 +135,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
             Student student = new Student(usernameTxt.getText(),new String(passwortTxt.getPassword()),vornameTxt.getText(),nachnameTxt.getText(),Integer.parseInt(matrikelTxt.getText()));
             ds.persistObject(student);
             System.out.println("check");
-            new StudentMainView(student);
+            new StudentMainView(student,einlogenView);
         }
 
     }

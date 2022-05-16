@@ -2,6 +2,7 @@ package View;
 
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -18,6 +19,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
     private JButton abmeldenBtn;
+    DatabaseService ds=DatabaseService.getInstance();
     private JButton testatEinsehenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
@@ -136,12 +138,12 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateErstellen() {
         this.setVisible(false);
-        //new TestatErstellenView(this);
+        new TestatErstellenView(ds.readAufgabenFromDatabase(),this,doz);
     }
 
     private void testatuebersicht() {
         this.setVisible(false);
-        //new TestatKatalogView(this);
+        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
     }
 
     private void aufgabeErstellen() {
@@ -151,20 +153,20 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void aufgabenuebersicht() {
         this.setVisible(false);
-        //new AufgabenKatalogView(this);
+        new AufgabenKatalogView(ds.readAufgabenFromDatabase(),this,doz);
     }
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new TrainingGenerierenView(this);
+        new TrainingGenerierenView(this, doz);
     }
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-        //new TestatKatalogView(this);
+        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
     }
     private void testatEinsehen(){
         this.setVisible(false);
-       //new KorrigiereTestatKatalogView(this);
+       new KorrigiereTestatKatalogView(ds.readTestatBearbeitungenFromDatabase(),this,doz);
     }
 }

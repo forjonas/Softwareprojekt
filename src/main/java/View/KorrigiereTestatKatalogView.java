@@ -7,6 +7,7 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;
@@ -34,6 +35,8 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     private KorrigiereTestatTableModel korrigiereTestatTableModel;
     private JButton btnZurueck;
     private JButton btnKorrigieren;
+    private JFrame userFrame;
+    private Benutzer benutzer;
 
     /**
      * Launch the application.
@@ -63,7 +66,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(testatbearbeitungsliste);
+                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(testatbearbeitungsliste,null,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -75,7 +78,9 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     /**
      * Create the frame.
      */
-    public KorrigiereTestatKatalogView(List<TestatBearbeitung> testatbearbeitungsliste) {
+    public KorrigiereTestatKatalogView(List<TestatBearbeitung> testatbearbeitungsliste,JFrame userFrame, Benutzer benutzer) {
+        this.userFrame=userFrame;
+        this.benutzer=benutzer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Korrigiere Testat");
         contentPane = new JPanel();
@@ -137,6 +142,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         if (e.getSource() == this.btnZurueck) {
             System.out.println("zurück");
             dispose();
+            userFrame.setVisible(true);
         }
         if (e.getSource() == this.btnKorrigieren) {
             System.out.println("korrigieren");
