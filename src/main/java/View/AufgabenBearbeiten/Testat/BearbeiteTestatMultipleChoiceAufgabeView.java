@@ -1,16 +1,13 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +16,14 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * @author Kristin Kubisch
- * @version 10.05.22
- * @version2 13.05.22
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
  */
 public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JButton btnBeendenTestat;
+    private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
@@ -108,8 +106,8 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnBeendenTestat = new JButton("Beenden");
-        panelSouth.add(btnBeendenTestat);
+        btnAbbrechenTestat = new JButton("Abbrechen");
+        panelSouth.add(btnAbbrechenTestat);
         btnLoesungshinweisTestat = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTestat);
         btnVoherigeAufgabeTestat = new JButton("Vorherige Aufgabe");
@@ -119,7 +117,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         btnTestatBeenden = new JButton("Testat Beenden");
         panelSouth.add(btnTestatBeenden);
 
-        this.btnBeendenTestat.addActionListener(this);
+        this.btnAbbrechenTestat.addActionListener(this);
         this.btnLoesungshinweisTestat.addActionListener(this);
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
@@ -133,7 +131,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenTestat) {
+        if (e.getSource() == this.btnAbbrechenTestat) {
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
 
@@ -141,14 +139,10 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printTest();
-            BearbeiteTestatKatalogView.main(null);
 
-        }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+            testatApp.zurueckTestat();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
@@ -174,23 +168,28 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
             u1.setUserloesung(u3);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter();
+        }
 
-/**
- * boolean[] arr = new boolean[aufgabe.getAntwortmoeglichkeiten().size()];//Array größe von antworten
- *             arr[0] = false;
- *             arr[1] = false;
- *             arr[2] = false;
- *             arr[3] = false;
- *             if (button1.isSelected()) {
- *                 arr[0] = true;
- *             } else if (button2.isSelected()) {
- *                 arr[1] = true;
- *             } else if (button3.isSelected()) {
- *                 arr[2] = true;
- *             } else if (button4.isSelected()) {
- *                 arr[3] = true;
- *             }
- */
+        /**
+         * boolean[] arr = new boolean[aufgabe.getAntwortmoeglichkeiten().size()];//Array größe von antworten
+         *             arr[0] = false;
+         *             arr[1] = false;
+         *             arr[2] = false;
+         *             arr[3] = false;
+         *             if (button1.isSelected()) {
+         *                 arr[0] = true;
+         *             } else if (button2.isSelected()) {
+         *                 arr[1] = true;
+         *             } else if (button3.isSelected()) {
+         *                 arr[2] = true;
+         *             } else if (button4.isSelected()) {
+         *                 arr[3] = true;
+         *             }
+         */
+        if (e.getSource() == this.btnTestatBeenden) {
+            this.dispose();
+            testatApp.printPersistenz();
+            BearbeiteTestatKatalogView.main(null);
 
         }
     }

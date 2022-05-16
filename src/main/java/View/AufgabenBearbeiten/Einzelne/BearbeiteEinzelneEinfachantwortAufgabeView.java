@@ -21,7 +21,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
 
     private JPanel contentPane;
     private JTextArea textArea;
-    private JButton btnBeendenEinzel;
+    private JButton btnAbbrechen;
     private JButton btnLoesungshinweisEinzel;
     private JButton btnAufgabeBeendenEinzel;
     private final EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
@@ -56,7 +56,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         this.aufgabe = aufgabe;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 674, 435);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -65,9 +65,13 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel("Hier steht ein Text");//(aufgabe.getTextbeschreibung()); //eingetragen
+        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());
         panelNorth.add(lblNewLabel1);
 // Textbeschreibung
+
+        /**
+         * Optionales Bild hinzufügen
+         */
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -85,37 +89,41 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 // im BorderLayout Panel mit FlowLayout
 
-        btnBeendenEinzel = new JButton("Beenden");
-        panelSouth.add(btnBeendenEinzel);
+        btnAbbrechen = new JButton("Beenden");
+        panelSouth.add(btnAbbrechen);
         btnLoesungshinweisEinzel = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisEinzel);
         btnAufgabeBeendenEinzel = new JButton("Aufgabe Beenden");
         panelSouth.add(btnAufgabeBeendenEinzel);
 //im Panel Panel die Buttons
 
-        this.btnBeendenEinzel.addActionListener(this);
+        this.btnAbbrechen.addActionListener(this);
         this.btnLoesungshinweisEinzel.addActionListener(this);
         this.btnAufgabeBeendenEinzel.addActionListener(this);
 //addActionListener
+
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+        super.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenEinzel) {
-            JOptionPane.showMessageDialog(this, "Button Beenden");
-
+        if (e.getSource() == this.btnAbbrechen) {
+            this.dispose();
+            BearbeiteEinzelneAufgabeKatalogView.main(null);
         }
         if (e.getSource() == this.btnLoesungshinweisEinzel) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
         if (e.getSource() == this.btnAufgabeBeendenEinzel) {
-            JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
 
             u1 = new UserloesungEinfachantwort();
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
-
-          //  View.weiter(u1,aufgabe,benutzer);
+            this.dispose();
+            //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
 
         }
 

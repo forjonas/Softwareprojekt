@@ -4,6 +4,8 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,10 +17,12 @@ import javax.swing.border.EmptyBorder;
 public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JButton btnBeenden;
+    private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
     private JButton btnAufgabeBeenden;
     private JButton btnUpload;
+
+
     private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
     private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 
@@ -75,14 +79,14 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnBeenden = new JButton("Beenden");
-        panelSouth.add(btnBeenden);
+        btnAbbrechen = new JButton("Beenden");
+        panelSouth.add(btnAbbrechen);
         btnLoesungshinweis = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweis);
         btnAufgabeBeenden = new JButton("Aufgabe Beenden");
         panelSouth.add(btnAufgabeBeenden);
 
-        this.btnBeenden.addActionListener(this);
+        this.btnAbbrechen.addActionListener(this);
         this.btnLoesungshinweis.addActionListener(this);
         this.btnAufgabeBeenden.addActionListener(this);
         this.btnUpload.addActionListener(this);
@@ -90,7 +94,7 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeenden) {
+        if (e.getSource() == this.btnAbbrechen) {
             JOptionPane.showMessageDialog(this, "Button Beenden");
 
         }
@@ -100,6 +104,14 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
+
+            /**
+             *  u1 = new UserloesungEinfachantwort();
+             *             String u2 = textArea.getText();
+             *             u1.setUserloesung(u2);
+             *             this.dispose();
+             *             //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
+             */
 
         }
         if (e.getSource() == this.btnUpload) {

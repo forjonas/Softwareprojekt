@@ -1,4 +1,4 @@
-package TestateK;
+package testateK;
 
 import app.TestatApp;
 import entity.aufgabe.*;
@@ -7,11 +7,7 @@ import entity.benutzer.Dozent;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
-import persistence.DatabaseService;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -28,19 +24,20 @@ public class MainTestenTestate {
         MusterloesungEinfachantwort m1 = new MusterloesungEinfachantwort();
         m1.setLoesungshinweis("Lösungshinweis MusterloesungEinfachantwort");
         a1.setMusterloesung(m1);
-/**
-        MusterloesungProgrammieraufgabe m2 = new MusterloesungProgrammieraufgabe();
-        m2.setLoesungshinweis("Lösungshinweis MusterloesungProgrammieraufgabe");
-        a2.setMusterloesung(m2);
 
-        MusterloesungMultipleChoiceAufgabe m3 = new MusterloesungMultipleChoiceAufgabe();
-        m3.setLoesungshinweis("Lösungshinweis MusterloesungMultipleChoiceAufgabe");
-        a3.setMusterloesung(m3);
+        /**
+         MusterloesungProgrammieraufgabe m2 = new MusterloesungProgrammieraufgabe();
+         m2.setLoesungshinweis("Lösungshinweis MusterloesungProgrammieraufgabe");
+         a2.setMusterloesung(m2);
 
-        MusterloesungDesignaufgabe m4 = new MusterloesungDesignaufgabe();
-        m4.setLoesungshinweis("Lösungshinweis MusterloesungDesignaufgabe");
-        a4.setMusterloesung(m4);
-*/
+         MusterloesungMultipleChoiceAufgabe m3 = new MusterloesungMultipleChoiceAufgabe();
+         m3.setLoesungshinweis("Lösungshinweis MusterloesungMultipleChoiceAufgabe");
+         a3.setMusterloesung(m3);
+
+         MusterloesungDesignaufgabe m4 = new MusterloesungDesignaufgabe();
+         m4.setLoesungshinweis("Lösungshinweis MusterloesungDesignaufgabe");
+         a4.setMusterloesung(m4);
+         */
         java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1});
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
@@ -53,14 +50,11 @@ public class MainTestenTestate {
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
 
-        //Ich bekomme TestatApp testat = new TestatApp(testat1, database);
-        //testat1.zeigeAufgabe;
-
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
 
-                    TestatApp testatApp = new TestatApp(t1,student1);
+                    TestatApp testatApp = new TestatApp(t1, student1);
                     testatApp.zeigeAktuelleAufgabe();
 
                 } catch (Exception e) {
