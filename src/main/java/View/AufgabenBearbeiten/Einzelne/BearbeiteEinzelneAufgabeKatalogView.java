@@ -82,7 +82,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         this.aktuellerBenutzer = aktuellerBenutzer;
         aufgabenliste = ds.readAufgabenFromDatabase();
         //Test
-        aufgabenliste = getTestData();
+        //aufgabenliste = getTestData();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite einzelne Aufgabe");
         contentPane = new JPanel();

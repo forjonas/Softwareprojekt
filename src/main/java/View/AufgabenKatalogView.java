@@ -47,12 +47,12 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     public static void main(String[] args) {
         Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
         Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent3 = (Dozent) DatabaseService.getInstance().readDozentnachBenutzernamen("PPanzer");
+        //Dozent dozent3 = (Dozent) DatabaseService.getInstance().readDozentnachBenutzernamen("PPanzer");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent1);
-                    AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
+                    AufgabenKatalogView frame = new AufgabenKatalogView(dozent1);
+                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
                     //AufgabenKatalogView frame = new AufgabenKatalogView(dozent3);
                     frame.setVisible(true);
                 } catch (Exception e) {

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class BearbeiteTestatTableModel extends AbstractTableModel {
     private List<Testat> testatliste;
-    private final String[] COLUMN_NAMES = {"Name", "Dozent", "Zeit", "Maximalpunktzahl", "Bearbeitet"};
+    private final String[] COLUMN_NAMES = {"Name", "Dozent", "Zeit", "Maximalpunktzahl", "Bearbeitet", "Bewertung"};
     private Benutzer user;
 
     public BearbeiteTestatTableModel(List<Testat> testatliste, Benutzer user) {
@@ -45,6 +45,7 @@ public class BearbeiteTestatTableModel extends AbstractTableModel {
             case 1:
             case 2:
             case 4:
+            case 5:
                 return String.class;
             case 3:
                 return Integer.class;
@@ -92,10 +93,24 @@ public class BearbeiteTestatTableModel extends AbstractTableModel {
                 if (testatliste.get(rowIndex).getBearbeitungen() == null) {
                     return "Fehler, Bearbeitungen sind Null";
                 } else {
-                    if(testatliste.get(rowIndex).isTestatVonUserBearbeitetWorden(user)) {
+                    if (testatliste.get(rowIndex).isTestatVonUserBearbeitetWorden(user)) {
                         return "Ja";
                     } else {
                         return "Nein";
+                    }
+                }
+            }
+            case 5: {
+                if (testatliste.get(rowIndex).getBearbeitungen() == null) {
+                    return "Fehler, Bearbeitungen sind Null";
+                } else {
+                    TestatBearbeitung testatBearbeitung = testatliste.get(rowIndex).getBearbeitungVonBenutzer(user);
+                    if (testatBearbeitung == null) {
+                        return "Noch nicht bearbeitet";
+                    } else if (testatBearbeitung.getTestatBewerter() == null) {
+                        return "Noch nicht bewertet";
+                    } else {
+                        return testatBearbeitung.getErreichtePunktzahl() + " Punkte";
                     }
                 }
             }

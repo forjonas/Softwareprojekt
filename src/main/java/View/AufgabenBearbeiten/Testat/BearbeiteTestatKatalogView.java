@@ -46,17 +46,25 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     private JButton btnBearbeiten;
     private List<Testat> testatListe;
     private Benutzer aktuellerBenutzer;
+    //Nur zum Testen
+    private static Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Student student2 = (Student) DatabaseService.getInstance().readStudentnachBenutzernamen("AApfel");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    Student student2 = new Student();
+                    List<Student> studenten = DatabaseService.getInstance().readStudentenFromDatabase();
+                    for(Student student: studenten) {
+                        if(student.getBenutzername().equals("vvogel")){
+                            student2 = student;
+                            break;
+                        }
+                    }
                     BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(student1);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(student2);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(dozent1);
@@ -69,7 +77,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     }
 
     private List<Testat> getTestData() {
-        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
+        //Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
         Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -80,9 +88,11 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
         Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        TestatBearbeitung tb = new TestatBearbeitung(t1, 0, student1, null);
-        t1.addBearbeitung(tb);
+        TestatBearbeitung tb1 = new TestatBearbeitung(t1, 50, student1, dozent1);
+        t1.addBearbeitung(tb1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
+        TestatBearbeitung tb2 = new TestatBearbeitung(t2, 0, student1, null);
+        t2.addBearbeitung(tb2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         Testat t4 = new Testat();
         List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3, t4});
@@ -97,7 +107,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = ds.readTestateFromDatabase();
         //Test
-        //testatListe = getTestData();
+        testatListe = getTestData();
         //testatListe = new LinkedList<Testat>();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite Testat");

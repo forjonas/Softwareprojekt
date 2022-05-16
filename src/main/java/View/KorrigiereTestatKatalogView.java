@@ -46,20 +46,20 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
      * Launch the application.
      */
     public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        Dozent dozent1 = new Dozent("admin", "asdf", "Peter", "Zwegat");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Dozent dozent2 = new Dozent();
                     List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
                     for(Dozent dozent: dozenten) {
-                        if(dozent.getBenutzername().equals("PZwegat")){
+                        if(dozent.getBenutzername().equals("KKubisch")){
                             dozent2 = dozent;
                             break;
                         }
                     }
-                    //KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent1);
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent2);
+                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent1);
+                    //KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent2);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -99,7 +99,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         testatBearbeitungsListe = DatabaseService.getInstance().readTestatBearbeitungenFromDatabase();
         //Test
         //testatBearbeitungsListe = new LinkedList<TestatBearbeitung>();
-        //testatBearbeitungsListe = getTestData();
+        testatBearbeitungsListe = getTestData();
         testatBearbeitungsListe = new LinkedList<TestatBearbeitung>(testatBearbeitungsListe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Korrigiere Testat");

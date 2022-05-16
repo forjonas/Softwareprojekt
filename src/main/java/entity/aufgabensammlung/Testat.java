@@ -145,7 +145,7 @@ public class Testat extends Aufgabensammlung {
      * Gibt zurück, ob das Testat bereits vom übergebenen Benutzer bearbeitet wurde
      *
      * @param benutzer Benutzer, für den überprüft wird, ob er das Testat bearbeitet hat
-     * @return Wahrheitswert, der angibtm ob der übergebene Benutzer das Testat bearbeitet hat
+     * @return Wahrheitswert, der angibt ob der übergebene Benutzer das Testat bearbeitet hat
      */
     public boolean isTestatVonUserBearbeitetWorden(Benutzer benutzer) {
         List<TestatBearbeitung> bearbeitungen = this.getBearbeitungen();
@@ -155,6 +155,23 @@ public class Testat extends Aufgabensammlung {
             }
         }
         return false;
+    }
+
+    /**
+     * Falls das Testat vom übergebenen Benutzer bearbeitet wurde, wird seine Testatbearbeitung des Testats
+     * zurückgegeben. Hat er das Testat nicht bearbeitet, wird null zurückgegeben
+     *
+     * @param benutzer Benutzer, für den eine Testatbearbeitung des Testats gefunden werden soll
+     * @return Testatbearbeitung des Testats vom übergebenen Benutzer
+     */
+    public TestatBearbeitung getBearbeitungVonBenutzer(Benutzer benutzer) {
+        List<TestatBearbeitung> bearbeitungen = this.getBearbeitungen();
+        for (TestatBearbeitung t : bearbeitungen) {
+            if (t.getTestatBearbeiter() == benutzer) {
+                return t;
+            }
+        }
+        return null;
     }
 
     /**

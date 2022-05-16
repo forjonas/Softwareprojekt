@@ -51,13 +51,13 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                     Dozent dozent3 = new Dozent();
                     List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
                     for(Dozent dozent: dozenten) {
-                        if(dozent.getBenutzername().equals("PZwegat")){
+                        if(dozent.getBenutzername().equals("mmustermann")){
                             dozent3 = dozent;
                         }
                     }
-                    //TestatKatalogView frame = new TestatKatalogView(dozent1);
+                    TestatKatalogView frame = new TestatKatalogView(dozent1);
                     //TestatKatalogView frame = new TestatKatalogView(dozent2);
-                    TestatKatalogView frame = new TestatKatalogView(dozent3);
+                    //TestatKatalogView frame = new TestatKatalogView(dozent3);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
