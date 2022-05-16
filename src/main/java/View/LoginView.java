@@ -139,9 +139,9 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
     public void einloggenSequenz() {
         if (usernameTxt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Bitte Benutzernamen eingeben");
+            JOptionPane.showMessageDialog(this, "Bitte Benutzernamen eingeben.");
         } else if (passwortTxt.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Bitte Passwort eingeben");
+            JOptionPane.showMessageDialog(this, "Bitte Passwort eingeben.");
         } else {
             if (userIstStudent(usernameTxt.getText())) {
                 Student student = (Student) ds.readStudentnachBenutzernamen(usernameTxt.getText());
@@ -157,7 +157,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
                     this.dispose();
                     return;
                 }
-            }
+            }else JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
             /*
             List<Benutzer> list = ds.readBenutzerFromDatabase();
             for (int i = 0; i < list.size(); i++) {
