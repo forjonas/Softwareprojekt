@@ -1,6 +1,9 @@
 package View;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import entity.benutzer.Student;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,22 +13,25 @@ import java.awt.event.ActionListener;
 public class StudentMainView extends JFrame implements ActionListener {
 
     /**------Attribute------ */
+    DatabaseService ds=DatabaseService.getInstance();
     private JPanel studentPnl;
     private JButton testateOeffnenBtn;
     private JButton ergebnisTestateBtn;
     private JButton generiereTrainingBtn;
+    private JButton einzelneAufgabeBtn;
     private JButton abmeldenBtn;
+    private JFrame homeframe;
+    private Student student;
 
     /**------Attribute Ende------ */
 
-    public static void main(String[] args)
-    {new StudentMainView(new Student());}
-
-    public StudentMainView(Student student)//ID für individuelle Angabe
+    public StudentMainView(Student student, JFrame homeFrame)//ID für individuelle Angabe
     {
+        this.homeframe=homeFrame;
+        this.student=student;
         studentPnl= new JPanel();
         studentPnl.setLayout(new BorderLayout());
-        JLabel textLbl = new JLabel("Willkommen "+student.getVorname()+" "+student.getNachname());//+Benutzer.getStudentenID());
+        JLabel textLbl = new JLabel("Willkommen "+student.getVorname()+" "+student.getNachname()+" Matrikelnummer:"+student.getMatrikelnummer());//+Benutzer.getStudentenID());
         JPanel tempNorthPnl= new JPanel(new FlowLayout());
         JPanel tempCenterPnl= new JPanel(new FlowLayout());
         JPanel tempSouthPnl= new JPanel(new FlowLayout());
@@ -41,6 +47,11 @@ public class StudentMainView extends JFrame implements ActionListener {
         ergebnisTestateBtn = new JButton("Ergebnisse");
         ergebnisTestateBtn.addActionListener(this);
         ergebnisTestateBtn.setPreferredSize(new Dimension(160,80));
+        einzelneAufgabeBtn = new JButton("Einzelne Aufgabe");
+        einzelneAufgabeBtn.addActionListener(this);
+        einzelneAufgabeBtn.setPreferredSize(new Dimension(160,80));
+
+
         abmeldenBtn=new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
         abmeldenBtn.setPreferredSize(new Dimension(70,30));
@@ -50,6 +61,7 @@ public class StudentMainView extends JFrame implements ActionListener {
         tempCenterPnl.add(generiereTrainingBtn);
         tempCenterPnl.add(testateOeffnenBtn);
         tempCenterPnl.add(ergebnisTestateBtn);
+        tempCenterPnl.add(einzelneAufgabeBtn);
         tempNorthPnl.add(textLbl);
         tempSouthPnl.add(abmeldenBtn);
         studentPnl.add(tempNorthPnl, BorderLayout.NORTH);
@@ -68,17 +80,21 @@ public class StudentMainView extends JFrame implements ActionListener {
     {
 
         if(e.getSource() == this.ergebnisTestateBtn){
-            //dd
+            //new Bea
         }
         else if(e.getSource() == this.testateOeffnenBtn){
-            //d
+            new BearbeiteTestatKatalogView(ds.readTestateFromDatabase(),student,this);
+            this.setVisible(false);
         }
         else if(e.getSource() == this.abmeldenBtn){
             this.dispose();
             new LoginView();
         }
         else if(e.getSource() == this.generiereTrainingBtn){
-            new TrainingGenerierenView(this);
+            new TrainingGenerierenView(this,student);
+            this.setVisible(false);
+        }else if(e.getSource() == this.einzelneAufgabeBtn){
+            new BearbeiteEinzelneAufgabeKatalogView(ds.readAufgabenFromDatabase(),student,this);
             this.setVisible(false);
         }
 

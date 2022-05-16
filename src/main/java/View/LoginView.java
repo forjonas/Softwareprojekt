@@ -19,39 +19,33 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
 
     persistence.DatabaseService ds = DatabaseService.getInstance();
-    Benutzer user = new Student("jhirsch","1337","Jonah","Hirsch",123654);
-
-    Student student = new Student("abc","1337","Jonah","Hirsch",123654);
-    Dozent dozent = new Dozent("def","1337","a","def");
     private JButton studentAnmeldenBtn;
     private JButton dozentAnmeldenBtn;
     private JButton registrierenBtn;
     private JButton einloggenBtn;
     private JPanel generalPnl;
+    private JLabel einloggenLbl = new JLabel("Einloggen", SwingConstants.CENTER);
+    private JLabel usernameLbl = new JLabel("Benutzername:", SwingConstants.LEADING);
+    private JLabel passwortLbl = new JLabel("Kennwort:", SwingConstants.LEADING);
+    private JTextField usernameTxt = new JTextField(30);
+    private JPasswordField passwortTxt = new JPasswordField(30);
 
-    private JLabel einloggenLbl =new JLabel("Einloggen",SwingConstants.CENTER);
-    private JLabel usernameLbl=new JLabel("Benutzername:",SwingConstants.LEADING);
-    private JLabel passwortLbl=new JLabel("Kennwort:",SwingConstants.LEADING);
-
-    private JTextField usernameTxt=new JTextField(30);
-    private JPasswordField passwortTxt=new JPasswordField(30);
-
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new LoginView();
     }
-    public LoginView()
-    {
-        this.setName("Home");
-        this.getContentPane().add(generalPnl =new JPanel());
 
-        //Deaktivierung der Buttons aufgrund von Anmeldestruktur
+    public LoginView() {
+        this.setName("Home");
+        this.getContentPane().add(generalPnl = new JPanel());
+
+        /*Deaktivierung der Buttons aufgrund von Anmeldestruktur
         studentAnmeldenBtn = new JButton("Student");
         studentAnmeldenBtn.addActionListener(this);
         studentAnmeldenBtn.setPreferredSize(new Dimension(70, 30));
         dozentAnmeldenBtn = new JButton("Dozent");
         dozentAnmeldenBtn.addActionListener(this);
         dozentAnmeldenBtn.setPreferredSize(new Dimension(70, 30));
+        */
 
         registrierenBtn = new JButton("Registrieren");
         registrierenBtn.addActionListener(this);
@@ -62,8 +56,8 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
         fuelleHomeFrame();
 
-        this.setSize(600,600);
-        this.setMinimumSize(new Dimension(500,400));
+        this.setSize(600, 600);
+        this.setMinimumSize(new Dimension(500, 400));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -71,172 +65,168 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
     }
 
 
-    public void fuelleHomeFrame()
-    {
-        JPanel tempPanel=new JPanel(new BorderLayout());
+    public void fuelleHomeFrame() {
+        JPanel tempPanel = new JPanel(new BorderLayout());
 
 
         //GridLayout Instanziierung.
-        JPanel tempPanel3=new JPanel(new GridBagLayout());
-        tempPanel3.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        GridBagConstraints c=new GridBagConstraints();
-        c.weightx=0;
-        c.weighty=0;
+        JPanel tempPanel3 = new JPanel(new GridBagLayout());
+        tempPanel3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 0;
+        c.weighty = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
 
         //1. Reihe 1.Spalte
-        c.gridx=0;
-        c.gridwidth=2;
-        c.gridy=0;
-        c.insets=new Insets(0,0,0,0);
-        tempPanel3.add(einloggenLbl,c);
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        tempPanel3.add(einloggenLbl, c);
 
         //2. Reihe 1.Spalte
-        c.gridx=0;
-        c.gridwidth=1;
-        c.gridy=1;
-        c.insets=new Insets(25,7,0,10);
-        tempPanel3.add(usernameLbl,c);
+        c.gridx = 0;
+        c.gridwidth = 1;
+        c.gridy = 1;
+        c.insets = new Insets(25, 7, 0, 10);
+        tempPanel3.add(usernameLbl, c);
 
         //2. Reihe 2. Spalte
-        c.gridx=1;
-        c.gridwidth=1;
-        c.gridy=1;
-        c.insets=new Insets(25,10,0,7);
-        tempPanel3.add(usernameTxt,c);
+        c.gridx = 1;
+        c.gridwidth = 1;
+        c.gridy = 1;
+        c.insets = new Insets(25, 10, 0, 7);
+        tempPanel3.add(usernameTxt, c);
 
         //3. Reihe 1. Spalte
-        c.gridx=0;
-        c.gridwidth=1;
-        c.gridy=2;
-        c.insets=new Insets(25,7,0,10);
-        tempPanel3.add(passwortLbl,c);
+        c.gridx = 0;
+        c.gridwidth = 1;
+        c.gridy = 2;
+        c.insets = new Insets(25, 7, 0, 10);
+        tempPanel3.add(passwortLbl, c);
 
         //3. Reihe 2. Spalte
-        c.gridx=1;
-        c.gridwidth=1;
-        c.gridy=2;
-        c.insets=new Insets(25,10,0,7);
-        tempPanel3.add(passwortTxt,c);
+        c.gridx = 1;
+        c.gridwidth = 1;
+        c.gridy = 2;
+        c.insets = new Insets(25, 10, 0, 7);
+        tempPanel3.add(passwortTxt, c);
 
         //4. Reihe 1. u. 2. Spalte
-        c.gridx=0;
-        c.gridwidth=2;
-        c.gridy=3;
-        c.insets=new Insets(30,7,0,7);
-        tempPanel3.add(einloggenBtn,c);
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy = 3;
+        c.insets = new Insets(30, 7, 0, 7);
+        tempPanel3.add(einloggenBtn, c);
 
         //5. Reihe 1. u. 2. Spalte
-        c.gridx=0;
-        c.gridwidth=2;
-        c.gridy=4;
-        c.insets=new Insets(20,0,0,0);
-        tempPanel3.add(new JLabel("-oder-",SwingConstants.CENTER),c);
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy = 4;
+        c.insets = new Insets(20, 0, 0, 0);
+        tempPanel3.add(new JLabel("-oder-", SwingConstants.CENTER), c);
 
         //6. Reihe 1. u. 2. Spalte
-        c.gridx=0;
-        c.gridwidth=2;
-        c.gridy=5;
-        c.insets=new Insets(20,7,0,7);
-        tempPanel3.add(registrierenBtn,c);
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy = 5;
+        c.insets = new Insets(20, 7, 0, 7);
+        tempPanel3.add(registrierenBtn, c);
         //Ende GridLayout Instanziierung.
-        tempPanel.add(tempPanel3,BorderLayout.CENTER);
+        tempPanel.add(tempPanel3, BorderLayout.CENTER);
         this.add(tempPanel3);
     }
 
-    public void einloggenSequenz()
-    {
-        if(usernameTxt.getText().isEmpty()) {
+    public void einloggenSequenz() {
+        if (usernameTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Bitte Benutzernamen eingeben");
-        }else if(passwortTxt.getPassword().length==0){
+        } else if (passwortTxt.getPassword().length == 0) {
             JOptionPane.showMessageDialog(this, "Bitte Passwort eingeben");
-        }else{
+        } else {
+            if (userIstStudent(usernameTxt.getText())) {
+                Student student = (Student) ds.readStudentnachBenutzernamen(usernameTxt.getText());
+                if (checkPasswort(student)) {
+                    new StudentMainView(student, this);
+                    this.dispose();
+                    return;
+                }
+            } else if (userIstDozent(usernameTxt.getText())) {
+                Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(usernameTxt.getText());
+                if (checkPasswort(dozent)) {
+                    new DozentAnsicht(this, dozent);
+                    this.dispose();
+                    return;
+                }
+            }
+            /*
             List<Benutzer> list = ds.readBenutzerFromDatabase();
             for (int i = 0; i < list.size(); i++) {
                 String username = list.get(i).getBenutzername();
-                //System.out.println(list.get(i));
-                System.out.println(username);
                 String k = usernameTxt.getText();
-                System.out.println(k);
                 if (k.equals(username)) {
                     if (userIstStudent(usernameTxt.getText())) {
                         Student student = (Student) ds.readStudentnachBenutzernamen(usernameTxt.getText());
                         checkPasswort(student);
-                        new StudentMainView(student);
+                        new StudentMainView(student,this);
                         this.dispose();
                         return;
                     } else if (userIstDozent(usernameTxt.getText())) {
                         Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(usernameTxt.getText());
                         checkPasswort(dozent);
-                        //new DozentAnsicht(dozent);
+                        new DozentAnsicht(this,dozent);
                         this.dispose();
                         return;
                     } else {
-                        System.out.println("Fehler 702 - Kein Student/Dozent");
+                        JOptionPane.showMessageDialog(this, "Error 701. Benutzer existiert, ist jedoch weder Student noch Dozent.");
 
                     }
                 } else {
-                    System.out.println("Fehler 701");
-                    System.out.println(usernameTxt.getText());
-                    System.out.println(String.valueOf(passwortTxt.getPassword()));
-                    JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");break;
+                    if((i-1)==list.size())JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
                 }
-            }
+            }*/
         }
     }
 
-    public boolean userIstStudent(String name)
-    {
+    public boolean userIstStudent(String name) {
         List<Student> list = ds.readStudentenFromDatabase();
-        for (int i = 0; i <= list.size(); i++)
-        {
-            if (name.equals(list.get(i).getBenutzername()))
-            {
+        for (int i = 0; i < list.size(); i++) {
+            if (name.equals(list.get(i).getBenutzername())) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean userIstDozent(String name)
-    {
+    public boolean userIstDozent(String name) {
         List<Dozent> list = ds.readDozentenFromDatabase();
-        for (int i = 0; i <= list.size(); i++)
-        {
-            if (name.equals(list.get(i).getBenutzername()))
-            {
+        for (int i = 0; i < list.size(); i++) {
+            if (name.equals(list.get(i).getBenutzername())) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkPasswort(Benutzer user)
-    {
-        if(Arrays.equals(passwortTxt.getPassword(),user.getPasswort().toCharArray()))
-        {
+    public boolean checkPasswort(Benutzer user) {
+        if (Arrays.equals(passwortTxt.getPassword(), user.getPasswort().toCharArray())) {
             return true;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Bitte richtiges Passwort eingeben");
             return false;
         }
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == this.studentAnmeldenBtn){
+        if (e.getSource() == this.studentAnmeldenBtn) {
             //new StudentMainView();//anmeldungStudent();
             //this.setVisible(false);
-        }
-        else if(e.getSource() == this.dozentAnmeldenBtn){
+        } else if (e.getSource() == this.dozentAnmeldenBtn) {
             //d
-        }
-        else if(e.getSource() == this.registrierenBtn){
+        } else if (e.getSource() == this.registrierenBtn) {
             new RegistrierenView(this);
-        }
-        else if(e.getSource() == this.einloggenBtn){
+        } else if (e.getSource() == this.einloggenBtn) {
             einloggenSequenz();
         }
 
@@ -249,7 +239,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             einloggenSequenz();
         }
     }

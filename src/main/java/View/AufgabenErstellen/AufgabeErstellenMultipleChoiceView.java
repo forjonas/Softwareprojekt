@@ -1,7 +1,5 @@
 package View.AufgabenErstellen;
 
-import View.DozentAnsicht;
-import View.ImageFilter;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
@@ -21,9 +19,12 @@ import java.util.ArrayList;
  *
  * @author Jannik Oehme
  * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
+ * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
     private Dozent doz;
+    //Frames
+    private JFrame aufgabeErstellenStartViewFrame;
     //Panels
     private JPanel AufgabeErstellenMultipleChoicePnl;
     private JPanel centerPnl;
@@ -57,9 +58,10 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JLabel antwort4Lbl;
     private JLabel anzAntLbl;
     //TextAreas
-    private JTextField titelTF;
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
+    //TextFields
+    private JTextField titelTF;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
     private JTextField loesungTF;
@@ -67,9 +69,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JTextField antwort2TF;
     private JTextField antwort3TF;
     private JTextField antwort4TF;
-    private JFrame aufgabeErstellenStartViewFrame;
+    //Files
     private File bspBild;
-    private JFileChooser FC;
 
     public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
         this.doz = doz;
@@ -122,22 +123,14 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setLineWrap(true);
-
-
+        //TextFields
         bearbeitungsZeitTF = new JTextField();
-
         punkteTF = new JTextField();
-
         loesungTF = new JTextField();
-
         antwort1TF = new JTextField();
-
         antwort2TF = new JTextField();
-
         antwort3TF = new JTextField();
-
         antwort4TF = new JTextField();
-
         //Label
         bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
         anzAntLbl = new JLabel("Anzahl der Antwortmöglichkeiten");
@@ -202,7 +195,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         AufgabeErstellenMultipleChoicePnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenMultipleChoicePnl);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -210,13 +202,13 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.anzCB) {
-            switchMC();
+            switchVisibility();
         } else if (e.getSource() == this.bspBildBtn) {
-            bspBildHochladen();
+            FileChooserView filcV = new FileChooserView();
+            bspBild = filcV.fileChooser();
         }
     }
-
-    private void switchMC() {
+    private void switchVisibility() {
         int switcher = (Integer) anzCB.getSelectedItem();
         switch (switcher) {
             case 1:
@@ -262,13 +254,10 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             default:
         }
     }
-
-
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
-
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -304,7 +293,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
-
     private ArrayList<Boolean> getLoesung(String loesungText) {
         int switcher = Integer.parseInt(loesungText);
         ArrayList<Boolean> loesung = new ArrayList<Boolean>();
@@ -338,7 +326,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                 return loesung;
         }
     }
-
     private ArrayList<String> mcSpeichern() {
         ArrayList<String> liste = new ArrayList<String>();
         int switcher = (Integer) anzCB.getSelectedItem();
@@ -365,20 +352,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         }
         return liste;
     }
-
-    private File bspBildHochladen() {
-        FC = new JFileChooser((String) null);
-        FC.setAcceptAllFileFilterUsed(false);
-        FC.setFileFilter(new ImageFilter());
-        int returnVal = FC.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            bspBild = FC.getSelectedFile();
-            System.out.println(bspBild.getName());
-            return bspBild;
-        }
-        return null;
-    }
-
     private void createObjectandPersist(String aufgTitel,
                                         String aufText,
                                         String loesungshinweis,
@@ -400,10 +373,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                 doz,
                 antworten,
                 null);
-
         doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungMultipleChoiceAufgabe mlp
-                = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
+        MusterloesungMultipleChoiceAufgabe mlp = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
@@ -414,7 +385,5 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         }
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
-
-
     }
 }

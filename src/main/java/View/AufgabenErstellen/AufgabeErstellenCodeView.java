@@ -21,8 +21,11 @@ import java.io.File;
  *
  * @author Jannik Oehme
  * @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
+ * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
+    //JFrame
+    private JFrame aufgabeErstellenStartViewFrame;
     private Dozent doz;
     //Panels
     private JPanel AufgabeErstellenCodePnl;
@@ -50,7 +53,6 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JLabel bearbeitungszeitLbl;
     private JLabel punkteLbl;
     private JLabel loesungLbl;
-
     //TextAreas
     //private JTextArea codeTA;
     private JTextField titelTF;
@@ -62,7 +64,6 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     //File
     private File codeBspFile;
     private JFileChooser FC;
-    private JFrame aufgabeErstellenStartViewFrame;
 
     public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
         this.doz = doz;
@@ -86,6 +87,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
+        //Panels
         AufgabeErstellenCodePnl = new JPanel();
         AufgabeErstellenCodePnl.setLayout(bl);
         centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
@@ -99,33 +101,27 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
 
-        titelTF = new JTextField();
-
         //ComboBoxes
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
+        //TextAreas
+        loesungTA = new JTextArea();
+        loesungTA.setLineWrap(true);
 
         aufgabenTextTA = new JTextArea(50, 50);
         aufgabenTextTA.setLineWrap(true);
 
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setLineWrap(true);
-
+        //TextFields
+        titelTF = new JTextField();
         bearbeitungsZeitTF = new JTextField();
-
         punkteTF = new JTextField();
-
-        //codeTA = new JTextArea();
-        //codeTA.setLineWrap(true);
-
-        loesungTA = new JTextArea();
-        loesungTA.setLineWrap(true);
-
+        //Labels
         codeBspHochLbl = new JLabel("Optionales Java Design ");
-        //codeBeispiel = new JLabel("Code Beispiel: ");
         kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
@@ -134,15 +130,13 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         punkteLbl = new JLabel("Punkte: ");
         loesungLbl = new JLabel("Lösung");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
-
+        //Components Adden
         centerPnl.add(titelLbl);
         centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
         centerPnl.add(aufgabenTextTA);
         centerPnl.add(loesungLbl);
         centerPnl.add(loesungTA);
-        //centerPnl.add(codeBeispiel);
-        //centerPnl.add(codeTA);
         centerPnl.add(kategorieLbl);
         centerPnl.add(kategorienCB);
         centerPnl.add(schwierigketiLbl);
@@ -172,23 +166,10 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.codeHochBtn) {
-            codeBspHochladen();
+            FileChooserView filcV = new FileChooserView();
+            codeBspFile = filcV.fileChooser();
         }
     }
-
-    private File codeBspHochladen() {
-        FC = new JFileChooser((String) null);
-        FC.setAcceptAllFileFilterUsed(false);
-        FC.setFileFilter(new ImageFilter());
-        int returnVal = FC.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            codeBspFile = FC.getSelectedFile();
-            System.out.println(codeBspFile.getName());
-            return codeBspFile;
-        }
-        return null;
-    }
-
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
@@ -202,7 +183,6 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         int punkte = 0;
         Kategorie kat = null;
         Schwierigkeitsgrad schw = null;
-        //String codeText = null;
         String loesung = null;
 
         try {
@@ -213,7 +193,6 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
-            //codeText = codeTA.getText();
             loesung = loesungTA.getText();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,

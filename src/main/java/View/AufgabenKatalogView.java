@@ -1,10 +1,13 @@
 package View;
 
+import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.AufgabeTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -31,6 +34,8 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnErstellen;
+    private Dozent benutzer;
+    private JFrame userFrame;
 
     /**
      * Launch the application.
@@ -45,7 +50,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(aufgabenListe);
+                    AufgabenKatalogView frame = new AufgabenKatalogView(aufgabenListe,null,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -57,7 +62,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public AufgabenKatalogView(List<Aufgabe> aufgabenliste) {
+    public AufgabenKatalogView(List<Aufgabe> aufgabenliste, JFrame userFrame, Dozent benutzer) {
+        this.userFrame=userFrame;
+        this.benutzer=benutzer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Aufgabenkatalog");
         contentPane = new JPanel();
@@ -132,9 +139,11 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             System.out.println("zurück");
             dispose();
+            userFrame.setVisible(true);
         }
         if (e.getSource() == this.btnErstellen) {
             System.out.println("erstellen");
+            new AufgabeErstellenStartView(this,benutzer);
         }
         if (e.getSource() == this.btnLoeschen) {
             System.out.println("löschen");

@@ -5,6 +5,7 @@ import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -35,6 +36,8 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnBearbeiten;
+    private Student student;
+    private JFrame studentMainView;
 
     /**
      * Launch the application.
@@ -49,7 +52,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(aufgabenListe);
+                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(aufgabenListe,null,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -61,7 +64,9 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneAufgabeKatalogView(List<Aufgabe> aufgabenliste) {
+    public BearbeiteEinzelneAufgabeKatalogView(List<Aufgabe> aufgabenliste, Student student,JFrame studentMainView) {
+        this.student=student;
+        this.studentMainView=studentMainView;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite einzelne Aufgabe");
         contentPane = new JPanel();
@@ -121,7 +126,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
-            System.out.println("zurück");
+            studentMainView.setVisible(true);
             dispose();
         }
         if (e.getSource() == this.btnBearbeiten) {

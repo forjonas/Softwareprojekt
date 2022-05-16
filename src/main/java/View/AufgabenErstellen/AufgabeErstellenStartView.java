@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
  * @author Jannik Oehme
  * @version 05.05.2022
  *  @version 09.05.2022 Layout gefixed
+ *  @version 15.05.2022 Dozentübergabe eingerichtet, Frame parameter eingefügt, inputcleaner eingefügt, change zu extends JFrame gemacht
  */
 public class AufgabeErstellenStartView extends JFrame implements ActionListener {
     private JPanel centerPnl;
@@ -48,10 +49,9 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         //Buttons
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
-
         weiterBtn = new JButton("Weiter");
         weiterBtn.addActionListener(this);
-        //DropDownMenu
+        //ComboBox
         String[] AufgabenTypen = {"Designaufgabe","Programmieraufgabe","Einfachantwort", "MultipleChoiceaufgabe"};
         DDM = new JComboBox<>(AufgabenTypen);
         //Components Adden
@@ -90,15 +90,12 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
                         new AufgabeErstellenEinfachAntwortView(this,doz);
                         break;
             default:    this.setVisible(false);
-
-
         }
     }
     private void zurueck() {
         this.dispose();
         dozentAnsichtFrame.setVisible(true);
     }
-
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
         if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
             JOptionPane.showMessageDialog(testFrame,
