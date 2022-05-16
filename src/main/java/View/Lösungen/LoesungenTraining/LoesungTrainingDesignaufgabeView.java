@@ -1,11 +1,11 @@
 package View.Lösungen.LoesungenTraining;
 
-import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,28 +13,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionListener {
+    private ControllerLoesungenTraining cont;
     private JTextField txtfAufgabentext;
-    private JLabel lblplaceholderUserloesung;
-    private JLabel lblPlaceholderMusterloesung;
+    private JLabel lblUserloesung;
+    private JLabel lblMusterloesung;
     private JButton btnBeenden;
     private JButton btnHinweis;
     private JButton btnNaechsteAufgabe;
     private JButton btnVorherigeAufgabe;
     private JPanel mainPanel;
+    private JLabel lblAufgabenstellungsbild;
     private final Designaufgabe aufgabe;
 
 
-    public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe) {
+    public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe, ControllerLoesungenTraining cont) {
+        this.cont = cont;
         this.aufgabe = aufgabe;
-        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();   //Beschaffen der Musterlösung über die Aufgabe
+        //lblMusterloesung.setIcon(mLD.getMusterloesung());
+        UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe)  cont.getUserloesung(aufgabe);    //Beschaffen der Userlösung aus der DB über die Aufgabe
+        //lblUserloesung.setIcon(uLD.getUserloesung());
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -58,19 +69,19 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
     }
 
     private void beenden() {
-        ControllerLoesungenTraining.getInstance().beendeLoesungTraining();
+        cont.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
         try {
-            ControllerLoesungenTraining.getInstance().naechsteAufgabe();
+            cont.naechsteAufgabe();
         } catch (Exception ignored) {
         }
     }
 
     private void vorherigeAufgabe() {
         try {
-            ControllerLoesungenTraining.getInstance().vorherigeAufgabe();
+            cont.vorherigeAufgabe();
         } catch (Exception ignored) {
         }
     }
@@ -112,14 +123,14 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         mainPanel.add(spacer2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         mainPanel.add(spacer3, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        lblplaceholderUserloesung = new JLabel();
-        lblplaceholderUserloesung.setText("Placeholder Userlösung");
-        mainPanel.add(lblplaceholderUserloesung, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lblUserloesung = new JLabel();
+        lblUserloesung.setText("Placeholder Userlösung");
+        mainPanel.add(lblUserloesung, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
         mainPanel.add(spacer4, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        lblPlaceholderMusterloesung = new JLabel();
-        lblPlaceholderMusterloesung.setText("Placeholder Musterloesung");
-        mainPanel.add(lblPlaceholderMusterloesung, new GridConstraints(1, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lblMusterloesung = new JLabel();
+        lblMusterloesung.setText("Placeholder Musterloesung");
+        mainPanel.add(lblMusterloesung, new GridConstraints(1, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnBeenden = new JButton();
         btnBeenden.setText("Beenden");
         mainPanel.add(btnBeenden, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
