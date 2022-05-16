@@ -111,6 +111,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
             return true;
         }else
         {
+            JOptionPane.showMessageDialog(this,"Passwort ist nicht identisch.");
             return false;
         }
     }
@@ -120,6 +121,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
         List<Student> list = ds.readStudentenFromDatabase();
         for(int i=0;i<=list.size();i++) {
             if (usernameTxt.getText().equalsIgnoreCase(list.get(i).getBenutzername())) {
+                JOptionPane.showMessageDialog(this,"Benutzer existiert bereits.");
                 return true;
             } else {
                 return false;
