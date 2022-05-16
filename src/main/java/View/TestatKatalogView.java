@@ -6,10 +6,12 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
+import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +35,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnErstellen;
+    private Benutzer benutzer;
+    DatabaseService ds=DatabaseService.getInstance();
+    private JFrame dozentFrame;
 
     /**
      * Launch the application.
@@ -54,7 +59,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TestatKatalogView frame = new TestatKatalogView(testatliste);
+                    TestatKatalogView frame = new TestatKatalogView(testatliste,null,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -66,7 +71,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public TestatKatalogView(List<Testat> testatListe) {
+    public TestatKatalogView(List<Testat> testatListe,JFrame dozentFrame, Benutzer benutzer) {
+        this.benutzer=benutzer;
+        this.dozentFrame=dozentFrame;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testatkatalog");
         contentPane = new JPanel();
@@ -141,9 +148,11 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             System.out.println("zurück");
             dispose();
+            dozentFrame.setVisible(true);
         }
         if (e.getSource() == this.btnErstellen) {
             System.out.println("erstellen");
+            new TestatErstellenView(ds.readAufgabenFromDatabase(),this,benutzer);
         }
         if (e.getSource() == this.btnLoeschen) {
             System.out.println("löschen");
