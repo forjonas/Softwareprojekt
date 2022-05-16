@@ -122,6 +122,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			JOptionPane.showMessageDialog(this,"Button Vorherige");
+			trainingApp.zurueckTrainig();
+
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {//angepasst
 			u1 = new UserloesungDesignaufgabe();

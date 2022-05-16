@@ -18,8 +18,6 @@ import javax.swing.border.EmptyBorder;
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
- * <p>
- * Schnittstelle um ein Training auszuführen
  */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
@@ -113,6 +111,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+            trainingApp.zurueckTrainig();
+
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             u1 = new UserloesungEinfachantwort();

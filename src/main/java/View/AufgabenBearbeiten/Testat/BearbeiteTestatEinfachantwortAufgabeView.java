@@ -3,7 +3,6 @@ package View.AufgabenBearbeiten.Testat;
 import app.TestatApp;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.TestatBearbeitung;
-import entity.enums.Aufgabentyp;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -115,7 +114,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            testatApp.zrueck();
+            testatApp.zurueckTestat();
 
             /**
              * zeige alte Userlösung

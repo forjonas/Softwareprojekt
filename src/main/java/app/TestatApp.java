@@ -21,8 +21,6 @@ import java.util.List;
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
- * <p>
- * Schnittstelle um ein Testat auszuführen
  */
 public class TestatApp {
 
@@ -43,6 +41,7 @@ public class TestatApp {
 
     public void zeigeAktuelleAufgabe() { //Aufgaben anzeigen
 
+        Aufgabe aufgabeB = bearbeitet.getTestat().getAufgaben().get(this.index);
         Aufgabe aufgabe = testat.getAufgaben().get(this.index); //Aufgabe am Index erhalten
 
         if (this.aktuellerFrame != null) { //Alte (aktuelle) Ansicht der Aufgabe schließen (Fenster schließen)
@@ -70,7 +69,7 @@ public class TestatApp {
         }
     }
 
-    public void zrueck() {
+    public void zurueckTestat() {
         if (this.index > 0) {
             this.index--;
             zeigeAktuelleAufgabe();

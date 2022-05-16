@@ -142,7 +142,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            testatApp.zrueck();
+            testatApp.zurueckTestat();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {

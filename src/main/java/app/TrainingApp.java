@@ -63,6 +63,15 @@ public class TrainingApp {
 
     }
 
+    public void zurueckTrainig() {
+        if (this.index > 0) {
+            this.index--;
+            zeigeAktuelleAufgabe();
+        } else {
+            JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
+        }
+    }
+
     public void weiter() {
         if (this.index < training.getAnzahlAufgaben() - 1) {
             this.index++;
