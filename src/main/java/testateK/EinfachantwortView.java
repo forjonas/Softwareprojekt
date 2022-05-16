@@ -1,24 +1,33 @@
-package View.AufgabenBearbeiten.Testat;
+package testateK;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import app.TestatApp;
-import entity.aufgabe.*;
+import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
-/**
- * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- */
-public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
+
+
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JSplitPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class EinfachantwortView extends JFrame implements ActionListener {
 
     //Frame Elemente
     private JPanel contentPane;
@@ -37,12 +46,9 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     /**
      * Create the frame.
      */
-    public BearbeiteTestatEinfachantwortAufgabeView(TestatApp testatApp, EinfachantwortAufgabe aufgabe) {
+    public EinfachantwortView() {
 
-        this.aufgabe = aufgabe;
-        this.testatApp = testatApp;
-
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle("Test1"); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
@@ -53,7 +59,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
 
-        JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
+        JLabel lblTextbeschreibung = new JLabel("Test2"); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
 
         /**
@@ -110,34 +116,37 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+            JOptionPane.showMessageDialog(this, "Test3"); //Lösungshinweis bekommen
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            testatApp.zurueckTestat();
-
-            /**
-             * zeige alte Userlösung
-             * Editiere alte Userlösung
-             * halte diese neue Userlösung in der Liste
-             *
-             */
-
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-
-            u1 = new UserloesungEinfachantwort();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
-            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatApp.weiter(); //testatApp.testat
+            JOptionPane.showMessageDialog(this, "Test3");
         }
         if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printPersistenz();
-            BearbeiteTestatKatalogView.main(null);
+            JOptionPane.showMessageDialog(this, "Test3");
         }
+    }
+
+
+
+
+    public static void main(String[] args) {
+
+
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+
+                    EinfachantwortView testatApp = new EinfachantwortView();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
 

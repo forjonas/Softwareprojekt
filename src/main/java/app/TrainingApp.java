@@ -5,15 +5,10 @@ import View.AufgabenBearbeiten.Training.BearbeiteTrainingEinfachantwortAufgabeVi
 import View.AufgabenBearbeiten.Training.BearbeiteTrainingMultipleChoiceAufgabeView;
 import View.AufgabenBearbeiten.Training.BearbeiteTrainingProgrammieraufgabeView;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
-import entity.benutzer.Dozent;
+import entity.benutzer.Benutzer;
 import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
+import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -24,6 +19,9 @@ import java.util.List;
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
+ * @version3: 16.05.22
+ *
+ * Schnittstelle um ein Training auszuführen
  */
 
 public class TrainingApp {
@@ -32,25 +30,24 @@ public class TrainingApp {
     private int index;
     private JFrame aktuellerFrame;
     private DatabaseService database;
-    //zwischenspeichern der AntwortenListe
-    public List<Object> usereingaben = new ArrayList<>();
+    private Benutzer benutzer;
+    public List<Userloesung> usereingaben = new ArrayList<>();
 
 
-    public TrainingApp(Training training, DatabaseService database) {
+    public TrainingApp(Training training, Benutzer benutzer) {
         this.index = 0;
         this.training = training;
-        this.database = database; //Muss DatabaseService mit übergeben(dahin speichern)
-
+        this.benutzer = benutzer;
     }
 
-    public void zeigeAktuelleAufgabe() {
-        Aufgabe aufgabe = training.getAufgaben().get(this.index);//bekomme Aufgabe an der Position
+    public void zeigeAktuelleAufgabe() {//Aufgaben anzeigen
 
-        if (this.aktuellerFrame != null) {//Alte Ansicht Aufgabe weg (Fenster schließen)
+        Aufgabe aufgabe = training.getAufgaben().get(this.index);
+
+        if (this.aktuellerFrame != null) {
             this.aktuellerFrame.dispose();
         }
 
-        // Öffne Ansicht mit Aufgabe bzw Frame bauen
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
             this.aktuellerFrame = new BearbeiteTrainingEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
 
@@ -62,29 +59,35 @@ public class TrainingApp {
             this.aktuellerFrame = new BearbeiteTrainingDesignaufgabeView(this, (Designaufgabe) aufgabe);
         }
 
-        this.aktuellerFrame.setVisible(true);       //Frame anzeigen
+        this.aktuellerFrame.setVisible(true);
 
     }
 
-    public void weiter() { //Wie ist der aktuelle Index, kann er noch eine Aufgabe finden? Ja: Index einstellen + AktuelleAufgabe anzeigen
+    public void zurueckTrainig() {
+        if (this.index > 0) {
+            this.index--;
+            zeigeAktuelleAufgabe();
+        } else {
+            JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
+        }
+    }
+
+    public void weiter() {
         if (this.index < training.getAnzahlAufgaben() - 1) {
             this.index++;
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
-            //UserLösungen speichern
-            //Beenden--> in Datenbank persistieren
         }
+    }
+    public void printPersistenz() {//usereingaben Liste persistieren
+
+        DatabaseService ds1 = database.getInstance();
+        ds1.persistObjects(usereingaben);
+        System.out.println(usereingaben);
     }
 
     public void finish() {
-        // nimm usereingaben Liste und
-    }
-
-    public void printTest() {
-        System.out.println(usereingaben);
-
-        // nimm usereingaben Liste und
     }
 
 }

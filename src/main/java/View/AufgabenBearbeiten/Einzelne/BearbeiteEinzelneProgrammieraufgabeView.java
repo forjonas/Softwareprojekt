@@ -4,6 +4,7 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,12 +16,12 @@ import javax.swing.border.EmptyBorder;
 public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JButton btnBeenden;
+    private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
     private JButton btnAufgabeBeenden;
-    private JButton btnUpload;
-    private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+    private JTextArea textArea;
     private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
+    private UserloesungEinfachantwort u1;
 
     /**
      * Launch the application.
@@ -53,7 +54,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         this.aufgabe = aufgabe;
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 674, 435);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -64,51 +65,53 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());//eingetragen
         panelNorth.add(lblNewLabel1);
 
-        JLabel lblNewLabel_2 = new JLabel(icon);
-        contentPane.add(lblNewLabel_2, BorderLayout.CENTER);
+        JPanel panelCenter = new JPanel();
+        contentPane.add(panelCenter, BorderLayout.CENTER);
+        textArea = new JTextArea(18, 50);
+        panelCenter.add(textArea);
 
         JPanel panelWest = new JPanel();
         contentPane.add(panelWest, BorderLayout.WEST);
-        btnUpload = new JButton("Upload");
-        panelWest.add(btnUpload);
-
+        JLabel lblNewLabel_1 = new JLabel("Antwort:");
+        panelWest.add(lblNewLabel_1);
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnBeenden = new JButton("Beenden");
-        panelSouth.add(btnBeenden);
+        btnAbbrechen = new JButton("Beenden");
+        panelSouth.add(btnAbbrechen);
         btnLoesungshinweis = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweis);
         btnAufgabeBeenden = new JButton("Aufgabe Beenden");
         panelSouth.add(btnAufgabeBeenden);
 
-        this.btnBeenden.addActionListener(this);
+        this.btnAbbrechen.addActionListener(this);
         this.btnLoesungshinweis.addActionListener(this);
         this.btnAufgabeBeenden.addActionListener(this);
-        this.btnUpload.addActionListener(this);
 
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeenden) {
-            JOptionPane.showMessageDialog(this, "Button Beenden");
-
+        if (e.getSource() == this.btnAbbrechen) {
+            this.dispose();
+            BearbeiteEinzelneAufgabeKatalogView.main(null);
         }
         if (e.getSource() == this.btnLoesungshinweis) {
-            //JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
-            JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
+            u1 = new UserloesungEinfachantwort();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            this.dispose();
+            //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
 
-
-        }
-        if (e.getSource() == this.btnUpload) {
-            JOptionPane.showMessageDialog(this, "Upload Button");
         }
     }
 }
