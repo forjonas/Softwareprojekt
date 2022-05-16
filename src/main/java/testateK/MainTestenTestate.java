@@ -1,4 +1,4 @@
-package testateK;
+package TestateK;
 
 import app.TestatApp;
 import entity.aufgabe.*;
