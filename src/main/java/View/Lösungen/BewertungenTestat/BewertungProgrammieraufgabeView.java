@@ -3,6 +3,8 @@ package View.Lösungen.BewertungenTestat;
 import View.LoesungsHinweisView;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
+import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungProgrammieraufgabeView extends JFrame implements ActionListener {
+    private ControllerBewertungenTestate cont;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JTextField txtfUserLoesung;
@@ -18,19 +21,29 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JButton btnVorherigeAufgabe;
     private JButton btnHinweis;
     private JButton btnNaechsteAufgabe;
+    private JLabel lblAufgabenstellungsbild;
     private Programmieraufgabe aufgabe;
 
-    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate cont) {
+        this.cont = cont;
         this.aufgabe = aufgabe;
-        MusterloesungProgrammieraufgabe mLPA = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        txtfMusterloesung.setText(mLPA.getMusterloesung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();      //Beschaffen der Musterlösung über die Aufgabe
+        txtfMusterloesung.setText(mLP.getMusterloesung());
+        UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);        //Beschaffen der Userlösung aus der DB über die Aufgabe
+        txtfUserLoesung.setText(uLP.getUserloesung());
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -53,15 +66,15 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     }
 
     private void beenden() {
-        ControllerBewertungenTestate.getInstance().beendeBewertungTestat();
+        cont.beendeBewertungTestat();
     }
 
     private void naechsteAufgabe() {
-        ControllerBewertungenTestate.getInstance().naechsteAufgabe();
+        cont.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        ControllerBewertungenTestate.getInstance().vorherigeAufgabe();
+        cont.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

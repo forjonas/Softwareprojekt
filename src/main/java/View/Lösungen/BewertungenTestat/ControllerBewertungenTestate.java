@@ -2,27 +2,50 @@ package View.Lösungen.BewertungenTestat;
 
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
+import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Benutzer;
+import entity.loesung.userloesung.Userloesung;
+import persistence.DatabaseService;
+
+import java.util.List;
 
 public class ControllerBewertungenTestate {
-    private static ControllerBewertungenTestate instance;
+    private TestatBearbeitung testatBearbeitung;
     private Testat testat;
     private int index;
+    public Benutzer benutzer;
+    private DatabaseService ds = DatabaseService.getInstance();
+    private List<Userloesung> userloesungList;
 
-    private ControllerBewertungenTestate() {
-
-    }
-
-    public static ControllerBewertungenTestate getInstance() {
-        if (instance == null) {
-            instance = new ControllerBewertungenTestate();
-        }
-        return instance;
-    }
-
-    public void setTestat(Testat testat) {
-        this.testat = testat;
+    public ControllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer) {
+        this.testatBearbeitung = testatBearbeitung;
+        this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
+        this.benutzer = benutzer;
+
+        this.userloesungList = ds.readUserloesungVonTestat(testat, benutzer);
+
         startBewertungTestat();
+    }
+
+    public void setTestatBearbeitung(TestatBearbeitung testatBearbeitung) {
+        this.testatBearbeitung = testatBearbeitung;
+        this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
+        this.index = 0;
+
+        this.userloesungList = ds.readUserloesungVonTestat(testat, benutzer);
+
+        startBewertungTestat();
+    }
+
+    public Userloesung getUserloesung(Aufgabe aufgabe) {
+        Userloesung userloesung = null;
+        for (Userloesung uDB : userloesungList) {
+            if (uDB.getAufgabe().equals(aufgabe)) {
+                userloesung = uDB;
+            }
+        }
+        return userloesung;
     }
 
     public void startBewertungTestat() {
@@ -30,7 +53,7 @@ public class ControllerBewertungenTestate {
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe);
+                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
                     bEV.versteckeVorherigeAufgabe();
                     if (testat.getAnzahlAufgaben() == 1) {
                         bEV.versteckeNaechsteAufgabe();
@@ -41,7 +64,7 @@ public class ControllerBewertungenTestate {
             case Programmieren: {
                 try {
                     assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe);
+                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
                     bPV.versteckeVorherigeAufgabe();
                     if (testat.getAnzahlAufgaben() == 1) {
                         bPV.versteckeNaechsteAufgabe();
@@ -52,7 +75,7 @@ public class ControllerBewertungenTestate {
             case MultipleChoice: {
                 try {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView bTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
+                    BewertungMultipleChoiceAufgabeView bTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                     bTMCV.versteckeVorherigeAufgabe();
                     if (testat.getAnzahlAufgaben() == 1) {
                         bTMCV.versteckeNaechsteAufgabe();
@@ -63,7 +86,7 @@ public class ControllerBewertungenTestate {
             case Design: {
                 try {
                     assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe);
+                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
                     bDV.versteckeVorherigeAufgabe();
                     if (testat.getAnzahlAufgaben() == 1) {
                         bDV.versteckeNaechsteAufgabe();
@@ -75,7 +98,7 @@ public class ControllerBewertungenTestate {
     }
 
     public void beendeBewertungTestat() {
-        //zurück zum vorherigen Menü
+        //zurück zum vorherigen Menü; Benutzer weitergeben!
         System.out.println("Hier gehts bald zurück zur Testatsübersicht.");
     }
 
@@ -85,7 +108,7 @@ public class ControllerBewertungenTestate {
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe);
+                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bEV.versteckeNaechsteAufgabe();
                     }
@@ -95,7 +118,7 @@ public class ControllerBewertungenTestate {
             case Programmieren: {
                 try {
                     assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe);
+                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bPV.versteckeNaechsteAufgabe();
                     }
@@ -105,7 +128,7 @@ public class ControllerBewertungenTestate {
             case MultipleChoice: {
                 try {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView lTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
+                    BewertungMultipleChoiceAufgabeView lTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         lTMCV.versteckeNaechsteAufgabe();
                     }
@@ -115,7 +138,7 @@ public class ControllerBewertungenTestate {
             case Design: {
                 try {
                     assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView lDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe);
+                    BewertungDesignaufgabeView lDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         lDV.versteckeNaechsteAufgabe();
                     }
@@ -131,7 +154,7 @@ public class ControllerBewertungenTestate {
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe);
+                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
                     if (index == 0) {
                         bEV.versteckeVorherigeAufgabe();
                     }
@@ -141,7 +164,7 @@ public class ControllerBewertungenTestate {
             case Programmieren: {
                 try {
                     assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe);
+                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
                     if (index == 0) {
                         bPV.versteckeVorherigeAufgabe();
                     }
@@ -151,7 +174,7 @@ public class ControllerBewertungenTestate {
             case MultipleChoice: {
                 try {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView lTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe);
+                    BewertungMultipleChoiceAufgabeView lTMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                     if (index == 0) {
                         lTMCV.versteckeVorherigeAufgabe();
                     }
@@ -161,7 +184,7 @@ public class ControllerBewertungenTestate {
             case Design: {
                 try {
                     assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView lDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe);
+                    BewertungDesignaufgabeView lDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
                     if (index == 0) {
                         lDV.versteckeVorherigeAufgabe();
                     }

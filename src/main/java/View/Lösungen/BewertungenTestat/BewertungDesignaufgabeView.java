@@ -1,36 +1,48 @@
 package View.Lösungen.BewertungenTestat;
 
-import View.LoesungsHinweisView;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
+    private ControllerBewertungenTestate cont;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
-    private JLabel lblPlaceholderUserloesung;
-    private JLabel lblPlaceholderMusterloesung;
+    private JLabel lblUserloesung;
+    private JLabel lblMusterloesung;
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
+    private JLabel lblAufgabenstellungsbild;
     private final Designaufgabe aufgabe;
 
-    public BewertungDesignaufgabeView(Designaufgabe aufgabe) {
+    public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate cont) {
+        this.cont = cont;
         this.aufgabe = aufgabe;
-        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());        //Placeholder
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        /*
+        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();       //Beschaffen der Musterlösung über die Aufgabe
+        lblMusterloesung.setIcon(mLD.getMusterloesung());
+        UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe) cont.getUserloesung(aufgabe);         //Beschaffen der Userlösung aus der DB über die Aufgabe
+        lblUserloesung.setIcon(uLD.getUserloesung());
+        */
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -55,15 +67,15 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
 
 
     private void beenden() {
-        ControllerBewertungenTestate.getInstance().beendeBewertungTestat();
+        cont.beendeBewertungTestat();
     }
 
     private void naechsteAufgabe() {
-        ControllerBewertungenTestate.getInstance().naechsteAufgabe();
+        cont.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        ControllerBewertungenTestate.getInstance().vorherigeAufgabe();
+        cont.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

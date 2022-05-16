@@ -4,9 +4,10 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.EinfachantwortAufgabe;
+import entity.benutzer.Benutzer;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import persistence.DatabaseService;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,22 +24,28 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JPanel mainPanel;
     private JPanel panelUser;
     private JPanel panelMuster;
-    private JLabel lblUserloesung;
-    private JLabel lblMusterloesung;
-    private JLabel lblAufgabentext;
+    private JLabel lblAufgabenstellungsbild;
     private final EinfachantwortAufgabe aufgabe;
+    private Benutzer benutzer;
 
 
-    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer) {
+        this.benutzer = benutzer;
         this.aufgabe = aufgabe;
-        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();             //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLE.getMusterloesung());
-        //txtfUserLoesung.setText(aufgabe.getUserloesung());
+        txtfUserLoesung.setText(userloesungEinfachantwort.getUserloesung());                                    //Beschaffen der Userlösung über das mitgegebene Userlösungsobjekt
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);

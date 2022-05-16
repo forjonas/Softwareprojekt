@@ -4,6 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
+import entity.benutzer.Benutzer;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
@@ -19,18 +20,27 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JButton btnHinweis;
     private JLabel lblPlaceholderUserloesung;
     private JLabel lblPlaceholderMusterloesung;
+    private JLabel lblAufgabenstellungsbild;
     private final Designaufgabe aufgabe;
+    private Benutzer benutzer;
 
-    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe) {
+    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe, Benutzer benutzer) {
+        this.benutzer = benutzer;
         this.aufgabe = aufgabe;
-        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        //lblPlaceholderMusterloesung.setText(mLD.getMusterloesung());            //Placeholder
-        lblPlaceholderUserloesung.setText(userloesungDesignaufgabe.getUserloesung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();         //Beschaffen der Musterlösung über die Aufgabe
+        //lblPlaceholderMusterloesung.setIcon(mLD.getMusterloesung());
+        //lblPlaceholderUserloesung.setIcon(userloesungDesignaufgabe.getUserloesung());                   //Beschaffen der Userlösung aus dem übergebenen Userlösungsobjekt
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);

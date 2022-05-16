@@ -5,7 +5,9 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Benutzer;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,17 +21,27 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JTextField txtfUserloesung;
     private JTextField txtfMusterloesung;
     private JPanel mainPanel;
+    private JLabel lblAufgabenstellungsbild;
     private final Programmieraufgabe aufgabe;
+    private Benutzer benutzer;
 
-    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe) {
+        this.benutzer = benutzer;
         this.aufgabe = aufgabe;
-        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();     //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLP.getMusterloesung());
+        txtfUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());                                //Beschaffen der Userlösung aus der DB über die Aufgabe
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);

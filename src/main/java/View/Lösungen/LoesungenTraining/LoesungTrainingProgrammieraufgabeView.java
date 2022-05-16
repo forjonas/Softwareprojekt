@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
+    private ControllerLoesungenTraining cont;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JTextField txtfUserLoesung;
@@ -21,19 +23,29 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JPanel mainPanel;
+    private JLabel lblAufgabenstellungsbild;
     private final Programmieraufgabe aufgabe;
 
-    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining cont) {
+        this.cont = cont;
         this.aufgabe = aufgabe;
-        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+
+        //Setzen der Daten
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();          //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLP.getMusterloesung());
+        UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);            //Beschaffen der Userlösung aus der DB über die Aufgabe
+        txtfUserLoesung.setText(uLP.getUserloesung());
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -56,12 +68,12 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     }
 
     private void beenden(){
-        ControllerLoesungenTraining.getInstance().beendeLoesungTraining();
+        cont.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
         try {
-            ControllerLoesungenTraining.getInstance().naechsteAufgabe();
+            cont.naechsteAufgabe();
         } catch (Exception ignored){
 
         }
@@ -69,7 +81,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
 
     private void vorherigeAufgabe(){
         try {
-            ControllerLoesungenTraining.getInstance().vorherigeAufgabe();
+            cont.vorherigeAufgabe();
         } catch (Exception ignored) {
         }
     }
