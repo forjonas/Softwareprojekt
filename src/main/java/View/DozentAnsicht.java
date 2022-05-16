@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 04.05.2022
+
  */
 public class DozentAnsicht extends JFrame implements ActionListener {
 
@@ -48,6 +49,8 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void fuelleDozentFrame(){
+        //JLabel
+        JLabel welcomeMsgLbl = new JLabel("Willkommen "+doz.getVorname()+" "+doz.getNachname());
         //Buttons
         abmeldenBtn = new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
@@ -80,7 +83,6 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         dozentMainPanel = new JPanel(new BorderLayout());
 
         //Components Adden
-
         centerPnl.add(testatEinsehenBtn);
         centerPnl.add(testateDurchfuehrenBtn);
         centerPnl.add(testatuebersichtBtn);
@@ -92,6 +94,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
         dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
         dozentMainPanel.add(abmeldenBtn, BorderLayout.SOUTH);
+        dozentMainPanel.add(welcomeMsgLbl,BorderLayout.NORTH);
 
         this.add(dozentMainPanel);
     }
