@@ -20,14 +20,12 @@ public class StudentMainView extends JFrame implements ActionListener {
     private JButton generiereTrainingBtn;
     private JButton einzelneAufgabeBtn;
     private JButton abmeldenBtn;
-    private JFrame homeframe;
     private Student student;
 
     /**------Attribute Ende------ */
 
-    public StudentMainView(Student student, JFrame homeFrame)//ID für individuelle Angabe
+    public StudentMainView(Student student)//ID für individuelle Angabe
     {
-        this.homeframe=homeFrame;
         this.student=student;
         studentPnl= new JPanel();
         studentPnl.setLayout(new BorderLayout());
@@ -83,7 +81,7 @@ public class StudentMainView extends JFrame implements ActionListener {
             //new Bea
         }
         else if(e.getSource() == this.testateOeffnenBtn){
-            new BearbeiteTestatKatalogView(ds.readTestateFromDatabase(),student,this);
+            new BearbeiteTestatKatalogView(this, student);
             this.setVisible(false);
         }
         else if(e.getSource() == this.abmeldenBtn){
@@ -94,7 +92,7 @@ public class StudentMainView extends JFrame implements ActionListener {
             new TrainingGenerierenView(this,student);
             this.setVisible(false);
         }else if(e.getSource() == this.einzelneAufgabeBtn){
-            new BearbeiteEinzelneAufgabeKatalogView(ds.readAufgabenFromDatabase(),student,this);
+            new BearbeiteEinzelneAufgabeKatalogView(this, student);
             this.setVisible(false);
         }
 

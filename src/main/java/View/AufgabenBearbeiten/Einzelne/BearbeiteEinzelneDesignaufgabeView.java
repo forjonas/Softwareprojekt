@@ -90,6 +90,8 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         this.btnLoesungshinweis.addActionListener(this);
         this.btnAufgabeBeenden.addActionListener(this);
         this.btnUpload.addActionListener(this);
+
+        super.setVisible(true);
     }
 
     @Override

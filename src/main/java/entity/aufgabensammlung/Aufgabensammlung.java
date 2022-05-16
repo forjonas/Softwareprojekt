@@ -134,7 +134,11 @@ public abstract class Aufgabensammlung {
      * @return Anzahl der Aufgaben in der Aufgabensammlung
      */
     public int getAnzahlAufgaben() {
-        return aufgaben.size();
+        if (aufgaben != null) {
+            return aufgaben.size();
+        } else {
+            return 0;
+        }
     }
 
     /**

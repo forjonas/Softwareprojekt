@@ -29,7 +29,7 @@ public class PersistenceTest {
         System.out.println("Methode zum Testen der Persistenz");
         DatabaseService ds = DatabaseService.getInstance();
 
-        //createTestData();
+        createTestData();
         //ds.clearDatabase();
         //deleteTestData();
         //testRelations();

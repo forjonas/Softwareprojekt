@@ -1,5 +1,10 @@
 package View;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneDesignaufgabeView;
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneEinfachantwortAufgabeView;
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneMultipleChoiceAufgabeView;
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneProgrammieraufgabeView;
+import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
 import View.tableModel.TrainingTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
@@ -12,6 +17,7 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,15 +38,32 @@ import java.util.List;
 public class EinsehenTrainingKatalogView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
-    private JTable tableTestate;
+    private JTable tableTrainings;
     private TrainingTableModel trainingsTableModel;
     private JButton btnZurueck;
     private JButton btnEinsehen;
+    private Dozent aktuellerBenutzer;
+    private List<Training> trainingsliste;
+    private JFrame jframe;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
+        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(null, dozent1);
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private List<Training> getTestData() {
         Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
@@ -50,26 +74,25 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         Student student1 = new Student("CClown", "ccc", "Chris", "Clown", 3333);
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
-        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
-        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}));
-        List<Training> trainingsliste = Arrays.asList(new Training[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(trainingsliste);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Training t1 = new Training(aufgabenListe1, 60, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Leicht, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), student1);
+        Training t2 = new Training(aufgabenListe2, 70, Kategorie.Datenbanken, Schwierigkeitsgrad.Mittel, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), dozent1);
+        Training t3 = new Training(aufgabenListe3, 50, Kategorie.Software_Engineering, Schwierigkeitsgrad.Schwer, Arrays.asList(new Aufgabentyp[] {Aufgabentyp.Einfachantwort, Aufgabentyp.Programmieren}), dozent2);
+        Training t4 = new Training();
+        List<Training> trainingsliste = Arrays.asList(new Training[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3, t4});
+        return  trainingsliste;
     }
 
     /**
      * Create the frame.
      */
-    public EinsehenTrainingKatalogView(List<Training> trainingsliste) {
+    public EinsehenTrainingKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
+        this.aktuellerBenutzer = aktuellerBenutzer;
+        trainingsliste = DatabaseService.getInstance().readTrainingsFromDatabase();
+        //Test
+        //trainingsliste = new LinkedList<Training>();
+        //trainingsliste = getTestData();
+        trainingsliste = new LinkedList<Training>(trainingsliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Trainings einsehen");
         contentPane = new JPanel();
@@ -112,11 +135,11 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        tableTestate = new JTable();
+        tableTrainings = new JTable();
         trainingsTableModel = new TrainingTableModel(trainingsliste);
-        tableTestate.setModel(trainingsTableModel);
-        tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        scrollPane.setViewportView(tableTestate);
+        tableTrainings.setModel(trainingsTableModel);
+        tableTrainings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane.setViewportView(tableTrainings);
 
         btnEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
@@ -130,11 +153,35 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
-            System.out.println("zurück");
-            dispose();
+            zurueckButtonLogik();
         }
         if (e.getSource() == this.btnEinsehen) {
-            System.out.println("einsehen");
+            einsehenButtonLogik();
+        }
+    }
+
+    private void zurueckButtonLogik() {
+        jframe.setVisible(true);
+        dispose();
+    }
+
+    private void einsehenButtonLogik() {
+        if (trainingsliste.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine Trainings zum Einsehen", "Keine Trainings", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int selectedRow = tableTrainings.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Es wurde kein Training zum Einsehen ausgewählt", "Keine Training ausgewählt", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Training training = trainingsliste.get(selectedRow);
+                if(training.getAnzahlAufgaben() > 0) {
+                    //In meinem Branch noch ohne Option, um den aktuellen Benutzter zu übergeben
+                    new ControllerLoesungenTraining(training, aktuellerBenutzer);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Das gewählte Training enthält keine Aufgaben", "Keine Aufgaben", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 

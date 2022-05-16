@@ -15,7 +15,7 @@ import java.util.List;
 public class RegistrierenView extends JFrame implements ActionListener {
 
     DatabaseService ds = DatabaseService.getInstance();
-    private JFrame einlogenView;
+    private JFrame einloggenView;
     private JPanel registrierePnl;
     private JButton registrierenBtn;
     private JButton zurueckBtn;
@@ -41,7 +41,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
         this.setName("Home");
         this.getContentPane().add(registrierePnl =new JPanel(new BorderLayout()));
 
-        einlogenView=hauptmenueView;
+        einloggenView =hauptmenueView;
 
         registrierenBtn = new JButton("Registrieren");
         registrierenBtn.addActionListener(this);
@@ -58,7 +58,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
-        einlogenView.setVisible(false);
+        einloggenView.setVisible(false);
     }
 
     public void fuelleRegistrierenFrame()
@@ -137,7 +137,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
             Student student = new Student(usernameTxt.getText(),new String(passwortTxt.getPassword()),vornameTxt.getText(),nachnameTxt.getText(),Integer.parseInt(matrikelTxt.getText()));
             ds.persistObject(student);
             System.out.println("check");
-            new StudentMainView(student,einlogenView);
+            new StudentMainView(student);
         }
 
     }
@@ -150,7 +150,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
             this.dispose();
         }
         else if(e.getSource() == this.zurueckBtn){
-            einlogenView.setVisible(true);
+            einloggenView.setVisible(true);
             this.dispose();
         }
     }

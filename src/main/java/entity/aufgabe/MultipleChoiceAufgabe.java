@@ -37,7 +37,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
     public MultipleChoiceAufgabe() {
         super();
         this.antwortmoeglichkeiten = new LinkedList<String>();
-        //Nothing to do
+        this.aufgabentyp = Aufgabentyp.MultipleChoice;
     }
 
     /**
