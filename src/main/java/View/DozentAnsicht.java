@@ -34,11 +34,9 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JPanel dozentMainPanel;
     GridLayout gl = new GridLayout(2,4);
     Dozent doz;
-    private JFrame homeview;
 
-    public DozentAnsicht(JFrame homeview, Dozent doz){
+    public DozentAnsicht(Dozent doz){
         this.doz = doz;
-        this.homeview = homeview;
         this.setName("Home");
         fuelleDozentFrame();
         this.setMinimumSize(new Dimension(1500,900));
@@ -141,12 +139,12 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateErstellen() {
         this.setVisible(false);
-        new TestatErstellenView(ds.readAufgabenFromDatabase(),this,doz);
+        new TestatErstellenView(this, doz);
     }
 
     private void testatuebersicht() {
         this.setVisible(false);
-        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
+        new TestatKatalogView(this, doz);
     }
 
     private void aufgabeErstellen() {
@@ -156,7 +154,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void aufgabenuebersicht() {
         this.setVisible(false);
-        new AufgabenKatalogView(ds.readAufgabenFromDatabase(),this,doz);
+        new AufgabenKatalogView(this, doz);
     }
 
     private void trainingsDurchfuehren() {
@@ -166,10 +164,10 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
+        new TestatKatalogView(this, doz);
     }
     private void testatEinsehen(){
         this.setVisible(false);
-       new KorrigiereTestatKatalogView(ds.readTestatBearbeitungenFromDatabase(),this,doz);
+       new KorrigiereTestatKatalogView(this, doz);
     }
 }

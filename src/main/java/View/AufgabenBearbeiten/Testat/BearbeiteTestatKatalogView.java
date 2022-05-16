@@ -46,6 +46,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     private JButton btnBearbeiten;
     private List<Testat> testatListe;
     private Benutzer aktuellerBenutzer;
+    private JFrame jframe;
     //Nur zum Testen
     private static Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
@@ -65,7 +66,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                             break;
                         }
                     }
-                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(student1);
+                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(null, student1);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(student2);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(dozent1);
                     frame.setVisible(true);
@@ -102,7 +103,8 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     /**
      * Create the frame.
      */
-    public BearbeiteTestatKatalogView(Benutzer aktuellerBenutzer) {
+    public BearbeiteTestatKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
+        this.jframe = jframe;
         DatabaseService ds = DatabaseService.getInstance();
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = ds.readTestateFromDatabase();
@@ -176,13 +178,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Student.class) {
-            new StudentMainView((Student) aktuellerBenutzer);
-        } else if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht((Dozent) aktuellerBenutzer);
-        }
+        jframe.setVisible(true);
         dispose();
     }
 
@@ -202,9 +198,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                 } else {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
-                        TestatApp testatApp = new TestatApp(testat, DatabaseService.getInstance());
-                        //Noch nicht implementiert in meinem Branch
-                        //TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer);
+                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer);
                         testatApp.zeigeAktuelleAufgabe();
                         dispose();
                     } else if (passwort != null) {

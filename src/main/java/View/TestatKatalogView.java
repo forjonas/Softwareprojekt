@@ -38,6 +38,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
     private List<Testat> testatliste;
+    private JFrame jframe;
 
     /**
      * Launch the application.
@@ -55,7 +56,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                             dozent3 = dozent;
                         }
                     }
-                    TestatKatalogView frame = new TestatKatalogView(dozent1);
+                    TestatKatalogView frame = new TestatKatalogView(null, dozent1);
                     //TestatKatalogView frame = new TestatKatalogView(dozent2);
                     //TestatKatalogView frame = new TestatKatalogView(dozent3);
                     frame.setVisible(true);
@@ -87,7 +88,8 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public TestatKatalogView(Dozent aktuellerBenutzer) {
+    public TestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatliste = DatabaseService.getInstance().readTestateFromDatabase();
         //Test
@@ -177,18 +179,12 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht((Dozent) aktuellerBenutzer);
-        } else {
-            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
-        }
+        jframe.setVisible(true);
         dispose();
     }
 
     private void erstellenButtonLogik() {
-        new TestatErstellenView(aktuellerBenutzer);
+        new TestatErstellenView(jframe, aktuellerBenutzer);
         dispose();
     }
 

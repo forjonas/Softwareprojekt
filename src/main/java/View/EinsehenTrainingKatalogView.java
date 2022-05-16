@@ -44,6 +44,7 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
     private JButton btnEinsehen;
     private Dozent aktuellerBenutzer;
     private List<Training> trainingsliste;
+    private JFrame jframe;
 
     /**
      * Launch the application.
@@ -53,7 +54,7 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(dozent1);
+                    EinsehenTrainingKatalogView frame = new EinsehenTrainingKatalogView(null, dozent1);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -84,7 +85,8 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
     /**
      * Create the frame.
      */
-    public EinsehenTrainingKatalogView(Dozent aktuellerBenutzer) {
+    public EinsehenTrainingKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         trainingsliste = DatabaseService.getInstance().readTrainingsFromDatabase();
         //Test
@@ -159,13 +161,7 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht((Dozent) aktuellerBenutzer);
-        } else {
-            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
-        }
+        jframe.setVisible(true);
         dispose();
     }
 
@@ -180,9 +176,7 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
                 Training training = trainingsliste.get(selectedRow);
                 if(training.getAnzahlAufgaben() > 0) {
                     //In meinem Branch noch ohne Option, um den aktuellen Benutzter zu übergeben
-                    ControllerLoesungenTraining controller = ControllerLoesungenTraining.getInstance();
-                    controller.setTraining(training);
-                    controller.startLoesungTraining();
+                    new ControllerLoesungenTraining(training, aktuellerBenutzer);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Das gewählte Training enthält keine Aufgaben", "Keine Aufgaben", JOptionPane.ERROR_MESSAGE);

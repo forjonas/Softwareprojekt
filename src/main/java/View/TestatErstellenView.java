@@ -39,6 +39,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JTextField txtName;
     private List<Aufgabe> aufgabenliste;
     private Dozent aktuellerBenutzer;
+    private JFrame jframe;
 
     /**
      * Launch the application.
@@ -48,7 +49,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TestatErstellenView frame = new TestatErstellenView(dozent1);
+                    TestatErstellenView frame = new TestatErstellenView(null, dozent1);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -71,7 +72,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public TestatErstellenView(Dozent aktuellerBenutzer) {
+    public TestatErstellenView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         aufgabenliste = DatabaseService.getInstance().readAufgabenFromDatabase();
         //Test
@@ -190,13 +192,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private void zurueckButtonLogik() {
         boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.WARNING_MESSAGE));
         if(schliessenGewuenscht){
-            if (aktuellerBenutzer.getClass() == Dozent.class) {
-                new DozentAnsicht();
-                //Noch nicht implementiert in meinem Branch
-                //new DozentAnsicht((Dozent) aktuellerBenutzer);
-            } else {
-                JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
-            }
+            jframe.setVisible(true);
             dispose();
         }
     }

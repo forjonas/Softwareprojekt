@@ -43,6 +43,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     private JButton btnBearbeiten;
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
+    private JFrame jFrame;
 
     /**
      * Launch the application.
@@ -53,7 +54,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(student1);
+                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(null, student1);
                     //BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(dozent1);
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -77,7 +78,8 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneAufgabeKatalogView(Benutzer aktuellerBenutzer) {
+    public BearbeiteEinzelneAufgabeKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
+        this.jFrame = jframe;
         DatabaseService ds = DatabaseService.getInstance();
         this.aktuellerBenutzer = aktuellerBenutzer;
         aufgabenliste = ds.readAufgabenFromDatabase();
@@ -150,13 +152,7 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Student.class) {
-            new StudentMainView((Student) aktuellerBenutzer);
-        } else if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht((Dozent) aktuellerBenutzer);
-        }
+        jFrame.setVisible(true);
         dispose();
     }
 

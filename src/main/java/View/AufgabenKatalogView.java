@@ -40,6 +40,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
     private List<Aufgabe> aufgabenliste;
+    private JFrame jframe;
 
     /**
      * Launch the application.
@@ -51,7 +52,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(dozent1);
+                    AufgabenKatalogView frame = new AufgabenKatalogView(null, dozent1);
                     //AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
                     //AufgabenKatalogView frame = new AufgabenKatalogView(dozent3);
                     frame.setVisible(true);
@@ -78,7 +79,8 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public AufgabenKatalogView(Dozent aktuellerBenutzer) {
+    public AufgabenKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         DatabaseService ds = DatabaseService.getInstance();
         aufgabenliste = ds.readAufgabenFromDatabase();
@@ -169,20 +171,12 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht((Dozent) aktuellerBenutzer);
-        } else {
-            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
-        }
+        jframe.setVisible(true);
         dispose();
     }
 
     private void erstellenButtonLogik() {
-        //In meinem Branch noch nicht implementiert
-        //new AufgabeErstellenStartView(aktuellerBenutzer);
-        new AufgabeErstellenStartView(null);
+        new AufgabeErstellenStartView(jframe, aktuellerBenutzer);
         dispose();
     }
 

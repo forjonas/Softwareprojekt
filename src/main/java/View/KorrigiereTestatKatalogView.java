@@ -41,6 +41,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     private JButton btnKorrigieren;
     private Dozent aktuellerBenutzer;
     private List<TestatBearbeitung> testatBearbeitungsListe;
+    private JFrame jframe;
 
     /**
      * Launch the application.
@@ -58,7 +59,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                             break;
                         }
                     }
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent1);
+                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(null, dozent1);
                     //KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent2);
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -94,7 +95,8 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     /**
      * Create the frame.
      */
-    public KorrigiereTestatKatalogView(Dozent aktuellerBenutzer) {
+    public KorrigiereTestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
+        this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatBearbeitungsListe = DatabaseService.getInstance().readTestatBearbeitungenFromDatabase();
         //Test
@@ -168,13 +170,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     }
 
     private void zurueckButtonLogik() {
-        if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht();
-            //Noch nicht implementiert in meinem Branch
-            //new DozentAnsicht(aktuellerBenutzer);
-        } else {
-            JOptionPane.showMessageDialog(this, "Fehler: Benutzer ist nicht als Dozent eingeloggt", "Falscher Benutzer", JOptionPane.ERROR_MESSAGE);
-        }
+        jframe.setVisible(true);
         dispose();
     }
 
@@ -203,9 +199,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                 else {
                     //Version des ControllerBewertungenTestate, die gerade in meinem Branch liegt
                     //Müsste eigentlich mit TestatBearbeitung statt Testat und mit Benutzer/Dozent initialisiert werden
-                    ControllerBewertungenTestate controller = ControllerBewertungenTestate.getInstance();
-                    controller.setTestat(testatBearbeitung.getTestat());
-                    controller.startBewertungTestat();
+                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer);
                     dispose();
                 }
             }
