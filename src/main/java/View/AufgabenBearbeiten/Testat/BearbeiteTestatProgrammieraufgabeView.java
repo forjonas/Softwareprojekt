@@ -122,7 +122,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatApp.weiter(); //testatApp.testat
+            testatApp.weiter();
 
         }
         if (e.getSource() == this.btnTestatBeenden) {
