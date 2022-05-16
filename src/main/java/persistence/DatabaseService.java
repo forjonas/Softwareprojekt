@@ -419,4 +419,22 @@ public class DatabaseService<T> {
         }
     }
 
+    public synchronized List<Userloesung> readUserloesungVonTestat(Testat testat, Benutzer benutzer) {
+        TypedQuery<Userloesung> query = em.createQuery("SELECT s FROM Userloesung s WHERE s.userloesungErsteller= :benutzer AND s.aufgabensammlung= :testat", Userloesung.class).setParameter("benutzer", benutzer).setParameter("testat", testat);
+        List<Userloesung> userloesungList = query.getResultList();
+        return userloesungList;
+    }
+
+    public synchronized List<Userloesung> readUserloesungVonTraining(Training training, Benutzer benutzer) {
+        TypedQuery<Userloesung> query = em.createQuery("SELECT s FROM Userloesung s WHERE s.userloesungErsteller= :benutzer AND s.aufgabensammlung= :training", Userloesung.class).setParameter("benutzer", benutzer).setParameter("training", training);
+        List<Userloesung> userloesungList = query.getResultList();
+        return userloesungList;
+    }
+
+    public synchronized Testat readTestatMitTestatbearbeitung(TestatBearbeitung bearbeitung) {
+        TypedQuery<Testat> query = em.createQuery("SELECT s FROM Testat s WHERE s.bearbeitungen= :bearbeitung", Testat.class).setParameter("bearbeitung", bearbeitung);
+        Testat result = query.getSingleResult();
+        return result;
+    }
+
 }

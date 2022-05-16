@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabensammlung.Training;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements ActionListener {
+    private ControllerLoesungenTraining cont;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -22,20 +24,29 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
     private JButton btnNaechsteAufgabe;
     private JButton btnVorherigeAufgabe;
     private JPanel panelMain;
+    private JLabel lblAufgabenstellungsbild;
     private final EinfachantwortAufgabe aufgabe;
 
-    public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe) {
+    public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, ControllerLoesungenTraining cont) {
+        this.cont = cont;
         this.aufgabe = aufgabe;
-        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+
+        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();             //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLE.getMusterloesung());
-        //txtfUserLoesung.setText(aufgabe.getUserloesung());
+        UserloesungEinfachantwort uLE = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);               //Beschaffen der Userlösung aus der DB über die Aufgabe
+        txtfUserLoesung.setText(uLE.getUserloesung());
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -57,21 +68,22 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         }
     }
 
-    private void beenden(){
-        ControllerLoesungenTraining.getInstance().beendeLoesungTraining();
+    private void beenden() {
+        cont.beendeLoesungTraining();
     }
 
-    private void naechsteAufgabe(){
-        try {
-            ControllerLoesungenTraining.getInstance().naechsteAufgabe();
+    private void naechsteAufgabe() {
+        /*try {
+            cont.naechsteAufgabe();
         } catch (Exception ignored){
 
-        }
+        }*/
+        cont.naechsteAufgabe();
     }
 
-    private void vorherigeAufgabe(){
+    private void vorherigeAufgabe() {
         try {
-            ControllerLoesungenTraining.getInstance().vorherigeAufgabe();
+            cont.vorherigeAufgabe();
         } catch (Exception ignored) {
         }
     }
@@ -81,7 +93,7 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         this.update(this.getGraphics());
     }
 
-    public void versteckeVorherigeAufgabe(){
+    public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
