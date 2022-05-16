@@ -20,11 +20,16 @@ import java.io.File;
  *
  * @author Jannik Oehme
  * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
+ * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
     private Dozent doz;
     //Frames
+    private JFrame aufgabeErstellenStartViewFrame;
     private JPanel AufgabeErstellenEinfachAntwortViewPnl;
+    //Layouts
+    private BorderLayout bl = new BorderLayout();
+    private GridLayout gl = new GridLayout(10, 2);
     //Panels
     private JPanel centerPnl;
     private JPanel northPnl;
@@ -32,14 +37,10 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     //JComboboxen
     private JComboBox kategorienCB;
     private JComboBox schwierigkeitCB;
-    //Layouts
-    private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10, 2);
     //Buttons
     private JButton zurueckBtn;
     private JButton speichernBtn;
     private JButton bspBildBtn;
-
     //Labels
     private JLabel bspBildLbl;
     private JLabel kategorieLbl;
@@ -51,27 +52,23 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JLabel punkteLbl;
     private JLabel loesungLbl;
     //TextAreas
-    private JTextField titelTF;
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
+    private JTextArea loesungTA;
+    //TextFields
+    private JTextField titelTF;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
-    private JTextArea loesungTA;
-    private JFrame aufgabeErstellenStartViewFrame;
-    private File bspBild;
-    private JFileChooser FC;
-
-    public static void main(String[] args) {
-        new AufgabeErstellenEinfachAntwortView(null);
-    }
-
-    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame) {
+    //Files
+    File bspBild;
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+        this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Einfach Antwort");
         AufgabeErstellenEinfachAntwortViewFuellen();
-        this.pack();
         this.setMinimumSize(new Dimension(1500, 900));
         this.setSize(1500, 900);
+        this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -79,9 +76,9 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        doz = new Dozent();
         gl.setVgap(25);
         gl.setHgap(25);
+        //Panels
         centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
@@ -98,29 +95,18 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
         //Text Areas
-        titelTF = new JTextField();
-
-        titelTF.setBounds(20, 75, 250, 200);
-
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
-        aufgabenTextTA.setBounds(20, 75, 250, 200);
 
         loesungshinwTA = new JTextArea();
-        loesungshinwTA.setBounds(20, 75, 250, 200);
         loesungshinwTA.setLineWrap(true);
 
-        bearbeitungsZeitTF = new JTextField();
-        bearbeitungsZeitTF.setBounds(20, 75, 250, 200);
-
-
-        punkteTF = new JTextField();
-        punkteTF.setBounds(20, 75, 250, 200);
-
-
         loesungTA = new JTextArea();
-        loesungTA.setBounds(20, 75, 250, 200);
         loesungTA.setLineWrap(true);
+        //TextFields
+        titelTF = new JTextField();
+        bearbeitungsZeitTF = new JTextField();
+        punkteTF = new JTextField();
         //ComboBoxes
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
@@ -165,7 +151,6 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -173,15 +158,14 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.bspBildBtn) {
-            bspBild = bspBildHochladen();
+            FileChooserView filcV = new FileChooserView();
+            bspBild = filcV.fileChooser();
         }
     }
-
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
-
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -210,27 +194,22 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
             this.dispose();
-            DozentAnsicht.main(null);
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
-
-    private File bspBildHochladen() {
-        FC = new JFileChooser((String) null);
-        FC.setAcceptAllFileFilterUsed(false);
-        FC.setFileFilter(new ImageFilter());
-        int returnVal = FC.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            bspBild = FC.getSelectedFile();
-            System.out.println(bspBild.getName());
-            return bspBild;
-        }
-        return null;
-    }
-
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(
+                bearbeitungsZeit,
+                "asd", // Eigentlich bspBild
+                kat,
+                punkte,
+                schw,
+                aufText,
+                aufgTitel,
+                doz,
+                null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {

@@ -1,9 +1,9 @@
 package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
-import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +23,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
-    private JButton btnBeendenTestat;
+    private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
@@ -32,7 +32,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private TestatApp testatApp;
     private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
     private TestatBearbeitung bearbeitet;
-    private String antwort;
+    private UserloesungProgrammieraufgabe u1;
 
     /**
      * Create the frame.
@@ -75,8 +75,8 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnBeendenTestat = new JButton("Beenden");
-        panelSouth.add(btnBeendenTestat);
+        btnAbbrechenTestat = new JButton("Abbrechen");
+        panelSouth.add(btnAbbrechenTestat);
 
         btnLoesungshinweisTestat = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTestat);
@@ -88,7 +88,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         btnTestatBeenden = new JButton("Testat Beenden");
         panelSouth.add(btnTestatBeenden);
 
-        this.btnBeendenTestat.addActionListener(this);
+        this.btnAbbrechenTestat.addActionListener(this);
         this.btnLoesungshinweisTestat.addActionListener(this);
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
@@ -102,33 +102,33 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnBeendenTestat) {
+        if (e.getSource() == this.btnAbbrechenTestat) {
             this.dispose();
-            testatApp.printTest();
             BearbeiteTestatKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
         }
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.printTest();
-            BearbeiteTestatKatalogView.main(null);
 
-        }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
+            testatApp.zurueckTestat();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
-            antwort = textArea.getText();
-            testatApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
-            testatApp.weiter(); //testatApp.testat
-            /**
-             * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-             */
+            u1 = new UserloesungProgrammieraufgabe();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+            testatApp.weiter();
+
+        }
+        if (e.getSource() == this.btnTestatBeenden) {
+            this.dispose();
+            testatApp.printPersistenz();
+            BearbeiteTestatKatalogView.main(null);
 
         }
     }

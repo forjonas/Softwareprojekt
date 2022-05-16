@@ -35,6 +35,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     private BearbeiteTestatTableModel bearbeiteTestatTableModel;
     private JButton btnZurueck;
     private JButton btnBearbeiten;
+    private JFrame userFrame;
 
     /**
      * Launch the application.
@@ -58,7 +59,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(testatliste, student1);
+                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(testatliste, student1,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -70,7 +71,8 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     /**
      * Create the frame.
      */
-    public BearbeiteTestatKatalogView(List<Testat> testatListe, Benutzer user) {
+    public BearbeiteTestatKatalogView(List<Testat> testatListe, Benutzer user, JFrame userFrame) {
+        this.userFrame=userFrame;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite Testat");
         contentPane = new JPanel();
@@ -132,6 +134,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         if (e.getSource() == this.btnZurueck) {
             System.out.println("zurück");
             dispose();
+            userFrame.setVisible(true);
         }
         if (e.getSource() == this.btnBearbeiten) {
             System.out.println("bearbeiten");

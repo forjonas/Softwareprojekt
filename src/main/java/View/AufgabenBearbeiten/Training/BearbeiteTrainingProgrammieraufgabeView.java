@@ -1,13 +1,9 @@
 package View.AufgabenBearbeiten.Training;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import app.TestatApp;
 import app.TrainingApp;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.TestatBearbeitung;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 
@@ -19,112 +15,108 @@ import java.awt.event.ActionEvent;
 public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
 
 
-	private JPanel contentPane;
-	private JTextArea textArea;
-	private JButton btnBeendenTraining;
-	private JButton btnLoesungshinweisTraining;
-	private JButton btnVoherigeAufgabeTraining;
-	private JButton btnNaechsteAufgabeTraining;
-	private JButton btnTrainingBeenden;
-	private JButton btnUpload;
+    private JPanel contentPane;
+    private JTextArea textArea;
+    private JButton btnAbbrechenTraining;
+    private JButton btnLoesungshinweisTraining;
+    private JButton btnVoherigeAufgabeTraining;
+    private JButton btnNaechsteAufgabeTraining;
+    private JButton btnTrainingBeenden;
 
-	private TrainingApp trainingApp;
-	private Programmieraufgabe aufgabe;
-	private String antwort;
+    private TrainingApp trainingApp;
+    private Programmieraufgabe aufgabe;
+    private UserloesungProgrammieraufgabe u1;
 
+    /**
+     * Create the frame.
+     */
+    public BearbeiteTrainingProgrammieraufgabeView(TrainingApp trainingApp, Programmieraufgabe aufgabe) {
+        this.aufgabe = aufgabe;
+        this.trainingApp = trainingApp;
 
-	/**
-	 * Create the frame.
-	 */
-	public BearbeiteTrainingProgrammieraufgabeView(TrainingApp trainingApp, Programmieraufgabe aufgabe) {
-		this.aufgabe = aufgabe;
-		this.trainingApp = trainingApp;
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setBounds(100, 100, 674, 435);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
 
-		setTitle(aufgabe.getName()); //Name der Aufgabe
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 674, 435);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+        JPanel panelNorth = new JPanel();
+        contentPane.add(panelNorth, BorderLayout.NORTH);
+        JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
+        panelNorth.add(lblTextbeschreibung);
 
-		JPanel panelNorth = new JPanel();
-		contentPane.add(panelNorth, BorderLayout.NORTH);
-		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
-		panelNorth.add(lblNewLabel1);
+        /**
+         * Optionales Bild hinzufügen
+         */
 
-		/**
-		 * Optionales Bild hinzufügen
-		 */
+        JPanel panelCenter = new JPanel();
+        contentPane.add(panelCenter, BorderLayout.CENTER);
+        textArea = new JTextArea(18, 50);
+        panelCenter.add(textArea);
 
-		JPanel panelCenter = new JPanel();
-		contentPane.add(panelCenter, BorderLayout.CENTER);
-		textArea = new JTextArea(18, 50);
-		panelCenter.add(textArea);
-
-		JPanel panelWest = new JPanel();
-		contentPane.add(panelWest, BorderLayout.WEST);
-		JLabel lblNewLabel_1 = new JLabel("Antwort:");
-		panelWest.add(lblNewLabel_1);
+        JPanel panelWest = new JPanel();
+        contentPane.add(panelWest, BorderLayout.WEST);
+        JLabel lblNewLabel_1 = new JLabel("Antwort:");
+        panelWest.add(lblNewLabel_1);
 
 
-		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		contentPane.add(panelSouth, BorderLayout.SOUTH);
+        JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-		btnBeendenTraining = new JButton("Beenden");
-		panelSouth.add(btnBeendenTraining);
-		btnLoesungshinweisTraining = new JButton("Loesungshinweis");
-		panelSouth.add(btnLoesungshinweisTraining);
-		btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
-		panelSouth.add(btnVoherigeAufgabeTraining);
-		btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
-		panelSouth.add(btnNaechsteAufgabeTraining);
-		btnTrainingBeenden = new JButton("Testat Beenden");
-		panelSouth.add(btnTrainingBeenden);
+        btnAbbrechenTraining = new JButton("Abbrechen");
+        panelSouth.add(btnAbbrechenTraining);
+        btnLoesungshinweisTraining = new JButton("Loesungshinweis");
+        panelSouth.add(btnLoesungshinweisTraining);
+        btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
+        panelSouth.add(btnVoherigeAufgabeTraining);
+        btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
+        panelSouth.add(btnNaechsteAufgabeTraining);
+        btnTrainingBeenden = new JButton("Testat Beenden");
+        panelSouth.add(btnTrainingBeenden);
 
-		this.btnBeendenTraining.addActionListener(this);
-		this.btnLoesungshinweisTraining.addActionListener(this);
-		this.btnVoherigeAufgabeTraining.addActionListener(this);
-		this.btnNaechsteAufgabeTraining.addActionListener(this);
-		this.btnTrainingBeenden.addActionListener(this);
-		this.btnUpload.addActionListener(this);
+        this.btnAbbrechenTraining.addActionListener(this);
+        this.btnLoesungshinweisTraining.addActionListener(this);
+        this.btnVoherigeAufgabeTraining.addActionListener(this);
+        this.btnNaechsteAufgabeTraining.addActionListener(this);
+        this.btnTrainingBeenden.addActionListener(this);
 
-		super.pack();
-		Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
-		super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
-		super.setVisible(true);
-	}
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+        super.setVisible(true);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.btnBeendenTraining) {
-			this.dispose();
-			BearbeiteTestatKatalogView.main(null);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnAbbrechenTraining) {
+            this.dispose();
+            BearbeiteTestatKatalogView.main(null);
 
-		}
-		if (e.getSource() == this.btnLoesungshinweisTraining) {
-			JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
-		}
-		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-			JOptionPane.showMessageDialog(this, "Button Vorherige");
-		}
-		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
+        }
+        if (e.getSource() == this.btnLoesungshinweisTraining) {
+            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+        }
+        if (e.getSource() == this.btnVoherigeAufgabeTraining) {
+            JOptionPane.showMessageDialog(this, "Button Vorherige");
+            trainingApp.zurueckTrainig();
+        }
+        if (e.getSource() == this.btnNaechsteAufgabeTraining) {
 
-			antwort = textArea.getText();
-			trainingApp.usereingaben.add(antwort); //antwort wird in Liste hinzugefügt und gehalten
-			trainingApp.weiter(); //testatApp.testat
-			/**
-			 * speichern in testatApp und am Ende Testat an TestatBearbeiten übergenen --> erstellen und persetieren
-			 */
-			this.trainingApp.weiter();
+            u1 = new UserloesungProgrammieraufgabe();
+            String u2 = textArea.getText();
+            u1.setUserloesung(u2);
+            trainingApp.usereingaben.add(u1);
+            trainingApp.weiter();
 
-		}
-		if (e.getSource() == this.btnTrainingBeenden) {
-			this.dispose();
-			trainingApp.printTest();
-			BearbeiteTestatKatalogView.main(null);
+        }
+        if (e.getSource() == this.btnTrainingBeenden) {
+            this.dispose();
+            trainingApp.printPersistenz();
+            BearbeiteTestatKatalogView.main(null);
 
-		}
+        }
 
-	}
+    }
 }

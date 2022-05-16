@@ -5,6 +5,7 @@ import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Benutzer;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -32,6 +33,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnFreigeben;
     private JTextField txtPasswort;
+    private JFrame dozentansichtFrame;
+    private Benutzer benutzer;
 
     /**
      * Launch the application.
@@ -46,7 +49,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TestatErstellenView frame = new TestatErstellenView(aufgabenListe);
+                    TestatErstellenView frame = new TestatErstellenView(aufgabenListe,null,null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -58,7 +61,9 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     /**
      * Create the frame.
      */
-    public TestatErstellenView(List<Aufgabe> aufgabenliste) {
+    public TestatErstellenView(List<Aufgabe> aufgabenliste,JFrame dozentFrame,Benutzer benutzer) {
+        this.dozentansichtFrame=dozentFrame;
+        this.benutzer=benutzer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testat erstellen");
         contentPane = new JPanel();
@@ -156,6 +161,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             System.out.println("zurück");
             dispose();
+            dozentansichtFrame.setVisible(true);
         }
         if (e.getSource() == this.btnFreigeben) {
             String passwort = txtPasswort.getText();

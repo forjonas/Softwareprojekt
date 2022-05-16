@@ -2,8 +2,10 @@ package View;
 
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
+import persistence.DatabaseService;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +14,13 @@ import java.awt.event.ActionListener;
  *
  * @author Jannik Oehme
  * @version 04.05.2022
+
  */
 public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
+    private JButton abmeldenBtn;
+    DatabaseService ds=DatabaseService.getInstance();
     private JButton testatEinsehenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
@@ -26,17 +31,14 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JButton testateDurchfuehrenBtn;
     //Panels
     private JPanel centerPnl;
-    private JPanel dozentPnl;
+    private JPanel dozentMainPanel;
     GridLayout gl = new GridLayout(2,4);
     Dozent doz;
+    private JFrame homeview;
 
-    public static void main(String[] args)
-    {
-        new DozentAnsicht();
-    }
-
-
-    public DozentAnsicht(){
+    public DozentAnsicht(JFrame homeview, Dozent doz){
+        this.doz = doz;
+        this.homeview = homeview;
         this.setName("Home");
         fuelleDozentFrame();
         this.setMinimumSize(new Dimension(1500,900));
@@ -47,8 +49,12 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         this.setVisible(true);
     }
     public void fuelleDozentFrame(){
-        doz = new Dozent();
+        //JLabel
+        JLabel welcomeMsgLbl = new JLabel("Willkommen "+doz.getVorname()+" "+doz.getNachname());
         //Buttons
+        abmeldenBtn = new JButton("Abmelden");
+        abmeldenBtn.addActionListener(this);
+
         testatEinsehenBtn = new JButton("Testat Einsehen");
         testatEinsehenBtn.addActionListener(this);
 
@@ -73,22 +79,24 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         testateDurchfuehrenBtn = new JButton("Testate Durchführen");
         testateDurchfuehrenBtn.addActionListener(this);
         //Panels
-        dozentPnl = new JPanel(gl);
         centerPnl = new JPanel(gl);
+        dozentMainPanel = new JPanel(new BorderLayout());
 
         //Components Adden
+        centerPnl.add(testatEinsehenBtn);
+        centerPnl.add(testateDurchfuehrenBtn);
+        centerPnl.add(testatuebersichtBtn);
+        centerPnl.add(testateErstellenBtn);
+        centerPnl.add(trainingsDurchfuehrenBtn);
+        centerPnl.add(trainingsEinsehenBtn);
+        centerPnl.add(aufgabenuebersichtBtn);
+        centerPnl.add(aufgabeErstellenBtn);
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
+        dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
+        dozentMainPanel.add(abmeldenBtn, BorderLayout.SOUTH);
+        dozentMainPanel.add(welcomeMsgLbl,BorderLayout.NORTH);
 
-        dozentPnl.add(testatEinsehenBtn);
-        dozentPnl.add(testateDurchfuehrenBtn);
-        dozentPnl.add(testatuebersichtBtn);
-        dozentPnl.add(testateErstellenBtn);
-        dozentPnl.add(trainingsDurchfuehrenBtn);
-        dozentPnl.add(trainingsEinsehenBtn);
-        dozentPnl.add(aufgabenuebersichtBtn);
-        dozentPnl.add(aufgabeErstellenBtn);
-        dozentPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
-
-        this.add(dozentPnl);
+        this.add(dozentMainPanel);
     }
     @Override
     public void actionPerformed(ActionEvent e)
@@ -117,42 +125,51 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         else if(e.getSource()==this.trainingsEinsehenBtn){
             trainingsEinsehen();
         }
+        else if(e.getSource() == this.abmeldenBtn){
+            abmelden();
     }
+    }
+
+    private void abmelden() {
+        this.dispose();
+        new LoginView();
+    }
+
     private void trainingsEinsehen() {
         //Huh?
     }
 
     private void testateErstellen() {
         this.setVisible(false);
-        //new TestatErstellenView(this);
+        new TestatErstellenView(ds.readAufgabenFromDatabase(),this,doz);
     }
 
     private void testatuebersicht() {
         this.setVisible(false);
-        //new TestatKatalogView(this);
+        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
     }
 
     private void aufgabeErstellen() {
         this.setVisible(false);
-        new AufgabeErstellenStartView(this);
+        new AufgabeErstellenStartView(this,doz);
     }
 
     private void aufgabenuebersicht() {
         this.setVisible(false);
-        //new AufgabenKatalogView(this);
+        new AufgabenKatalogView(ds.readAufgabenFromDatabase(),this,doz);
     }
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new TrainingGenerierenView(this);
+        new TrainingGenerierenView(this, doz);
     }
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-       // new TestatKatalogView(this);
+        new TestatKatalogView(ds.readTestateFromDatabase(),this,doz);
     }
     private void testatEinsehen(){
         this.setVisible(false);
-       // new KorrigiereTestatKatalogView(this);
+       new KorrigiereTestatKatalogView(ds.readTestatBearbeitungenFromDatabase(),this,doz);
     }
 }

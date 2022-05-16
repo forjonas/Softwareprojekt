@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
  * @author Jannik Oehme
  * @version 05.05.2022
  *  @version 09.05.2022 Layout gefixed
+ *  @version 15.05.2022 Dozentübergabe eingerichtet, Frame parameter eingefügt, inputcleaner eingefügt, change zu extends JFrame gemacht
  */
 public class AufgabeErstellenStartView extends JFrame implements ActionListener {
     private JPanel centerPnl;
@@ -26,12 +27,8 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     private JFrame dozentAnsichtFrame;
     Dozent doz;
 
-
-    public static void main(String[] args) {
-        new AufgabeErstellenStartView(null);
-    }
-
-    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame) {
+    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame,Dozent doz) {
+        this.doz = doz;
         this.dozentAnsichtFrame = dozentAnsichtFrame;
         this.setName("Aufgabe Erstellen");
         AufgabeErstellenFrameFuellen();
@@ -52,10 +49,9 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         //Buttons
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
-
         weiterBtn = new JButton("Weiter");
         weiterBtn.addActionListener(this);
-        //DropDownMenu
+        //ComboBox
         String[] AufgabenTypen = {"Designaufgabe","Programmieraufgabe","Einfachantwort", "MultipleChoiceaufgabe"};
         DDM = new JComboBox<>(AufgabenTypen);
         //Components Adden
@@ -82,27 +78,24 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         String switcher = (String) DDM.getSelectedItem();
         switch(switcher) {
             case "Designaufgabe":this.setVisible(false);
-                        new AufgabeErstellenUmlView(this);
+                        new AufgabeErstellenUmlView(this,doz);
                         break;
             case "Programmieraufgabe":this.setVisible(false);
-                        new AufgabeErstellenCodeView(this);
+                        new AufgabeErstellenCodeView(this,doz);
                         break;
             case "MultipleChoiceaufgabe":this.setVisible(false);
-                        new AufgabeErstellenMultipleChoiceView(this);
+                        new AufgabeErstellenMultipleChoiceView(this,doz);
                         break;
             case "Einfachantwort": this.setVisible(false); ;
-                        new AufgabeErstellenEinfachAntwortView(this);
+                        new AufgabeErstellenEinfachAntwortView(this,doz);
                         break;
             default:    this.setVisible(false);
-
-
         }
     }
     private void zurueck() {
         this.dispose();
-        DozentAnsicht.main(null);
+        dozentAnsichtFrame.setVisible(true);
     }
-
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
         if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
             JOptionPane.showMessageDialog(testFrame,
