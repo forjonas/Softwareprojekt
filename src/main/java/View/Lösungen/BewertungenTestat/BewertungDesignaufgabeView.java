@@ -19,6 +19,14 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblUserPunktzahl;
+    private JLabel lblDash;
+    private JLabel lblMaximalPunktzahl;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
     private final Designaufgabe aufgabe;
 
     public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate cont) {
@@ -36,6 +44,8 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         /*
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();       //Beschaffen der Musterlösung über die Aufgabe
         lblMusterloesung.setIcon(mLD.getMusterloesung());

@@ -30,7 +30,7 @@ public class LoesungsViewsTestklasse {
 
     public static void main(String[] args) throws Exception {
 
-        Dozent dozent = new Dozent("benutzername", "passwort", "Vorname", "Nachname");
+        Dozent dozent = new Dozent("tJoswig", "passwort", "Timo", "Joswig");
 
         Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null, null);
         MusterloesungEinfachantwort mLE = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Hier könnte ihr Lösungshinweis stehen.", "Musterlösungen sind eine Lüge.");

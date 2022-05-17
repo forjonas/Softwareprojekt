@@ -19,6 +19,14 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JButton btnHinweis;
     private JButton btnBeenden;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblUserPunktzahl;
+    private JLabel lblDash;
+    private JLabel lblMaximalPunktzahl;
     private final EinfachantwortAufgabe aufgabe;
 
     public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate cont) {
@@ -36,6 +44,8 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                        //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();        //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLE.getMusterloesung());
         UserloesungEinfachantwort uLE = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);          //Beschaffen der Userlösung aus der DB über die Aufgabe

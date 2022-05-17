@@ -22,6 +22,14 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JButton btnHinweis;
     private JButton btnNaechsteAufgabe;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblUserPunktzahl;
+    private JLabel lblDash;
+    private JLabel lblMaximalPunktzahl;
     private Programmieraufgabe aufgabe;
 
     public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate cont) {
@@ -39,6 +47,8 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();      //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLP.getMusterloesung());
         UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);        //Beschaffen der Userlösung aus der DB über die Aufgabe
