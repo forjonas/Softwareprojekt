@@ -8,12 +8,11 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.benutzer.Benutzer;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
-import persistence.DatabaseService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements ActionListener {
 

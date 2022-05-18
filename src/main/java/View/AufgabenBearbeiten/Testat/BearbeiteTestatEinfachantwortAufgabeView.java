@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.*;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -27,13 +28,14 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
+    private boolean hinweisVerwendet;
 
     private TestatController testatController;
     private EinfachantwortAufgabe aufgabe;
-    private UserloesungEinfachantwort u1;
+    private UserloesungEinfachantwort userloesung;
 
     public BearbeiteTestatEinfachantwortAufgabeView(TestatController testatController, EinfachantwortAufgabe aufgabe) {
-
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
@@ -102,22 +104,29 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            testatController.zurueckTestat();
-
+            if(testatController.isIndexNotFirst()) {
+                testatController.zurueckTestat();
+                this.dispose();
+            } else {
+                testatController.zurueckTestat();
+            }
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-
-            u1 = new UserloesungEinfachantwort();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
-            testatController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatController.weiter(); //testatApp.testat
-
+            String userloesungString = textArea.getText();
+            userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            testatController.addUserloesung(userloesung);
+            if(testatController.isIndexNotLast()) {
+                testatController.weiter();
+                this.dispose();
+            } else {
+                testatController.weiter();
+            }
         }
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");

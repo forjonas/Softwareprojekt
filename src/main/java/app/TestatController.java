@@ -1,6 +1,10 @@
 package app;
 
-import View.AufgabenBearbeiten.Testat.*;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatDesignaufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatEinfachantwortAufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatMultipleChoiceAufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatProgrammieraufgabeView;
+import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -40,23 +44,20 @@ public class TestatController {
     private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
     private JFrame hauptmenueFrame;
-
-    //private
-    public List<Userloesung> usereingaben = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
+    private List<Userloesung> userloesungen = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
 
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
         this.testat = testat;
-        this.aktuellerBenutzer = aktuellerBenutzer; //Muss DatabaseService mit übergeben(dahin speichern)
+        this.aktuellerBenutzer = aktuellerBenutzer;
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat.addBearbeitung(testatBearbeitung);
         zeigeAktuelleAufgabe();
     }
 
-    public void setNewTestatKatalog()
-    {
-        new BearbeiteTestatKatalogView(hauptmenueFrame, aktuellerBenutzer);
+    public void setNewTestatKatalog() {
+        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
     public void zeigeAktuelleAufgabe() { //Aufgaben anzeigen
@@ -98,32 +99,40 @@ public class TestatController {
         }
     }
 
-    public void persistTestat() {//usereingaben Liste persistieren
-
-        DatabaseService ds1 = database.getInstance();
-        ds1.persistObjects(usereingaben);
-        ds1.persistObject(testatBearbeitung);
-        new BearbeiteTestatKatalogView(hauptmenueFrame, aktuellerBenutzer);
-/**
- *
- *     public void setUsereingaben(List<Userloesung> usereingaben) {
- *         this.usereingaben = usereingaben;
- *     }
- *
- *     public void setUsereingabe(String usereingabe) {
- *
- *         userloesung.setUserloesung
- *
- *                 add(usereingabe);
- *         //this.usereingaben = usereingaben;
- *     }
- *
- */
+    public void addUserloesung(Userloesung userloesung) {
+        userloesungen.add(userloesung);
     }
+
+    public void persistTestat() {//usereingaben Liste persistieren
+        for(Userloesung userloesung : userloesungen) {
+            userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
+            try {
+                userloesung.getAufgabe().addUserloesung(userloesung);
+            } catch (Exception ignored) {
+            }
+            userloesung.getAufgabensammlung().addUserloesung(userloesung);
+        }
+        DatabaseService ds = database.getInstance();
+        ds.persistObjects(userloesungen);
+        ds.persistObject(testatBearbeitung);
+        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
+    }
+
+    public boolean isIndexNotFirst() {
+        return (index > 0);
+    }
+
+    public boolean isIndexNotLast() {
+        return (index < testat.getAnzahlAufgaben()-1);
+    }
+
     public Testat getTestat() {
         return testat;
     }
 
+    public Benutzer getAktuellerBenutzer() {
+        return aktuellerBenutzer;
+    }
 
     public static void main(String[] args) throws Exception {
 
@@ -148,7 +157,6 @@ public class TestatController {
         a2.setMusterloesung(m4);
         m4.setLoesungshinweis("Lösungshinweis MusterloesungDesignaufgabe");
 
-
         java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1});
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
@@ -159,10 +167,6 @@ public class TestatController {
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
-
-
-
     }
 
 }
-

@@ -1,6 +1,5 @@
 package View.AufgabenErstellen;
 
-import View.DozentAnsicht;
 import entity.benutzer.Dozent;
 
 import javax.swing.*;

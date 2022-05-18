@@ -2,12 +2,14 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.*;
@@ -28,6 +30,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
+    private boolean hinweisVerwendet;
 
     JRadioButton button1;
     JRadioButton button2;
@@ -36,7 +39,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
     private TestatController testatController;
     private MultipleChoiceAufgabe aufgabe;
-    private UserloesungMultipleChoiceAufgabe u1;
+    private UserloesungMultipleChoiceAufgabe userloesung;
 
     private String antwort1;
     private String antwort2;
@@ -44,7 +47,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private String antwort4;
 
     public BearbeiteTestatMultipleChoiceAufgabeView(TestatController testatController, MultipleChoiceAufgabe aufgabe) {
-
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
@@ -132,46 +135,54 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            testatController.zurueckTestat();
-
+            if(testatController.isIndexNotFirst()) {
+                testatController.zurueckTestat();
+                this.dispose();
+            } else {
+                testatController.zurueckTestat();
+            }
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
-            u1 = new UserloesungMultipleChoiceAufgabe();
-            List<Boolean> u3 = new ArrayList<Boolean>();
+            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
 
-            u3.add(false);
-            u3.add(false);
-            u3.add(false);
-            u3.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
 
             if (button1.isSelected()) {
-                u3.set(0, true);
+                userloesungBooleanArray.set(0, true);
             } else if (button2.isSelected()) {
-                u3.set(1, true);
+                userloesungBooleanArray.set(1, true);
             } else if (button3.isSelected()) {
-                u3.set(2, true);
+                userloesungBooleanArray.set(2, true);
             } else if (button4.isSelected()) {
-                u3.set(3, true);
+                userloesungBooleanArray.set(3, true);
             }
 
-            u1.setUserloesung(u3);
-            testatController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatController.weiter();
+            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            testatController.addUserloesung(userloesung); //antwort wird in UListe hinzugefügt und gehalten
+            if(testatController.isIndexNotLast()) {
+                testatController.weiter();
+                this.dispose();
+            } else {
+                testatController.weiter();
+            }
         }
-
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatController.persistTestat();
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
-
         }
     }
+
 }

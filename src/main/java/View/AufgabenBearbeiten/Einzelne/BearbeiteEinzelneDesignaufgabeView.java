@@ -2,13 +2,8 @@ package View.AufgabenBearbeiten.Einzelne;
 
 import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneDesignaufgabeView;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.MultipleChoiceAufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

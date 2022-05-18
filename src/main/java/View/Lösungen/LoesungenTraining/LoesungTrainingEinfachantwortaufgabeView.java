@@ -1,11 +1,9 @@
 package View.Lösungen.LoesungenTraining;
 
-import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabensammlung.Training;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 

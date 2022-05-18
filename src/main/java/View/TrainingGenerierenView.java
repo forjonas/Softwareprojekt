@@ -1,7 +1,6 @@
 package View;
 
 import View.tableModel.AufgabenAuswaehlenTableModel;
-import View.tableModel.AufgabenTrainingTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
@@ -30,7 +29,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableAufgaben;
-    private AufgabenTrainingTableModel aufgabenTrainingTableModel;
+    private AufgabenAuswaehlenTableModel aufgabenTrainingTableModel;
     private JButton btnZurueck;
     private JButton erstellenBtn;
     private JTextField txtPasswort;
@@ -114,7 +113,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         panelCenterNorth.add(lblTrainingConfigSetzen);
 
         tableAufgaben = new JTable();
-        aufgabenTrainingTableModel = new AufgabenTrainingTableModel(aufgabenliste);
+        aufgabenTrainingTableModel = new AufgabenAuswaehlenTableModel(aufgabenliste);
         tableAufgaben.setModel(aufgabenTrainingTableModel);
         tableAufgaben.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableAufgaben);

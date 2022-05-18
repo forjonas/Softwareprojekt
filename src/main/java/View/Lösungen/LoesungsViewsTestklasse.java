@@ -1,35 +1,5 @@
 package View.Lösungen;
 
-import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneDesignaufgabeView;
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufgabeView;
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneProgrammieraufgabeView;
-import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
-import entity.*;
-import entity.aufgabe.*;
-import entity.aufgabensammlung.Aufgabensammlung;
-import entity.aufgabensammlung.Testat;
-import entity.aufgabensammlung.TestatBearbeitung;
-import entity.aufgabensammlung.Training;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
-import entity.loesung.userloesung.*;
-import persistence.DatabaseService;
-
-import javax.swing.*;
-import java.io.File;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 public class LoesungsViewsTestklasse {
 
     public static void main(String[] args) throws Exception {
