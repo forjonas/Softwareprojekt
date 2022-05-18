@@ -117,6 +117,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
                 training = new Training(aufgabenTraining, trainingsdauer, readKategorie(), schwierigkeitsgradSetzen(), aufgabenTypenSetzen(), benutzer);
                 TrainingApp trainingApp = new TrainingApp(training, benutzer, studentMainViewTest);
                 trainingApp.zeigeAktuelleAufgabe();
+                this.setVisible(false);
             } else {
                 switch (aufgabenList.get(i).getAufgabentyp()) {
                     case MultipleChoice: {
@@ -220,7 +221,6 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
             this.dispose();
             studentMainViewTest.setVisible(true);
         } else if (e.getSource() == this.trainingStartenBtn) {
-            this.setVisible(false);
             createNewTraining();
         }
     }

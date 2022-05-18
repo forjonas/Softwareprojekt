@@ -178,6 +178,8 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     }
 
     private void zurueckButtonLogik() {
+        jframe.revalidate();
+        jframe.repaint();
         jframe.setVisible(true);
         dispose();
     }
@@ -198,7 +200,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                 } else {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
-                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer);
+                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer,this);
                         testatApp.zeigeAktuelleAufgabe();
                         dispose();
                     } else if (passwort != null) {
