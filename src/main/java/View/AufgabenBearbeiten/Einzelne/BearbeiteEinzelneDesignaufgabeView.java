@@ -105,8 +105,8 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
-            JOptionPane.showMessageDialog(this, "Button Beenden");
-
+            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
+            dispose();
         }
         if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
