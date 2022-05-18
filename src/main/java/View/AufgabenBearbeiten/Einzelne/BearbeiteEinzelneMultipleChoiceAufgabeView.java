@@ -64,7 +64,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe,Benutzer benutzer, JFrame frame) {
+    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
         this.frame = frame;
@@ -142,8 +142,8 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
-            this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
+            dispose();
         }
         if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {

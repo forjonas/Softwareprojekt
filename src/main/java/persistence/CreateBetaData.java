@@ -162,7 +162,7 @@ public class CreateBetaData {
         mda1 = new MusterloesungDesignaufgabe(da1, "Beziehungen wie Aggregation und Komposition sind hier nicht gefragt.", fmda1);
         mda2 = new MusterloesungDesignaufgabe(da2, "Beziehungen wie Aggregation und Komposition sind hier nicht gefragt.", fmda2);
         mda3 = new MusterloesungDesignaufgabe(da3, "Es gibt 7 unterschiedliche Architekturprinzipien.", fmda3);
-        mda4 = new MusterloesungDesignaufgabe(da1, null, fmda4);
+        mda4 = new MusterloesungDesignaufgabe(da1, "Ich bin ein Lösungshinweis", fmda4);
         da1.setMusterloesung(mda1);
         da2.setMusterloesung(mda2);
         da3.setMusterloesung(mda3);
@@ -182,7 +182,7 @@ public class CreateBetaData {
         List<Boolean> lmma3 = Arrays.asList(false, false, false, true);
         List<Boolean> lmma4 = Arrays.asList(true, false, true, false);
 
-        mma1 = new MusterloesungMultipleChoiceAufgabe(ma1, null, lmma1);
+        mma1 = new MusterloesungMultipleChoiceAufgabe(ma1, "Ich bin ein Lösungshinweis", lmma1);
         mma2 = new MusterloesungMultipleChoiceAufgabe(ma2, "Nicht primitive Datentypen sind bspwl. Klassen", lmma2);
         mma3 = new MusterloesungMultipleChoiceAufgabe(ma3, "Hier steht ein Lösungshinweis", lmma3);
         mma4 = new MusterloesungMultipleChoiceAufgabe(ma4, "Die Schwitch-Case-Anweisung lässt sich auch mit dem beenden der Methode beenden.", lmma4);
@@ -309,4 +309,5 @@ public class CreateBetaData {
         student2.addErstellteLoesung(ul13);
         student2.addBearbeitetesTestat(testatBearbeitung2);
     }
+
 }

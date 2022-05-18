@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
@@ -87,7 +88,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnAbbrechen = new JButton("Beenden");
+        btnAbbrechen = new JButton("Abbrechen");
         panelSouth.add(btnAbbrechen);
         btnLoesungshinweis = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweis);
@@ -107,8 +108,8 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
-            this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
+            dispose();
         }
         if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -122,8 +123,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             this.dispose();
-            new LoesungEinzelneProgrammieraufgabeView(aufgabe,u1, benutzer, frame);
-
+            new LoesungEinzelneProgrammieraufgabeView(aufgabe, u1, benutzer, frame);
         }
     }
 }

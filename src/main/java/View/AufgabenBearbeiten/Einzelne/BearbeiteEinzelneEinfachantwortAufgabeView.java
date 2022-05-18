@@ -116,7 +116,6 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
-
             /**
              * if (textArea.getText().isEmpty()) {
              *                 // int i1 = 0;
@@ -130,8 +129,8 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
              *                 }
              *             }
              */
-            this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
+            dispose();
         }
         if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
