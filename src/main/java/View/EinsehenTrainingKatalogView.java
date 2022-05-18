@@ -1,11 +1,7 @@
 package View;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneDesignaufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneMultipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneProgrammieraufgabeView;
-import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
 import View.tableModel.TrainingTableModel;
+import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;

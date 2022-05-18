@@ -1,7 +1,6 @@
 package View;
 
 import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
 
@@ -177,7 +176,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-        new BearbeiteTestatKatalogView(this, dozent);
+        new MeineTestateKatalogView(this, dozent);
     }
     private void testatEinsehen(){
         this.setVisible(false);

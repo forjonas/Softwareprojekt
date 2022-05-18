@@ -1,6 +1,7 @@
-package View.AufgabenBearbeiten.Testat;
+package View;
 
-import View.tableModel.BearbeiteTestatTableModel;
+import View.tableModel.MeineTestateTableModel;
+import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
 import app.TestatController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
@@ -30,12 +31,13 @@ import java.util.List;
  * @author Jonas Herbst
  * @version 04.05.22
  */
-public class BearbeiteTestatKatalogView extends JFrame implements ActionListener {
+public class MeineTestateKatalogView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableTestate;
-    private BearbeiteTestatTableModel bearbeiteTestatTableModel;
+    private MeineTestateTableModel meineTestateTableModel;
     private JButton btnZurueck;
+    private JButton btnBewertungEinsehen;
     private JButton btnBearbeiten;
     private List<Testat> testatListe;
     private Benutzer aktuellerBenutzer;
@@ -53,13 +55,13 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                 try {
                     Student student2 = new Student();
                     List<Student> studenten = DatabaseService.getInstance().readStudentenFromDatabase();
-                    for(Student student: studenten) {
-                        if(student.getBenutzername().equals("vvogel")){
+                    for (Student student : studenten) {
+                        if (student.getBenutzername().equals("vvogel")) {
                             student2 = student;
                             break;
                         }
                     }
-                    BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(null, student1);
+                    MeineTestateKatalogView frame = new MeineTestateKatalogView(null, student1);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(student2);
                     //BearbeiteTestatKatalogView frame = new BearbeiteTestatKatalogView(dozent1);
                     frame.setVisible(true);
@@ -96,7 +98,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     /**
      * Create the frame.
      */
-    public BearbeiteTestatKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
+    public MeineTestateKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = DatabaseService.getInstance().readTestateFromDatabase();
@@ -104,7 +106,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         //testatListe = getTestData();
         //testatListe = new LinkedList<Testat>();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Bearbeite Testat");
+        setTitle("Meine Testat");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -115,7 +117,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         GridBagLayout gbl_panelNorth = new GridBagLayout();
         gbl_panelNorth.columnWidths = new int[]{0, 0, 0, 0};
         gbl_panelNorth.rowHeights = new int[]{0, 0};
-        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_panelNorth.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panelNorth.setLayout(gbl_panelNorth);
 
@@ -130,13 +132,24 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         btnZurueck = new JButton("Zurück");
         panelLeftNorth.add(btnZurueck);
 
-        JPanel panelRightNorth = new JPanel();
+        JPanel panelCenterNorth = new JPanel();
         GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
-        gbc_panelCenterNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelCenterNorth.anchor = GridBagConstraints.CENTER;
         gbc_panelCenterNorth.fill = GridBagConstraints.VERTICAL;
         gbc_panelCenterNorth.gridx = 1;
         gbc_panelCenterNorth.gridy = 0;
-        panelNorth.add(panelRightNorth, gbc_panelCenterNorth);
+        panelNorth.add(panelCenterNorth, gbc_panelCenterNorth);
+
+        btnBewertungEinsehen = new JButton("Bewertung einsehen");
+        panelCenterNorth.add(btnBewertungEinsehen);
+
+        JPanel panelRightNorth = new JPanel();
+        GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
+        gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridy = 0;
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
         btnBearbeiten = new JButton("Bearbeiten");
         panelRightNorth.add(btnBearbeiten);
@@ -145,12 +158,13 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableTestate = new JTable();
-        bearbeiteTestatTableModel = new BearbeiteTestatTableModel(testatListe, this.aktuellerBenutzer);
-        tableTestate.setModel(bearbeiteTestatTableModel);
+        meineTestateTableModel = new MeineTestateTableModel(testatListe, this.aktuellerBenutzer);
+        tableTestate.setModel(meineTestateTableModel);
         tableTestate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableTestate);
 
         btnBearbeiten.addActionListener(this);
+        btnBewertungEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
 
         super.pack();
@@ -164,6 +178,9 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
+        if (e.getSource() == this.btnBewertungEinsehen) {
+            bewertungEinsehenButtonLogik();
+        }
         if (e.getSource() == this.btnBearbeiten) {
             bearbeitenButtonLogik();
         }
@@ -172,6 +189,32 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
+    }
+
+    private void bewertungEinsehenButtonLogik() {
+        if (testatListe.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine bewerteten Testate zum Einsehen", "Keine Testate", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int selectedRow = tableTestate.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Es wurde kein bewertetes Testat zum Einsehen ausgewählt", "Keine Testat ausgewählt", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Testat testat = testatListe.get(selectedRow);
+                if (!testat.isTestatVonUserBearbeitetWorden(aktuellerBenutzer)) {
+                    JOptionPane.showMessageDialog(this, "Sie haben dieses Testat noch nicht bearbeitet", "Testat noch nicht bearbeitet", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    TestatBearbeitung testatBearbeitung = testat.getBearbeitungVonBenutzer(aktuellerBenutzer);
+                    if (testatBearbeitung.getTestatBewerter() == null) {
+                        JOptionPane.showMessageDialog(this, "Ihre Bearbeitung dieses Testats wurde noch nicht bewertet", "Testatbearbeitung noch nicht bewertet", JOptionPane.WARNING_MESSAGE);
+                    } else if (testat.getAufgaben().size() <= 0) {
+                        JOptionPane.showMessageDialog(this, "Fehler: Testat enthält keine Aufgaben", "Testat konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        new ControllerBewertungenTestate(testatBearbeitung, aktuellerBenutzer, jframe);
+                        dispose();
+                    }
+                }
+            }
+        }
     }
 
     private void bearbeitenButtonLogik() {

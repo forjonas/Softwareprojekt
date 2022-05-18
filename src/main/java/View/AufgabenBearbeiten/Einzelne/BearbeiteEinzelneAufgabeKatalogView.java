@@ -1,7 +1,5 @@
 package View.AufgabenBearbeiten.Einzelne;
 
-import View.DozentAnsicht;
-import View.StudentMainView;
 import View.tableModel.BearbeiteAufgabeTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;

@@ -36,6 +36,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
 
 
     public RegistrierenView(JFrame hauptmenueView) {
+        this.setTitle("Registrieren");
         this.setName("Home");
         this.getContentPane().add(registrierePnl = new JPanel(new BorderLayout()));
 
@@ -101,7 +102,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
         this.add(registrierePnl);
     }
 
-    public boolean checkPasswort() {
+    public boolean isPasswortIdentisch() {
         if (Arrays.equals(passwortTxt.getPassword(), passwortWiederholenTxt.getPassword())) {
             return true;
         } else {
@@ -110,11 +111,10 @@ public class RegistrierenView extends JFrame implements ActionListener {
         }
     }
 
-    public boolean istBereitsStudent() {
-        List<Student> list = ds.readStudentenFromDatabase();
-        for (int i = 0; i <= list.size(); i++) {
-            if (usernameTxt.getText().equals(list.get(i).getBenutzername())) {
-                JOptionPane.showMessageDialog(this, "Benutzer existiert bereits.");
+    public boolean isUsernameTaken() {
+        List<Benutzer> list = ds.readBenutzerFromDatabase();
+        for (Benutzer b : list) {
+            if (usernameTxt.getText().equals(b.getBenutzername())) {
                 return true;
             }
         }
@@ -122,29 +122,33 @@ public class RegistrierenView extends JFrame implements ActionListener {
     }
 
     public void addStudent() {
-        if (fieldsEmpty()||anyFieldEmpty())
-        {
-            JOptionPane.showMessageDialog(this,"Bitte alle Felder füllen");
-        } else if (usernameTxt.getText()==null) {
-            JOptionPane.showMessageDialog(this,"Bitte Benutzernamen eingeben.");
-
-        } else if (!istBereitsStudent() && checkPasswort()) {
+        if (anyFieldNull() || anyFieldEmpty()) {
+            JOptionPane.showMessageDialog(this, "Bitte alle Felder füllen", "Felder leer", JOptionPane.WARNING_MESSAGE);
+        } else if (isUsernameTaken()) {
+            JOptionPane.showMessageDialog(this, "Benutzer existiert bereits.", "Benutzername vergeben", JOptionPane.WARNING_MESSAGE);
+        } else if (!isPasswortIdentisch()) {
+            JOptionPane.showMessageDialog(this, "Passwort ist nicht identisch.", "Passwort identisch", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
                 Student student = new Student(usernameTxt.getText(), new String(passwortTxt.getPassword()), vornameTxt.getText(), nachnameTxt.getText(), Integer.parseInt(matrikelTxt.getText()));
                 ds.persistObject(student);
                 new StudentMainView(student);
-                this.dispose();
+                dispose();
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Bitte Zahl bei der Matrikelnummer eingeben", "Falsche Matrikelnummer", JOptionPane.WARNING_MESSAGE);
             }
-
+        }
     }
 
-    public boolean fieldsEmpty() {
-        if (usernameTxt.getText() == "" && vornameTxt.getText() == null && nachnameTxt.getText() == null && matrikelTxt.getText() == null && passwortTxt.getPassword() == null && passwortWiederholenTxt.getPassword() == null) {
+    public boolean anyFieldNull() {
+        if (usernameTxt.getText() == null || vornameTxt.getText() == null || nachnameTxt.getText() == null || matrikelTxt.getText() == null || passwortTxt.getPassword() == null || passwortWiederholenTxt.getPassword() == null) {
             return true;
         }
         return false;
     }
-    public boolean anyFieldEmpty(){
-        if (usernameTxt.getText() == null || vornameTxt.getText() == null || nachnameTxt.getText() == null || matrikelTxt.getText() == null || passwortTxt.getPassword() == null || passwortWiederholenTxt.getPassword() == null) {
+
+    public boolean anyFieldEmpty() {
+        if (usernameTxt.getText().equals("") || vornameTxt.getText().equals("") || nachnameTxt.getText().equals("") || matrikelTxt.getText().equals("") || passwortTxt.getPassword().equals("") || passwortWiederholenTxt.getPassword().equals("")) {
             return true;
         }
         return false;

@@ -1,7 +1,5 @@
 package View;
 
-import View.AufgabenBearbeiten.Training.BearbeiteTrainingEinfachantwortAufgabeView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

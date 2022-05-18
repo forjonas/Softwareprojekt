@@ -1,8 +1,7 @@
 package View.Lösungen.BewertungenTestat;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.KorrigiereTestatKatalogView;
-import View.TestatKatalogView;
+import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -31,13 +30,23 @@ public class ControllerBewertungenTestate {
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
         this.benutzer = benutzer;
-
-        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
+        this.userloesungList = new LinkedList<Userloesung>();
+        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
+        for(Userloesung ul : datenbankliste) {
+            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
+                userloesungList.add(ul);
+            }
+        }
+        System.out.println(userloesungList.size());
+        for(Userloesung ul : userloesungList) {
+            System.out.println(ul.getUserloesungErsteller() + "  " + ul.getAufgabe().getName());
+        }
+        //this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
         }
-
+        System.out.println("Bewertung Controller");
         startBewertungTestat();
     }
 
@@ -45,8 +54,14 @@ public class ControllerBewertungenTestate {
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
-
-        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
+        this.userloesungList = new LinkedList<Userloesung>();
+        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
+        for(Userloesung ul : datenbankliste) {
+            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
+                userloesungList.add(ul);
+            }
+        }
+        //this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
@@ -93,7 +108,7 @@ public class ControllerBewertungenTestate {
             ds.persistObjects(userloesungList);
             new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
         } else {
-            new BearbeiteTestatKatalogView(jframe, benutzer);
+            new MeineTestateKatalogView(jframe, benutzer);
         }
     }
 
@@ -101,12 +116,14 @@ public class ControllerBewertungenTestate {
         if (benutzer.getClass().equals(Dozent.class)) {
             new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
         } else {
-            new BearbeiteTestatKatalogView(jframe, benutzer);
+            new MeineTestateKatalogView(jframe, benutzer);
         }
     }
 
     public void startBewertungTestat() {
+        System.out.println("Bewertung einer Aufgabe");
         Aufgabe aufgabe = testat.getAufgaben().get(0);
+        System.out.println(aufgabe.getAufgabentyp().getCode());
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
@@ -120,6 +137,8 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                System.out.println("Einfach");
+                break;
             }
             case Programmieren: {
                 try {
@@ -134,6 +153,8 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                System.out.println("Programm");
+                break;
             }
             case MultipleChoice: {
                 try {
@@ -148,9 +169,11 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                System.out.println("Multiple");
+                break;
             }
             case Design: {
-                try {
+//                try {
                     assert aufgabe instanceof Designaufgabe;
                     BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
                     bDV.versteckeVorherigeAufgabe();
@@ -160,9 +183,11 @@ public class ControllerBewertungenTestate {
                     if (userIstDozent()) {
                         bDV.bewertbar();
                     }
-                } catch (Exception ignored) {
-                }
-            }
+//                } catch (Exception ignored) {
+//                }
+                System.out.println("Design");
+                break;
+            } default: System.out.println("Dumm");
         }
     }
 

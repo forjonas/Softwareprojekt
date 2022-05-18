@@ -36,6 +36,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
     public LoginView() {
         this.setName("Home");
+        this.setTitle("Log-In");
         this.getContentPane().add(generalPnl = new JPanel());
 
         /*Deaktivierung der Buttons aufgrund von Anmeldestruktur
