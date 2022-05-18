@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TrainingController;
 import entity.aufgabe.Designaufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -28,19 +29,17 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	private JButton btnVoherigeAufgabeTraining;
 	private JButton btnNaechsteAufgabeTraining;
 	private JButton btnTrainingBeenden;
-
 	private JButton btnUpload;
-
+	private boolean hinweisVerwendet;
 	private File geuploadet;
-
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
-
 	private TrainingController trainingController;
 	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
-	private UserloesungEinfachantwort u1;
+	private UserloesungDesignaufgabe userloesung;
 
 
 	public BearbeiteTrainingDesignaufgabeView(TrainingController trainingController, Designaufgabe aufgabe) {
+		this.hinweisVerwendet = false;
 		this.aufgabe = aufgabe;
 		this.trainingController = trainingController;
 
@@ -91,7 +90,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		this.btnVoherigeAufgabeTraining.addActionListener(this);
 		this.btnNaechsteAufgabeTraining.addActionListener(this);
 		this.btnTrainingBeenden.addActionListener(this);
-		this.btnUpload.addActionListener(this);
+		//this.btnUpload.addActionListener(this);
 
 		super.pack();
 		Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -110,24 +109,29 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
 			if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
 				JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+				hinweisVerwendet = true;
 			} else {
 				JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-			JOptionPane.showMessageDialog(this,"Button Vorherige");
-			trainingController.zurueckTraining();
-			this.dispose();
+			if(trainingController.isIndexNotFirst()) {
+				trainingController.zurueckTraining();
+				this.dispose();
+			} else {
+				trainingController.zurueckTraining();
+			}
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-			u1 = new UserloesungEinfachantwort();
-			String u2 = textArea.getText();
-			u1.setUserloesung(u2);
-			trainingController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-			this.dispose();
-			trainingController.weiter(); //testatApp.testat
-
-
+			String userloesungString = textArea.getText();
+			userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+			trainingController.addUserloesung(userloesung);
+			if(trainingController.isIndexNotLast()) {
+				trainingController.weiter();
+				this.dispose();
+			} else {
+				trainingController.weiter();
+			}
 			/**
 			 u1 = new UserloesungDesignaufgabe();
 			 Icon u2 = icon.getImage();
@@ -138,9 +142,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
-			this.dispose();
 			trainingController.persistTraining();
-			trainingController.setUserFrameVisible(); //von Martin
+			this.dispose();
 		}
 		if (e.getSource() == this.btnUpload) {
 			JOptionPane.showMessageDialog(this, "Upload Button");
