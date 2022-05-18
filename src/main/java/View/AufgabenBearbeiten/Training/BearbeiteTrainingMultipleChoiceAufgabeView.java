@@ -141,7 +141,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            trainingApp.zurueckTrainig();
+            trainingApp.zurueckTraining();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
@@ -171,7 +171,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
             if (e.getSource() == this.btnTrainingBeenden) {
                 this.dispose();
                 trainingApp.printPersistenz();
-                BearbeiteTestatKatalogView.main(null);
+                trainingApp.setUserFrameVisible();
 
             }
 

@@ -27,6 +27,7 @@ import java.util.List;
 public class TrainingApp {
 
     private Training training;
+    private JFrame userframe;
     private int index;
     private JFrame aktuellerFrame;
     private DatabaseService database;
@@ -34,8 +35,9 @@ public class TrainingApp {
     public List<Userloesung> usereingaben = new ArrayList<>();
 
 
-    public TrainingApp(Training training, Benutzer benutzer) {
+    public TrainingApp(Training training, Benutzer benutzer, JFrame userframe) {
         this.index = 0;
+        this.userframe=userframe;
         this.training = training;
         this.benutzer = benutzer;
     }
@@ -63,7 +65,7 @@ public class TrainingApp {
 
     }
 
-    public void zurueckTrainig() {
+    public void zurueckTraining() {
         if (this.index > 0) {
             this.index--;
             zeigeAktuelleAufgabe();
@@ -88,6 +90,10 @@ public class TrainingApp {
     }
 
     public void finish() {
+    }
+    public void setUserFrameVisible()
+    {
+        userframe.setVisible(true);
     }
 
 }

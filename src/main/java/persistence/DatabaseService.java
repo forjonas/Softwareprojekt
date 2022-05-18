@@ -419,6 +419,13 @@ public class DatabaseService<T> {
         }
     }
 
+    public synchronized List<Aufgabe> readAufgabenmitKatSchwierigkeit(Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad)
+    {
+        TypedQuery<Aufgabe> query = em.createQuery("SELECT s FROM Aufgabe s WHERE s.kategorie= :kategorie AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Aufgabe.class).setParameter("kategorie",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+        List<Aufgabe> aufgabenList = query.getResultList();
+        return aufgabenList;
+    }
+
     public synchronized List<Userloesung> readUserloesungVonTestat(Testat testat, Benutzer benutzer) {
         TypedQuery<Userloesung> query = em.createQuery("SELECT s FROM Userloesung s WHERE s.userloesungErsteller= :benutzer AND s.aufgabensammlung= :testat", Userloesung.class).setParameter("benutzer", benutzer).setParameter("testat", testat);
         List<Userloesung> userloesungList = query.getResultList();
