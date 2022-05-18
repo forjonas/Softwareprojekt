@@ -105,9 +105,8 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
      */
     public BearbeiteTestatKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
         this.jframe = jframe;
-        DatabaseService ds = DatabaseService.getInstance();
         this.aktuellerBenutzer = aktuellerBenutzer;
-        testatListe = ds.readTestateFromDatabase();
+        testatListe = DatabaseService.getInstance().readTestateFromDatabase();
         //Test
         //testatListe = getTestData();
         //testatListe = new LinkedList<Testat>();
@@ -178,8 +177,6 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
     }
 
     private void zurueckButtonLogik() {
-        jframe.revalidate();
-        jframe.repaint();
         jframe.setVisible(true);
         dispose();
     }
@@ -200,13 +197,11 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                 } else {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
-                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer,this);
-                        testatApp.zeigeAktuelleAufgabe();
+                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer, jframe);
                         dispose();
                     } else if (passwort != null) {
                         JOptionPane.showMessageDialog(this, "Fehler: Falsches Passwort eingegeben", "Falsches Passwort", JOptionPane.ERROR_MESSAGE);
                     }
-
                 }
             }
         }

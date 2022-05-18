@@ -1,5 +1,6 @@
 package View;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
@@ -25,12 +26,13 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JButton testatuebersichtBtn;
     private JButton aufgabeErstellenBtn;
     private JButton aufgabenuebersichtBtn;
+    private JButton aufgabeBearbeitenBtn;
     private JButton trainingsDurchfuehrenBtn;
     private JButton meineTestateBtn;
     //Panels
     private JPanel centerPnl;
     private JPanel dozentMainPanel;
-    GridLayout gl = new GridLayout(2,4);
+    GridLayout gl = new GridLayout(3,3);
     Dozent dozent;
 
     public DozentAnsicht(Dozent doz){
@@ -69,6 +71,9 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         aufgabenuebersichtBtn = new JButton("Aufgabenübersicht");
         aufgabenuebersichtBtn.addActionListener(this);
 
+        aufgabeBearbeitenBtn = new JButton("Einzelne Aufgabe bearbeiten");
+        aufgabeBearbeitenBtn.addActionListener(this);
+
         trainingsDurchfuehrenBtn = new JButton("Trainings durchführen");
         trainingsDurchfuehrenBtn.addActionListener(this);
 
@@ -87,6 +92,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         centerPnl.add(trainingsEinsehenBtn);
         centerPnl.add(aufgabenuebersichtBtn);
         centerPnl.add(aufgabeErstellenBtn);
+        centerPnl.add(aufgabeBearbeitenBtn);
         centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
         dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
         dozentMainPanel.add(abmeldenBtn, BorderLayout.SOUTH);
@@ -111,6 +117,9 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         }
         else if(e.getSource()==this.aufgabeErstellenBtn){
             aufgabeErstellen();
+        }
+        else if(e.getSource()==this.aufgabeBearbeitenBtn){
+            aufgabeBearbeiten();
         }
         else if(e.getSource()==this.testatuebersichtBtn){
             testatuebersicht();
@@ -149,6 +158,11 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private void aufgabeErstellen() {
         this.setVisible(false);
         new AufgabeErstellenStartView(this,dozent);
+    }
+
+    private void aufgabeBearbeiten() {
+        this.setVisible(false);
+        new BearbeiteEinzelneAufgabeKatalogView(this, dozent);
     }
 
     private void aufgabenuebersicht() {

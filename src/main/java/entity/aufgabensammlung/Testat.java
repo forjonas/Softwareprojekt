@@ -183,7 +183,7 @@ public class Testat extends Aufgabensammlung {
     public boolean darfDozentTestatLoeschen(Dozent dozent) {
         boolean selbstErstellt = (this.testatErsteller == dozent);
         boolean leeresTestat = (this.testatErsteller == null);
-        boolean isAdmin = (dozent.getBenutzername() == "admin");
+        boolean isAdmin = (dozent.getBenutzername().equals("admin"));
         return (selbstErstellt || leeresTestat || isAdmin);
     }
 
