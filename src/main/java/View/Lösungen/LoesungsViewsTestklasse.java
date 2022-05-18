@@ -35,6 +35,7 @@ public class LoesungsViewsTestklasse {
     public static void main(String[] args) throws Exception {
 
         //Testatstest LOKAL
+        /*
         Dozent dozent = new Dozent("tJoswig", "passwort", "Timo", "Joswig");
 
         EinfachantwortAufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null, null);
@@ -67,6 +68,7 @@ public class LoesungsViewsTestklasse {
         loesungen.add(uLMC);
 
         new ControllerBewertungenTestate(bearbeitung1, dozent, new JFrame());
+        */
 
         //TestatstestÜberDB
         /*
@@ -94,10 +96,13 @@ public class LoesungsViewsTestklasse {
         ma2.setMusterloesung(mma2);
         ma3.setMusterloesung(mma3);
         ma4.setMusterloesung(mma4);
-        Testat testat2=new Testat(aufgabenliste3,"456","Testat nur MultipleChoice-Aufgaben",dozent2);
-        TestatBearbeitung testatBearbeitung=new TestatBearbeitung(testat2,15,student1,dozent2);
-        ControllerBewertungenTestate contTestatTest = new ControllerBewertungenTestate(bearbeitung1, student1);
         */
+
+        /*DatabaseService ds = DatabaseService.getInstance();
+        Dozent dozent1 = new Dozent("admin", "64bc9", "Peter", "Joswig");
+        TestatBearbeitung bearbeitung1 = (TestatBearbeitung) ds.readTestatBearbeitungenFromDatabase().get(0);
+        new ControllerBewertungenTestate(bearbeitung1, dozent1, new JFrame());*/
+
 
         //Einzelaufgaben
         //LoesungEinzelneProgrammieraufgabeView loesungEinzelneProgrammieraufgabeView = new LoesungEinzelneProgrammieraufgabeView((Programmieraufgabe) a3);
