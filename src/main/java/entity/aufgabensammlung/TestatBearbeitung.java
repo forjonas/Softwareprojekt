@@ -170,7 +170,7 @@ public class TestatBearbeitung {
         boolean leereTestatbearbeitung = (this.getTestat() == null || this.getTestat().getTestatErsteller() == null || this.getTestat().getAnzahlAufgaben() == 0);
         if(!leereTestatbearbeitung) {
             boolean selbstErstellt = (this.getTestat().getTestatErsteller() == dozent);
-            boolean isAdmin = (dozent.getBenutzername() == "admin");
+            boolean isAdmin = (dozent.getBenutzername().equals("admin"));
             return (selbstErstellt || isAdmin);
         } else {
             return true;

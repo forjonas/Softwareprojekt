@@ -1,9 +1,6 @@
 package app;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatDesignaufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatMultipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatProgrammieraufgabeView;
+import View.AufgabenBearbeiten.Testat.*;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -21,7 +18,6 @@ import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,23 +33,25 @@ import java.util.List;
 public class TestatApp {
 
     private Testat testat;
-    private TestatBearbeitung bearbeitet;
+    private TestatBearbeitung testatBearbeitung;
     private int index;
     private JFrame aktuellerFrame;
     private DatabaseService database;
-    private Benutzer benutzer;
+    private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
-    private JFrame uebersichtsframe;
+    private JFrame hauptmenueFrame;
 
     //private
     public List<Userloesung> usereingaben = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
 
-    public TestatApp(Testat testat, Benutzer benutzer,JFrame uebersichtsframe) { //Konstruktor: bekomme das Testat mit
-        this.uebersichtsframe=uebersichtsframe;
+    public TestatApp(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
+        this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
         this.testat = testat;
-        this.benutzer = benutzer; //Muss DatabaseService mit übergeben(dahin speichern)
-        this.bearbeitet = new TestatBearbeitung(testat, 0, benutzer, null);
+        this.aktuellerBenutzer = aktuellerBenutzer; //Muss DatabaseService mit übergeben(dahin speichern)
+        this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
+        this.testat.addBearbeitung(testatBearbeitung);
+        zeigeAktuelleAufgabe();
     }
 
     public void zeigeAktuelleAufgabe() { //Aufgaben anzeigen
@@ -82,7 +80,7 @@ public class TestatApp {
             this.index++;
             zeigeAktuelleAufgabe();
         } else {
-            JOptionPane.showMessageDialog(null, "Keine weitern Aufgaben. Klicken Sie auf Beenden");
+            JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
         }
     }
 
@@ -99,8 +97,8 @@ public class TestatApp {
 
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
-        ds1.persistObject(bearbeitet);
-        uebersichtsframe.setVisible(true);
+        ds1.persistObject(testatBearbeitung);
+        new BearbeiteTestatKatalogView(hauptmenueFrame, aktuellerBenutzer);
 /**
  *
  *     public void setUsereingaben(List<Userloesung> usereingaben) {

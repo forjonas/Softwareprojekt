@@ -88,13 +88,13 @@ public class CreateBetaData {
     }
 
     public void createBetaUser() throws Exception {
-        student1 = new Student("mmustermann", "123", "Max", "Mustermann", 123678);
-        student2 = new Student("vvogel", "1234", "Verena", "Vogel", 234789);
-        student3 = new Student("eengel", "234", "Erik", "Engel", 345890);
-        student4 = new Student("eEngel", "345", "Erina", "Engel", 345786);
+        student1 = new Student("mmustermann", "000", "Max", "Mustermann", 123678);
+        student2 = new Student("vvogel", "000", "Verena", "Vogel", 234789);
+        student3 = new Student("eengel", "000", "Erik", "Engel", 345890);
+        student4 = new Student("eEngel", "000", "Erina", "Engel", 345786);
 
-        dozent1 = new Dozent("tJoswig", "64bc9", "Timo", "Joswig");
-        dozent2 = new Dozent("kkubisch", "987caf6", "Kristin", "Kubisch");
+        dozent1 = new Dozent("tJoswig", "000", "Timo", "Joswig");
+        dozent2 = new Dozent("kkubisch", "000", "Kristin", "Kubisch");
 
         dozent3 = new Dozent("admin", "000", "Admin", "");
         dozent3.setBerechtigungsstufe(3);//->übergibt Adminrechte an diesen Dozenten
@@ -222,11 +222,11 @@ public class CreateBetaData {
         List<Aufgabe> aufgabenliste4 = Arrays.asList(ea1, ma1, da1, pa1);
         List<Aufgabe> aufgabenliste5 = Arrays.asList(ea3, ea4, ma4, pa4, pa1);
 
-        testat1 = new Testat(aufgabenliste1, "123", "Testat für Anfänger", dozent1);
+        testat1 = new Testat(aufgabenliste1, "000", "Testat für Anfänger", dozent1);
         dozent1.addErstelltesTestat(testat1);
-        testat2 = new Testat(aufgabenliste3, "456", "Testat nur MultipleChoice-Aufgaben", dozent2);
+        testat2 = new Testat(aufgabenliste3, "000", "Testat nur MultipleChoice-Aufgaben", dozent2);
         dozent2.addErstelltesTestat(testat2);
-        testat3 = new Testat(aufgabenliste2, "passwort", "Frühlingstestat", dozent1);
+        testat3 = new Testat(aufgabenliste2, "000", "Frühlingstestat", dozent1);
         dozent1.addErstelltesTestat(testat3);
 
         training1 = new Training(aufgabenliste5, 50, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Mittel, student2);
