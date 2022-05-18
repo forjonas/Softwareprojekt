@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public abstract class Userloesung extends Loesung {
     private boolean hinweisVerwendet;
+    private int erreichtePunkte = 0;
     @ManyToOne(cascade = CascadeType.PERSIST)
     //Aus irgend einem Grund findet er in dieser Klasse die ganzen Spalten für JoinColumn nicht, obwohl sie in der Datenbank existiert
     //Es funktioniert aber auch ohne
@@ -122,6 +123,24 @@ public abstract class Userloesung extends Loesung {
      */
     public void setAufgabensammlung(Aufgabensammlung aufgabensammlung) {
         this.aufgabensammlung = aufgabensammlung;
+    }
+
+    /**
+     * Setzt die vom User bei dieser Aufgabe erreichten Punkte
+     *
+     * @param punkte Die vom User erreichten Punkte
+     */
+    public void setErreichtePunkte(int punkte) {
+        this.erreichtePunkte = punkte;
+    }
+
+    /**
+     * Gibt die vom User bei dieser Aufgabe erreichten Punkte zurück
+     *
+     * @return erreichtePunkte des Users
+     */
+    public int getErreichtePunkte() {
+        return erreichtePunkte;
     }
 
 }

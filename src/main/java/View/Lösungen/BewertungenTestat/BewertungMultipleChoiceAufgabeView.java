@@ -12,6 +12,8 @@ import java.util.List;
 
 public class BewertungMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private ControllerBewertungenTestate cont;
+    private final MultipleChoiceAufgabe aufgabe;
+    private UserloesungMultipleChoiceAufgabe uLMC;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JPanel panelUserChoices;
@@ -29,7 +31,16 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JButton btnHinweis;
     private JButton btnBeenden;
     private JLabel lblAufgabenstellungsbild;
-    private final MultipleChoiceAufgabe aufgabe;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblDash;
+    private JLabel lblMaximalPunktzahl;
+    private JTextField txtfUserPunktzahl;
+    private JButton btnBewertungSpeichern;
+
 
     public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerBewertungenTestate cont) {
         this.cont = cont;
@@ -40,16 +51,20 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        btnBewertungSpeichern.addActionListener(this);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungMultipleChoiceAufgabe mLMC = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung(); //Beschaffen der Musterlösung über die Aufgabe
         List<Boolean> musterLoesungen = mLMC.getMusterloesung();
         UserloesungMultipleChoiceAufgabe uLMC = (UserloesungMultipleChoiceAufgabe) cont.getUserloesung(aufgabe);   //Beschaffen der Userlösung aus der DB über die Aufgabe
         List<Boolean> userLoesungen = uLMC.getUserloesung();
+        this.uLMC = uLMC;
         btnMusterloesung1.setSelected(musterLoesungen.get(0));
         btnUserloesung1.setSelected(userLoesungen.get(0));
         if (userLoesungen.size() == 4) {
@@ -68,6 +83,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
             btnMusterloesung2.setSelected(musterLoesungen.get(1));
             btnUserloesung2.setSelected(userLoesungen.get(1));
         }
+        txtfUserPunktzahl.setText(uLMC.getErreichtePunkte()+ "");                                            //Die vom Studenten erreichten Punkte
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,7 +93,6 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
-            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
@@ -87,11 +102,35 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         } else if (e.getSource() == this.btnVorherigeAufgabe) {
             this.dispose();
             vorherigeAufgabe();
+        } else if (e.getSource() == this.btnBewertungSpeichern) {
+            try {
+                Integer.parseInt(txtfUserPunktzahl.getText());
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist kein ganzzahliger Eintrag!");
+                return;
+            }
+            int bewertung = Integer.parseInt(txtfUserPunktzahl.getText());
+            if (!(0 <= bewertung && bewertung <= aufgabe.getPunktewert())) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
+                return;
+            }
+            uLMC.setErreichtePunkte(bewertung);
+            cont.setBewertet();
         }
     }
 
     private void beenden() {
-        cont.beendeBewertungTestat();
+        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+            this.dispose();
+            cont.beendeBewertungTestat();
+        } else {
+            int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
+                    "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
+            if (input == 0) {
+                this.dispose();
+                cont.abbrechenBewertungTestat();
+            }
+        }
     }
 
     private void naechsteAufgabe() {
@@ -109,6 +148,12 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
 
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
+        this.update(this.getGraphics());
+    }
+
+    public void bewertbar() {
+        this.txtfUserPunktzahl.setEditable(true);
+        this.btnBewertungSpeichern.setVisible(true);
         this.update(this.getGraphics());
     }
 }

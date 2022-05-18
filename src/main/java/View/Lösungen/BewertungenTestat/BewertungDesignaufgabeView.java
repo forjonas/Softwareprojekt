@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
     private ControllerBewertungenTestate cont;
+    private final Designaufgabe aufgabe;
+    private UserloesungDesignaufgabe uLD;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
@@ -19,7 +21,16 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JLabel lblAufgabenstellungsbild;
-    private final Designaufgabe aufgabe;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblDash;
+    private JLabel lblMaximalPunktzahl;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JTextField txtfUserPunktzahl;
+    private JButton btnBewertungSpeichern;
+
 
     public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate cont) {
         this.cont = cont;
@@ -30,18 +41,21 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        btnBewertungSpeichern.addActionListener(this);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
-        /*
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();       //Beschaffen der Musterlösung über die Aufgabe
-        lblMusterloesung.setIcon(mLD.getMusterloesung());
+        //lblMusterloesung.setIcon(mLD.getMusterloesung());
         UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe) cont.getUserloesung(aufgabe);         //Beschaffen der Userlösung aus der DB über die Aufgabe
-        lblUserloesung.setIcon(uLD.getUserloesung());
-        */
+        this.uLD = uLD;
+        //lblUserloesung.setIcon(uLD.getUserloesung());
+        txtfUserPunktzahl.setText(uLD.getErreichtePunkte()+ "");                                         //Die vom Studenten erreichten Punkte
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -52,7 +66,6 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
-            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
@@ -62,12 +75,36 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         } else if (e.getSource() == this.btnVorherigeAufgabe) {
             this.dispose();
             vorherigeAufgabe();
+        } else if (e.getSource() == this.btnBewertungSpeichern) {
+            try {
+                Integer.parseInt(txtfUserPunktzahl.getText());
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist kein ganzzahliger Eintrag!");
+                return;
+            }
+            int bewertung = Integer.parseInt(txtfUserPunktzahl.getText());
+            if (!(0 <= bewertung && bewertung <= aufgabe.getPunktewert())) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
+                return;
+            }
+            uLD.setErreichtePunkte(bewertung);
+            cont.setBewertet();
         }
     }
 
 
     private void beenden() {
-        cont.beendeBewertungTestat();
+        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+            this.dispose();
+            cont.beendeBewertungTestat();
+        } else {
+            int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
+                    "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
+            if (input == JOptionPane.YES_OPTION) {
+                this.dispose();
+                cont.abbrechenBewertungTestat();
+            }
+        }
     }
 
     private void naechsteAufgabe() {
@@ -88,5 +125,10 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         this.update(this.getGraphics());
     }
 
+    public void bewertbar() {
+        this.txtfUserPunktzahl.setEditable(true);
+        this.btnBewertungSpeichern.setVisible(true);
+        this.update(this.getGraphics());
+    }
 
 }

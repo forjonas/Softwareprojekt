@@ -21,6 +21,12 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblPlaceholderUserloesung;
     private JLabel lblPlaceholderMusterloesung;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblMaximalPunktzahl;
     private final Designaufgabe aufgabe;
     private Benutzer benutzer;
 
@@ -37,6 +43,8 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();         //Beschaffen der Musterlösung über die Aufgabe
         //lblPlaceholderMusterloesung.setIcon(mLD.getMusterloesung());
         //lblPlaceholderUserloesung.setIcon(userloesungDesignaufgabe.getUserloesung());                   //Beschaffen der Userlösung aus dem übergebenen Userlösungsobjekt
