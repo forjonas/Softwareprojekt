@@ -32,21 +32,19 @@ public class ControllerBewertungenTestate {
         this.benutzer = benutzer;
         this.userloesungList = new LinkedList<Userloesung>();
         List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
-        for(Userloesung ul : datenbankliste) {
-            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
+        for (Userloesung ul : datenbankliste) {
+            if (ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
                 userloesungList.add(ul);
             }
         }
-        System.out.println(userloesungList.size());
-        for(Userloesung ul : userloesungList) {
-            System.out.println(ul.getUserloesungErsteller() + "  " + ul.getAufgabe().getName());
-        }
-        //this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
+//        for(Userloesung ul : userloesungList) {
+//            System.out.println(ul.getUserloesungErsteller() + "  " + ul.getAufgabe().getName());
+//        }
+        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
         }
-        System.out.println("Bewertung Controller");
         startBewertungTestat();
     }
 
@@ -55,13 +53,13 @@ public class ControllerBewertungenTestate {
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
         this.userloesungList = new LinkedList<Userloesung>();
-        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
-        for(Userloesung ul : datenbankliste) {
-            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
-                userloesungList.add(ul);
-            }
-        }
-        //this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
+//        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
+//        for(Userloesung ul : datenbankliste) {
+//            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
+//                userloesungList.add(ul);
+//            }
+//        }
+        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
@@ -90,7 +88,7 @@ public class ControllerBewertungenTestate {
 
     public boolean bewertungVollstaendig() {
         boolean result = true;
-        for (boolean b:bewertetStatus) {
+        for (boolean b : bewertetStatus) {
             result = result && b;
         }
         return result;
@@ -99,7 +97,7 @@ public class ControllerBewertungenTestate {
     public void beendeBewertungTestat() {
         if (benutzer.getClass().equals(Dozent.class)) {
             int counter = 0;
-            for (Userloesung uL:userloesungList) {
+            for (Userloesung uL : userloesungList) {
                 counter += uL.getErreichtePunkte();
             }
             testatBearbeitung.setErreichtePunktzahl(counter);
@@ -137,7 +135,6 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
-                System.out.println("Einfach");
                 break;
             }
             case Programmieren: {
@@ -153,7 +150,6 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
-                System.out.println("Programm");
                 break;
             }
             case MultipleChoice: {
@@ -169,11 +165,10 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
-                System.out.println("Multiple");
                 break;
             }
             case Design: {
-//                try {
+                try {
                     assert aufgabe instanceof Designaufgabe;
                     BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
                     bDV.versteckeVorherigeAufgabe();
@@ -183,11 +178,12 @@ public class ControllerBewertungenTestate {
                     if (userIstDozent()) {
                         bDV.bewertbar();
                     }
-//                } catch (Exception ignored) {
-//                }
-                System.out.println("Design");
+                } catch (Exception ignored) {
+                }
                 break;
-            } default: System.out.println("Dumm");
+            }
+            default:
+                break;
         }
     }
 
