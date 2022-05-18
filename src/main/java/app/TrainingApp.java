@@ -89,7 +89,7 @@ public class TrainingApp {
         }
     }
 
-    public void printPersistenz() {//usereingaben Liste persistieren
+    public void persistTraining() {//usereingaben Liste persistieren
 
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
