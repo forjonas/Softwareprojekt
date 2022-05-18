@@ -113,9 +113,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnAbbrechenTraining) {
-			trainingApp.printPersistenz();
 			this.dispose();
-			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
+			trainingApp.setUserFrameVisible();
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
 			if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -125,7 +124,6 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			}
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-			JOptionPane.showMessageDialog(this,"Button Vorherige");
 			trainingApp.zurueckTraining();
 
 		}

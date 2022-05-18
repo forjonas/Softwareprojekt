@@ -109,43 +109,58 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     }
 
     public void createNewTraining() {
-        List<Aufgabe> aufgabenTraining = new LinkedList<Aufgabe>();
+        List<Aufgabe> aufgabenTraining= new LinkedList<Aufgabe>();
         int trainingsdauer = 0;
         List<Aufgabe> aufgabenList = ds.readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen());
-        for (int i = 0; i < aufgabenList.size(); i++) {
-            if (roundUp10(trainingsdauer) == Integer.parseInt(getValueCBox(dauerCBox))) {
-                training = new Training(aufgabenTraining, trainingsdauer, readKategorie(), schwierigkeitsgradSetzen(), aufgabenTypenSetzen(), benutzer);
-                TrainingApp trainingApp = new TrainingApp(training, benutzer, studentMainViewTest);
-                trainingApp.zeigeAktuelleAufgabe();
-                this.setVisible(false);
-            } else {
-                switch (aufgabenList.get(i).getAufgabentyp()) {
-                    case MultipleChoice: {
-                        if (aufgabenTypMCCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
-                            aufgabenTraining.add(aufgabenList.get(i));
-                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
-                            break;
-                        }
-                    }
-                    case Einfachantwort: {
-                        if (aufgabenTypEACBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
-                            aufgabenTraining.add(aufgabenList.get(i));
-                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
-                            break;
-                        }
-                    }
-                    case Programmieren: {
-                        if (aufgabenTypCodeCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
-                            aufgabenTraining.add(aufgabenList.get(i));
-                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
-                            break;
-                        }
-                    }
-                    case Design: {
-                        if (aufgabenTypUMLCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
-                            aufgabenTraining.add(aufgabenList.get(i));
-                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
-                            break;
+        if (aufgabenList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine Aufgabe die diesen Parametern entspricht.", "ERROR", JOptionPane.WARNING_MESSAGE);
+        } else {
+            for (int i = 0; i < aufgabenList.size(); i++) {
+                if (roundUp10(trainingsdauer) == Integer.parseInt(getValueCBox(dauerCBox))) {
+                    training = new Training(aufgabenTraining, trainingsdauer, readKategorie(), schwierigkeitsgradSetzen(), aufgabenTypenSetzen(), benutzer);
+                    TrainingApp trainingApp = new TrainingApp(training, benutzer, studentMainViewTest);
+                    trainingApp.zeigeAktuelleAufgabe();
+                    this.setVisible(false);
+                } else if (roundUp10(trainingsdauer) > Integer.parseInt(getValueCBox(dauerCBox))) {
+                    JOptionPane.showMessageDialog(this, "Es gibt keine Aufgabe die diesen Parametern entspricht.", "ERROR", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if (i == aufgabenList.size() - 1) {
+                        JOptionPane.showMessageDialog(this, "Es gibt nicht genug Aufgaben, um ein Training mit den gesetzten Parametern zu  erstellen.", "ERROR", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        switch (aufgabenList.get(i).getAufgabentyp()) {
+                            case MultipleChoice: {
+                                if (aufgabenTypMCCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                                    aufgabenTraining.add(aufgabenList.get(i));
+                                    trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                                    System.out.println("MultipleChoice gewählt");
+                                    System.out.println(aufgabenList.get(i));
+                                    break;
+                                }
+                            }
+                            case Einfachantwort: {
+                                if (aufgabenTypEACBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                                    aufgabenTraining.add(aufgabenList.get(i));
+                                    trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                                    System.out.println(aufgabenList.get(i));
+                                    break;
+                                }
+                            }
+                            case Programmieren: {
+                                if (aufgabenTypCodeCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                                    aufgabenTraining.add(aufgabenList.get(i));
+                                    trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                                    System.out.println(aufgabenList.get(i));
+                                    break;
+                                }
+                            }
+                            case Design: {
+                                if (aufgabenTypUMLCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                                    aufgabenTraining.add(aufgabenList.get(i));
+                                    trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                                    System.out.println(aufgabenList.get(i));
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -156,6 +171,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     public boolean unSelected()//gibt true zurück wenn keine checkbox ausgewählt wurde
     {
         if (!aufgabenTypMCCBox.isSelected() && !aufgabenTypUMLCBox.isSelected() && !aufgabenTypEACBox.isSelected() && !aufgabenTypCodeCBox.isSelected()) {
+            System.out.println("Multi ausgewählt");
             return true;
         }
         return false;
