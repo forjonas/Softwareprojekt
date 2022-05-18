@@ -69,7 +69,7 @@ class ImagePersistence {
 
     private static void writeTestImagesToFiles() {
         for (ImageTest img : readImageTestsFromDatabase()) {
-            File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\loadedImages\\" + img.getName() + ".jpg");
+            File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\loadedImages\\" + img.getName() + ".txt");
             convertByteArrayToFile(img.getImage(), file);
         }
     }
@@ -146,7 +146,7 @@ class ImageJFrame extends JFrame {
     private JPanel contentPane;
 
     public static void main(String[] args) {
-        ImageTest img = ImagePersistence.readImageTestsFromDatabase().get(0);
+        ImageTest img = ImagePersistence.readImageTestsFromDatabase().get(2);
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
