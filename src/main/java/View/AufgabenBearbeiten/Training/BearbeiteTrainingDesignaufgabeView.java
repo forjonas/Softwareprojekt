@@ -120,5 +120,6 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			this.dispose();
 			trainingApp.persistTraining();
 			trainingApp.setUserFrameVisible(); //von Martin
+		}
 	}
 }
