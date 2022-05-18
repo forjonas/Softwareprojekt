@@ -12,12 +12,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
- * @version4: 18.05.22
  */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
@@ -111,8 +111,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
-            trainingApp.zurueckTrainig();
-
+            trainingApp.zurueckTraining();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             u1 = new UserloesungEinfachantwort();
@@ -124,7 +123,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
             trainingApp.printPersistenz();
-            // BearbeiteTestatKatalogView.main(null);
+            BearbeiteTestatKatalogView.main(null);
+            //trainingApp.setUserFrameVisible();//master
         }
     }
 }

@@ -158,32 +158,6 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
                     return;
                 }
             }else JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
-            /*
-            List<Benutzer> list = ds.readBenutzerFromDatabase();
-            for (int i = 0; i < list.size(); i++) {
-                String username = list.get(i).getBenutzername();
-                String k = usernameTxt.getText();
-                if (k.equals(username)) {
-                    if (userIstStudent(usernameTxt.getText())) {
-                        Student student = (Student) ds.readStudentnachBenutzernamen(usernameTxt.getText());
-                        checkPasswort(student);
-                        new StudentMainView(student,this);
-                        this.dispose();
-                        return;
-                    } else if (userIstDozent(usernameTxt.getText())) {
-                        Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(usernameTxt.getText());
-                        checkPasswort(dozent);
-                        new DozentAnsicht(this,dozent);
-                        this.dispose();
-                        return;
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Error 701. Benutzer existiert, ist jedoch weder Student noch Dozent.");
-
-                    }
-                } else {
-                    if((i-1)==list.size())JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
-                }
-            }*/
         }
     }
 
