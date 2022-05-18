@@ -202,11 +202,11 @@ public class CreateBetaData {
         ea3.setMusterloesung(mea3);
         ea4.setMusterloesung(mea4);
 
-        mta1=new MusterloesungEinfachantwort();
-        mta2=new MusterloesungProgrammieraufgabe();
-        mta3=new MusterloesungProgrammieraufgabe();
-        mta4=new MusterloesungEinfachantwort();
-        mta5=new MusterloesungDesignaufgabe();
+        mta1=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta1,"Der Konstruktor hat den selben Namen wie seine Klasse","public Konstruktor()");
+        mta2=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta2,"","");
+        mta3=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta3,"","");
+        mta4=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta4,"","");
+        mta5=new MusterloesungDesignaufgabe((Designaufgabe) ta5,"","");
 
         //List<Musterloesung>musterlösung=Arrays.asList(mda1,mda2,mda3,mda4,mpa1,mpa2,mpa3,mpa4,mma1,mma2,mma3,mma4,mea1,mea2,mea3,mea4);
         //ds.persistObjects(musterlösung);
@@ -278,6 +278,7 @@ public class CreateBetaData {
         student1.addErstellteLoesung(ul7);
         student1.addErstellteLoesung(ul8);
         student1.addErstellteLoesung(ul9);
+        student1.addBearbeitetesTestat(testatBearbeitung);
 
         testat2.addBearbeitung(testatBearbeitung);
 
@@ -288,19 +289,23 @@ public class CreateBetaData {
         List<Boolean> ul12List = Arrays.asList(false, false, true, false);
         List<Boolean> ul13List = Arrays.asList(true, false, false, true);
 
-        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul6List, student2, testat2);
-        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul7List, student2, testat2);
-        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul8List, student2, testat2);
-        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul9List, student2, testat2);
+        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul10List, student2, testat2);
+        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul11List, student2, testat2);
+        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul12List, student2, testat2);
+        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul13List, student2, testat2);
 
         testat2.addUserloesung(ul10);
         testat2.addUserloesung(ul11);
         testat2.addUserloesung(ul12);
         testat2.addUserloesung(ul13);
 
+        testatBearbeitung2=new TestatBearbeitung(testat2);
+        testatBearbeitung2.setTestatBearbeiter(student2);
+
         student2.addErstellteLoesung(ul10);
         student2.addErstellteLoesung(ul11);
         student2.addErstellteLoesung(ul12);
         student2.addErstellteLoesung(ul13);
+        student2.addBearbeitetesTestat(testatBearbeitung2);
     }
 }

@@ -19,41 +19,39 @@ public class RegistrierenView extends JFrame implements ActionListener {
     private JPanel registrierePnl;
     private JButton registrierenBtn;
     private JButton zurueckBtn;
-    private JLabel registriereLbl= new JLabel("Registrieren",SwingConstants.CENTER);
-    private JLabel vornameLbl= new JLabel("Vorname:");
-    private JLabel nachnameLbl=new JLabel("Nachname:");
-    private JLabel matrikelnummerLbl=new JLabel("Matrikelnummer:");
-    private JLabel usernameLbl=new JLabel("Benutzername:");
-    private JLabel passwortLbl=new JLabel("Kennwort:");
-    private JLabel passwortWiederholenLbl=new JLabel("Wiederhole das Kennwort:");
+    private JLabel registriereLbl = new JLabel("Registrieren", SwingConstants.CENTER);
+    private JLabel vornameLbl = new JLabel("Vorname:");
+    private JLabel nachnameLbl = new JLabel("Nachname:");
+    private JLabel matrikelnummerLbl = new JLabel("Matrikelnummer:");
+    private JLabel usernameLbl = new JLabel("Benutzername:");
+    private JLabel passwortLbl = new JLabel("Kennwort:");
+    private JLabel passwortWiederholenLbl = new JLabel("Wiederhole das Kennwort:");
 
-    private JTextField usernameTxt=new JTextField(40);
-    private JTextField vornameTxt=new JTextField(40);
-    private JTextField nachnameTxt=new JTextField(40);
+    private JTextField usernameTxt = new JTextField(40);
+    private JTextField vornameTxt = new JTextField(40);
+    private JTextField nachnameTxt = new JTextField(40);
     private JFormattedTextField matrikelTxt;
-    private JPasswordField passwortTxt=new JPasswordField(40);
-    private JPasswordField passwortWiederholenTxt=new JPasswordField(40);
+    private JPasswordField passwortTxt = new JPasswordField(40);
+    private JPasswordField passwortWiederholenTxt = new JPasswordField(40);
 
 
-
-    public RegistrierenView(JFrame hauptmenueView)
-    {
+    public RegistrierenView(JFrame hauptmenueView) {
         this.setName("Home");
-        this.getContentPane().add(registrierePnl =new JPanel(new BorderLayout()));
+        this.getContentPane().add(registrierePnl = new JPanel(new BorderLayout()));
 
-        einloggenView =hauptmenueView;
+        einloggenView = hauptmenueView;
 
         registrierenBtn = new JButton("Registrieren");
         registrierenBtn.addActionListener(this);
         registrierenBtn.setPreferredSize(new Dimension(130, 30));
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
-        zurueckBtn.setPreferredSize(new Dimension(130,30));
+        zurueckBtn.setPreferredSize(new Dimension(130, 30));
 
         fuelleRegistrierenFrame();
 
 
-        this.setSize(600,600);
+        this.setSize(600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -61,19 +59,18 @@ public class RegistrierenView extends JFrame implements ActionListener {
         einloggenView.setVisible(false);
     }
 
-    public void fuelleRegistrierenFrame()
-    {
-        NumberFormat format=NumberFormat.getInstance();
+    public void fuelleRegistrierenFrame() {
+        NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setAllowsInvalid(false);
 
-        matrikelTxt=new JFormattedTextField(formatter);
+        matrikelTxt = new JFormattedTextField(formatter);
 
-        registrierePnl.add(registriereLbl,BorderLayout.NORTH);
+        registrierePnl.add(registriereLbl, BorderLayout.NORTH);
 
-        JPanel tempPanel2=new JPanel(new GridLayout(6,2,12,12));
-        tempPanel2.setBorder(BorderFactory.createEmptyBorder(30,5,25,5));
+        JPanel tempPanel2 = new JPanel(new GridLayout(6, 2, 12, 12));
+        tempPanel2.setBorder(BorderFactory.createEmptyBorder(30, 5, 25, 5));
 
         tempPanel2.add(vornameLbl);
         tempPanel2.add(vornameTxt);
@@ -88,68 +85,76 @@ public class RegistrierenView extends JFrame implements ActionListener {
         tempPanel2.add(passwortWiederholenLbl);
         tempPanel2.add(passwortWiederholenTxt);
 
-        registrierePnl.add(tempPanel2,BorderLayout.CENTER);
-        registrierePnl.add(new JLabel(""),BorderLayout.EAST);
-        registrierePnl.add(new JLabel(""),BorderLayout.WEST);
+        registrierePnl.add(tempPanel2, BorderLayout.CENTER);
+        registrierePnl.add(new JLabel(""), BorderLayout.EAST);
+        registrierePnl.add(new JLabel(""), BorderLayout.WEST);
 
-        JPanel tempButtonPnl=new JPanel(new FlowLayout());
-        tempButtonPnl.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
+        JPanel tempButtonPnl = new JPanel(new FlowLayout());
+        tempButtonPnl.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
         tempButtonPnl.add(registrierenBtn);
         tempButtonPnl.add(zurueckBtn);
 
-        registrierePnl.add(tempButtonPnl,BorderLayout.SOUTH);
-        registrierePnl.setBorder(BorderFactory.createEmptyBorder(20,80,30,80));
+        registrierePnl.add(tempButtonPnl, BorderLayout.SOUTH);
+        registrierePnl.setBorder(BorderFactory.createEmptyBorder(20, 80, 30, 80));
 
         this.add(registrierePnl);
     }
 
-    public boolean checkPasswort()
-    {
-        if(Arrays.equals(passwortTxt.getPassword(),passwortWiederholenTxt.getPassword()))
-        {
+    public boolean checkPasswort() {
+        if (Arrays.equals(passwortTxt.getPassword(), passwortWiederholenTxt.getPassword())) {
             return true;
-        }else
-        {
-            JOptionPane.showMessageDialog(this,"Passwort ist nicht identisch.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Passwort ist nicht identisch.");
             return false;
         }
     }
 
-    public boolean istBereitsStudent()
-    {
+    public boolean istBereitsStudent() {
         List<Student> list = ds.readStudentenFromDatabase();
-        for(int i=0;i<=list.size();i++) {
-            if (usernameTxt.getText().equalsIgnoreCase(list.get(i).getBenutzername())) {
-                JOptionPane.showMessageDialog(this,"Benutzer existiert bereits.");
+        for (int i = 0; i <= list.size(); i++) {
+            if (usernameTxt.getText().equals(list.get(i).getBenutzername())) {
+                JOptionPane.showMessageDialog(this, "Benutzer existiert bereits.");
                 return true;
-            } else {
-                return false;
             }
         }
         return false;
     }
 
-    public void addStudent()
-    {
-        if(!istBereitsStudent() && checkPasswort())
+    public void addStudent() {
+        if (fieldsEmpty()||anyFieldEmpty())
         {
-            Student student = new Student(usernameTxt.getText(),new String(passwortTxt.getPassword()),vornameTxt.getText(),nachnameTxt.getText(),Integer.parseInt(matrikelTxt.getText()));
-            ds.persistObject(student);
-            System.out.println("check");
-            new StudentMainView(student);
-        }
+            JOptionPane.showMessageDialog(this,"Bitte alle Felder füllen");
+        } else if (usernameTxt.getText()==null) {
+            JOptionPane.showMessageDialog(this,"Bitte Benutzernamen eingeben.");
+
+        } else if (!istBereitsStudent() && checkPasswort()) {
+                Student student = new Student(usernameTxt.getText(), new String(passwortTxt.getPassword()), vornameTxt.getText(), nachnameTxt.getText(), Integer.parseInt(matrikelTxt.getText()));
+                ds.persistObject(student);
+                new StudentMainView(student);
+                this.dispose();
+            }
 
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-
-        if(e.getSource() == this.registrierenBtn){
-            addStudent();
-            this.dispose();
+    public boolean fieldsEmpty() {
+        if (usernameTxt.getText() == null && vornameTxt.getText() == null && nachnameTxt.getText() == null && matrikelTxt.getText() == null && passwortTxt.getPassword() == null && passwortWiederholenTxt.getPassword() == null) {
+            return true;
         }
-        else if(e.getSource() == this.zurueckBtn){
+        return false;
+    }
+    public boolean anyFieldEmpty(){
+        if (usernameTxt.getText() == null || vornameTxt.getText() == null || nachnameTxt.getText() == null || matrikelTxt.getText() == null || passwortTxt.getPassword() == null || passwortWiederholenTxt.getPassword() == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == this.registrierenBtn) {
+            addStudent();
+        } else if (e.getSource() == this.zurueckBtn) {
             einloggenView.setVisible(true);
             this.dispose();
         }

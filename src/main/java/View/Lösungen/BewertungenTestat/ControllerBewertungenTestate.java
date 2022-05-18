@@ -33,7 +33,9 @@ public class ControllerBewertungenTestate {
         this.userloesungList = userloesungList;
         this.index = 0;
         this.benutzer = benutzer;
-
+        if (benutzer.getClass().equals(Dozent.class)) {
+            testatBearbeitung.setTestatBearbeiter(benutzer);
+        }
         this.userloesungList = ds.readUserloesungVonTestat(testat, benutzer);
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
@@ -77,7 +79,7 @@ public class ControllerBewertungenTestate {
 
     public boolean bewertungVollstaendig() {
         boolean result = true;
-        for (boolean b:bewertetStatus) {
+        for (boolean b : bewertetStatus) {
             result = result && b;
         }
         return result;
@@ -85,8 +87,8 @@ public class ControllerBewertungenTestate {
 
     public void beendeBewertungTestat() {
         int counter = 0;
-        for (Userloesung uL:userloesungList) {
-             counter += uL.getErreichtePunkte();
+        for (Userloesung uL : userloesungList) {
+            counter += uL.getErreichtePunkte();
         }
         testatBearbeitung.setErreichtePunktzahl(counter);
         ds.persistObject(testatBearbeitung);
