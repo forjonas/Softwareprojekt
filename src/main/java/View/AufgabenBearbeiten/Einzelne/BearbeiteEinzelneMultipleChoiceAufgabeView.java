@@ -156,7 +156,11 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
             BearbeiteEinzelneAufgabeKatalogView.main(null);
         }
         if (e.getSource() == this.btnLoesungshinweisEinzel) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         }
         if (e.getSource() == this.btnAufgabeBeendenEinzel) {
 

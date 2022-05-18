@@ -203,13 +203,16 @@ public class CreateBetaData {
         ea4.setMusterloesung(mea4);
 
         mta1=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta1,"Der Konstruktor hat den selben Namen wie seine Klasse","public Konstruktor()");
-        mta2=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta2,"","");
-        mta3=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta3,"","");
-        mta4=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta4,"","");
-        mta5=new MusterloesungDesignaufgabe((Designaufgabe) ta5,"","");
+        mta2=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta2,"Lösunghinweis","Musterlösung");
+        mta3=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta3,"Lösungshinweis","Müsterlösung");
+        mta4=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta4,"Lösungshinweis","Musterlösung");
+        mta5=new MusterloesungDesignaufgabe((Designaufgabe) ta5,"Lösungshinweis","Musterlösung");
 
-        //List<Musterloesung>musterlösung=Arrays.asList(mda1,mda2,mda3,mda4,mpa1,mpa2,mpa3,mpa4,mma1,mma2,mma3,mma4,mea1,mea2,mea3,mea4);
-        //ds.persistObjects(musterlösung);
+        ta1.setMusterloesung(mta1);
+        ta2.setMusterloesung(mta2);
+        ta3.setMusterloesung(mta3);
+        ta4.setMusterloesung(mta4);
+        ta5.setMusterloesung(mta5);
     }
 
     public void createBetaAufgabensammlungen() throws Exception {

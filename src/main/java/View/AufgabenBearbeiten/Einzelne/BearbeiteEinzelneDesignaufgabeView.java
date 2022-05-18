@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
@@ -113,13 +114,16 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
 
         }
         if (e.getSource() == this.btnLoesungshinweis) {
-            //JOptionPane.showMessageDialog(this,"Button Loesungshinweis");
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
             this.dispose();
-            new LoesungEinzelneDesignaufgabeView(aufgabe, u1, benutzer,frame);
+            new LoesungEinzelneDesignaufgabeView(aufgabe, u1, benutzer, frame);
 
 
             /**

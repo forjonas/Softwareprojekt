@@ -43,11 +43,13 @@ public class TestatApp {
     private DatabaseService database;
     private Benutzer benutzer;
     private Aufgabe aufgabe;
+    private JFrame uebersichtsframe;
 
     //private
     public List<Userloesung> usereingaben = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
 
-    public TestatApp(Testat testat, Benutzer benutzer) { //Konstruktor: bekomme das Testat mit
+    public TestatApp(Testat testat, Benutzer benutzer,JFrame uebersichtsframe) { //Konstruktor: bekomme das Testat mit
+        this.uebersichtsframe=uebersichtsframe;
         this.index = 0;
         this.testat = testat;
         this.benutzer = benutzer; //Muss DatabaseService mit übergeben(dahin speichern)
@@ -98,6 +100,7 @@ public class TestatApp {
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
         ds1.persistObject(bearbeitet);
+        uebersichtsframe.setVisible(true);
 /**
  *
  *     public void setUsereingaben(List<Userloesung> usereingaben) {
@@ -155,18 +158,7 @@ public class TestatApp {
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
 
-                    TestatApp testatApp = new TestatApp(t1, student1);
-                    testatApp.zeigeAktuelleAufgabe();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
 }

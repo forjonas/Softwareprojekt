@@ -1,11 +1,10 @@
 package View;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
-import persistence.DatabaseService;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,14 +19,14 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
     private JButton abmeldenBtn;
-    private JButton testatEinsehenBtn;
+    private JButton testateBerwertenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
     private JButton testatuebersichtBtn;
     private JButton aufgabeErstellenBtn;
     private JButton aufgabenuebersichtBtn;
     private JButton trainingsDurchfuehrenBtn;
-    private JButton testateDurchfuehrenBtn;
+    private JButton meineTestateBtn;
     //Panels
     private JPanel centerPnl;
     private JPanel dozentMainPanel;
@@ -52,36 +51,36 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         abmeldenBtn = new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
 
-        testatEinsehenBtn = new JButton("Testat Einsehen");
-        testatEinsehenBtn.addActionListener(this);
+        testateBerwertenBtn = new JButton("Testate bewerten");
+        testateBerwertenBtn.addActionListener(this);
 
-        trainingsEinsehenBtn = new JButton("Trainings Einsehen");
+        trainingsEinsehenBtn = new JButton("Trainings einsehen");
         trainingsEinsehenBtn.addActionListener(this);
 
-        testateErstellenBtn = new JButton("Testate Erstellen");
+        testateErstellenBtn = new JButton("Testate erstellen");
         testateErstellenBtn.addActionListener(this);
 
-        testatuebersichtBtn = new JButton("Testat Übersicht");
+        testatuebersichtBtn = new JButton("Testatübersicht");
         testatuebersichtBtn.addActionListener(this);
 
-        aufgabeErstellenBtn = new JButton("Aufgabe Erstellen");
+        aufgabeErstellenBtn = new JButton("Aufgabe erstellen");
         aufgabeErstellenBtn.addActionListener(this);
 
-        aufgabenuebersichtBtn = new JButton("Aufgaben Übersicht");
+        aufgabenuebersichtBtn = new JButton("Aufgabenübersicht");
         aufgabenuebersichtBtn.addActionListener(this);
 
-        trainingsDurchfuehrenBtn = new JButton("Trainings Durchführen");
+        trainingsDurchfuehrenBtn = new JButton("Trainings durchführen");
         trainingsDurchfuehrenBtn.addActionListener(this);
 
-        testateDurchfuehrenBtn = new JButton("Testate Durchführen");
-        testateDurchfuehrenBtn.addActionListener(this);
+        meineTestateBtn = new JButton("Meine Testate");
+        meineTestateBtn.addActionListener(this);
         //Panels
         centerPnl = new JPanel(gl);
         dozentMainPanel = new JPanel(new BorderLayout());
 
         //Components Adden
-        centerPnl.add(testatEinsehenBtn);
-        centerPnl.add(testateDurchfuehrenBtn);
+        centerPnl.add(testateBerwertenBtn);
+        centerPnl.add(meineTestateBtn);
         centerPnl.add(testatuebersichtBtn);
         centerPnl.add(testateErstellenBtn);
         centerPnl.add(trainingsDurchfuehrenBtn);
@@ -98,10 +97,10 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource() == this.testatEinsehenBtn){
+        if(e.getSource() == this.testateBerwertenBtn){
             testatEinsehen();
         }
-        else if(e.getSource()==this.testateDurchfuehrenBtn){
+        else if(e.getSource()==this.meineTestateBtn){
             testateDurchfuehren();
         }
         else if(e.getSource()==this.trainingsDurchfuehrenBtn){
@@ -164,7 +163,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-        new TestatKatalogView(this, dozent);
+        new BearbeiteTestatKatalogView(this, dozent);
     }
     private void testatEinsehen(){
         this.setVisible(false);
