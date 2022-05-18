@@ -2,7 +2,6 @@ package View.Lösungen.BewertungenTestat;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.KorrigiereTestatKatalogView;
-import View.TestatKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -29,12 +28,10 @@ public class ControllerBewertungenTestate {
         this.jframe = frame;
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
-        this.testat = testat;
-        this.userloesungList = userloesungList;
         this.index = 0;
         this.benutzer = benutzer;
 
-        this.userloesungList = ds.readUserloesungVonTestat(testat, benutzer);
+        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
@@ -48,7 +45,7 @@ public class ControllerBewertungenTestate {
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
 
-        this.userloesungList = ds.readUserloesungVonTestat(testat, benutzer);
+        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
             bewertetStatus.add(false);
@@ -84,15 +81,15 @@ public class ControllerBewertungenTestate {
     }
 
     public void beendeBewertungTestat() {
-        int counter = 0;
-        for (Userloesung uL:userloesungList) {
-             counter += uL.getErreichtePunkte();
-        }
-        testatBearbeitung.setErreichtePunktzahl(counter);
-        ds.persistObject(testatBearbeitung);
-        ds.persistObjects(userloesungList);
-
         if (benutzer.getClass().equals(Dozent.class)) {
+            int counter = 0;
+            for (Userloesung uL:userloesungList) {
+                counter += uL.getErreichtePunkte();
+            }
+            testatBearbeitung.setErreichtePunktzahl(counter);
+            testatBearbeitung.setTestatBewerter((Dozent) benutzer);
+            ds.persistObject(testatBearbeitung);
+            ds.persistObjects(userloesungList);
             new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
         } else {
             new BearbeiteTestatKatalogView(jframe, benutzer);
