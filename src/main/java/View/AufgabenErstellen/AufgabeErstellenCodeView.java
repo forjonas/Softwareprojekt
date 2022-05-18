@@ -1,7 +1,5 @@
 package View.AufgabenErstellen;
 
-import View.DozentAnsicht;
-import View.ImageFilter;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.aufgabe.Programmieraufgabe;
@@ -166,7 +164,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.codeHochBtn) {
-            FileChooserView filcV = new FileChooserView();
+            FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             codeBspFile = filcV.fileChooser();
         }
     }

@@ -96,6 +96,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         this.dispose();
         dozentAnsichtFrame.setVisible(true);
     }
+
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
         if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
             JOptionPane.showMessageDialog(testFrame,
@@ -104,6 +105,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+
         else{
             return true;
         }
