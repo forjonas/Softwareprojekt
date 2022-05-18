@@ -100,7 +100,13 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
+<<<<<<<<< Temporary merge branch 1
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            }
+=========
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+>>>>>>>>> Temporary merge branch 2
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
             testatApp.zurueckTestat();

@@ -64,9 +64,6 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
 
-        /**
-         * Optionales Bild hinzufügen
-         */
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -131,16 +128,19 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            JOptionPane.showMessageDialog(this, "Button Vorherige");
             trainingApp.zurueckTraining();
 
         }
@@ -169,10 +169,14 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         }
 
             if (e.getSource() == this.btnTrainingBeenden) {
+                JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                 this.dispose();
+<<<<<<<<< Temporary merge branch 1
                 trainingApp.printPersistenz();
-                BearbeiteTestatKatalogView.main(null);
-                trainingApp.setUserFrameVisible();
+=========
+                trainingApp.persistTraining();
+                trainingApp.setUserFrameVisible(); //von Martin
+>>>>>>>>> Temporary merge branch 2
 
             }
 
