@@ -40,7 +40,6 @@ public class TestatController {
     private TestatBearbeitung testatBearbeitung;
     private int index;
     private JFrame aktuellerFrame;
-    private DatabaseService database;
     private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
     private JFrame hauptmenueFrame;
@@ -112,7 +111,7 @@ public class TestatController {
             }
             userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
-        DatabaseService ds = database.getInstance();
+        DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
         ds.persistObject(testatBearbeitung);
         new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);

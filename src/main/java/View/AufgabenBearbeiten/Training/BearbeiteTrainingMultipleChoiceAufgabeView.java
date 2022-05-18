@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TrainingController;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
@@ -32,10 +33,10 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     JRadioButton button2;
     JRadioButton button3;
     JRadioButton button4;
-
+    private boolean hinweisVerwendet;
     private TrainingController trainingController;
     private MultipleChoiceAufgabe aufgabe; //Im Frame die Aufgabe
-    private UserloesungMultipleChoiceAufgabe u1;
+    private UserloesungMultipleChoiceAufgabe userloesung;
 
     private String antwort1;
     private String antwort2;
@@ -46,7 +47,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
      * Create the frame.
      */
     public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingController trainingController, MultipleChoiceAufgabe aufgabe) {
-
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
@@ -134,45 +135,53 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            trainingController.zurueckTraining();
-            this.dispose();
+            if(trainingController.isIndexNotFirst()) {
+                trainingController.zurueckTraining();
+                this.dispose();
+            } else {
+                trainingController.zurueckTraining();
+            }
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            u1 = new UserloesungMultipleChoiceAufgabe();
-            List<Boolean> u3 = new ArrayList<Boolean>();
+            userloesung = new UserloesungMultipleChoiceAufgabe();
+            List<Boolean> userloesungBooleanArray = new ArrayList<Boolean>();
 
-            u3.add(false);
-            u3.add(false);
-            u3.add(false);
-            u3.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
+            userloesungBooleanArray.add(false);
 
             if (button1.isSelected()) {
-                u3.set(0, true);
+                userloesungBooleanArray.set(0, true);
             } else if (button2.isSelected()) {
-                u3.set(1, true);
+                userloesungBooleanArray.set(1, true);
             } else if (button3.isSelected()) {
-                u3.set(2, true);
+                userloesungBooleanArray.set(2, true);
             } else if (button4.isSelected()) {
-                u3.set(3, true);
+                userloesungBooleanArray.set(3, true);
             }
 
-            u1.setUserloesung(u3);
-            trainingController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            this.dispose();
-            trainingController.weiter();
-
+            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+            trainingController.addUserloesung(userloesung);
+            if (trainingController.isIndexNotLast()) {
+                trainingController.weiter();
+                this.dispose();
+            } else {
+                trainingController.weiter();
+            }
         }
 
         if (e.getSource() == this.btnTrainingBeenden) {
-            this.dispose();
+            JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
             trainingController.persistTraining();
-            trainingController.setUserFrameVisible(); //von Martin
+            this.dispose();
         }
 
     }

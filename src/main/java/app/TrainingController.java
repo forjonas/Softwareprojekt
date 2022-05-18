@@ -33,19 +33,18 @@ import java.util.List;
 public class TrainingController {
 
     private Training training;
-    private JFrame userframe;
+    private JFrame hauptmenueFrame;
     private int index;
     private JFrame aktuellerFrame;
-    private DatabaseService database;
-    private Benutzer benutzer;
-    public List<Userloesung> usereingaben = new ArrayList<>();
+    private Benutzer aktuellerBenutzer;
+    public List<Userloesung> userloesungen = new ArrayList<>();
 
 
-    public TrainingController(Training training, Benutzer benutzer, JFrame userframe) {
+    public TrainingController(Training training, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.index = 0;
-        this.userframe = userframe;
+        this.hauptmenueFrame = hauptmenueFrame;
         this.training = training;
-        this.benutzer = benutzer;
+        this.aktuellerBenutzer = aktuellerBenutzer;
     }
 
     public void zeigeAktuelleAufgabe() {//Aufgaben anzeigen
@@ -83,22 +82,44 @@ public class TrainingController {
             this.index++;
             zeigeAktuelleAufgabe();
         } else {
-            JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
-            persistTraining();
+            JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
         }
     }
 
     public void persistTraining() {//usereingaben Liste persistieren
-
-        DatabaseService ds1 = database.getInstance();
-        ds1.persistObjects(usereingaben);
-        for (int i=0;i<usereingaben.size();i++) {
-            benutzer.addErstellteLoesung(usereingaben.get(i));
+        for (Userloesung userloesung : userloesungen) {
+            userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
+            try {
+                userloesung.getAufgabe().addUserloesung(userloesung);
+            } catch (Exception ignored) {
+            }
+            userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
-        benutzer.addBearbeitetesTraining(training);
-        new ControllerLoesungenTraining(training, benutzer, userframe);
-        //ControllerLoesungenTraining loesungenTraining = new ControllerLoesungenTraining(training, benutzer);
-        //loesungenTraining.startLoesungTraining();
+        aktuellerBenutzer.addBearbeitetesTraining(training);
+        DatabaseService ds = DatabaseService.getInstance();
+        ds.persistObjects(userloesungen);
+        ds.persistObject(training);
+        new ControllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
+    }
+
+    public boolean isIndexNotFirst() {
+        return (index > 0);
+    }
+
+    public boolean isIndexNotLast() {
+        return (index < training.getAnzahlAufgaben() - 1);
+    }
+
+    public Training getTraining() {
+        return training;
+    }
+
+    public Benutzer getAktuellerBenutzer() {
+        return aktuellerBenutzer;
+    }
+
+    public void addUserloesung(Userloesung userloesung) {
+        userloesungen.add(userloesung);
     }
 
     public static void main(String[] args) {
@@ -136,7 +157,7 @@ public class TrainingController {
     }
 
     public void setUserFrameVisible() {
-        userframe.setVisible(true);
+        hauptmenueFrame.setVisible(true);
     }
 
 }

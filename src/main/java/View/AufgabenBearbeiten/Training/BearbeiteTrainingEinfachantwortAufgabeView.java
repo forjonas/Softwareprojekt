@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Training;
 
 import app.TrainingController;
 import entity.aufgabe.EinfachantwortAufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 
@@ -27,15 +28,16 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     private JButton btnVoherigeAufgabeTraining;
     private JButton btnNaechsteAufgabeTraining;
     private JButton btnTrainingBeenden;
-
+    private boolean hinweisVerwendet;
     private TrainingController trainingController;
     private EinfachantwortAufgabe aufgabe;
-    private UserloesungEinfachantwort u1;
+    private UserloesungEinfachantwort userloesung;
 
     /**
      * Create the frame.
      */
     public BearbeiteTrainingEinfachantwortAufgabeView(TrainingController trainingController, EinfachantwortAufgabe aufgabe) {
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
@@ -101,28 +103,34 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            trainingController.zurueckTraining();
-            this.dispose();
+            if(trainingController.isIndexNotFirst()) {
+                trainingController.zurueckTraining();
+                this.dispose();
+            } else {
+                trainingController.zurueckTraining();
+            }
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            u1 = new UserloesungEinfachantwort();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
-            trainingController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            this.dispose();
-            trainingController.weiter(); //testatApp.testat
-
+            String userloesungString = textArea.getText();
+            userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, userloesungString, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+            trainingController.addUserloesung(userloesung);
+            if(trainingController.isIndexNotLast()) {
+                trainingController.weiter();
+                this.dispose();
+            } else {
+                trainingController.weiter();
+            }
         }
         if (e.getSource() == this.btnTrainingBeenden) {
             JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
-            this.dispose();
             trainingController.persistTraining();
-            trainingController.setUserFrameVisible(); //von Martin
+            this.dispose();
         }
     }
 }

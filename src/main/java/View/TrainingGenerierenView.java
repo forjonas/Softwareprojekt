@@ -1,7 +1,6 @@
 package View;
 
 import View.tableModel.AufgabenAuswaehlenTableModel;
-import View.tableModel.AufgabenTrainingTableModel;
 import app.TrainingController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Training;
@@ -215,7 +214,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
             }
             DatabaseService.getInstance().persistObject(training);
             new TrainingController(training,aktuellerBenutzer,jframe).zeigeAktuelleAufgabe();
-            this.setVisible(false);
+            dispose();
         }
     }
 
