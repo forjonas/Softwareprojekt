@@ -1,10 +1,7 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import app.TestatApp;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
-import entity.aufgabensammlung.TestatBearbeitung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -23,7 +20,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
-    //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
     private JButton btnAbbrechenTestat;
@@ -33,8 +29,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private JButton btnTestatBeenden;
 
     private TestatApp testatApp;
-    private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
-    // private TestatBearbeitung bearbeitet;
+    private EinfachantwortAufgabe aufgabe;
     private UserloesungEinfachantwort u1;
 
     public BearbeiteTestatEinfachantwortAufgabeView(TestatApp testatApp, EinfachantwortAufgabe aufgabe) {
@@ -54,7 +49,6 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
         JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
-
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -100,7 +94,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
-            JOptionPane.showMessageDialog(this, "Aufgabe wird nicht gespeichert");
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 
@@ -127,7 +121,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         }
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatApp.persistUser();
+            testatApp.persistTestat();
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 

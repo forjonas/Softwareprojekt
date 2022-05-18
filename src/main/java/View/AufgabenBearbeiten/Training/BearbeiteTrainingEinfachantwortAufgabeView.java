@@ -21,7 +21,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
-    //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
     private JButton btnAbbrechenTraining;
@@ -31,7 +30,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     private JButton btnTrainingBeenden;
 
     private TrainingApp trainingApp;
-    private EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
+    private EinfachantwortAufgabe aufgabe;
     private UserloesungEinfachantwort u1;
 
     /**
@@ -43,7 +42,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -54,11 +52,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
         JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
-
-        /**
-         * Optionales Bild hinzufügen
-         */
-
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -75,7 +68,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
-        btnAbbrechenTraining = new JButton("Beenden");
+        btnAbbrechenTraining = new JButton("Abbrechen");
         panelSouth.add(btnAbbrechenTraining);
         btnLoesungshinweisTraining = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisTraining);
@@ -102,8 +95,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            trainingApp.setUserFrameVisible();
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
@@ -124,8 +117,10 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
             trainingApp.weiter(); //testatApp.testat
         }
         if (e.getSource() == this.btnTrainingBeenden) {
+            JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
             this.dispose();
-            trainingApp.printPersistenz();
+            trainingApp.persistTraining();
+            trainingApp.setUserFrameVisible(); //von Martin
         }
     }
 }
