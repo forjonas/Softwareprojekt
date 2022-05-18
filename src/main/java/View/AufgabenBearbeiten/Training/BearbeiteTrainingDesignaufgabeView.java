@@ -143,7 +143,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnTrainingBeenden) {
 			trainingApp.printPersistenz();
 			this.dispose();
-			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
+			trainingApp.setUserFrameVisible();
 		}
 		if (e.getSource() == this.btnUpload) {
 			JOptionPane.showMessageDialog(this, "Upload Button");

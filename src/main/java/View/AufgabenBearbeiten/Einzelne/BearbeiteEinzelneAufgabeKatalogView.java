@@ -167,25 +167,25 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
                 Aufgabe aufgabe = aufgabenliste.get(selectedRow);
                 switch (aufgabe.getAufgabentyp()) {
                     case Design: {
-                        new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer);
+                        new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer);
                         break;
                     }
                     case Einfachantwort: {
-                        new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer);
+                        new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer);
                         break;
                     }
                     case MultipleChoice: {
-                        new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer);
+                        new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer);
                         break;
                     }
                     case Programmieren: {
-                        new BearbeiteEinzelneProgrammieraufgabeView((Programmieraufgabe) aufgabe,aktuellerBenutzer);
+                        new BearbeiteEinzelneProgrammieraufgabeView((Programmieraufgabe) aufgabe,aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneProgrammieraufgabeView((Programmieraufgabe) aufgabe, aktuellerBenutzer);
                         break;

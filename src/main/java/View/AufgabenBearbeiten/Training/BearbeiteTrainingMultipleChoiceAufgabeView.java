@@ -172,8 +172,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
                 this.dispose();
                 trainingApp.printPersistenz();
                 BearbeiteTestatKatalogView.main(null);
-               //trainingApp.setUserFrameVisible();
-
+                trainingApp.setUserFrameVisible();
 
             }
 

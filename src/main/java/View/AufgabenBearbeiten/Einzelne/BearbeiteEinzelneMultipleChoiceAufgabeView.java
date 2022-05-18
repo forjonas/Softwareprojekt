@@ -37,6 +37,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JButton btnLoesungshinweisEinzel;
     private JButton btnAufgabeBeendenEinzel;
     private MultipleChoiceAufgabe aufgabe;  //Im Frame die Aufgabe
+    private JFrame frame;
 
     JRadioButton button1;
     JRadioButton button2;
@@ -51,31 +52,32 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 
 
     /**
-     * Launch the application.
+     *  public static void main(String[] args) {
+     *
+     *         Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double","Test"}));
+     *         Benutzer benutzer = new Student();
+     *
+     *         EventQueue.invokeLater(new Runnable() {
+     *             public void run() {
+     *                 try {
+     *                     BearbeiteEinzelneMultipleChoiceAufgabeView frame = new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4,benutzer);
+     *                     frame.setVisible(true);
+     *                 } catch (Exception e) {
+     *                     e.printStackTrace();
+     *                 }
+     *             }
+     *         });
+     *     }
      */
-    public static void main(String[] args) {
 
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double","Test"}));
-        Benutzer benutzer = new Student();
-
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneMultipleChoiceAufgabeView frame = new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4,benutzer);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe,Benutzer benutzer) {
+    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe,Benutzer benutzer, JFrame frame) {
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
+        this.frame = frame;
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
@@ -178,7 +180,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 
             u1.setUserloesung(u3);
             this.dispose();
-            new LoesungEinzelneMultipleChoiceAufgabeView(aufgabe, u1, benutzer);
+            new LoesungEinzelneMultipleChoiceAufgabeView(aufgabe, u1, benutzer, frame);
 
         }
 

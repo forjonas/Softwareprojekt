@@ -115,7 +115,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
             this.dispose();
             trainingApp.printPersistenz();
             BearbeiteTestatKatalogView.main(null);
-           //trainingApp.setUserFrameVisible();
+            trainingApp.setUserFrameVisible();
 
         }
 

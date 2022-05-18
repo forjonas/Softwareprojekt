@@ -33,36 +33,37 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     private final EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
     private UserloesungEinfachantwort u1;
     private Benutzer benutzer;
+    private JFrame frame;
 
     /**
-     * Launch the application.
+     * public static void main(String[] args) {
+     *
+     *         EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
+     *         Designaufgabe a2 = new Designaufgabe();
+     *         Programmieraufgabe a3 = new Programmieraufgabe();
+     *         MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+     *         Benutzer benutzer = new Student();
+     *         EventQueue.invokeLater(new Runnable() {
+     *             public void run() {
+     *                 try {
+     *                     BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView(a1, benutzer);
+     *                     frame.setVisible(true);
+     *                 } catch (Exception e) {
+     *                     e.printStackTrace();
+     *                 }
+     *             }
+     *         });
+     *     }
      */
-    public static void main(String[] args) {
 
-        EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
-        Designaufgabe a2 = new Designaufgabe();
-        Programmieraufgabe a3 = new Programmieraufgabe();
-        MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
-        Benutzer benutzer = new Student();
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView(a1, benutzer);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer) {
-
+    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
+        this.frame = frame;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
@@ -146,7 +147,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             this.dispose();
-            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, u1, benutzer);
+            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, u1, benutzer, frame);
 
         }
 

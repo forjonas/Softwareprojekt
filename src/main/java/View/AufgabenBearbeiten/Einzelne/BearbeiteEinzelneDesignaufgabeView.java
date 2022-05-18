@@ -32,36 +32,37 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     private JButton btnUpload;
     private Benutzer benutzer;
     private UserloesungDesignaufgabe u1;
+    private JFrame frame;
 
     private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
     private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
+     public static void main(String[] args) {
 
-        EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
-        Designaufgabe a2 = new Designaufgabe();
-        Programmieraufgabe a3 = new Programmieraufgabe();
-        MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
-        Benutzer benutzer = new Student();
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneDesignaufgabeView frame = new BearbeiteEinzelneDesignaufgabeView(a2, benutzer);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+     EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
+     Designaufgabe a2 = new Designaufgabe();
+     Programmieraufgabe a3 = new Programmieraufgabe();
+     MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+     Benutzer benutzer = new Student();
+     EventQueue.invokeLater(new Runnable() {
+     public void run() {
+     try {
+     BearbeiteEinzelneDesignaufgabeView frame = new BearbeiteEinzelneDesignaufgabeView(a2, benutzer);
+     frame.setVisible(true);
+     } catch (Exception e) {
+     e.printStackTrace();
+     }
+     }
+     });
+     }     */
+
 
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer) {
+    public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
         setTitle(aufgabe.getName()); //Name der Aufgabe
@@ -90,7 +91,7 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
 
-        btnAbbrechen = new JButton("Beenden");
+        btnAbbrechen = new JButton("Abbrechen");
         panelSouth.add(btnAbbrechen);
         btnLoesungshinweis = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweis);
@@ -117,7 +118,8 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
             JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
-            new LoesungEinzelneDesignaufgabeView(aufgabe, u1, benutzer);
+            this.dispose();
+            new LoesungEinzelneDesignaufgabeView(aufgabe, u1, benutzer,frame);
 
 
             /**

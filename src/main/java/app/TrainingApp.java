@@ -43,7 +43,7 @@ public class TrainingApp {
 
     public TrainingApp(Training training, Benutzer benutzer, JFrame userframe) {
         this.index = 0;
-        this.userframe=userframe;
+        this.userframe = userframe;
         this.training = training;
         this.benutzer = benutzer;
     }
@@ -93,7 +93,7 @@ public class TrainingApp {
 
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
-        new ControllerLoesungenTraining(training, benutzer);
+        new ControllerLoesungenTraining(training, benutzer, userframe);
         //ControllerLoesungenTraining loesungenTraining = new ControllerLoesungenTraining(training, benutzer);
         //loesungenTraining.startLoesungTraining();
     }
@@ -131,8 +131,8 @@ public class TrainingApp {
         });
 
     }
-    public void setUserFrameVisible()
-    {
+
+    public void setUserFrameVisible() {
         userframe.setVisible(true);
     }
 

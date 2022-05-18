@@ -123,8 +123,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
             trainingApp.printPersistenz();
-            BearbeiteTestatKatalogView.main(null);
-            //trainingApp.setUserFrameVisible();//master
+            trainingApp.setUserFrameVisible();
         }
     }
 }
