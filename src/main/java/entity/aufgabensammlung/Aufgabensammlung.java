@@ -25,7 +25,7 @@ public abstract class Aufgabensammlung {
             name = "aufgabensammlung_aufgabe",
             joinColumns = @JoinColumn(name = "aufgabensammlung_id"),
             inverseJoinColumns = @JoinColumn(name = "aufgabe_id"))
-    private List<Aufgabe> aufgaben;
+    private List<Aufgabe> aufgaben; // kurz static gemacht
     private int gesamtzeit;
     private int gesamtpunktzahl;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "aufgabensammlung")
@@ -57,7 +57,7 @@ public abstract class Aufgabensammlung {
      *
      * @return Liste der Aufgaben
      */
-    public List<Aufgabe> getAufgaben() {
+    public List<Aufgabe> getAufgaben() {// kurz static gemacht
         return aufgaben;
     }
 

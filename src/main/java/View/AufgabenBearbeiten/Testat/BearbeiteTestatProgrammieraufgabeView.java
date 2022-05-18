@@ -11,11 +11,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 /**
  * @author Kristin Kubisch
- * @version 10.05.22
- * @version2 13.05.22
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
  */
 public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
 
@@ -127,7 +128,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
         if (e.getSource() == this.btnTestatBeenden) {
             this.dispose();
-            testatApp.printPersistenz();
+            testatApp.persistUser();
             BearbeiteTestatKatalogView.main(null);
 
         }

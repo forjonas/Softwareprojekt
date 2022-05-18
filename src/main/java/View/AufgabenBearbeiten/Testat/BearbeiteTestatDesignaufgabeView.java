@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
+import View.ImageFilter;
 import app.TestatApp;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -18,23 +19,24 @@ import javax.swing.border.EmptyBorder;
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
+ * @version4: 18.05.22
  */
 public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
 
+    public static JFileChooser fc = new JFileChooser();
     private JPanel contentPane;
+    private JButton BildHochladen;
+    //private JTextArea textArea;
+    private File geuploadet;
+    private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+
     private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
-
     private JButton btnUpload;
 
-    private JTextArea textArea;
-
-    private File geuploadet;
-
-    ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
 
     private TestatApp testatApp;
     private Designaufgabe aufgabe;  //Im Frame die Aufgabe
@@ -48,7 +50,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         this.aufgabe = aufgabe;
         this.testatApp = testatApp;
-        //FESTE ANGABEN WEG!!!
+
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setBounds(100, 100, 674, 435);
@@ -59,8 +61,11 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
+        panelNorth.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
         panelNorth.add(lblNewLabel1);
+        JLabel lblNewLabel2 = new JLabel(" + Bild");
+        panelNorth.add(lblNewLabel2);
 
         /**
          * Optionales Bild hinzufügen
@@ -68,8 +73,10 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
-        textArea = new JTextArea(18, 50);
-        panelCenter.add(textArea);
+
+
+        BildHochladen = new JButton("BildHochladen");
+        panelCenter.add(BildHochladen);
 
         /**
          JPanel panelCenter = new JPanel();
@@ -78,11 +85,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
          panelCenter.add(lblNewLabel_2);
          //Wenn auf Button-- Bild auswählen-- Bild anzeigen
          */
-        JPanel panelWest = new JPanel();
-        contentPane.add(panelWest, BorderLayout.WEST);
-        btnUpload = new JButton("Upload");
-        panelWest.add(btnUpload);
-
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
@@ -103,7 +105,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         this.btnVoherigeAufgabeTestat.addActionListener(this);
         this.btnNaechsteAufgabeTestat.addActionListener(this);
         this.btnTestatBeenden.addActionListener(this);
-        this.btnUpload.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -114,7 +115,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
-            testatApp.printPersistenz();
+            testatApp.persistUser();
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
         }
@@ -129,8 +130,9 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
 
             u1 = new UserloesungDesignaufgabe();
-            String u2 = textArea.getText();
+            String u2 = BildHochladen.getText();
             u1.setUserloesung(u2);
+            //  testatApp.setUsereingaben(u1);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
 
@@ -144,28 +146,23 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         }
 
         if (e.getSource() == this.btnTestatBeenden) {
-            testatApp.printPersistenz();
+            testatApp.persistUser();
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
+        }
+
+        if (e.getSource() == this.BildHochladen) {
+
+            int retVal = fc.showOpenDialog(null);
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                System.out.println("Datei: " + file.getName());
+            }
         }
 
         if (e.getSource() == this.btnUpload) { //angepasst
             JOptionPane.showMessageDialog(this, "Upload Button");
 
-            /**
-             private File codeBspHochladen() {
-             FC = new JFileChooser((String) null);
-             FC.setAcceptAllFileFilterUsed(false);
-             FC.setFileFilter(new ImageFilter());
-             int returnVal = FC.showOpenDialog(null);
-             if (returnVal == JFileChooser.APPROVE_OPTION) {
-             codeBspFile = FC.getSelectedFile();
-             System.out.println(codeBspFile.getName());
-             return codeBspFile;
-             }
-             return null;
-             }
-             */
 
             /**
              Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*

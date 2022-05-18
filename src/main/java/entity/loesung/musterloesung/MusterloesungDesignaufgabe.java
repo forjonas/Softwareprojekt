@@ -18,6 +18,7 @@ import java.io.File;
 public class MusterloesungDesignaufgabe extends Musterloesung {
 
     private File musterloesung; //ToDo: Filetype
+    //private String musterloesung;
 
     /**
      * Leerer Konstruktor für Klasse MusterloesungDesignaufgabe

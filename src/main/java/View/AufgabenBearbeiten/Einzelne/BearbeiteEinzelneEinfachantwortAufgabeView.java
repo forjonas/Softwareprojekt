@@ -1,9 +1,13 @@
 package View.AufgabenBearbeiten.Einzelne;
 
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
@@ -15,7 +19,9 @@ import java.awt.event.ActionEvent;
 
 /**
  * @author Kristin Kubisch
- * @version 10.05.22
+ * @version: 10.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
  */
 public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
@@ -26,34 +32,38 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     private JButton btnAufgabeBeendenEinzel;
     private final EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
     private UserloesungEinfachantwort u1;
+    private Benutzer benutzer;
+    private JFrame frame;
 
     /**
-     * Launch the application.
+     * public static void main(String[] args) {
+     *
+     *         EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
+     *         Designaufgabe a2 = new Designaufgabe();
+     *         Programmieraufgabe a3 = new Programmieraufgabe();
+     *         MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+     *         Benutzer benutzer = new Student();
+     *         EventQueue.invokeLater(new Runnable() {
+     *             public void run() {
+     *                 try {
+     *                     BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView(a1, benutzer);
+     *                     frame.setVisible(true);
+     *                 } catch (Exception e) {
+     *                     e.printStackTrace();
+     *                 }
+     *             }
+     *         });
+     *     }
      */
-    public static void main(String[] args) {
 
-        EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
-        Designaufgabe a2 = new Designaufgabe();
-        Programmieraufgabe a3 = new Programmieraufgabe();
-        MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView(a1);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe) {
-
+    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.aufgabe = aufgabe;
+        this.benutzer = benutzer;
+        this.frame = frame;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
@@ -89,7 +99,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 // im BorderLayout Panel mit FlowLayout
 
-        btnAbbrechen = new JButton("Beenden");
+        btnAbbrechen = new JButton("Abbrechen");
         panelSouth.add(btnAbbrechen);
         btnLoesungshinweisEinzel = new JButton("Loesungshinweis");
         panelSouth.add(btnLoesungshinweisEinzel);
@@ -111,6 +121,20 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
+
+            /**
+             * if (textArea.getText().isEmpty()) {
+             *                 // int i1 = 0;
+             *                 JOptionPane.showConfirmDialog(null, "Sollen alle Daten verschwinden?", "Daten gehen verloren", JOptionPane.YES_NO_OPTION);
+             *                 int i1 = 0;
+             *                 if (i1 == JOptionPane.YES_OPTION) {
+             *                     this.dispose();
+             *                     BearbeiteEinzelneAufgabeKatalogView.main(null);
+             *                 } else {
+             *
+             *                 }
+             *             }
+             */
             this.dispose();
             BearbeiteEinzelneAufgabeKatalogView.main(null);
         }
@@ -123,7 +147,7 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             this.dispose();
-            //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
+            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, u1, benutzer, frame);
 
         }
 

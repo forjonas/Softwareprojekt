@@ -13,12 +13,12 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
+ * @version4: 18.05.22
  */
 public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
@@ -188,7 +188,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
          */
         if (e.getSource() == this.btnTestatBeenden) {
             this.dispose();
-            testatApp.printPersistenz();
+            testatApp.persistUser();
             BearbeiteTestatKatalogView.main(null);
 
         }

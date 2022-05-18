@@ -1,11 +1,16 @@
 package View.AufgabenBearbeiten.Einzelne;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufgabeView;
 import app.TestatApp;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.TestatBearbeitung;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
@@ -32,13 +37,14 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JButton btnLoesungshinweisEinzel;
     private JButton btnAufgabeBeendenEinzel;
     private MultipleChoiceAufgabe aufgabe;  //Im Frame die Aufgabe
+    private JFrame frame;
 
     JRadioButton button1;
     JRadioButton button2;
     JRadioButton button3;
     JRadioButton button4;
     private UserloesungMultipleChoiceAufgabe u1;
-
+    private Benutzer benutzer;
     private String antwort1;
     private String antwort2;
     private String antwort3;
@@ -46,29 +52,32 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 
 
     /**
-     * Launch the application.
+     *  public static void main(String[] args) {
+     *
+     *         Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double","Test"}));
+     *         Benutzer benutzer = new Student();
+     *
+     *         EventQueue.invokeLater(new Runnable() {
+     *             public void run() {
+     *                 try {
+     *                     BearbeiteEinzelneMultipleChoiceAufgabeView frame = new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4,benutzer);
+     *                     frame.setVisible(true);
+     *                 } catch (Exception e) {
+     *                     e.printStackTrace();
+     *                 }
+     *             }
+     *         });
+     *     }
      */
-    public static void main(String[] args) {
 
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double, Test"}));
-
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneMultipleChoiceAufgabeView frame = new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe) {
+    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe,Benutzer benutzer, JFrame frame) {
         this.aufgabe = aufgabe;
+        this.benutzer = benutzer;
+        this.frame = frame;
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setBounds(100, 100, 674, 435);
@@ -118,6 +127,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         bg.add(button2);
         bg.add(button3);
         bg.add(button4);
+
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
@@ -169,10 +179,8 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
             }
 
             u1.setUserloesung(u3);
-            System.out.println(u3);
             this.dispose();
-            //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
-
+            new LoesungEinzelneMultipleChoiceAufgabeView(aufgabe, u1, benutzer, frame);
 
         }
 

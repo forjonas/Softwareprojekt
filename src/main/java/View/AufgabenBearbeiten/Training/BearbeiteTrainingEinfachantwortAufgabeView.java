@@ -112,7 +112,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
             trainingApp.zurueckTraining();
-
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             u1 = new UserloesungEinfachantwort();
