@@ -39,7 +39,7 @@ public class MainTestenTraining {
             public void run() {
                 try {
 
-                    TrainingApp trainingApp = new TrainingApp(training1, student1);
+                    TrainingApp trainingApp = new TrainingApp(training1, student1,null);
                     trainingApp.zeigeAktuelleAufgabe();
 
                 } catch (Exception e) {

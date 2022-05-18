@@ -101,7 +101,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         testatBearbeitungsListe = DatabaseService.getInstance().readTestatBearbeitungenFromDatabase();
         //Test
         //testatBearbeitungsListe = new LinkedList<TestatBearbeitung>();
-        testatBearbeitungsListe = getTestData();
+        //testatBearbeitungsListe = getTestData();
         testatBearbeitungsListe = new LinkedList<TestatBearbeitung>(testatBearbeitungsListe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Korrigiere Testat");

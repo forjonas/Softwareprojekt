@@ -27,7 +27,7 @@ public class CreateBetaData {
 
     /**
      * Beta-Data Attribute
-     *
+     * <p>
      * Dozenten, Studenten, Testate, Trainings, Musterlösungen, Aufgaben, ...
      */
     private Student student1;
@@ -43,26 +43,26 @@ public class CreateBetaData {
     private Programmieraufgabe pa1, pa2, pa3, pa4;
     private MultipleChoiceAufgabe ma1, ma2, ma3, ma4;
     private EinfachantwortAufgabe ea1, ea2, ea3, ea4;
+    private Aufgabe ta1,ta2,ta3,ta4,ta5;
 
     private MusterloesungDesignaufgabe mda1, mda2, mda3, mda4;
     private MusterloesungProgrammieraufgabe mpa1, mpa2, mpa3, mpa4;
     private MusterloesungMultipleChoiceAufgabe mma1, mma2, mma3, mma4;
     private MusterloesungEinfachantwort mea1, mea2, mea3, mea4;
 
-    private Userloesung ul1,ul2,ul3,ul4,ul5,ul6,ul7,ul8,ul9;
+    private Userloesung ul1, ul2, ul3, ul4, ul5, ul6, ul7, ul8, ul9, ul10, ul11, ul12, ul13, ul14, ul15, ul16, ul17, ul18, ul19;
 
-    private TestatBearbeitung testatBearbeitung;
+    private TestatBearbeitung testatBearbeitung, testatBearbeitung2, testatBearbeitung3, testatBearbeitung4, testatBearbeitung5, testatBearbeitung6, testatBearbeitung7;
 
     private File fmda1, fmda2, fmda3, fmda4;
     private Testat testat1, testat2, testat3;
-    private Training training1, training2,training3;
+    private Training training1, training2, training3;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new CreateBetaData();
     }
 
-    public CreateBetaData(){
+    public CreateBetaData() {
         try {
             createBetaUser();
             createBetaAufgaben();
@@ -70,7 +70,8 @@ public class CreateBetaData {
             createBetaAufgabensammlungen();
             createBetaUserLösungen();
 
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         ds.persistObject(dozent1);
         ds.persistObject(dozent2);
@@ -93,10 +94,9 @@ public class CreateBetaData {
         dozent1 = new Dozent("tJoswig", "64bc9", "Timo", "Joswig");
         dozent2 = new Dozent("kkubisch", "987caf6", "Kristin", "Kubisch");
 
-        dozent3 = new Dozent("admin","000","Admin","");
+        dozent3 = new Dozent("admin", "000", "Admin", "");
         dozent3.setBerechtigungsstufe(3);//->übergibt Adminrechte an diesen Dozenten
     }
-
 
     public void createBetaAufgaben() throws Exception {
         da1 = new Designaufgabe(7, "Programmcode", Kategorie.Klassendiagramme, 15, Schwierigkeitsgrad.Leicht, "Designen Sie die passende UML-Struktur für den Programmcode", "Programmcode zu UML-Design", dozent1);
@@ -124,6 +124,13 @@ public class CreateBetaData {
         ea3 = new EinfachantwortAufgabe(20, "Programmcode", Kategorie.Java_Programmierung, 20, Schwierigkeitsgrad.Mittel, "Erläutern Sie, warum diese Methode kein Objekt der Klasse Auto erstellen kann.", "MethodenErläuterung2", dozent1);
         ea4 = new EinfachantwortAufgabe(15, "Programmcode", Kategorie.Java_Programmierung, 15, Schwierigkeitsgrad.Leicht, "Erläuteren Sie den Programmcode und warum ein Objekt der Klasse Fahrrad erstellt wird", "Programmcodeweiterführung", dozent1);
 
+        ta1= new EinfachantwortAufgabe(7,"UML-Design",Kategorie.Java_Grundlagen,7,Schwierigkeitsgrad.Leicht,"Programmieren Sie den Konstruktor dieser Klasse","Klassenkonstruktor",dozent2);
+        ta2= new Programmieraufgabe(10,"Programmiercode",Kategorie.Java_Grundlagen,12,Schwierigkeitsgrad.Leicht,"Eliminieren SIe die Codeduplizierung in der gegebenen Klasse","Codeduplizierung",dozent1);
+        ta3= new Programmieraufgabe(12,null,Kategorie.Java_Grundlagen,8,Schwierigkeitsgrad.Leicht,"Programmieren Sie eine for-Schleife","for-Schleife",dozent1);
+        ta4= new EinfachantwortAufgabe(15,"Programmcode",Kategorie.Java_Grundlagen,12,Schwierigkeitsgrad.Leicht,"Warum gibt dieser Code 7 zurück","Rückgabewerte",dozent2);
+        ta5= new Designaufgabe(20,"Programmcode",Kategorie.Java_Grundlagen,15,Schwierigkeitsgrad.Leicht,"Designen Sie das Klassendiagramm","Klassendiagramm",dozent2);
+
+
         dozent1.addErstellteAufgabe(ea4);
         dozent1.addErstellteAufgabe(ea3);
         dozent1.addErstellteAufgabe(ma3);
@@ -133,6 +140,8 @@ public class CreateBetaData {
         dozent1.addErstellteAufgabe(da2);
         dozent1.addErstellteAufgabe(da1);
         dozent1.addErstellteAufgabe(pa2);
+        dozent1.addErstellteAufgabe(ta2);
+        dozent1.addErstellteAufgabe(ta3);
 
         dozent2.addErstellteAufgabe(da3);
         dozent2.addErstellteAufgabe(pa1);
@@ -141,6 +150,9 @@ public class CreateBetaData {
         dozent2.addErstellteAufgabe(ma4);
         dozent2.addErstellteAufgabe(ma2);
         dozent2.addErstellteAufgabe(pa3);
+        dozent2.addErstellteAufgabe(ta1);
+        dozent2.addErstellteAufgabe(ta4);
+        dozent2.addErstellteAufgabe(ta5);
 
         //List<Aufgabe> aufgaben=Arrays.asList(da1,da2,da3,da4,pa1,pa2,pa3,pa4,ma1,ma2,ma3,ma4,ea1,ea2,ea3,ea4);
         //ds.persistObjects(aufgaben);
@@ -158,31 +170,31 @@ public class CreateBetaData {
 
         mpa1 = new MusterloesungProgrammieraufgabe(pa1, "Beziehungen lassen sich durch Attribute darstellen", "Hier steht die Lösung, als Programmcode - Bsplw. Aufgabe aufgabe = new Aufgabe()");
         mpa2 = new MusterloesungProgrammieraufgabe(pa2, "Dies lässt sich durch eine Schleife vereinfachen,", "Siehe Lösung");
-        mpa3=new MusterloesungProgrammieraufgabe(pa3,"Zum Persistieren braucht man eine DatabaseService-Klasse","Siehe Lösung");
-        mpa4=new MusterloesungProgrammieraufgabe(pa4,"Primzahlen sind nur durch 1 und sich selber teilbar","Siehe Lösung");
+        mpa3 = new MusterloesungProgrammieraufgabe(pa3, "Zum Persistieren braucht man eine DatabaseService-Klasse", "Siehe Lösung");
+        mpa4 = new MusterloesungProgrammieraufgabe(pa4, "Primzahlen sind nur durch 1 und sich selber teilbar", "Siehe Lösung");
         pa1.setMusterloesung(mpa1);
         pa2.setMusterloesung(mpa2);
         pa3.setMusterloesung(mpa3);
         pa4.setMusterloesung(mpa4);
 
-        List<Boolean> lmma1= Arrays.asList(false,false,false,true);
-        List<Boolean> lmma2= Arrays.asList(false,true,false,false);
-        List<Boolean> lmma3= Arrays.asList(false,false,false,true);
-        List<Boolean> lmma4= Arrays.asList(true,false,true,false);
+        List<Boolean> lmma1 = Arrays.asList(false, false, false, true);
+        List<Boolean> lmma2 = Arrays.asList(false, true, false, false);
+        List<Boolean> lmma3 = Arrays.asList(false, false, false, true);
+        List<Boolean> lmma4 = Arrays.asList(true, false, true, false);
 
-        mma1=new MusterloesungMultipleChoiceAufgabe(ma1,null,lmma1);
-        mma2=new MusterloesungMultipleChoiceAufgabe(ma2,"Nicht primitive Datentypen sind bspwl. Klassen",lmma2);
-        mma3=new MusterloesungMultipleChoiceAufgabe(ma3,"Hier steht ein Lösungshinweis",lmma3);
-        mma4=new MusterloesungMultipleChoiceAufgabe(ma4,"Die Schwitch-Case-Anweisung lässt sich auch mit dem beenden der Methode beenden.",lmma4);
+        mma1 = new MusterloesungMultipleChoiceAufgabe(ma1, null, lmma1);
+        mma2 = new MusterloesungMultipleChoiceAufgabe(ma2, "Nicht primitive Datentypen sind bspwl. Klassen", lmma2);
+        mma3 = new MusterloesungMultipleChoiceAufgabe(ma3, "Hier steht ein Lösungshinweis", lmma3);
+        mma4 = new MusterloesungMultipleChoiceAufgabe(ma4, "Die Schwitch-Case-Anweisung lässt sich auch mit dem beenden der Methode beenden.", lmma4);
         ma1.setMusterloesung(mma1);
         ma2.setMusterloesung(mma2);
         ma3.setMusterloesung(mma3);
         ma4.setMusterloesung(mma4);
 
-        mea1=new MusterloesungEinfachantwort(ea1,"Hier steht der Unterschied zwischen Aggregation und Komposition.","Hier sthet die Begründung");
-        mea2=new MusterloesungEinfachantwort(ea2,"Erklärung eines Return-Wertes","Begründung für 'null'.");
-        mea3=new MusterloesungEinfachantwort(ea3,"Um Objekte erstellen zu können muss man Sie kennen","Die Methode/Klasse sthet in keiner Weise mit der Klasse Auto in verbindung");
-        mea4=new MusterloesungEinfachantwort(ea4,"Um ein Objekt zu erstellen muss die Klasse/Methode diese Objekt kennen.","Erläuterung");
+        mea1 = new MusterloesungEinfachantwort(ea1, "Hier steht der Unterschied zwischen Aggregation und Komposition.", "Hier sthet die Begründung");
+        mea2 = new MusterloesungEinfachantwort(ea2, "Erklärung eines Return-Wertes", "Begründung für 'null'.");
+        mea3 = new MusterloesungEinfachantwort(ea3, "Um Objekte erstellen zu können muss man Sie kennen", "Die Methode/Klasse sthet in keiner Weise mit der Klasse Auto in verbindung");
+        mea4 = new MusterloesungEinfachantwort(ea4, "Um ein Objekt zu erstellen muss die Klasse/Methode diese Objekt kennen.", "Erläuterung");
         ea1.setMusterloesung(mea1);
         ea2.setMusterloesung(mea2);
         ea3.setMusterloesung(mea3);
@@ -192,34 +204,38 @@ public class CreateBetaData {
         //ds.persistObjects(musterlösung);
     }
 
-    public void createBetaAufgabensammlungen() throws Exception
-    {
-        List<Aufgabe> aufgabenliste1=Arrays.asList(da1,da4,ea3,pa4,pa1,pa2,da2);
-        List<Aufgabe> aufgabenliste2=Arrays.asList(da2,da4,ma3,ma4,ma1,pa3,da3);
-        List<Aufgabe> aufgabenliste3=Arrays.asList(ma1,ma2,ma3,ma4);
-        List<Aufgabe> aufgabenliste4=Arrays.asList(ea1,ma1,da1,pa1);
-        List<Aufgabe> aufgabenliste5=Arrays.asList(ea3,ea4,ma4,pa4,pa1);
+    public void createBetaAufgabensammlungen() throws Exception {
+        List<Aufgabe> aufgabenliste1 = Arrays.asList(da1, da4, ea3, pa4, pa1, pa2, da2);
+        List<Aufgabe> aufgabenliste2 = Arrays.asList(da2, da4, ma3, ma4, ma1, pa3, da3);
+        List<Aufgabe> aufgabenliste3 = Arrays.asList(ma1, ma2, ma3, ma4);
+        List<Aufgabe> aufgabenliste4 = Arrays.asList(ea1, ma1, da1, pa1);
+        List<Aufgabe> aufgabenliste5 = Arrays.asList(ea3, ea4, ma4, pa4, pa1);
 
-        testat1=new Testat(aufgabenliste1,"123","Testat für Anfänger",dozent1);dozent1.addErstelltesTestat(testat1);
-        testat2=new Testat(aufgabenliste3,"456","Testat nur MultipleChoice-Aufgaben",dozent2);dozent2.addErstelltesTestat(testat2);
-        testat3=new Testat(aufgabenliste2,"passwort","Frühlingstestat",dozent1);dozent1.addErstelltesTestat(testat3);
+        testat1 = new Testat(aufgabenliste1, "123", "Testat für Anfänger", dozent1);
+        dozent1.addErstelltesTestat(testat1);
+        testat2 = new Testat(aufgabenliste3, "456", "Testat nur MultipleChoice-Aufgaben", dozent2);
+        dozent2.addErstelltesTestat(testat2);
+        testat3 = new Testat(aufgabenliste2, "passwort", "Frühlingstestat", dozent1);
+        dozent1.addErstelltesTestat(testat3);
 
-        training1=new Training(aufgabenliste5,50,Kategorie.Java_Programmierung,Schwierigkeitsgrad.Mittel,student2);student2.addBearbeitetesTraining(training1);
-        training2=new Training(aufgabenliste4,30,Kategorie.Java_Grundlagen,Schwierigkeitsgrad.Mittel,student4);student4.addBearbeitetesTraining(training2);
-        training3=new Training(aufgabenliste1,90,Kategorie.Java_Grundlagen,Schwierigkeitsgrad.Mittel,student3);student3.addBearbeitetesTraining(training3);
+        training1 = new Training(aufgabenliste5, 50, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Mittel, student2);
+        student2.addBearbeitetesTraining(training1);
+        training2 = new Training(aufgabenliste4, 30, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student4);
+        student4.addBearbeitetesTraining(training2);
+        training3 = new Training(aufgabenliste1, 90, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student3);
+        student3.addBearbeitetesTraining(training3);
 
 
         //List<Aufgabensammlung> aufgabensammlung=Arrays.asList(testat1,testat2,testat3,training1,training3);
         //ds.persistObjects(aufgabensammlung);
     }
 
-    public void createBetaUserLösungen() throws Exception
-    {
-        ul1=new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe)ma4,false,Arrays.asList(false,false,false,true),student3,training3);
-        ul2=new UserloesungEinfachantwort((EinfachantwortAufgabe)ea3,false,"Erklärung",student3,training3);
-        ul3=new UserloesungEinfachantwort((EinfachantwortAufgabe)ea4,false,"System.out.println()",student3,training3);
-        ul4=new UserloesungProgrammieraufgabe((Programmieraufgabe)pa1,true,"Code",student3,training3);
-        ul5=new UserloesungProgrammieraufgabe((Programmieraufgabe)pa4,true,"Code",student3,training3);
+    public void createBetaUserLösungen() throws Exception {
+        ul1 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, Arrays.asList(false, false, false, true), student3, training3);
+        ul2 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student3, training3);
+        ul3 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea4, false, "System.out.println()", student3, training3);
+        ul4 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student3, training3);
+        ul5 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa4, true, "Code", student3, training3);
 
         student3.addErstellteLoesung(ul1);
         student3.addErstellteLoesung(ul2);
@@ -233,28 +249,50 @@ public class CreateBetaData {
         training3.addUserloesung(ul4);
         training3.addUserloesung(ul5);
 
-        List<Boolean> ul6List=Arrays.asList(true,false,false,true);
-        List<Boolean> ul7List=Arrays.asList(true,true,true,false);
-        List<Boolean> ul8List=Arrays.asList(false,false,false,true);
-        List<Boolean> ul9List=Arrays.asList(true,false,false,true);
+        List<Boolean> ul6List = Arrays.asList(true, false, false, true);
+        List<Boolean> ul7List = Arrays.asList(true, true, true, false);
+        List<Boolean> ul8List = Arrays.asList(false, false, false, true);
+        List<Boolean> ul9List = Arrays.asList(true, false, false, true);
 
-        ul6=new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1,false,ul6List,student1,testat2);
-        ul7=new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1,false,ul7List,student1,testat2);
-        ul8=new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1,false,ul8List,student1,testat2);
-        ul9=new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1,false,ul9List,student1,testat2);
+        ul6 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul6List, student1, testat2);
+        ul7 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul7List, student1, testat2);
+        ul8 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul8List, student1, testat2);
+        ul9 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul9List, student1, testat2);
 
         testat2.addUserloesung(ul6);
         testat2.addUserloesung(ul7);
         testat2.addUserloesung(ul8);
         testat2.addUserloesung(ul9);
 
-        testatBearbeitung=new TestatBearbeitung(testat2,15,student1,dozent2);
-
-        testat2.addBearbeitung(testatBearbeitung);
+        testatBearbeitung = new TestatBearbeitung(testat2, 15, student1, dozent2);
 
         student1.addErstellteLoesung(ul6);
         student1.addErstellteLoesung(ul7);
         student1.addErstellteLoesung(ul8);
         student1.addErstellteLoesung(ul9);
+
+        testat2.addBearbeitung(testatBearbeitung);
+
+        //
+
+        List<Boolean> ul10List = Arrays.asList(true, false, true, true);
+        List<Boolean> ul11List = Arrays.asList(true, false, true, false);
+        List<Boolean> ul12List = Arrays.asList(false, false, true, false);
+        List<Boolean> ul13List = Arrays.asList(true, false, false, true);
+
+        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul6List, student2, testat2);
+        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul7List, student2, testat2);
+        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul8List, student2, testat2);
+        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul9List, student2, testat2);
+
+        testat2.addUserloesung(ul10);
+        testat2.addUserloesung(ul11);
+        testat2.addUserloesung(ul12);
+        testat2.addUserloesung(ul13);
+
+        student2.addErstellteLoesung(ul10);
+        student2.addErstellteLoesung(ul11);
+        student2.addErstellteLoesung(ul12);
+        student2.addErstellteLoesung(ul13);
     }
 }
