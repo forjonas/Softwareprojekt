@@ -2,7 +2,6 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.TestatBearbeitung;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
@@ -32,8 +31,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private JButton btnTestatBeenden;
 
     private TestatApp testatApp;
-    private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
-    private TestatBearbeitung bearbeitet;
+    private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe u1;
 
     /**
@@ -130,7 +128,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
 
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatApp.persistUser();
+            testatApp.persistTestat();
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
         }

@@ -2,7 +2,6 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatApp;
 import entity.aufgabe.MultipleChoiceAufgabe;
-import entity.aufgabensammlung.TestatBearbeitung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
@@ -36,8 +35,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     JRadioButton button4;
 
     private TestatApp testatApp;
-    private MultipleChoiceAufgabe aufgabe; //Im Frame die Aufgabe
-    private TestatBearbeitung bearbeitet;
+    private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe u1;
 
     private String antwort1;
@@ -166,7 +164,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatApp.persistUser();
+            testatApp.persistTestat();
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 
