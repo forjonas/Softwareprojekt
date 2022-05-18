@@ -1,11 +1,7 @@
 package View.AufgabenErstellen;
 
 import View.DozentAnsicht;
-import View.StudentMainView;
 import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-
-import javax.swing.*;
 
 public class Tester {
         public static void main(String[] args)

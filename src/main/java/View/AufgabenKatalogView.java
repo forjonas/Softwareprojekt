@@ -1,16 +1,12 @@
 package View;
 
-import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.AufgabeTableModel;
-import View.tableModel.BearbeiteAufgabeTableModel;
-import app.TestatApp;
+import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
-import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;

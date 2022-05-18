@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
+import View.MeineTestateKatalogView;
 import app.TestatApp;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
@@ -126,7 +127,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnAbbrechenTestat) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
+            MeineTestateKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {

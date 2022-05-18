@@ -13,12 +13,12 @@ import java.util.List;
  * @author Jonas Herbst
  * @version 06.05.22
  */
-public class BearbeiteTestatTableModel extends AbstractTableModel {
+public class MeineTestateTableModel extends AbstractTableModel {
     private List<Testat> testatliste;
     private final String[] COLUMN_NAMES = {"Name", "Dozent", "Zeit", "Maximalpunktzahl", "Bearbeitet", "Bewertung"};
     private Benutzer user;
 
-    public BearbeiteTestatTableModel(List<Testat> testatliste, Benutzer user) {
+    public MeineTestateTableModel(List<Testat> testatliste, Benutzer user) {
         this.testatliste = testatliste;
         this.user = user;
     }

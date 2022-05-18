@@ -2,14 +2,12 @@ package View;
 
 import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
 import View.tableModel.KorrigiereTestatTableModel;
-import app.TestatApp;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
-import entity.aufgabensammlung.Training;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;

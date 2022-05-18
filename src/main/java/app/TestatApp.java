@@ -1,6 +1,10 @@
 package app;
 
-import View.AufgabenBearbeiten.Testat.*;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatDesignaufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatEinfachantwortAufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatMultipleChoiceAufgabeView;
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatProgrammieraufgabeView;
+import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -98,7 +102,7 @@ public class TestatApp {
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
         ds1.persistObject(testatBearbeitung);
-        new BearbeiteTestatKatalogView(hauptmenueFrame, aktuellerBenutzer);
+        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
 /**
  *
  *     public void setUsereingaben(List<Userloesung> usereingaben) {

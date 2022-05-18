@@ -1,6 +1,6 @@
 package View.AufgabenBearbeiten.Training;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
+import View.MeineTestateKatalogView;
 import app.TrainingApp;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
@@ -92,7 +92,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
+            MeineTestateKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {

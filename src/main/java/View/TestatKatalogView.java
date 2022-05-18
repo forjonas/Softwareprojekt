@@ -1,6 +1,5 @@
 package View;
 
-import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.TestatTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;

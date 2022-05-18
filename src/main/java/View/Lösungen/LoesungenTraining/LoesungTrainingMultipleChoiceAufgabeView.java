@@ -4,7 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.MultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 

@@ -3,7 +3,6 @@ package persistence;
 
 import View.LoginView;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
@@ -17,7 +16,6 @@ import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 

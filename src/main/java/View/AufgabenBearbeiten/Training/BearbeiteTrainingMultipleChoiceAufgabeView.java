@@ -1,6 +1,5 @@
 package View.AufgabenBearbeiten.Training;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import app.TrainingApp;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;

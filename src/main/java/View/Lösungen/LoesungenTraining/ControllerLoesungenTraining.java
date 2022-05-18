@@ -1,10 +1,6 @@
 package View.Lösungen.LoesungenTraining;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import View.DozentAnsicht;
 import View.EinsehenTrainingKatalogView;
-import View.KorrigiereTestatKatalogView;
-import View.StudentMainView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;

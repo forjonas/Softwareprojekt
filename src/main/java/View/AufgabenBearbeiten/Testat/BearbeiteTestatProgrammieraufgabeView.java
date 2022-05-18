@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
+import View.MeineTestateKatalogView;
 import app.TestatApp;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
@@ -105,7 +106,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         if (e.getSource() == this.btnAbbrechenTestat) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
+            MeineTestateKatalogView.main(null);
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
