@@ -29,7 +29,7 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private Benutzer benutzer;
 
 
-    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer) {
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer) {//Benutzer hinzugefügt(Kristin)
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());

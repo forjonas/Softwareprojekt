@@ -25,7 +25,7 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private final Programmieraufgabe aufgabe;
     private Benutzer benutzer;
 
-    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe) {
+    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe, Benutzer benutzer) { //Benutzer hinzugefügt(Kristin)
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());

@@ -11,7 +11,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
+ */
 public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
 
 
@@ -114,7 +120,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
             trainingApp.printPersistenz();
-            BearbeiteTestatKatalogView.main(null);
+           // BearbeiteTestatKatalogView.main(null);
 
         }
 

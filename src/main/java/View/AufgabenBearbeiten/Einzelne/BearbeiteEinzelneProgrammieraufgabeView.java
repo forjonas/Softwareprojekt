@@ -1,10 +1,14 @@
 package View.AufgabenBearbeiten.Einzelne;
 
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneProgrammieraufgabeView;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabe.Programmieraufgabe;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +16,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
+ */
 public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
@@ -21,7 +30,8 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     private JButton btnAufgabeBeenden;
     private JTextArea textArea;
     private Programmieraufgabe aufgabe;  //Im Frame die Aufgabe
-    private UserloesungEinfachantwort u1;
+    private UserloesungProgrammieraufgabe u1;
+    private Benutzer benutzer;
 
     /**
      * Launch the application.
@@ -33,12 +43,13 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         Designaufgabe a2 = new Designaufgabe();
         Programmieraufgabe a3 = new Programmieraufgabe();
         MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
+        Benutzer benutzer = new Student();
 
 
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView(a3);
+                    BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView(a3, benutzer);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -50,7 +61,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     /**
      * Create the frame.
      */
-    public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe) {
+    public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, Benutzer benutzer) {
         this.aufgabe = aufgabe;
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,11 +117,11 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
-            u1 = new UserloesungEinfachantwort();
+            u1 = new UserloesungProgrammieraufgabe();
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
             this.dispose();
-            //  LoesungEinzelneDesignaufgabeView(aufgabe, u1);
+            new LoesungEinzelneProgrammieraufgabeView(aufgabe,u1, benutzer);
 
         }
     }

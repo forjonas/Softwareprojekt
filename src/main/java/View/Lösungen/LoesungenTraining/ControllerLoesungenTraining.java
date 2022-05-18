@@ -23,6 +23,7 @@ public class ControllerLoesungenTraining {
         this.userloesungList = ds.readUserloesungVonTraining(training, benutzer);
 
         startLoesungTraining();
+        //startLoesungTraining();
     }
 
     public void setTraining(Training training) {

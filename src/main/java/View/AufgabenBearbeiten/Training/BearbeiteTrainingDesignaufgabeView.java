@@ -12,12 +12,12 @@ import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
  * @version3: 16.05.22
+ * @version4: 18.05.22
  */
 public class BearbeiteTrainingDesignaufgabeView extends JFrame implements ActionListener {
 
@@ -143,7 +143,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnTrainingBeenden) {
 			trainingApp.printPersistenz();
 			this.dispose();
-			BearbeiteTestatKatalogView.main(null);//FÜR TRAINING NOCH ANPASSEN
+			// BearbeiteTestatKatalogView.main(null);
 		}
 		if (e.getSource() == this.btnUpload) {
 			JOptionPane.showMessageDialog(this, "Upload Button");

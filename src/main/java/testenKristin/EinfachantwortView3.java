@@ -1,14 +1,12 @@
-package testateK;
+package testenKristin;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import static java.awt.GridBagConstraints.FIRST_LINE_START;
 import static java.awt.GridBagConstraints.CENTER;
+import static java.awt.GridBagConstraints.FIRST_LINE_START;
 
-public class EinfachantwortView2 extends JFrame {
+public class EinfachantwortView3 extends JFrame {
 
     private Container container;
     private GridBagLayout gbLayout;
@@ -19,7 +17,7 @@ public class EinfachantwortView2 extends JFrame {
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
 
-    public EinfachantwortView2() {
+    public EinfachantwortView3() {
         super.setTitle("Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setBounds(100, 100, 450, 300);
@@ -132,7 +130,7 @@ public class EinfachantwortView2 extends JFrame {
             public void run() {
                 try {
 
-                    EinfachantwortView2 frame = new EinfachantwortView2();
+                    EinfachantwortView3 frame = new EinfachantwortView3();
                     frame.setVisible(true);
 
                 } catch (Exception e) {
