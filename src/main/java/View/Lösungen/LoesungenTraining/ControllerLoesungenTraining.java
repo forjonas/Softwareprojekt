@@ -30,7 +30,7 @@ public class ControllerLoesungenTraining {
         this.index = 0;
         this.benutzer = benutzer;
 
-        this.userloesungList = ds.readUserloesungVonTraining(training, benutzer);
+        this.userloesungList = ds.readUserloesungVonTraining(training, training.getTrainingsErsteller());
 
         startLoesungTraining();
         //startLoesungTraining();
@@ -40,7 +40,7 @@ public class ControllerLoesungenTraining {
         this.training = training;
         this.index = 0;
 
-        this.userloesungList = ds.readUserloesungVonTraining(training, benutzer);
+        this.userloesungList = ds.readUserloesungVonTraining(training, training.getTrainingsErsteller());
 
         startLoesungTraining();
     }
