@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
@@ -113,7 +114,6 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            JOptionPane.showMessageDialog(this, "Button Vorherige");
             testatApp.zurueckTestat();
 
         }
@@ -126,11 +126,12 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             testatApp.weiter();
 
         }
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
-            testatApp.persistUser();
-            BearbeiteTestatKatalogView.main(null);
 
+        if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
+            JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+            testatApp.persistUser();
+            this.dispose();
+            //BearbeiteTestatKatalogView.main(null);
         }
     }
 }

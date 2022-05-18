@@ -23,12 +23,11 @@ import javax.swing.border.EmptyBorder;
  */
 public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
 
-    public static JFileChooser fc = new JFileChooser();
+    //public static JFileChooser fc = new JFileChooser();
     private JPanel contentPane;
     private JButton BildHochladen;
     //private JTextArea textArea;
-    private File geuploadet;
-    private ImageIcon icon = new ImageIcon("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+    //private File geuploadet;
 
     private JButton btnAbbrechenTestat;
     private JButton btnLoesungshinweisTestat;
@@ -43,9 +42,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     private TestatBearbeitung bearbeitet;
     private UserloesungDesignaufgabe u1; //noch String
 
-    /**
-     * Create the frame.
-     */
     public BearbeiteTestatDesignaufgabeView(TestatApp testatApp, Designaufgabe aufgabe) {
 
         this.aufgabe = aufgabe;
@@ -53,7 +49,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -67,24 +62,11 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         JLabel lblNewLabel2 = new JLabel(" + Bild");
         panelNorth.add(lblNewLabel2);
 
-        /**
-         * Optionales Bild hinzufügen
-         */
-
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
 
-
         BildHochladen = new JButton("BildHochladen");
         panelCenter.add(BildHochladen);
-
-        /**
-         JPanel panelCenter = new JPanel();
-         contentPane.add(panelCenter, BorderLayout.CENTER);
-         JLabel lblNewLabel_2 = new JLabel(); //Button daraus machen
-         panelCenter.add(lblNewLabel_2);
-         //Wenn auf Button-- Bild auswählen-- Bild anzeigen
-         */
 
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contentPane.add(panelSouth, BorderLayout.SOUTH);
@@ -115,16 +97,15 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
-            testatApp.persistUser();
+            JOptionPane.showMessageDialog(this, "Nichts gespeichert");
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
+            //BearbeiteTestatKatalogView.main(null);
+
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());//Lösungshinweis eingefügt
         }
-
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            JOptionPane.showMessageDialog(this, "Button Vorherige");
             testatApp.zurueckTestat();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) { //angepasst
@@ -132,46 +113,20 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             u1 = new UserloesungDesignaufgabe();
             String u2 = BildHochladen.getText();
             u1.setUserloesung(u2);
-            //  testatApp.setUsereingaben(u1);
             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
             testatApp.weiter(); //testatApp.testat
-
-            /**
-             u1 = new UserloesungDesignaufgabe();
-             Icon u2 = icon.getImage();
-             u1.setUserloesung(u2);
-             testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-             testatApp.weiter(); //testatApp.testat
-             */
         }
 
-        if (e.getSource() == this.btnTestatBeenden) {
+        if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
+            JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatApp.persistUser();
             this.dispose();
-            BearbeiteTestatKatalogView.main(null);
-        }
-
-        if (e.getSource() == this.BildHochladen) {
-
-            int retVal = fc.showOpenDialog(null);
-            if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                System.out.println("Datei: " + file.getName());
-            }
+            //BearbeiteTestatKatalogView.main(null);
         }
 
         if (e.getSource() == this.btnUpload) { //angepasst
             JOptionPane.showMessageDialog(this, "Upload Button");
 
-
-            /**
-             Wenn ich auf Button klicke: öffne Dateifile *Ich wähle Bild aus*
-             lade das DocCode
-             Lese Datei und speicher diese in antwort
-             antwort = getDatei();
-             String docUpload = textArea.getText(); // lese den input eig. Bild
-             lblNewLabel_2.setIcon(docUpload);  //Oder austauschen mit File
-             */
         }
 
     }

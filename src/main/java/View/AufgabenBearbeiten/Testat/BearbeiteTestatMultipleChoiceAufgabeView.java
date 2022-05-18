@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
@@ -44,9 +45,6 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private String antwort3;
     private String antwort4;
 
-    /**
-     * Create the frame.
-     */
     public BearbeiteTestatMultipleChoiceAufgabeView(TestatApp testatApp, MultipleChoiceAufgabe aufgabe) {
 
         this.aufgabe = aufgabe;
@@ -64,10 +62,6 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         contentPane.add(panelNorth, BorderLayout.NORTH);
         JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
-
-        /**
-         * Optionales Bild hinzufügen
-         */
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -141,7 +135,6 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            JOptionPane.showMessageDialog(this, "Button Vorherige");
             testatApp.zurueckTestat();
 
         }
@@ -170,26 +163,11 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
             testatApp.weiter();
         }
 
-        /**
-         * boolean[] arr = new boolean[aufgabe.getAntwortmoeglichkeiten().size()];//Array größe von antworten
-         *             arr[0] = false;
-         *             arr[1] = false;
-         *             arr[2] = false;
-         *             arr[3] = false;
-         *             if (button1.isSelected()) {
-         *                 arr[0] = true;
-         *             } else if (button2.isSelected()) {
-         *                 arr[1] = true;
-         *             } else if (button3.isSelected()) {
-         *                 arr[2] = true;
-         *             } else if (button4.isSelected()) {
-         *                 arr[3] = true;
-         *             }
-         */
-        if (e.getSource() == this.btnTestatBeenden) {
-            this.dispose();
+        if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
+            JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatApp.persistUser();
-            BearbeiteTestatKatalogView.main(null);
+            this.dispose();
+            //BearbeiteTestatKatalogView.main(null);
 
         }
     }
