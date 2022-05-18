@@ -95,6 +95,7 @@ public class TrainingController {
         for (int i=0;i<usereingaben.size();i++) {
             benutzer.addErstellteLoesung(usereingaben.get(i));
         }
+        benutzer.addBearbeitetesTraining(training);
         new ControllerLoesungenTraining(training, benutzer, userframe);
         //ControllerLoesungenTraining loesungenTraining = new ControllerLoesungenTraining(training, benutzer);
         //loesungenTraining.startLoesungTraining();

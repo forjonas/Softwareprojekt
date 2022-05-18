@@ -29,7 +29,6 @@ public class ControllerLoesungenTraining {
         this.userloesungList = ds.readUserloesungVonTraining(training, training.getTrainingsErsteller());
 
         startLoesungTraining();
-        //startLoesungTraining();
     }
 
     public void setTraining(Training training) {

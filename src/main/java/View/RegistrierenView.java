@@ -1,5 +1,6 @@
 package View;
 
+import entity.benutzer.Benutzer;
 import entity.benutzer.Student;
 import persistence.DatabaseService;
 
