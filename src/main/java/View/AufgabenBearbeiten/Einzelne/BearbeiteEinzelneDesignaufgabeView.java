@@ -116,7 +116,6 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
             }
         }
         if (e.getSource() == this.btnAufgabeBeenden) {
-            JOptionPane.showMessageDialog(this, "Button Aufgabe Beenden");
             this.dispose();
             new LoesungEinzelneDesignaufgabeView(aufgabe, u1, benutzer, frame);
 

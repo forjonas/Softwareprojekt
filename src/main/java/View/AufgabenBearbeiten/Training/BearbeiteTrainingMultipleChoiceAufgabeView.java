@@ -1,6 +1,6 @@
 package View.AufgabenBearbeiten.Training;
 
-import app.TrainingApp;
+import app.TrainingController;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
@@ -33,7 +33,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     JRadioButton button3;
     JRadioButton button4;
 
-    private TrainingApp trainingApp;
+    private TrainingController trainingController;
     private MultipleChoiceAufgabe aufgabe; //Im Frame die Aufgabe
     private UserloesungMultipleChoiceAufgabe u1;
 
@@ -45,10 +45,10 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     /**
      * Create the frame.
      */
-    public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingApp trainingApp, MultipleChoiceAufgabe aufgabe) {
+    public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingController trainingController, MultipleChoiceAufgabe aufgabe) {
 
         this.aufgabe = aufgabe;
-        this.trainingApp = trainingApp;
+        this.trainingController = trainingController;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,9 +107,9 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         panelSouth.add(btnLoesungshinweisTraining);
         btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
         panelSouth.add(btnVoherigeAufgabeTraining);
-        btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
+        btnNaechsteAufgabeTraining = new JButton("Nächste Aufgabe");
         panelSouth.add(btnNaechsteAufgabeTraining);
-        btnTrainingBeenden = new JButton("Testat Beenden");
+        btnTrainingBeenden = new JButton("Training Beenden");
         panelSouth.add(btnTrainingBeenden);
 
         this.btnAbbrechenTraining.addActionListener(this);
@@ -140,8 +140,8 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            trainingApp.zurueckTraining();
-
+            trainingController.zurueckTraining();
+            this.dispose();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             u1 = new UserloesungMultipleChoiceAufgabe();
@@ -163,15 +163,16 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
             }
 
             u1.setUserloesung(u3);
-            trainingApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            trainingApp.weiter();
+            trainingController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+            this.dispose();
+            trainingController.weiter();
+
         }
 
         if (e.getSource() == this.btnTrainingBeenden) {
-            JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
             this.dispose();
-            trainingApp.persistTraining();
-            trainingApp.setUserFrameVisible(); //von Martin
+            trainingController.persistTraining();
+            trainingController.setUserFrameVisible(); //von Martin
         }
 
     }

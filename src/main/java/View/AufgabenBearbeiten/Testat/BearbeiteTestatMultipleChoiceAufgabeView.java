@@ -1,7 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.MeineTestateKatalogView;
-import app.TestatApp;
+import app.TestatController;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
@@ -35,7 +34,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     JRadioButton button3;
     JRadioButton button4;
 
-    private TestatApp testatApp;
+    private TestatController testatController;
     private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe u1;
 
@@ -44,10 +43,10 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private String antwort3;
     private String antwort4;
 
-    public BearbeiteTestatMultipleChoiceAufgabeView(TestatApp testatApp, MultipleChoiceAufgabe aufgabe) {
+    public BearbeiteTestatMultipleChoiceAufgabeView(TestatController testatController, MultipleChoiceAufgabe aufgabe) {
 
         this.aufgabe = aufgabe;
-        this.testatApp = testatApp;
+        this.testatController = testatController;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,7 +126,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         if (e.getSource() == this.btnAbbrechenTestat) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            MeineTestateKatalogView.main(null);
+            testatController.setNewTestatKatalog();
 
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
@@ -139,7 +138,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            testatApp.zurueckTestat();
+            testatController.zurueckTestat();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
@@ -163,13 +162,13 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
             }
 
             u1.setUserloesung(u3);
-            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatApp.weiter();
+            testatController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+            testatController.weiter();
         }
 
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatApp.persistTestat();
+            testatController.persistTestat();
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 

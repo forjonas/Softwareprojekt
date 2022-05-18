@@ -1,7 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.MeineTestateKatalogView;
-import app.TestatApp;
+import app.TestatController;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
@@ -31,17 +30,17 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
 
-    private TestatApp testatApp;
+    private TestatController testatController;
     private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe u1;
 
     /**
      * Create the frame.
      */
-    public BearbeiteTestatProgrammieraufgabeView(TestatApp testatApp, Programmieraufgabe aufgabe) { //angepasst
+    public BearbeiteTestatProgrammieraufgabeView(TestatController testatController, Programmieraufgabe aufgabe) { //angepasst
 
         this.aufgabe = aufgabe;
-        this.testatApp = testatApp;
+        this.testatController = testatController;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,8 +105,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         if (e.getSource() == this.btnAbbrechenTestat) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            MeineTestateKatalogView.main(null);
-
+            testatController.setNewTestatKatalog();
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -118,24 +116,23 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            testatApp.zurueckTestat();
-
+            testatController.zurueckTestat();
+            this.dispose();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
 
             u1 = new UserloesungProgrammieraufgabe();
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
-            testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatApp.weiter();
-
+            testatController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+            testatController.weiter();
+            this.dispose();
         }
 
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatApp.persistTestat();
+            testatController.persistTestat();
             this.dispose();
-            //BearbeiteTestatKatalogView.main(null);
         }
     }
 }

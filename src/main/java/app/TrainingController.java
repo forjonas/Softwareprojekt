@@ -30,7 +30,7 @@ import java.util.List;
  * Schnittstelle um ein Training auszuführen
  */
 
-public class TrainingApp {
+public class TrainingController {
 
     private Training training;
     private JFrame userframe;
@@ -41,7 +41,7 @@ public class TrainingApp {
     public List<Userloesung> usereingaben = new ArrayList<>();
 
 
-    public TrainingApp(Training training, Benutzer benutzer, JFrame userframe) {
+    public TrainingController(Training training, Benutzer benutzer, JFrame userframe) {
         this.index = 0;
         this.userframe = userframe;
         this.training = training;
@@ -75,8 +75,6 @@ public class TrainingApp {
         if (this.index > 0) {
             this.index--;
             zeigeAktuelleAufgabe();
-        } else {
-            JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
         }
     }
 
@@ -86,6 +84,7 @@ public class TrainingApp {
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Aufgabe Beenden");
+            persistTraining();
         }
     }
 
@@ -121,8 +120,8 @@ public class TrainingApp {
             public void run() {
                 try {
 
-                    TrainingApp trainingApp = new TrainingApp(training1, student1, null);
-                    trainingApp.zeigeAktuelleAufgabe();
+                    TrainingController trainingController = new TrainingController(training1, student1, null);
+                    trainingController.zeigeAktuelleAufgabe();
 
                 } catch (Exception e) {
                     e.printStackTrace();

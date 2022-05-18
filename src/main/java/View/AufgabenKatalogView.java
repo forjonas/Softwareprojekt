@@ -1,7 +1,7 @@
 package View;
 
-import View.tableModel.AufgabeTableModel;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
+import View.tableModel.AufgabeTableModel;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
@@ -33,6 +33,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnLoeschen;
+    private JButton btnBearbeiten;
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
     private List<Aufgabe> aufgabenliste;

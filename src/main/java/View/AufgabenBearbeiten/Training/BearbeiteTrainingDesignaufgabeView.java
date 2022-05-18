@@ -1,14 +1,13 @@
 package View.AufgabenBearbeiten.Training;
 
-import app.TrainingApp;
+import app.TrainingController;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -30,17 +29,24 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	private JButton btnNaechsteAufgabeTraining;
 	private JButton btnTrainingBeenden;
 
-	private TrainingApp trainingApp;
+	private JButton btnUpload;
+
+	private File geuploadet;
+
+	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+
+	private TrainingController trainingController;
 	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 	private UserloesungEinfachantwort u1;
 
 
-	public BearbeiteTrainingDesignaufgabeView(TrainingApp trainingApp, Designaufgabe aufgabe) {
+	public BearbeiteTrainingDesignaufgabeView(TrainingController trainingController, Designaufgabe aufgabe) {
 		this.aufgabe = aufgabe;
-		this.trainingApp = trainingApp;
+		this.trainingController = trainingController;
 
 		setTitle(aufgabe.getName()); //Name der Aufgabe
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 674, 435);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -48,6 +54,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 		JPanel panelNorth = new JPanel();
 		contentPane.add(panelNorth, BorderLayout.NORTH);
+		JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung//angepasst
+		panelNorth.add(lblNewLabel1);
 
 		JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
 		panelNorth.add(lblTextbeschreibung);
@@ -73,7 +81,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		panelSouth.add(btnLoesungshinweisTraining);
 		btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
 		panelSouth.add(btnVoherigeAufgabeTraining);
-		btnNaechsteAufgabeTraining = new JButton("Naechste Aufgabe");
+		btnNaechsteAufgabeTraining = new JButton("Nächste Aufgabe");
 		panelSouth.add(btnNaechsteAufgabeTraining);
 		btnTrainingBeenden = new JButton("Training Beenden");
 		panelSouth.add(btnTrainingBeenden);
@@ -83,6 +91,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		this.btnVoherigeAufgabeTraining.addActionListener(this);
 		this.btnNaechsteAufgabeTraining.addActionListener(this);
 		this.btnTrainingBeenden.addActionListener(this);
+		this.btnUpload.addActionListener(this);
 
 		super.pack();
 		Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -96,7 +105,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnAbbrechenTraining) {
 			JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
 			this.dispose();
-
+			trainingController.setUserFrameVisible();
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
 			if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -106,20 +115,36 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			}
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-			trainingApp.zurueckTraining();
+			JOptionPane.showMessageDialog(this,"Button Vorherige");
+			trainingController.zurueckTraining();
+			this.dispose();
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
 			u1 = new UserloesungEinfachantwort();
 			String u2 = textArea.getText();
 			u1.setUserloesung(u2);
-			trainingApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-			trainingApp.weiter(); //testatApp.testat
+			trainingController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+			this.dispose();
+			trainingController.weiter(); //testatApp.testat
+
+
+			/**
+			 u1 = new UserloesungDesignaufgabe();
+			 Icon u2 = icon.getImage();
+			 u1.setUserloesung(u2);
+			 testatApp.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
+			 testatApp.weiter(); //testatApp.testat
+			 */
 		}
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
 			this.dispose();
-			trainingApp.persistTraining();
-			trainingApp.setUserFrameVisible(); //von Martin
+			trainingController.persistTraining();
+			trainingController.setUserFrameVisible(); //von Martin
 		}
+		if (e.getSource() == this.btnUpload) {
+			JOptionPane.showMessageDialog(this, "Upload Button");
+		}
+
 	}
 }
