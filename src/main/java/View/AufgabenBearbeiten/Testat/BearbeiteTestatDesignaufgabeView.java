@@ -97,7 +97,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
-            JOptionPane.showMessageDialog(this, "Nichts gespeichert");
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 

@@ -100,7 +100,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
-            JOptionPane.showMessageDialog(this, "Aufgabe wird nicht gespeichert");
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
 

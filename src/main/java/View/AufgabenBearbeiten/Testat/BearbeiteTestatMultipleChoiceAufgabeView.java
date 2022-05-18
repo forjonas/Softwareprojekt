@@ -126,6 +126,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
             BearbeiteTestatKatalogView.main(null);
 
