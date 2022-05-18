@@ -1,7 +1,5 @@
 package View.AufgabenErstellen;
 
-import View.DozentAnsicht;
-import View.ImageFilter;
 import entity.aufgabe.Designaufgabe;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
@@ -14,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.Blob;
 
 /**
  * Die View zur Erstellung einer UML Aufgabe
@@ -58,7 +57,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private JTextField punkteTF;
     //Files
     private File designFile;
-    private File loesungFile;
+    private String loesungString;
 
     public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
         this.doz = doz;
@@ -152,11 +151,11 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.UMLHochladenBtn) {
-            FileChooserView filcV = new FileChooserView();
+            FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             designFile = filcV.fileChooser();
         } else if (e.getSource() == this.musterloesungBtn) {
-            FileChooserView filcV = new FileChooserView();
-            loesungFile = filcV.fileChooser();
+            FileChooserAuslagerung filcV = new FileChooserAuslagerung();
+           // loesungFile = filcV.fileChooser();
         }
     }
     private void zurueck() {
@@ -208,7 +207,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
                 doz,
                 null);
         doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungFile);
+        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungString);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {

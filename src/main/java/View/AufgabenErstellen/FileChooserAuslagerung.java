@@ -5,7 +5,7 @@ import View.ImageFilter;
 import javax.swing.*;
 import java.io.File;
 
-public class FileChooserView {
+public class FileChooserAuslagerung {
     JFileChooser FC;
     File returnFile;
     public void FileChooserView(){

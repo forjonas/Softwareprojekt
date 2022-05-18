@@ -17,7 +17,7 @@ import java.io.File;
 @Entity
 public class MusterloesungDesignaufgabe extends Musterloesung {
 
-    private File musterloesung; //ToDo: Filetype
+    private String musterloesung; //ToDo: Filetype
     //private String musterloesung;
 
     /**
@@ -34,7 +34,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      * @param loesungshinweis zur Lösung gehörender Lösungshinweis
      * @param musterloesung   Musterlösung in Form einer Bilddatei
      */
-    public MusterloesungDesignaufgabe(Designaufgabe aufgabe, String loesungshinweis, File musterloesung) {
+    public MusterloesungDesignaufgabe(Designaufgabe aufgabe, String loesungshinweis, String musterloesung) {
         super(aufgabe, loesungshinweis);
         this.musterloesung = musterloesung;
     }
@@ -44,7 +44,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      *
      * @return Musterlösung in Form einer Bilddatei
      */
-    public File getMusterloesung() {
+    public String getMusterloesung() {
         return musterloesung;
     }
 
@@ -53,7 +53,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      *
      * @param musterloesung in Form einer Bilddatei
      */
-    public void setMusterloesung(File musterloesung) {
+    public void setMusterloesung(String musterloesung) {
         this.musterloesung = musterloesung;
     }
 
