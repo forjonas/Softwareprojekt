@@ -1,16 +1,8 @@
 package View.AufgabenBearbeiten.Einzelne;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
 import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufgabeView;
-import app.TestatApp;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import java.awt.*;
@@ -19,9 +11,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

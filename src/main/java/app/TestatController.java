@@ -30,7 +30,7 @@ import java.util.List;
  * @version4: 18.05.22
  * Schnittstelle um ein Testat auszuführen
  */
-public class TestatApp {
+public class TestatController {
 
     private Testat testat;
     private TestatBearbeitung testatBearbeitung;
@@ -44,7 +44,7 @@ public class TestatApp {
     //private
     public List<Userloesung> usereingaben = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
 
-    public TestatApp(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
+    public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
         this.testat = testat;
@@ -52,6 +52,11 @@ public class TestatApp {
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat.addBearbeitung(testatBearbeitung);
         zeigeAktuelleAufgabe();
+    }
+
+    public void setNewTestatKatalog()
+    {
+        new BearbeiteTestatKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
     public void zeigeAktuelleAufgabe() { //Aufgaben anzeigen

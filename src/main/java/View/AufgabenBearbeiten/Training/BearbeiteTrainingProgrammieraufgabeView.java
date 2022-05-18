@@ -1,7 +1,6 @@
 package View.AufgabenBearbeiten.Training;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
-import app.TrainingApp;
+import app.TrainingController;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
@@ -23,16 +22,16 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
     private JButton btnNaechsteAufgabeTraining;
     private JButton btnTrainingBeenden;
 
-    private TrainingApp trainingApp;
+    private TrainingController trainingController;
     private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe u1;
 
     /**
      * Create the frame.
      */
-    public BearbeiteTrainingProgrammieraufgabeView(TrainingApp trainingApp, Programmieraufgabe aufgabe) {
+    public BearbeiteTrainingProgrammieraufgabeView(TrainingController trainingController, Programmieraufgabe aufgabe) {
         this.aufgabe = aufgabe;
-        this.trainingApp = trainingApp;
+        this.trainingController = trainingController;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,9 +70,9 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         panelSouth.add(btnLoesungshinweisTraining);
         btnVoherigeAufgabeTraining = new JButton("Vorherige Aufgabe");
         panelSouth.add(btnVoherigeAufgabeTraining);
-        btnNaechsteAufgabeTraining = new JButton("N\u00E4chste Aufgabe");
+        btnNaechsteAufgabeTraining = new JButton("Nächste Aufgabe");
         panelSouth.add(btnNaechsteAufgabeTraining);
-        btnTrainingBeenden = new JButton("Testat Beenden");
+        btnTrainingBeenden = new JButton("Training Beenden");
         panelSouth.add(btnTrainingBeenden);
 
         this.btnAbbrechenTraining.addActionListener(this);
@@ -92,7 +91,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
             this.dispose();
-            trainingApp.setUserFrameVisible();
+            trainingController.setUserFrameVisible();
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
@@ -103,21 +102,20 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
             }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            trainingApp.zurueckTraining();
+            trainingController.zurueckTraining();
         }
         if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-
             u1 = new UserloesungProgrammieraufgabe();
             String u2 = textArea.getText();
             u1.setUserloesung(u2);
-            trainingApp.usereingaben.add(u1);
-            trainingApp.weiter();
-
+            trainingController.usereingaben.add(u1);
+            this.dispose();
+            trainingController.weiter();
         }
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
-            trainingApp.persistTraining();
-            trainingApp.setUserFrameVisible();
+            trainingController.persistTraining();
+            trainingController.setUserFrameVisible();
         }
 
     }

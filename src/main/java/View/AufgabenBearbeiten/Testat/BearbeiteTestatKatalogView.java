@@ -1,13 +1,7 @@
 package View.AufgabenBearbeiten.Testat;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneDesignaufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneMultipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneProgrammieraufgabeView;
-import View.DozentAnsicht;
-import View.StudentMainView;
 import View.tableModel.BearbeiteTestatTableModel;
-import app.TestatApp;
+import app.TestatController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
@@ -28,7 +22,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -197,7 +190,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
                 } else {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
-                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer, jframe);
+                        TestatController testatController = new TestatController(testat, aktuellerBenutzer, jframe);
                         dispose();
                     } else if (passwort != null) {
                         JOptionPane.showMessageDialog(this, "Fehler: Falsches Passwort eingegeben", "Falsches Passwort", JOptionPane.ERROR_MESSAGE);
