@@ -22,10 +22,16 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JTextField txtfMusterloesung;
     private JPanel mainPanel;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblMaximalPunktzahl;
     private final Programmieraufgabe aufgabe;
     private Benutzer benutzer;
 
-    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe) {
+    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe, Benutzer benutzer) {
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -38,6 +44,8 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();     //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLP.getMusterloesung());
         txtfUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());                                //Beschaffen der Userlösung aus der DB über die Aufgabe

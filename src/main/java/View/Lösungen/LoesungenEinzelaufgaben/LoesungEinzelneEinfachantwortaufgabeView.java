@@ -25,6 +25,12 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JPanel panelUser;
     private JPanel panelMuster;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblMaximalPunktzahl;
     private final EinfachantwortAufgabe aufgabe;
     private Benutzer benutzer;
 
@@ -42,6 +48,8 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();             //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLE.getMusterloesung());
         txtfUserLoesung.setText(userloesungEinfachantwort.getUserloesung());                                    //Beschaffen der Userlösung über das mitgegebene Userlösungsobjekt

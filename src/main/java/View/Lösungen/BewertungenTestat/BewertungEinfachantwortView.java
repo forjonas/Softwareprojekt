@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 
 public class BewertungEinfachantwortView extends JFrame implements ActionListener {
     private ControllerBewertungenTestate cont;
+    private final EinfachantwortAufgabe aufgabe;
+    private UserloesungEinfachantwort uLE;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JTextField txtfUserLoesung;
@@ -27,7 +29,9 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblUserPunktzahl;
     private JLabel lblDash;
     private JLabel lblMaximalPunktzahl;
-    private final EinfachantwortAufgabe aufgabe;
+    private JTextField txtfUserPunktzahl;
+    private JButton btnBewertungSpeichern;
+
 
     public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate cont) {
         this.cont = cont;
@@ -38,6 +42,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        btnBewertungSpeichern.addActionListener(this);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
@@ -49,7 +54,9 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();        //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLE.getMusterloesung());
         UserloesungEinfachantwort uLE = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);          //Beschaffen der Userlösung aus der DB über die Aufgabe
+        this.uLE = uLE;
         txtfUserLoesung.setText(uLE.getUserloesung());
+        txtfUserPunktzahl.setText(uLE.getErreichtePunkte()+ "");                                            //Die vom Studenten erreichten Punkte
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -59,7 +66,6 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
-            this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
@@ -69,11 +75,35 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         } else if (e.getSource() == this.btnVorherigeAufgabe) {
             this.dispose();
             vorherigeAufgabe();
+        } else if (e.getSource() == this.btnBewertungSpeichern) {
+            try {
+                Integer.parseInt(txtfUserPunktzahl.getText());
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist kein ganzzahliger Eintrag!");
+                return;
+            }
+            int bewertung = Integer.parseInt(txtfUserPunktzahl.getText());
+            if (!(0 <= bewertung && bewertung <= aufgabe.getPunktewert())) {
+                JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
+                return;
+            }
+            uLE.setErreichtePunkte(bewertung);
+            cont.setBewertet();
         }
     }
 
     private void beenden() {
-        cont.beendeBewertungTestat();
+        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+            this.dispose();
+            cont.beendeBewertungTestat();
+        } else {
+            int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
+                    "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
+            if (input == 0) {
+                this.dispose();
+                cont.abbrechenBewertungTestat();
+            }
+        }
     }
 
     private void naechsteAufgabe() {
@@ -91,6 +121,12 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
 
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
+        this.update(this.getGraphics());
+    }
+
+    public void bewertbar() {
+        this.txtfUserPunktzahl.setEditable(true);
+        this.btnBewertungSpeichern.setVisible(true);
         this.update(this.getGraphics());
     }
 }
