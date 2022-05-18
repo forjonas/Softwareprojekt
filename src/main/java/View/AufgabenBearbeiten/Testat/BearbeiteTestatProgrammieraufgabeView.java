@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
@@ -20,8 +21,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
 
-
-    //Frame Elemente
     private JPanel contentPane;
     private JTextArea textArea;
     private JButton btnAbbrechenTestat;
@@ -29,16 +28,17 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnTestatBeenden;
+    private boolean hinweisVerwendet;
 
     private TestatController testatController;
     private Programmieraufgabe aufgabe;
-    private UserloesungProgrammieraufgabe u1;
+    private UserloesungProgrammieraufgabe userloesung;
 
     /**
      * Create the frame.
      */
     public BearbeiteTestatProgrammieraufgabeView(TestatController testatController, Programmieraufgabe aufgabe) { //angepasst
-
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
@@ -110,25 +110,31 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            testatController.zurueckTestat();
-            this.dispose();
+            if(testatController.isIndexNotFirst()) {
+                testatController.zurueckTestat();
+                this.dispose();
+            } else {
+                testatController.zurueckTestat();
+            }
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-
-            u1 = new UserloesungProgrammieraufgabe();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
-            testatController.usereingaben.add(u1); //antwort wird in UListe hinzugefügt und gehalten
-            testatController.weiter();
-            this.dispose();
+            String userloesungString = textArea.getText();
+            userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            testatController.addUserloesung(userloesung);
+            if(testatController.isIndexNotLast()) {
+                testatController.weiter();
+                this.dispose();
+            } else {
+                testatController.weiter();
+            }
         }
-
         if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatController.persistTestat();

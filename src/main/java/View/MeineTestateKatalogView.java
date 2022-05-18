@@ -2,7 +2,7 @@ package View;
 
 import View.tableModel.MeineTestateTableModel;
 import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
-import app.TestatApp;
+import app.TestatController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
@@ -210,6 +210,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(this, "Fehler: Testat enthält keine Aufgaben", "Testat konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
                     } else {
                         new ControllerBewertungenTestate(testatBearbeitung, aktuellerBenutzer, jframe);
+                        dispose();
                     }
                 }
             }
@@ -232,7 +233,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
                 } else {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
-                        TestatApp testatApp = new TestatApp(testat, aktuellerBenutzer, jframe);
+                        TestatController testatController = new TestatController(testat, aktuellerBenutzer, jframe);
                         dispose();
                     } else if (passwort != null) {
                         JOptionPane.showMessageDialog(this, "Fehler: Falsches Passwort eingegeben", "Falsches Passwort", JOptionPane.ERROR_MESSAGE);
