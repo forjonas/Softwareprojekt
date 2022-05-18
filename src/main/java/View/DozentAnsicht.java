@@ -20,7 +20,6 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     //Buttons
     private JButton abmeldenBtn;
-    DatabaseService ds=DatabaseService.getInstance();
     private JButton testatEinsehenBtn;
     private JButton trainingsEinsehenBtn;
     private JButton testateErstellenBtn;
@@ -33,10 +32,10 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     private JPanel centerPnl;
     private JPanel dozentMainPanel;
     GridLayout gl = new GridLayout(2,4);
-    Dozent doz;
+    Dozent dozent;
 
     public DozentAnsicht(Dozent doz){
-        this.doz = doz;
+        this.dozent = doz;
         this.setName("Home");
         fuelleDozentFrame();
         this.setMinimumSize(new Dimension(1500,900));
@@ -48,7 +47,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     }
     public void fuelleDozentFrame(){
         //JLabel
-        JLabel welcomeMsgLbl = new JLabel("Willkommen "+doz.getVorname()+" "+doz.getNachname());
+        JLabel welcomeMsgLbl = new JLabel("Willkommen "+dozent.getVorname()+" "+dozent.getNachname());
         //Buttons
         abmeldenBtn = new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
@@ -134,40 +133,41 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     }
 
     private void trainingsEinsehen() {
-        //Huh?
+        this.setVisible(false);
+        new EinsehenTrainingKatalogView(this,dozent);
     }
 
     private void testateErstellen() {
         this.setVisible(false);
-        new TestatErstellenView(this, doz);
+        new TestatErstellenView(this, dozent);
     }
 
     private void testatuebersicht() {
         this.setVisible(false);
-        new TestatKatalogView(this, doz);
+        new TestatKatalogView(this, dozent);
     }
 
     private void aufgabeErstellen() {
         this.setVisible(false);
-        new AufgabeErstellenStartView(this,doz);
+        new AufgabeErstellenStartView(this,dozent);
     }
 
     private void aufgabenuebersicht() {
         this.setVisible(false);
-        new AufgabenKatalogView(this, doz);
+        new AufgabenKatalogView(this, dozent);
     }
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new TrainingGenerierenView(this, doz);
+        new TrainingGenerierenView(this, dozent);
     }
 
     private void testateDurchfuehren() {
         this.setVisible(false);
-        new TestatKatalogView(this, doz);
+        new TestatKatalogView(this, dozent);
     }
     private void testatEinsehen(){
         this.setVisible(false);
-       new KorrigiereTestatKatalogView(this, doz);
+       new KorrigiereTestatKatalogView(this, dozent);
     }
 }
