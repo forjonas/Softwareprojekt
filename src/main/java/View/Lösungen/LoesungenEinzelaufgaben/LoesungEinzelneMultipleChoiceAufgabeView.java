@@ -1,5 +1,6 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -16,6 +17,9 @@ import java.util.List;
 
 public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
+    private final MultipleChoiceAufgabe aufgabe;
+    private Benutzer benutzer;
+    private JFrame frame;
     private JPanel mainPanel;
     private JButton btnHinweis;
     private JButton btnBeenden;
@@ -37,12 +41,10 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
-    private final MultipleChoiceAufgabe aufgabe;
-    private Benutzer benutzer;
 
 
-
-    public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe, Benutzer benutzer) { //Benutzer hinzugefügt(Kristin)
+    public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -96,7 +98,7 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     }
 
     private void beenden(){
-
+        new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
     }
 
     {

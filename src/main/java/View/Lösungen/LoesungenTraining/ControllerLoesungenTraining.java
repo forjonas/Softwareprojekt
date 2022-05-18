@@ -1,21 +1,31 @@
 package View.Lösungen.LoesungenTraining;
 
+import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
+import View.DozentAnsicht;
+import View.EinsehenTrainingKatalogView;
+import View.KorrigiereTestatKatalogView;
+import View.StudentMainView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
+import entity.benutzer.Dozent;
 import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
+
+import javax.swing.*;
 import java.util.List;
 
 public class ControllerLoesungenTraining {
 
     private Training training;
+    private JFrame frame;
     private int index;
     public Benutzer benutzer;
     private DatabaseService ds = DatabaseService.getInstance();
     private List<Userloesung> userloesungList;
 
-    public ControllerLoesungenTraining(Training training, Benutzer benutzer) {
+    public ControllerLoesungenTraining(Training training, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.training = training;
         this.index = 0;
         this.benutzer = benutzer;
@@ -95,8 +105,11 @@ public class ControllerLoesungenTraining {
     }
 
     public void beendeLoesungTraining() {
-        //zurück zum vorherigen Menü; Benutzer weitergeben!
-        System.out.println("Hier gehts bald wieder zur Trainingsübersicht!");
+        if (benutzer.getClass().equals(Dozent.class)) {
+            new EinsehenTrainingKatalogView(frame, (Dozent) benutzer);
+        } else {
+            frame.setVisible(true);
+        }
     }
 
     public void naechsteAufgabe(){
