@@ -96,7 +96,11 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
             JOptionPane.showMessageDialog(this, "Button Vorherige");
@@ -114,9 +118,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
             trainingApp.persistTraining();
-            BearbeiteTestatKatalogView.main(null);
             trainingApp.setUserFrameVisible();
-
         }
 
     }

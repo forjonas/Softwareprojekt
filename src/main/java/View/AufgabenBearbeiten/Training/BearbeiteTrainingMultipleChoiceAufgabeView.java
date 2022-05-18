@@ -133,7 +133,11 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
         }
         if (e.getSource() == this.btnLoesungshinweisTraining) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTraining) {
@@ -169,7 +173,6 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
                 this.dispose();
                 trainingApp.persistTraining();
                 trainingApp.setUserFrameVisible(); //von Martin
-
             }
 
     }

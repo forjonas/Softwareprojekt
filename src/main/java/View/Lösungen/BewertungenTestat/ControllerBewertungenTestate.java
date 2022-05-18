@@ -2,6 +2,7 @@ package View.Lösungen.BewertungenTestat;
 
 import View.AufgabenBearbeiten.Testat.BearbeiteTestatKatalogView;
 import View.KorrigiereTestatKatalogView;
+import View.TestatKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;

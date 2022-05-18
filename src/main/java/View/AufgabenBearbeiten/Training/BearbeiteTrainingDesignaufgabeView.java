@@ -99,7 +99,11 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
-			JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
+			if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+				JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+			} else {
+				JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			trainingApp.zurueckTraining();
@@ -116,6 +120,5 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 			this.dispose();
 			trainingApp.persistTraining();
 			trainingApp.setUserFrameVisible(); //von Martin
-		}
 	}
 }

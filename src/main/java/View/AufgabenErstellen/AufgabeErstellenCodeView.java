@@ -60,6 +60,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JTextArea loesungTA;
     //File
     private File codeBspFile;
+    private JFileChooser FC;
 
     public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;

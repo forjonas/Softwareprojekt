@@ -50,6 +50,8 @@ public class CreateBetaData {
     private MusterloesungMultipleChoiceAufgabe mma1, mma2, mma3, mma4;
     private MusterloesungEinfachantwort mea1, mea2, mea3, mea4;
 
+    private Musterloesung mta1,mta2,mta3,mta4,mta5;
+
     private Userloesung ul1, ul2, ul3, ul4, ul5, ul6, ul7, ul8, ul9, ul10, ul11, ul12, ul13, ul14, ul15, ul16, ul17, ul18, ul19;
 
     private TestatBearbeitung testatBearbeitung, testatBearbeitung2, testatBearbeitung3, testatBearbeitung4, testatBearbeitung5, testatBearbeitung6, testatBearbeitung7;
@@ -200,8 +202,17 @@ public class CreateBetaData {
         ea3.setMusterloesung(mea3);
         ea4.setMusterloesung(mea4);
 
-        //List<Musterloesung>musterlösung=Arrays.asList(mda1,mda2,mda3,mda4,mpa1,mpa2,mpa3,mpa4,mma1,mma2,mma3,mma4,mea1,mea2,mea3,mea4);
-        //ds.persistObjects(musterlösung);
+        mta1=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta1,"Der Konstruktor hat den selben Namen wie seine Klasse","public Konstruktor()");
+        mta2=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta2,"Lösunghinweis","Musterlösung");
+        mta3=new MusterloesungProgrammieraufgabe((Programmieraufgabe) ta3,"Lösungshinweis","Müsterlösung");
+        mta4=new MusterloesungEinfachantwort((EinfachantwortAufgabe) ta4,"Lösungshinweis","Musterlösung");
+        mta5=new MusterloesungDesignaufgabe((Designaufgabe) ta5,"Lösungshinweis","Musterlösung");
+
+        ta1.setMusterloesung(mta1);
+        ta2.setMusterloesung(mta2);
+        ta3.setMusterloesung(mta3);
+        ta4.setMusterloesung(mta4);
+        ta5.setMusterloesung(mta5);
     }
 
     public void createBetaAufgabensammlungen() throws Exception {
@@ -270,6 +281,7 @@ public class CreateBetaData {
         student1.addErstellteLoesung(ul7);
         student1.addErstellteLoesung(ul8);
         student1.addErstellteLoesung(ul9);
+        student1.addBearbeitetesTestat(testatBearbeitung);
 
         testat2.addBearbeitung(testatBearbeitung);
 
@@ -280,19 +292,23 @@ public class CreateBetaData {
         List<Boolean> ul12List = Arrays.asList(false, false, true, false);
         List<Boolean> ul13List = Arrays.asList(true, false, false, true);
 
-        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul6List, student2, testat2);
-        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul7List, student2, testat2);
-        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul8List, student2, testat2);
-        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul9List, student2, testat2);
+        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul10List, student2, testat2);
+        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul11List, student2, testat2);
+        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul12List, student2, testat2);
+        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul13List, student2, testat2);
 
         testat2.addUserloesung(ul10);
         testat2.addUserloesung(ul11);
         testat2.addUserloesung(ul12);
         testat2.addUserloesung(ul13);
 
+        testatBearbeitung2=new TestatBearbeitung(testat2);
+        testatBearbeitung2.setTestatBearbeiter(student2);
+
         student2.addErstellteLoesung(ul10);
         student2.addErstellteLoesung(ul11);
         student2.addErstellteLoesung(ul12);
         student2.addErstellteLoesung(ul13);
+        student2.addBearbeitetesTestat(testatBearbeitung2);
     }
 }
