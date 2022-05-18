@@ -33,8 +33,6 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 	private JButton btnUpload;
 
-	private JTextArea textArea;
-
 	private File geuploadet;
 
 	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
