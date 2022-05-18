@@ -95,7 +95,7 @@ public class TestatApp {
         }
     }
 
-    public void persistUser() {//usereingaben Liste persistieren
+    public void persistTestat() {//usereingaben Liste persistieren
 
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
