@@ -172,7 +172,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new TrainingGenerierenView(this, dozent);
+        new CreateFrageView(this, dozent);
     }
 
     private void testateDurchfuehren() {

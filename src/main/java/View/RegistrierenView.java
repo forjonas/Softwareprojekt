@@ -138,7 +138,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
     }
 
     public boolean fieldsEmpty() {
-        if (usernameTxt.getText() == null && vornameTxt.getText() == null && nachnameTxt.getText() == null && matrikelTxt.getText() == null && passwortTxt.getPassword() == null && passwortWiederholenTxt.getPassword() == null) {
+        if (usernameTxt.getText() == "" && vornameTxt.getText() == null && nachnameTxt.getText() == null && matrikelTxt.getText() == null && passwortTxt.getPassword() == null && passwortWiederholenTxt.getPassword() == null) {
             return true;
         }
         return false;

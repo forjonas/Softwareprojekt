@@ -2,6 +2,7 @@ package View;
 
 import View.tableModel.AufgabenAuswaehlenTableModel;
 import View.tableModel.AufgabenTrainingTableModel;
+import app.TrainingController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
@@ -29,12 +30,11 @@ import java.util.List;
 public class TrainingGenerierenView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
+    private CreateFrageView createFrageView;
     private JTable tableAufgaben;
-    private AufgabenTrainingTableModel aufgabenTrainingTableModel;
+    private AufgabenAuswaehlenTableModel aufgabenAuswahlTableModel;
     private JButton btnZurueck;
     private JButton erstellenBtn;
-    private JTextField txtPasswort;
-    private JTextField txtName;
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
     private JFrame jframe;
@@ -43,20 +43,19 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
 
     private JComboBox<String> kategorieCBox = new JComboBox<>(kategorieArray);
     private JComboBox<String> schwierigkeitCBox = new JComboBox<>(schwierigkeitArray);
-    ;
-    private int gesamtzeit = 0;
+
+    private int gesamtzeit;
 
 
     /**
      * Create the frame.
      */
-    public TrainingGenerierenView(JFrame jframe, Benutzer aktuellerBenutzer) {
+    public TrainingGenerierenView(JFrame jframe, Benutzer aktuellerBenutzer, List<Aufgabe> aufgabenliste) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
-        aufgabenliste = DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen());
-        aufgabenliste = new LinkedList<>(aufgabenliste);
+        this.aufgabenliste=aufgabenliste;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Testat erstellen");
+        setTitle("Training erstellen");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -101,21 +100,19 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         gbc_panelCenterNorth.fill = GridBagConstraints.BOTH;
         gbc_panelCenterNorth.gridx = 2;
         gbc_panelCenterNorth.gridy = 0;
-        panelNorth.add(panelCenterNorth, gbc_panelCenterNorth);
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        JLabel lblTrainingConfigSetzen = new JLabel();
-        lblTrainingConfigSetzen.add(schwierigkeitCBox);
-        lblTrainingConfigSetzen.add(kategorieCBox);
-        lblTrainingConfigSetzen.setHorizontalAlignment(SwingConstants.CENTER);
-
-        panelCenterNorth.add(lblTrainingConfigSetzen);
+        JPanel pnlTrainingConfigSetzen = new JPanel();
+        pnlTrainingConfigSetzen.add(schwierigkeitCBox);
+        pnlTrainingConfigSetzen.add(kategorieCBox);
+        panelCenterNorth.add(pnlTrainingConfigSetzen);
 
         tableAufgaben = new JTable();
-        aufgabenTrainingTableModel = new AufgabenTrainingTableModel(aufgabenliste);
-        tableAufgaben.setModel(aufgabenTrainingTableModel);
+        aufgabenAuswahlTableModel = new AufgabenAuswaehlenTableModel(aufgabenliste);
+        tableAufgaben.setModel(aufgabenAuswahlTableModel);
         tableAufgaben.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableAufgaben);
 
@@ -157,6 +154,11 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
 
     public String getValueCBox(JComboBox combo) {
         return (String) combo.getSelectedItem();
+    }
+
+    public void setAufgabenliste(List<Aufgabe> aufgabenliste)
+    {
+        this.aufgabenliste=aufgabenliste;
     }
 
     public Kategorie readKategorie() {
@@ -213,18 +215,23 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
                 a.addVerwendung(training);
             }
             DatabaseService.getInstance().persistObject(training);
-            JOptionPane.showMessageDialog(this, "Testat wurde erstellt", "Testat erstellt", JOptionPane.INFORMATION_MESSAGE);
+            new TrainingController(training,aktuellerBenutzer,jframe).zeigeAktuelleAufgabe();
+            this.setVisible(false);
+
+        }else{
+            JOptionPane.showMessageDialog(this,"Es wurden keine Aufgaben gewählt.");
         }
     }
 
     private List<Aufgabe> aufgabenAuswaehlenLogik() {
+        gesamtzeit=0;
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es sind keine Aufgaben zum Erstellen des Testats verfügbar", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
         } else {
             List<Aufgabe> ausgewaehlteAufgaben = new LinkedList<Aufgabe>();
 
             for (int i = 0; i < aufgabenliste.size(); i++) {
-                boolean ausgewaehlt = (boolean) aufgabenTrainingTableModel.getValueAt(i, 6);
+                boolean ausgewaehlt = (boolean) aufgabenAuswahlTableModel.getValueAt(i, 6);
                 if (ausgewaehlt) {
                     ausgewaehlteAufgaben.add(aufgabenliste.get(i));
                     gesamtzeit += aufgabenliste.get(i).getBearbeitungszeit();
@@ -234,9 +241,9 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Es wurden keine Aufgaben für das Testat ausgewählt", "Keine Aufgaben ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 if (gesamtzeit < 10) {
-                    JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats muss mindestens 10 Minuten betragen.\nBitte mehr Aufgaben auswählen.", "Zu wenige Aufgaben", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats muss mindestens 10 Minuten betragen.\nBitte mehr Aufgaben auswählen.", "Zu wenige Aufgaben", JOptionPane.WARNING_MESSAGE);return null;
                 } else if (gesamtzeit > 90) {
-                    JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats darf höchstens 90 Minuten betragen.\nBitte weniger Aufgaben auswählen.", "Zu viele Aufgaben", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats darf höchstens 90 Minuten betragen.\nBitte weniger Aufgaben auswählen.", "Zu viele Aufgaben", JOptionPane.WARNING_MESSAGE);return null;
                 } else {
                     return ausgewaehlteAufgaben;
                 }
@@ -266,5 +273,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         }
         return aufgabentypList;
     }
+
+
 
 }

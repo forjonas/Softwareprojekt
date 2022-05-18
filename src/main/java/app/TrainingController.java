@@ -92,6 +92,9 @@ public class TrainingController {
 
         DatabaseService ds1 = database.getInstance();
         ds1.persistObjects(usereingaben);
+        for (int i=0;i<usereingaben.size();i++) {
+            benutzer.addErstellteLoesung(usereingaben.get(i));
+        }
         new ControllerLoesungenTraining(training, benutzer, userframe);
         //ControllerLoesungenTraining loesungenTraining = new ControllerLoesungenTraining(training, benutzer);
         //loesungenTraining.startLoesungTraining();
