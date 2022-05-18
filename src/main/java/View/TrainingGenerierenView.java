@@ -2,8 +2,6 @@ package View;
 
 import app.TrainingApp;
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.enums.Aufgabentyp;
@@ -18,8 +16,6 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static java.lang.Integer.parseInt;
 
 public class TrainingGenerierenView extends JFrame implements ActionListener {
 
@@ -115,80 +111,53 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     public void createNewTraining() {
         List<Aufgabe> aufgabenTraining = new LinkedList<Aufgabe>();
         int trainingsdauer = 0;
-        for (int i = 0; i <= 20; i++) {
+        List<Aufgabe> aufgabenList = ds.readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen());
+        for (int i = 0; i < aufgabenList.size(); i++) {
             if (roundUp10(trainingsdauer) == Integer.parseInt(getValueCBox(dauerCBox))) {
                 training = new Training(aufgabenTraining, trainingsdauer, readKategorie(), schwierigkeitsgradSetzen(), aufgabenTypenSetzen(), benutzer);
-                TrainingApp trainingApp = new TrainingApp(training, benutzer);
+                TrainingApp trainingApp = new TrainingApp(training, benutzer, studentMainViewTest);
                 trainingApp.zeigeAktuelleAufgabe();
             } else {
-                if (aufgabenTraining.size() == 0) {//Setzt die erste Aufgabe, damit die Überprüfung der Aufgaben, damit Sie sich nicht Wiederholen, funktioniert
-                    if (aufgabenTypSetzen() == Aufgabentyp.Programmieren) {
-                        Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Programmieren, readKategorie(), schwierigkeitsgradSetzen());
-                        aufgabenTraining.add(temp);
-                        trainingsdauer += temp.getBearbeitungszeit();
-                    } else if (aufgabenTypSetzen() == Aufgabentyp.Einfachantwort) {
-                        Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Einfachantwort, readKategorie(), schwierigkeitsgradSetzen());
-                        aufgabenTraining.add(temp);
-                        trainingsdauer += temp.getBearbeitungszeit();
-                    } else if (aufgabenTypSetzen() == Aufgabentyp.MultipleChoice) {
-                        Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.MultipleChoice, readKategorie(), schwierigkeitsgradSetzen());
-                        aufgabenTraining.add(temp);
-                        trainingsdauer += temp.getBearbeitungszeit();
-                    } else if (aufgabenTypSetzen() == Aufgabentyp.Design) {
-                        Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Design, readKategorie(), schwierigkeitsgradSetzen());
-                        aufgabenTraining.add(temp);
-                        trainingsdauer += temp.getBearbeitungszeit();
+                switch (aufgabenList.get(i).getAufgabentyp()) {
+                    case MultipleChoice: {
+                        if (aufgabenTypMCCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                            aufgabenTraining.add(aufgabenList.get(i));
+                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                            break;
+                        }
                     }
-                }
-                else{
-                    addAufgabe(aufgabenTraining,trainingsdauer);
+                    case Einfachantwort: {
+                        if (aufgabenTypEACBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                            aufgabenTraining.add(aufgabenList.get(i));
+                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                            break;
+                        }
+                    }
+                    case Programmieren: {
+                        if (aufgabenTypCodeCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                            aufgabenTraining.add(aufgabenList.get(i));
+                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                            break;
+                        }
+                    }
+                    case Design: {
+                        if (aufgabenTypUMLCBox.isSelected() || unSelected()) {//if(Selected==true oder unSelected==true) damit alle Typen ausgewählt werden wenn keine checkbox gesetzt ist
+                            aufgabenTraining.add(aufgabenList.get(i));
+                            trainingsdauer += aufgabenList.get(i).getBearbeitungszeit();
+                            break;
+                        }
+                    }
                 }
             }
         }
     }
 
-    public void addAufgabe(List<Aufgabe> list, int dauer) {
-        List<Aufgabe> aufgabenTraining = list;
-        int trainingsdauer = dauer;
-
-        if (aufgabenTypSetzen() == Aufgabentyp.Programmieren) {
-            Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Programmieren, readKategorie(), schwierigkeitsgradSetzen());
-            for (int k = 0; k < aufgabenTraining.size(); k++) {
-                if (temp != aufgabenTraining.get(k)) {
-                    aufgabenTraining.add(temp);
-                    trainingsdauer += temp.getBearbeitungszeit();
-                }
-            }
-
-        } else if (aufgabenTypSetzen() == Aufgabentyp.Einfachantwort) {
-            Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Einfachantwort, readKategorie(), schwierigkeitsgradSetzen());
-            for (int k = 0; k < aufgabenTraining.size(); k++) {
-                if (temp != aufgabenTraining.get(k)) {
-                    aufgabenTraining.add(temp);
-                    trainingsdauer += temp.getBearbeitungszeit();
-                }
-            }
-
-        } else if (aufgabenTypSetzen() == Aufgabentyp.MultipleChoice) {
-            Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.MultipleChoice, readKategorie(), schwierigkeitsgradSetzen());
-            for (int k = 0; k < aufgabenTraining.size(); k++) {
-                if (temp != aufgabenTraining.get(k)) {
-                    aufgabenTraining.add(temp);
-                    trainingsdauer += temp.getBearbeitungszeit();
-                }
-            }
-
-        } else if (aufgabenTypSetzen() == Aufgabentyp.Design) {
-            Aufgabe temp = ds.readAufgabeMitTyp(Aufgabentyp.Design, readKategorie(), schwierigkeitsgradSetzen());
-            for (int k = 0; k < aufgabenTraining.size(); k++) {
-                if (temp != aufgabenTraining.get(k)) {
-                    aufgabenTraining.add(temp);
-                    trainingsdauer += temp.getBearbeitungszeit();
-                }
-            }
-
+    public boolean unSelected()//gibt true zurück wenn keine checkbox ausgewählt wurde
+    {
+        if (!aufgabenTypMCCBox.isSelected() && !aufgabenTypUMLCBox.isSelected() && !aufgabenTypEACBox.isSelected() && !aufgabenTypCodeCBox.isSelected()) {
+            return true;
         }
-
+        return false;
     }
 
     public int roundUp10(int zahl) {
@@ -214,34 +183,6 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         return null;
     }
 
-    public String readKategorieString() {
-        switch (getValueCBox(kategorieCBox)) {
-            case "Software Engineering":
-                return "Software Engineering";
-            case "Java Programmierung":
-                return "Java Programmierung";
-            case "Java Grundlagen":
-                return "Java Grundlagen";
-            case "Klassendiagramme":
-                return "Klassendiagramme";
-            case "Datenbanken":
-                return "Datenbanken";
-        }
-        return null;
-    }
-
-    public int schwierigkeitsgradSetzenInt() {
-        switch (getValueCBox(schwierigkeitCBox)) {
-            case "leicht":
-                return 1;
-            case "mittel":
-                return 2;
-            case "schwer":
-                return 3;
-        }
-        return 1;
-    }
-
     public Schwierigkeitsgrad schwierigkeitsgradSetzen() {
         switch (getValueCBox(schwierigkeitCBox)) {
             case "leicht":
@@ -252,39 +193,6 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
                 return Schwierigkeitsgrad.Schwer;
         }
         return Schwierigkeitsgrad.Leicht;
-    }
-
-    public Aufgabentyp aufgabenTypSetzen() {
-        boolean mc = false;
-        boolean uml = false;
-        boolean code = false;
-        boolean ea = false;
-        int decider = random();
-
-        if (aufgabenTypCodeCBox.isSelected()) {
-            code = true;
-        }
-        if (aufgabenTypEACBox.isSelected()) {
-            ea = true;
-        }
-        if (aufgabenTypMCCBox.isSelected()) {
-            mc = true;
-        }
-        if (aufgabenTypUMLCBox.isSelected()) {
-            uml = true;
-        }
-
-        if (decider == 1 && code == true) {
-            return Aufgabentyp.Programmieren;
-        } else if (decider == 2 && ea == true) {
-            return Aufgabentyp.Einfachantwort;
-        } else if (decider == 3 && mc == true) {
-            return Aufgabentyp.MultipleChoice;
-        } else if (decider == 4 && uml == true) {
-            return Aufgabentyp.Design;
-        } else {
-            return null;
-        }
     }
 
     public List<Aufgabentyp> aufgabenTypenSetzen() {
@@ -304,10 +212,6 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
             list.add(Aufgabentyp.Einfachantwort);
         }
         return list;
-    }
-
-    public int random() {
-        return (int) Math.floor(Math.random() * (4 - 1 + 1) + 1);
     }
 
     @Override

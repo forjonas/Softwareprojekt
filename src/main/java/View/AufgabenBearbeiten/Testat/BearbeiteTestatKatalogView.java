@@ -109,7 +109,7 @@ public class BearbeiteTestatKatalogView extends JFrame implements ActionListener
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = ds.readTestateFromDatabase();
         //Test
-        testatListe = getTestData();
+        //testatListe = getTestData();
         //testatListe = new LinkedList<Testat>();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bearbeite Testat");

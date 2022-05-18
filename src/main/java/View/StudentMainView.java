@@ -78,7 +78,7 @@ public class StudentMainView extends JFrame implements ActionListener {
     {
 
         if(e.getSource() == this.ergebnisTestateBtn){
-            //new Bea
+            new BearbeiteTestatKatalogView(this,student);
         }
         else if(e.getSource() == this.testateOeffnenBtn){
             new BearbeiteTestatKatalogView(this, student);
