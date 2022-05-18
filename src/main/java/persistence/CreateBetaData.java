@@ -56,7 +56,7 @@ public class CreateBetaData {
 
     private TestatBearbeitung testatBearbeitung, testatBearbeitung2, testatBearbeitung3, testatBearbeitung4, testatBearbeitung5, testatBearbeitung6, testatBearbeitung7;
 
-    private File fmda1, fmda2, fmda3, fmda4;
+    private String fmda1, fmda2, fmda3, fmda4;
     private Testat testat1, testat2, testat3;
     private Training training1, training2, training3;
 

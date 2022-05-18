@@ -97,7 +97,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         AufgabeErstellenMultipleChoicePnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl.setLayout(bl);
         //JComboboxen
-        Integer[] anz = {1, 2, 3, 4};
+        Integer[] anz = {2, 3, 4};
         anzCB = new JComboBox(anz);
         anzCB.addActionListener(this);
 
@@ -204,23 +204,13 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         } else if (e.getSource() == this.anzCB) {
             switchVisibility();
         } else if (e.getSource() == this.bspBildBtn) {
-            FileChooserView filcV = new FileChooserView();
+            FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             bspBild = filcV.fileChooser();
         }
     }
     private void switchVisibility() {
         int switcher = (Integer) anzCB.getSelectedItem();
         switch (switcher) {
-            case 1:
-                antwort1TF.setVisible(true);
-                antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(false);
-                antwort2Lbl.setVisible(false);
-                antwort3TF.setVisible(false);
-                antwort3Lbl.setVisible(false);
-                antwort4TF.setVisible(false);
-                antwort4Lbl.setVisible(false);
-                break;
             case 2:
                 antwort1TF.setVisible(true);
                 antwort1Lbl.setVisible(true);
@@ -330,9 +320,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         ArrayList<String> liste = new ArrayList<String>();
         int switcher = (Integer) anzCB.getSelectedItem();
         switch (switcher) {
-            case 1:
-                liste.add(antwort1TF.getText());
-                return liste;
             case 2:
                 liste.add(antwort1TF.getText());
                 liste.add(antwort2TF.getText());

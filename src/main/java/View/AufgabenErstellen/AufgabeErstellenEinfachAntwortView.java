@@ -1,7 +1,5 @@
 package View.AufgabenErstellen;
 
-import View.DozentAnsicht;
-import View.ImageFilter;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
@@ -158,7 +156,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         } else if (e.getSource() == this.speichernBtn) {
             speichern();
         } else if (e.getSource() == this.bspBildBtn) {
-            FileChooserView filcV = new FileChooserView();
+            FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             bspBild = filcV.fileChooser();
         }
     }

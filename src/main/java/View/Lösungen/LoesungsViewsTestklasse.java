@@ -41,7 +41,7 @@ public class LoesungsViewsTestklasse {
         MusterloesungEinfachantwort mLE = new MusterloesungEinfachantwort(a1, "Hier könnte ihr Lösungshinweis stehen.", "Musterlösungen sind eine Lüge.");
         a1.setMusterloesung(mLE);
         Designaufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null, null);
-        MusterloesungDesignaufgabe mlD = new MusterloesungDesignaufgabe(a2, "Hier könnte ihr Lösungshinweis stehen.", new File("Lösungshinweise sind eine Lüge."));
+        MusterloesungDesignaufgabe mlD = new MusterloesungDesignaufgabe(a2, "Hier könnte ihr Lösungshinweis stehen.", "Lösungshinweise sind eine Lüge.");
         a2.setMusterloesung(mlD);
         Programmieraufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null, null);
         MusterloesungProgrammieraufgabe mLP = new MusterloesungProgrammieraufgabe(a3, "Hier könnte ihr Lösungshinweis stehen.", "public static void main(String[] args){}");
