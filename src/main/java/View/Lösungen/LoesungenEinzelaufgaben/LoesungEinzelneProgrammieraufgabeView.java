@@ -1,5 +1,6 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import View.LoesungsHinweisView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -15,6 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
+
+    private final Programmieraufgabe aufgabe;
+    private Benutzer benutzer;
+    private JFrame frame;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -28,10 +33,9 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
-    private final Programmieraufgabe aufgabe;
-    private Benutzer benutzer;
 
-    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe, Benutzer benutzer) {
+    public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -66,7 +70,7 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     }
 
     private void beenden(){
-
+        new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
     }
 
     {

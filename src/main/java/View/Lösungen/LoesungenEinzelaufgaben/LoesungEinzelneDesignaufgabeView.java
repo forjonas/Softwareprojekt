@@ -1,5 +1,6 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 
 public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
+    private JFrame frame;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -30,7 +32,8 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private final Designaufgabe aufgabe;
     private Benutzer benutzer;
 
-    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe, Benutzer benutzer) {
+    public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -65,7 +68,7 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     }
 
     private void beenden(){
-
+        new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
     }
 
     {

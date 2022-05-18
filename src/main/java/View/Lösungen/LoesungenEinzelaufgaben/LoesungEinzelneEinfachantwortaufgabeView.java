@@ -1,5 +1,6 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
+import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -16,6 +17,9 @@ import java.util.List;
 
 public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements ActionListener {
 
+    private final EinfachantwortAufgabe aufgabe;
+    private Benutzer benutzer;
+    private JFrame frame;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -31,11 +35,10 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
-    private final EinfachantwortAufgabe aufgabe;
-    private Benutzer benutzer;
 
 
-    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer) {
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer, JFrame frame) {
+        this.frame = frame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -71,7 +74,7 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     }
 
     private void beenden(){
-
+        new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
     }
 
     {
