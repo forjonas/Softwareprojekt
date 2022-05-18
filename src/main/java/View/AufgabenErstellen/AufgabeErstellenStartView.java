@@ -25,7 +25,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     private GridLayout gl = new GridLayout(3,1);
     private JComboBox <String> DDM;
     private JFrame dozentAnsichtFrame;
-    Dozent doz;
+   private Dozent doz;
 
     public AufgabeErstellenStartView(JFrame dozentAnsichtFrame,Dozent doz) {
         this.doz = doz;
@@ -41,7 +41,6 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         this.setVisible(true);
     }
     private void AufgabeErstellenFrameFuellen() {
-        doz = new Dozent();
         //Panels
         centerPnl =new JPanel();
         centerPnl.setLayout(gl);

@@ -18,7 +18,6 @@ import java.io.File;
  * Die View zur Erstellung einer Code Aufgabe
  *
  * @author Jannik Oehme
- * @version 09.05.2022 Layout gefixed funktionalität geadded schreibt passig in die Datenbank.
  * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
@@ -61,9 +60,8 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JTextArea loesungTA;
     //File
     private File codeBspFile;
-    private JFileChooser FC;
 
-    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("ProgrammierAufgabe");
@@ -168,6 +166,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
             codeBspFile = filcV.fileChooser();
         }
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
@@ -193,41 +192,27 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
             punkte = Integer.parseInt(punkteTF.getText());
             loesung = loesungTA.getText();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
 
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung,/**codeText,**/doz);
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung);
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
 
         }
     }
 
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung, /**String codeText,**/Dozent doz) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung /**String codeText,**/) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit,
-                "asd", // Eigentlich codeBEispFile
-                kat,
-                punkte,
-                schw,
-                aufText,
-                aufgTitel,
-                doz,
-                null);
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, "asd", kat, punkte, schw, aufText, aufgTitel, doz, null);
         MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
         doz.addErstellteAufgabe(neueAufgabe);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Musterlösung setzten fehlgeschlagen",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
