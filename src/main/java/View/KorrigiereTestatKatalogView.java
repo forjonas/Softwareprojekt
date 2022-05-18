@@ -199,7 +199,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                 else {
                     //Version des ControllerBewertungenTestate, die gerade in meinem Branch liegt
                     //Müsste eigentlich mit TestatBearbeitung statt Testat und mit Benutzer/Dozent initialisiert werden
-                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer);
+                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer, jframe);
                     dispose();
                 }
             }

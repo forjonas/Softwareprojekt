@@ -24,6 +24,12 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JButton btnNaechsteAufgabe;
     private JPanel mainPanel;
     private JLabel lblAufgabenstellungsbild;
+    private JPanel panelPunktzahl;
+    private JLabel lblPunktzahlString;
+    private JLabel lblMaximalPunktzahl;
+    private JPanel panelBearbeitungszeit;
+    private JLabel lblBearbeitungszeitString;
+    private JLabel lblBearbeitungszeit;
     private final Programmieraufgabe aufgabe;
 
     public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining cont) {
@@ -40,6 +46,8 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();          //Beschaffen der Musterlösung über die Aufgabe
         txtfMusterloesung.setText(mLP.getMusterloesung());
