@@ -349,7 +349,7 @@ public abstract class Aufgabe {
     public boolean darfDozentAufgabeLoeschen(Dozent dozent) {
         boolean selbstErstellt = (this.aufgabenErsteller == dozent);
         boolean leereAufgabe = (this.aufgabenErsteller == null);
-        boolean isAdmin = (dozent.getBenutzername() == "admin");
+        boolean isAdmin = (dozent.getBenutzername().equals("admin"));
         return (selbstErstellt || leereAufgabe || isAdmin);
     }
 

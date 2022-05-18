@@ -168,13 +168,12 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
             trainingApp.weiter();
         }
 
-            if (e.getSource() == this.btnTrainingBeenden) {
-                JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
-                this.dispose();
-                trainingApp.persistTraining();
-                trainingApp.setUserFrameVisible(); //von Martin
-
-            }
+        if (e.getSource() == this.btnTrainingBeenden) {
+            JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
+            this.dispose();
+            trainingApp.persistTraining();
+            trainingApp.setUserFrameVisible(); //von Martin
+        }
 
     }
 }
