@@ -118,12 +118,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnTrainingBeenden) {
             JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
             this.dispose();
-<<<<<<<<< Temporary merge branch 1
-            trainingApp.printPersistenz();
-=========
             trainingApp.persistTraining();
             trainingApp.setUserFrameVisible(); //von Martin
->>>>>>>>> Temporary merge branch 2
         }
     }
 }

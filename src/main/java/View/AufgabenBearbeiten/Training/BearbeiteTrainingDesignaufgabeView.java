@@ -99,15 +99,11 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
 		}
 		if (e.getSource() == this.btnLoesungshinweisTraining) {
-<<<<<<<<< Temporary merge branch 1
 			if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
 				JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
 			} else {
 				JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
 			}
-=========
-			JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen
->>>>>>>>> Temporary merge branch 2
 		}
 		if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 			trainingApp.zurueckTraining();
@@ -122,14 +118,8 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		if (e.getSource() == this.btnTrainingBeenden) {
 			JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
 			this.dispose();
-<<<<<<<<< Temporary merge branch 1
-		}
-		if (e.getSource() == this.btnUpload) {
-			JOptionPane.showMessageDialog(this, "Upload Button");
-=========
 			trainingApp.persistTraining();
 			trainingApp.setUserFrameVisible(); //von Martin
->>>>>>>>> Temporary merge branch 2
 		}
 	}
 }

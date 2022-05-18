@@ -117,14 +117,9 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         }
         if (e.getSource() == this.btnTrainingBeenden) {
             this.dispose();
-<<<<<<<<< Temporary merge branch 1
-            trainingApp.printPersistenz();
-=========
             trainingApp.persistTraining();
             BearbeiteTestatKatalogView.main(null);
             trainingApp.setUserFrameVisible();
->>>>>>>>> Temporary merge branch 2
-
         }
 
     }
