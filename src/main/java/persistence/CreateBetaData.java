@@ -50,6 +50,8 @@ public class CreateBetaData {
     private MusterloesungMultipleChoiceAufgabe mma1, mma2, mma3, mma4;
     private MusterloesungEinfachantwort mea1, mea2, mea3, mea4;
 
+    private Musterloesung mta1,mta2,mta3,mta4,mta5;
+
     private Userloesung ul1, ul2, ul3, ul4, ul5, ul6, ul7, ul8, ul9, ul10, ul11, ul12, ul13, ul14, ul15, ul16, ul17, ul18, ul19;
 
     private TestatBearbeitung testatBearbeitung, testatBearbeitung2, testatBearbeitung3, testatBearbeitung4, testatBearbeitung5, testatBearbeitung6, testatBearbeitung7;
@@ -199,6 +201,12 @@ public class CreateBetaData {
         ea2.setMusterloesung(mea2);
         ea3.setMusterloesung(mea3);
         ea4.setMusterloesung(mea4);
+
+        mta1=new MusterloesungEinfachantwort();
+        mta2=new MusterloesungProgrammieraufgabe();
+        mta3=new MusterloesungProgrammieraufgabe();
+        mta4=new MusterloesungEinfachantwort();
+        mta5=new MusterloesungDesignaufgabe();
 
         //List<Musterloesung>musterlösung=Arrays.asList(mda1,mda2,mda3,mda4,mpa1,mpa2,mpa3,mpa4,mma1,mma2,mma3,mma4,mea1,mea2,mea3,mea4);
         //ds.persistObjects(musterlösung);

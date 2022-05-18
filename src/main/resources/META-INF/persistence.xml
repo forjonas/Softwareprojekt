@@ -43,7 +43,7 @@
             <property name="jakarta.persistence.jdbc.password" value="D2U19-GghZMpwsEXYNscnxMffkO4knwN"/>
             <!-- Befehl, der dafür sorgt, dass die Entitäten aus dem Programm in der Datenbank als Tabellen erstellt werden-->
             <!-- Anderer Wert: Drop and Create, setzt Schema zurück, immer dann notwendig, wenn das Datenbankschema geändert wurde-->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <!-- Was machen diese Befehle? Sind sie notwendig? - Mit persistence.xml auseinandersetzen -->
             <!--<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
             <property name="eclipselink.jdbc.cache-statements" value="true"/>
