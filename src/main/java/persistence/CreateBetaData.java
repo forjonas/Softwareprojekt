@@ -162,7 +162,7 @@ public class CreateBetaData {
         mda1 = new MusterloesungDesignaufgabe(da1, "Beziehungen wie Aggregation und Komposition sind hier nicht gefragt.", fmda1);
         mda2 = new MusterloesungDesignaufgabe(da2, "Beziehungen wie Aggregation und Komposition sind hier nicht gefragt.", fmda2);
         mda3 = new MusterloesungDesignaufgabe(da3, "Es gibt 7 unterschiedliche Architekturprinzipien.", fmda3);
-        mda4 = new MusterloesungDesignaufgabe(da1, "Ich bin ein Lösungshinweis", fmda4);
+        mda4 = new MusterloesungDesignaufgabe(da4, "Ich bin ein Lösungshinweis", fmda4);
         da1.setMusterloesung(mda1);
         da2.setMusterloesung(mda2);
         da3.setMusterloesung(mda3);
