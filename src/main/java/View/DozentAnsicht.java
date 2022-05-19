@@ -79,6 +79,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         meineTestateBtn = new JButton("Meine Testate");
         meineTestateBtn.addActionListener(this);
         //Panels
+        JPanel tempSouthPanel=new JPanel(new FlowLayout());
         centerPnl = new JPanel(gl);
         dozentMainPanel = new JPanel(new BorderLayout());
 
@@ -92,9 +93,10 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         centerPnl.add(aufgabenuebersichtBtn);
         centerPnl.add(aufgabeErstellenBtn);
         centerPnl.add(aufgabeBearbeitenBtn);
+        tempSouthPanel.add(abmeldenBtn);
         centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
         dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
-        dozentMainPanel.add(abmeldenBtn, BorderLayout.SOUTH);
+        dozentMainPanel.add(tempSouthPanel, BorderLayout.SOUTH);
         dozentMainPanel.add(welcomeMsgLbl,BorderLayout.NORTH);
 
         this.add(dozentMainPanel);

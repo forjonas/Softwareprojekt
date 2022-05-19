@@ -202,6 +202,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case Programmieren: {
                 try {
@@ -215,6 +216,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case MultipleChoice: {
                 try {
@@ -228,6 +230,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case Design: {
                 try {
@@ -241,6 +244,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
         }
     }
@@ -260,6 +264,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case Programmieren: {
                 try {
@@ -273,6 +278,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case MultipleChoice: {
                 try {
@@ -286,6 +292,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
             case Design: {
                 try {
@@ -299,6 +306,7 @@ public class ControllerBewertungenTestate {
                     }
                 } catch (Exception ignored) {
                 }
+                break;
             }
         }
     }
