@@ -42,7 +42,7 @@ public class ControllerLoesungenTraining {
 
     public Userloesung getUserloesung(Aufgabe aufgabe) {
         Userloesung userloesung = null;
-        for (Userloesung uDB:userloesungList) {
+        for (Userloesung uDB : userloesungList) {
             if (uDB.getAufgabe().equals(aufgabe)) {
                 userloesung = uDB;
             }
@@ -61,7 +61,7 @@ public class ControllerLoesungenTraining {
                         lTEV.versteckeNaechsteAufgabe();
                     }
                 } catch (Exception ignored) {
-                }
+                }break;
             }
             case Programmieren: {
                 try {
@@ -72,7 +72,7 @@ public class ControllerLoesungenTraining {
                         lTPV.versteckeNaechsteAufgabe();
                     }
                 } catch (Exception ignored) {
-                }
+                }break;
             }
             case MultipleChoice: {
                 try {
@@ -83,7 +83,7 @@ public class ControllerLoesungenTraining {
                         lTMCV.versteckeNaechsteAufgabe();
                     }
                 } catch (Exception ignored) {
-                }
+                }break;
             }
             case Design: {
                 try {
@@ -94,7 +94,7 @@ public class ControllerLoesungenTraining {
                         lDV.versteckeNaechsteAufgabe();
                     }
                 } catch (Exception ignored) {
-                }
+                }break;
             }
         }
     }
@@ -107,7 +107,7 @@ public class ControllerLoesungenTraining {
         }
     }
 
-    public void naechsteAufgabe(){
+    public void naechsteAufgabe() {
         index++;
         Aufgabe aufgabe = training.getAufgaben().get(index);
         switch (aufgabe.getAufgabentyp()) {
@@ -116,6 +116,7 @@ public class ControllerLoesungenTraining {
                 if (index == training.getAnzahlAufgaben() - 1) {
                     lTEV.versteckeNaechsteAufgabe();
                 }
+                break;
             }
             case Programmieren: {
                 assert aufgabe instanceof Programmieraufgabe;
@@ -123,6 +124,7 @@ public class ControllerLoesungenTraining {
                 if (index == training.getAnzahlAufgaben() - 1) {
                     lTPV.versteckeNaechsteAufgabe();
                 }
+                break;
             }
             case MultipleChoice: {
                 assert aufgabe instanceof MultipleChoiceAufgabe;
@@ -130,6 +132,7 @@ public class ControllerLoesungenTraining {
                 if (index == training.getAnzahlAufgaben() - 1) {
                     lTMCAV.versteckeNaechsteAufgabe();
                 }
+                break;
             }
             case Design: {
                 assert aufgabe instanceof Designaufgabe;
@@ -137,6 +140,7 @@ public class ControllerLoesungenTraining {
                 if (index == training.getAnzahlAufgaben() - 1) {
                     lDV.versteckeNaechsteAufgabe();
                 }
+                break;
             }
         }
     }
@@ -151,6 +155,7 @@ public class ControllerLoesungenTraining {
                 if (index == 0) {
                     lTEV.versteckeVorherigeAufgabe();
                 }
+                break;
             }
             case Programmieren: {
                 assert aufgabe instanceof Programmieraufgabe;
@@ -158,6 +163,7 @@ public class ControllerLoesungenTraining {
                 if (index == 0) {
                     lTPV.versteckeVorherigeAufgabe();
                 }
+                break;
             }
             case MultipleChoice: {
                 assert aufgabe instanceof MultipleChoiceAufgabe;
@@ -165,6 +171,7 @@ public class ControllerLoesungenTraining {
                 if (index == 0) {
                     lTMCAV.versteckeVorherigeAufgabe();
                 }
+                break;
             }
             case Design: {
                 assert aufgabe instanceof Designaufgabe;
@@ -172,6 +179,7 @@ public class ControllerLoesungenTraining {
                 if (index == 0) {
                     lDV.versteckeVorherigeAufgabe();
                 }
+                break;
             }
         }
     }

@@ -20,19 +20,27 @@ public class CreateFrageView extends JFrame implements ActionListener {
     private Benutzer benutzer;
     private JComboBox<String> kategorieCBox = new JComboBox<>(kategorieArray);
     private JComboBox<String> schwierigkeitCBox = new JComboBox<>(schwierigkeitArray);
-    JButton waehlenBtn;
-    TrainingGenerierenView trainingGenerierenView;
+    private JButton waehlenBtn;
+    private JButton abbrechenBtn;
+    private TrainingGenerierenView trainingGenerierenView;
 
     public CreateFrageView(JFrame jframe, Benutzer benutzer) {
         setTitle("Kategorie und Schwierigkeit wählen.");
         this.jframe = jframe;
         this.benutzer = benutzer;
-        JPanel waehlenPnl = new JPanel();
-        waehlenPnl.add(kategorieCBox);
-        waehlenPnl.add(schwierigkeitCBox);
+        JPanel tempPanel=new JPanel();
+        JPanel waehlenPnl = new JPanel(new BorderLayout());
+        JPanel tempSouthPanel=new JPanel(new FlowLayout());
+        tempPanel.add(kategorieCBox);
+        tempPanel.add(schwierigkeitCBox);
         waehlenBtn = new JButton("OK");
         waehlenBtn.addActionListener(this);
-        waehlenPnl.add(waehlenBtn);
+        abbrechenBtn=new JButton("Abbrechen");
+        abbrechenBtn.addActionListener(this);
+        tempPanel.add(waehlenBtn);
+        tempSouthPanel.add(abbrechenBtn);
+        waehlenPnl.add(tempPanel,BorderLayout.CENTER);
+        waehlenPnl.add(tempSouthPanel,BorderLayout.SOUTH);
         this.add(waehlenPnl);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(500,150));
@@ -73,21 +81,21 @@ public class CreateFrageView extends JFrame implements ActionListener {
         return (String) combo.getSelectedItem();
     }
 
-    public List<Aufgabe> createAufgabenList()
-    {
-        return DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen());
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.waehlenBtn) {
             if (DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()).size()!=0) {
-                trainingGenerierenView = new TrainingGenerierenView(jframe, benutzer,DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()));
-                //trainingGenerierenView.setAufgabenliste(DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()));
+                new TrainingGenerierenView(jframe, benutzer,DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()));
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this,"Es gibt keine Aufgaben mit diesen Parametern","ERROR",JOptionPane.WARNING_MESSAGE);
             }
+        }
+        if (e.getSource()== this.abbrechenBtn)
+        {
+            jframe.setVisible(true);
+            this.dispose();
         }
     }
 }

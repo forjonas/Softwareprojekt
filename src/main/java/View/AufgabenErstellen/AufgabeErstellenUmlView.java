@@ -57,6 +57,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     //Files
     private File designFile;
     private String loesungString;
+    private File musterloesungFile;
 
     public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
         this.doz = doz;
@@ -154,7 +155,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
             designFile = filcV.fileChooser();
         } else if (e.getSource() == this.musterloesungBtn) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-           // loesungFile = filcV.fileChooser();
+            musterloesungFile = filcV.fileChooser();
         }
     }
     private void zurueck() {
