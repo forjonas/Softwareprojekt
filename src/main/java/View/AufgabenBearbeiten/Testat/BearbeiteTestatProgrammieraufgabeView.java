@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.Programmieraufgabe;
+import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
@@ -117,7 +118,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            if(testatController.isIndexNotFirst()) {
+            if (testatController.isIndexNotFirst()) {
                 testatController.zurueckTestat();
                 this.dispose();
             } else {
@@ -128,7 +129,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             String userloesungString = textArea.getText();
             userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
-            if(testatController.isIndexNotLast()) {
+            if (testatController.isIndexNotLast()) {
                 testatController.weiter();
                 this.dispose();
             } else {
@@ -140,5 +141,14 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             testatController.persistTestat();
             this.dispose();
         }
+
+
     }
+
+    public void setUserloesung (Userloesung userloesung){
+        String eingabeText = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
+        this.textArea.setText(eingabeText);
+    }
+
+
 }

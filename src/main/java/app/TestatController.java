@@ -43,12 +43,13 @@ public class TestatController {
     private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
     private JFrame hauptmenueFrame;
-    private List<Userloesung> userloesungen = new ArrayList<>(); //Liste vom Typ Userlösungen mit antworten//bei Beeenden .persist
+    private List<Userloesung> userloesungen;
 
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
         this.testat = testat;
+        this.userloesungen = new ArrayList<>();
         this.aktuellerBenutzer = aktuellerBenutzer;
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat.addBearbeitung(testatBearbeitung);
@@ -69,13 +70,36 @@ public class TestatController {
         }
         // Passende View zusammen mit Aufgabe öffnen
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
-            this.aktuellerFrame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);// Für funktionalität: TestatApp mit übergeben
+            BearbeiteTestatEinfachantwortAufgabeView frame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
+
+            if (userloesungen.size() >= index + 1) {
+                frame.setUserloesung(userloesungen.get(index));
+            }
+
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            this.aktuellerFrame = new BearbeiteTestatMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+
+            BearbeiteTestatMultipleChoiceAufgabeView frame = new BearbeiteTestatMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+            if (userloesungen.size() >= index + 1) {
+                frame.setUserloesung(userloesungen.get(index));
+            }
+            this.aktuellerFrame = frame;
+
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
-            this.aktuellerFrame = new BearbeiteTestatProgrammieraufgabeView(this, (Programmieraufgabe) aufgabe);
+            BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView(this, (Programmieraufgabe) aufgabe);
+            if (userloesungen.size() >= index + 1) {
+                frame.setUserloesung(userloesungen.get(index));
+            }
+            this.aktuellerFrame = frame;
+
+
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
-            this.aktuellerFrame = new BearbeiteTestatDesignaufgabeView(this, (Designaufgabe) aufgabe);
+            BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(this, (Designaufgabe) aufgabe);
+            if (userloesungen.size() >= index + 1) {
+                frame.setUserloesung(userloesungen.get(index));
+            }
+            this.aktuellerFrame = frame;
+
         }
         this.aktuellerFrame.setVisible(true);
     }
@@ -99,7 +123,12 @@ public class TestatController {
     }
 
     public void addUserloesung(Userloesung userloesung) {
-        userloesungen.add(userloesung);
+        if (userloesungen.size() < this.index + 1) {
+            userloesungen.add(userloesung);
+        } else {
+            userloesungen.set(this.index, userloesung);
+        }
+
     }
 
     public void persistTestat() {//usereingaben Liste persistieren
@@ -166,6 +195,10 @@ public class TestatController {
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
+
+        TestatController testatApp = new TestatController(t1, dozent2, null);
+        testatApp.zeigeAktuelleAufgabe();
+
     }
 
 }

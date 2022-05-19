@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.*;
+import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
@@ -110,18 +111,20 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            if(testatController.isIndexNotFirst()) {
+            if (testatController.isIndexNotFirst()) {
                 testatController.zurueckTestat();
                 this.dispose();
+                //getaktuelleLoesung();
             } else {
                 testatController.zurueckTestat();
             }
         }
+
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
             String userloesungString = textArea.getText();
             userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
-            if(testatController.isIndexNotLast()) {
+            if (testatController.isIndexNotLast()) {
                 testatController.weiter();
                 this.dispose();
             } else {
@@ -135,5 +138,11 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             //BearbeiteTestatKatalogView.main(null);
 
         }
+    }
+
+    public void setUserloesung(Userloesung userloesung) {
+        String eingabeText = ((UserloesungEinfachantwort) userloesung).getUserloesung();
+        this.textArea.setText(eingabeText);
+
     }
 }
