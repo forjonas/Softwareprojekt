@@ -103,7 +103,7 @@ public class TestatController {
     }
 
     public void persistTestat() {//usereingaben Liste persistieren
-        for(Userloesung userloesung : userloesungen) {
+        for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
                 userloesung.getAufgabe().addUserloesung(userloesung);
@@ -122,7 +122,7 @@ public class TestatController {
     }
 
     public boolean isIndexNotLast() {
-        return (index < testat.getAnzahlAufgaben()-1);
+        return (index < testat.getAnzahlAufgaben() - 1);
     }
 
     public Testat getTestat() {
