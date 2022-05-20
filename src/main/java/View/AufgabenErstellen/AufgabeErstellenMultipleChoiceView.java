@@ -18,7 +18,6 @@ import java.util.ArrayList;
  * Die View zur Erstellung einer Multiple Choice Aufgabe
  *
  * @author Jannik Oehme
- * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
@@ -72,7 +71,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     //Files
     private File bspBild;
 
-    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("MultipleChoice");
@@ -195,6 +194,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         AufgabeErstellenMultipleChoicePnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenMultipleChoicePnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -208,6 +208,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             bspBild = filcV.fileChooser();
         }
     }
+
     private void switchVisibility() {
         int switcher = (Integer) anzCB.getSelectedItem();
         switch (switcher) {
@@ -244,10 +245,12 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             default:
         }
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -270,10 +273,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             loesungsText = loesungTF.getText();
             loesung = getLoesung(loesungsText);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Eine Eingabe entsprach nicht dem nötigen DatenTyp",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
@@ -283,6 +283,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
+
     private ArrayList<Boolean> getLoesung(String loesungText) {
         int switcher = Integer.parseInt(loesungText);
         ArrayList<Boolean> loesung = new ArrayList<Boolean>();
@@ -316,6 +317,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                 return loesung;
         }
     }
+
     private ArrayList<String> mcSpeichern() {
         ArrayList<String> liste = new ArrayList<String>();
         int switcher = (Integer) anzCB.getSelectedItem();
@@ -339,36 +341,18 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         }
         return liste;
     }
-    private void createObjectandPersist(String aufgTitel,
-                                        String aufText,
-                                        String loesungshinweis,
-                                        int bearbeitungsZeit,
-                                        int punkte,
-                                        Kategorie kat,
-                                        Schwierigkeitsgrad schw,
-                                        ArrayList<String> antworten,
-                                        Dozent doz, ArrayList<Boolean> loesung) {
+
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, Dozent doz, ArrayList<Boolean> loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit,
-                "Null", //Eigentlich beispielBild
-                kat,
-                punkte,
-                schw,
-                aufText,
-                aufgTitel,
-                doz,
-                antworten,
-                null);
+        //ToDo: Aufgabenstellungsbild als ByteArray übergeben
+        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Musterlösung setzten fehlgeschlagen",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);

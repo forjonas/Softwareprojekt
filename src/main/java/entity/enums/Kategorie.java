@@ -7,6 +7,7 @@ package entity.enums;
  * @version 22.04.22
  */
 public enum Kategorie {
+
     Software_Engineering("Software Engineering"), Datenbanken("Datenbanken"), Java_Programmierung("Java-Programmierung"), Java_Grundlagen("Java-Grundlagen"), Klassendiagramme("Klassendiagramme");
 
     private String code;
@@ -18,4 +19,5 @@ public enum Kategorie {
     public String getCode() {
         return code;
     }
+
 }

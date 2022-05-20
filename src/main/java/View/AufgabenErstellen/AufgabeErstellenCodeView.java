@@ -207,7 +207,8 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung /**String codeText,**/) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, "asd", kat, punkte, schw, aufText, aufgTitel, doz, null);
+        //ToDo: Möglichkeit, eine Aufgabenstellungsbild als ByteArray hinzuzufügen einführen
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
         MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
         doz.addErstellteAufgabe(neueAufgabe);
         try {

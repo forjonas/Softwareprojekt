@@ -26,8 +26,8 @@ public abstract class Aufgabe {
     @Id
     private long aufgabenId;
     private int bearbeitungszeit;
-    //Datentyp ändern
-    private String aufgabenstellungsbild;
+    @Lob
+    private byte[] aufgabenstellungsbild;
     private Kategorie kategorie;
     private int punktewert;
     private Schwierigkeitsgrad schwierigkeitsgrad;
@@ -64,7 +64,7 @@ public abstract class Aufgabe {
      * @param textbeschreibung      Textbeschreibung der Aufgabe
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Aufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, Musterloesung musterloesung) {
+    public Aufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, Musterloesung musterloesung) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.aufgabenstellungsbild = aufgabenstellungsbild;
         this.kategorie = kategorie;
@@ -90,7 +90,7 @@ public abstract class Aufgabe {
      * @param textbeschreibung      Textbeschreibung der Aufgabe
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Aufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
+    public Aufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
         this.bearbeitungszeit = bearbeitungszeit;
         this.aufgabenstellungsbild = aufgabenstellungsbild;
         this.kategorie = kategorie;
@@ -126,7 +126,7 @@ public abstract class Aufgabe {
      *
      * @return Bild, das Teil der Aufgabenstellung ist
      */
-    public String getAufgabenstellungsbild() {
+    public byte[] getAufgabenstellungsbild() {
         return aufgabenstellungsbild;
     }
 
@@ -135,7 +135,7 @@ public abstract class Aufgabe {
      *
      * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
      */
-    public void setAufgabenstellungsbild(String aufgabenstellungsbild) {
+    public void setAufgabenstellungsbild(byte[] aufgabenstellungsbild) {
         this.aufgabenstellungsbild = aufgabenstellungsbild;
     }
 

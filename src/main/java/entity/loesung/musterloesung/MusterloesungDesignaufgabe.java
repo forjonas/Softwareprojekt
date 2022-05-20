@@ -17,8 +17,8 @@ import java.io.File;
 @Entity
 public class MusterloesungDesignaufgabe extends Musterloesung {
 
-    private String musterloesung; //ToDo: Filetype
-    //private String musterloesung;
+    @Lob
+    private byte[] musterloesung;
 
     /**
      * Leerer Konstruktor für Klasse MusterloesungDesignaufgabe
@@ -34,7 +34,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      * @param loesungshinweis zur Lösung gehörender Lösungshinweis
      * @param musterloesung   Musterlösung in Form einer Bilddatei
      */
-    public MusterloesungDesignaufgabe(Designaufgabe aufgabe, String loesungshinweis, String musterloesung) {
+    public MusterloesungDesignaufgabe(Designaufgabe aufgabe, String loesungshinweis, byte[] musterloesung) {
         super(aufgabe, loesungshinweis);
         this.musterloesung = musterloesung;
     }
@@ -44,7 +44,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      *
      * @return Musterlösung in Form einer Bilddatei
      */
-    public String getMusterloesung() {
+    public byte[] getMusterloesung() {
         return musterloesung;
     }
 
@@ -53,7 +53,7 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
      *
      * @param musterloesung in Form einer Bilddatei
      */
-    public void setMusterloesung(String musterloesung) {
+    public void setMusterloesung(byte[] musterloesung) {
         this.musterloesung = musterloesung;
     }
 
