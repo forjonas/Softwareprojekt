@@ -2,7 +2,9 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.Designaufgabe;
+import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,7 @@ import javax.swing.border.EmptyBorder;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt
  */
 public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
 
@@ -134,6 +137,17 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             testatController.persistTestat();
             this.dispose();
         }
+    }
+
+    public void setUserloesung (Userloesung userloesung){
+       // String eingabeText = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
+       // this.textArea.setText(eingabeText);
+    }
+
+
+    public void hideButton() {
+        this.btnTestatBeenden.setVisible(false);
+        this.update(this.getGraphics());
     }
 
 }

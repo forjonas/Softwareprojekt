@@ -32,7 +32,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 	private JButton btnUpload;
 	private boolean hinweisVerwendet;
 	private File geuploadet;
-	ImageIcon icon = new ImageIcon ("C:\\BspSoftwareProjekt\\BspDiagram.jpg");
+	ImageIcon icon = new ImageIcon ();
 	private TrainingController trainingController;
 	private Designaufgabe aufgabe;  //Im Frame die Aufgabe
 	private UserloesungDesignaufgabe userloesung;

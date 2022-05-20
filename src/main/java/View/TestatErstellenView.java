@@ -7,6 +7,7 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -27,6 +28,7 @@ import java.util.List;
  *
  * @author Jonas Herbst
  * @version 04.05.22
+ * 20.05: Preview angepasst(Timo u. Kristin)
  */
 public class TestatErstellenView extends JFrame implements ActionListener {
 
@@ -34,6 +36,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JTable tableAufgaben;
     private AufgabenAuswaehlenTableModel aufgabenAuswaehlenTableModel;
     private JButton btnZurueck;
+    private JButton btnPreview;
+
     private JButton btnFreigeben;
     private JTextField txtPasswort;
     private JTextField txtName;
@@ -108,6 +112,18 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         btnZurueck = new JButton("Zurück");
         panelLeftNorth.add(btnZurueck);
 
+        JPanel panelRightNorth = new JPanel();
+        GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
+        gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridy = 0;
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
+
+        btnPreview = new JButton("Preview");
+        panelRightNorth.add(btnPreview);
+
+
         JPanel panelCenterNorth = new JPanel();
         GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
         gbc_panelCenterNorth.anchor = GridBagConstraints.CENTER;
@@ -172,6 +188,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnZurueck.addActionListener(this);
         btnFreigeben.addActionListener(this);
+        btnPreview.addActionListener(this);//verändert
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -184,6 +201,14 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
+
+
+        //verändert
+        if (e.getSource() == this.btnPreview) {
+            previewButtonLogik();
+        }
+
+
         if (e.getSource() == this.btnFreigeben) {
             freigebenButtonLogik();
         }
@@ -191,7 +216,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
     private void zurueckButtonLogik() {
         boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.WARNING_MESSAGE));
-        if(schliessenGewuenscht){
+        if (schliessenGewuenscht) {
             jframe.setVisible(true);
             dispose();
         }
@@ -199,16 +224,16 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
     private void freigebenButtonLogik() {
         List<Aufgabe> ausgewaehlteAufgaben = aufgabenAuswaehlenLogik();
-        if(ausgewaehlteAufgaben != null) {
+        if (ausgewaehlteAufgaben != null) {
             String passwort = txtPasswort.getText().trim();
             String name = txtName.getText().trim();
-            if(name == null || name.equals("")) {
+            if (name == null || name.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bitte Namen für das Testat eingeben", "Keine Name eingegeben", JOptionPane.WARNING_MESSAGE);
-            } else if(passwort == null || passwort.equals("")) {
+            } else if (passwort == null || passwort.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bitte Passwort für das Testat eingeben", "Kein Passwort eingegeben", JOptionPane.WARNING_MESSAGE);
             } else {
                 Testat testat = new Testat(ausgewaehlteAufgaben, passwort, name, aktuellerBenutzer);
-                for(Aufgabe a: ausgewaehlteAufgaben) {
+                for (Aufgabe a : ausgewaehlteAufgaben) {
                     a.addVerwendung(testat);
                 }
                 DatabaseService.getInstance().persistObject(testat);
@@ -225,7 +250,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             int gesamtzeit = 0;
             for (int i = 0; i < aufgabenliste.size(); i++) {
                 boolean ausgewaehlt = (boolean) aufgabenAuswaehlenTableModel.getValueAt(i, 6);
-                if(ausgewaehlt) {
+                if (ausgewaehlt) {
                     ausgewaehlteAufgaben.add(aufgabenliste.get(i));
                     gesamtzeit += aufgabenliste.get(i).getBearbeitungszeit();
                 }
@@ -233,7 +258,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             if (ausgewaehlteAufgaben.size() <= 0) {
                 JOptionPane.showMessageDialog(this, "Es wurden keine Aufgaben für das Testat ausgewählt", "Keine Aufgaben ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
-                if(gesamtzeit < 10) {
+                if (gesamtzeit < 10) {
                     JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats muss mindestens 10 Minuten betragen.\nBitte mehr Aufgaben auswählen.", "Zu wenige Aufgaben", JOptionPane.WARNING_MESSAGE);
                 } else if (gesamtzeit > 90) {
                     JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Testats darf höchstens 90 Minuten betragen.\nBitte weniger Aufgaben auswählen.", "Zu viele Aufgaben", JOptionPane.WARNING_MESSAGE);
@@ -243,6 +268,21 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             }
         }
         return null;
+    }
+
+    private void previewButtonLogik() {
+        int selectedRow = tableAufgaben.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Aufgabe aufgabe = aufgabenliste.get(selectedRow);
+            TestatErstellenAufgabenPreview preview = new TestatErstellenAufgabenPreview(aufgabe);
+            if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+                preview.showMcPanel();
+            } else {
+                preview.hideMcPanel();
+            }
+        }
     }
 
 }
