@@ -7,6 +7,7 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Dozent;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -33,6 +34,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnLoeschen;
+    private JButton btnPreview;
     private JButton btnBearbeiten;
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
@@ -135,6 +137,11 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen = new JButton("Löschen");
         panelRightNorth.add(btnLoeschen);
 
+
+        btnPreview = new JButton("Preview");
+        panelRightNorth.add(btnPreview);
+
+
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
@@ -147,6 +154,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen.addActionListener(this);
         btnErstellen.addActionListener(this);
         btnZurueck.addActionListener(this);
+        btnPreview.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -165,6 +173,11 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnLoeschen) {
             loeschenButtonLogik();
         }
+
+        if (e.getSource() == this.btnPreview) {
+            previewButtonLogik();
+        }
+
     }
 
     private void zurueckButtonLogik() {
@@ -194,7 +207,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
                 } else {
                     loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
                 }
-                if(loeschenGewuenscht) {
+                if (loeschenGewuenscht) {
                     aufgabenliste.remove(aufgabe);
                     aufgabeTableModel.fireTableDataChanged();
                     DatabaseService.getInstance().saveDeleteAufgabeFromDatabase(aufgabe);
@@ -203,5 +216,22 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
             }
         }
     }
+
+    private void previewButtonLogik() {
+        int selectedRow = tableAufgaben.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Aufgabe aufgabe = aufgabenliste.get(selectedRow);
+            TestatErstellenAufgabenPreview preview = new TestatErstellenAufgabenPreview(aufgabe);
+            if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+                preview.showMcPanel();
+            } else {
+                preview.hideMcPanel();
+            }
+
+        }
+    }
+
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 /*
 20.05 T.Joswig u. K.Kubisch Preview
  */
-public class TestatErstellenAufgabenPreview extends JFrame implements ActionListener {
+public class TestatErstellenAufgabenPreview extends JDialog implements ActionListener {
     private JTextField txtfAufgabenstellung;
     private JButton btnZurueckButton;
     private JLabel lblBild;
@@ -27,6 +27,7 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
     private JRadioButton antwort4;
     private JPanel mcPanel;
 
+
     private Aufgabe aufgabe;
 
 
@@ -37,8 +38,7 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
         btnZurueckButton.addActionListener(this);
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + " P.");
@@ -46,6 +46,9 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
         if (aufgabe.getAufgabenstellungsbild()!= null){
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
+
+        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
