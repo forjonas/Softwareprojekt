@@ -2,6 +2,7 @@ package View;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.enums.Aufgabentyp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.util.List;
 /*
 20.05 T.Joswig u. K.Kubisch Preview
  */
-public class TestatErstellenAufgabenPreview extends JFrame implements ActionListener {
+public class TestatErstellenAufgabenPreview extends JDialog implements ActionListener {
     private JTextField txtfAufgabenstellung;
     private JButton btnZurueckButton;
     private JLabel lblBild;
@@ -26,6 +27,8 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
     private JRadioButton antwort3;
     private JRadioButton antwort4;
     private JPanel mcPanel;
+    private JLabel lblAufgabentypWert;
+
 
     private Aufgabe aufgabe;
 
@@ -36,16 +39,25 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
         this.setContentPane(mainPanel);
         btnZurueckButton.addActionListener(this);
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+            showMcPanel();
+        } else {
+            hideMcPanel();
+        }
 
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + " P.");
+        lblAufgabentypWert.setText((aufgabe.getAufgabentyp().getCode()));
 
-        if (aufgabe.getAufgabenstellungsbild()!= null){
+        if (aufgabe.getAufgabenstellungsbild() != null) {
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
+
+        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
