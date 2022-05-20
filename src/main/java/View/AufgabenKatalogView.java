@@ -27,7 +27,7 @@ import java.util.List;
  * @author Jonas Herbst
  * @version 04.05.22
  * <p>
- * 20.05.22: Preview Button hinzugefügt
+ * 20.05.22: Preview Button hinzugefügt (Timo u. Kristin)
  */
 public class AufgabenKatalogView extends JFrame implements ActionListener {
 
