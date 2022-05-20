@@ -31,7 +31,6 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
 
 
     public TestatErstellenAufgabenPreview(Aufgabe aufgabe) {
-
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         btnZurueckButton.addActionListener(this);
