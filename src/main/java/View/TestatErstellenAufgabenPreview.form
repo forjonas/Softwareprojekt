@@ -27,7 +27,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Bild"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="1de1" class="javax.swing.JButton" binding="btnZurueckButton">

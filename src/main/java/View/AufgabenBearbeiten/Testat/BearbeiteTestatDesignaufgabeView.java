@@ -140,8 +140,8 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     }
 
     public void setUserloesung (Userloesung userloesung){
-        String eingabeText = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
-        this.textArea.setText(eingabeText);
+       // String eingabeText = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
+       // this.textArea.setText(eingabeText);
     }
 
 

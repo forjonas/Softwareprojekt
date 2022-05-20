@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Jonas Herbst
  * @version 04.05.22
+ * 20.05: Preview angepasst(Timo u. Kristin)
  */
 public class TestatErstellenView extends JFrame implements ActionListener {
 

@@ -37,12 +37,15 @@ public class TestatErstellenAufgabenPreview extends JFrame implements ActionList
         btnZurueckButton.addActionListener(this);
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + " P.");
-        //lblBild.setIcon(aufgabe.getAufgabenstellungsbild());
+
+        if (aufgabe.getAufgabenstellungsbild()!= null){
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
+        }
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
