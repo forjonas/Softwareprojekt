@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt
  */
 public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
@@ -207,5 +208,10 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
                 button1.setSelected(wert);
             }
         }
+    }
+
+    public void hideButton() {
+        this.btnTestatBeenden.setVisible(false);
+        this.update(this.getGraphics());
     }
 }

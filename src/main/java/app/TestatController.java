@@ -32,6 +32,8 @@ import java.util.List;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
+ * @version5: 19.05.22 Vorher Button mit Inhalt
+ * @version6: 20.05.22 "Beenden" Button auf setVisible(false)
  * Schnittstelle um ein Testat auszuführen
  */
 public class TestatController {
@@ -71,35 +73,56 @@ public class TestatController {
         // Passende View zusammen mit Aufgabe öffnen
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
             BearbeiteTestatEinfachantwortAufgabeView frame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
-
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
 
             this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index+1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }
+
+
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
 
             BearbeiteTestatMultipleChoiceAufgabeView frame = new BearbeiteTestatMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
+
+
+
+
             this.aktuellerFrame = frame;
+            if (index+1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }
 
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
             BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView(this, (Programmieraufgabe) aufgabe);
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
-            this.aktuellerFrame = frame;
 
+
+
+            this.aktuellerFrame = frame;
+            if (index+1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }
 
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
             BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(this, (Designaufgabe) aufgabe);
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
-            this.aktuellerFrame = frame;
 
+
+
+            this.aktuellerFrame = frame;
+            if (index+1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }
         }
         this.aktuellerFrame.setVisible(true);
     }

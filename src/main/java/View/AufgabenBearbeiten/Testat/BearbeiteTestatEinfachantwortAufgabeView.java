@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt
  */
 public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
 
@@ -145,4 +146,10 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         this.textArea.setText(eingabeText);
 
     }
+
+    public void hideButton() {
+        this.btnTestatBeenden.setVisible(false);
+        this.update(this.getGraphics());
+    }
+
 }

@@ -7,6 +7,7 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -34,6 +35,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JTable tableAufgaben;
     private AufgabenAuswaehlenTableModel aufgabenAuswaehlenTableModel;
     private JButton btnZurueck;
+    private JButton btnPreview;
+
     private JButton btnFreigeben;
     private JTextField txtPasswort;
     private JTextField txtName;
@@ -107,6 +110,18 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnZurueck = new JButton("Zurück");
         panelLeftNorth.add(btnZurueck);
+
+        JPanel panelRightNorth = new JPanel();
+        GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
+        gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
+        gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridy = 0;
+        panelNorth.add(panelRightNorth, gbc_panelRightNorth);
+
+        btnPreview = new JButton("Preview");
+        panelRightNorth.add(btnPreview);
+
 
         JPanel panelCenterNorth = new JPanel();
         GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
@@ -184,6 +199,14 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
+
+
+        //verändert
+        if (e.getSource() == this.btnPreview) {
+            previewButtonLogik();
+        }
+
+
         if (e.getSource() == this.btnFreigeben) {
             freigebenButtonLogik();
         }
