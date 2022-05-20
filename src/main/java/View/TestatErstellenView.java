@@ -273,7 +273,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private void previewButtonLogik() {
         int selectedRow = tableAufgaben.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe zum Bearbeiten ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
             TestatErstellenAufgabenPreview preview = new TestatErstellenAufgabenPreview(aufgabe);
