@@ -1,15 +1,11 @@
 package View;
 
-import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.AufgabeTableModel;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -17,40 +13,35 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Ansicht in der die bestehenden Aufgaben administriert und neue hinzugefügt werden können.
+ * Ansicht, die eine tabellarische Übersicht der Aufgaben in einem Testat zeigt
  *
  * @author Jonas Herbst
  * @version 04.05.22
  */
-public class AufgabenKatalogView extends JFrame implements ActionListener {
+public class AufgabenEinesTestatsView extends JDialog implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableAufgaben;
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
-    private JButton btnLoeschen;
-    private JButton btnErstellen;
-    private Dozent aktuellerBenutzer;
+    private JButton btnEinsehen;
     private List<Aufgabe> aufgabenliste;
-    private JFrame jframe;
+    private Testat testat;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
         Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
-        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        //Dozent dozent3 = (Dozent) DatabaseService.getInstance().readDozentnachBenutzernamen("PPanzer");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(null, dozent1);
-                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
-                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent3);
+                    AufgabenEinesTestatsView frame = new AufgabenEinesTestatsView(getTestData());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -59,33 +50,30 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         });
     }
 
-    private List<Aufgabe> getTestData() {
+    private static Testat getTestData() {
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
         Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent1);
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent1, Arrays.asList(new String[]{"char", "int", "double"}));
         Aufgabe a5 = new EinfachantwortAufgabe();
-        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
-        List<Aufgabe> aufgabenListe2 = new LinkedList<Aufgabe>(aufgabenListe1);
-        return aufgabenListe1;
+        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a5});
+        Testat testat = new Testat(aufgabenListe1, "000", "NeuesTestat", dozent1);
+        return testat;
     }
 
     /**
      * Create the frame.
      */
-    public AufgabenKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
-        this.jframe = jframe;
-        this.aktuellerBenutzer = aktuellerBenutzer;
-        DatabaseService ds = DatabaseService.getInstance();
-        aufgabenliste = ds.readAufgabenFromDatabase();
-        //Test
-        //aufgabenliste = getTestData();
-        //aufgabenliste = new LinkedList<Aufgabe>();
+    public AufgabenEinesTestatsView(Testat testat) {
+        this.testat = testat;
+        aufgabenliste = testat.getAufgaben();
         aufgabenliste = new LinkedList<Aufgabe>(aufgabenliste);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Aufgabenkatalog");
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setTitle("Aufgaben des Testats \""+testat.getName()+"\"");
+        //setModal(true);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        //setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -120,9 +108,6 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         gbc_panelCenterNorth.gridy = 0;
         panelNorth.add(panelCenterNorth, gbc_panelCenterNorth);
 
-        btnErstellen = new JButton("Neue Aufgabe erstellen");
-        panelCenterNorth.add(btnErstellen);
-
         JPanel panelRightNorth = new JPanel();
         GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
         gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
@@ -131,8 +116,8 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         gbc_panelRightNorth.gridy = 0;
         panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
-        btnLoeschen = new JButton("Löschen");
-        panelRightNorth.add(btnLoeschen);
+        btnEinsehen = new JButton("Einsehen");
+        panelRightNorth.add(btnEinsehen);
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -143,8 +128,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         tableAufgaben.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableAufgaben);
 
-        btnLoeschen.addActionListener(this);
-        btnErstellen.addActionListener(this);
+        btnEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
 
         super.pack();
@@ -158,47 +142,25 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
-        if (e.getSource() == this.btnErstellen) {
-            erstellenButtonLogik();
-        }
-        if (e.getSource() == this.btnLoeschen) {
-            loeschenButtonLogik();
+        if (e.getSource() == this.btnEinsehen) {
+            einsehenButtonLogik();
         }
     }
 
     private void zurueckButtonLogik() {
-        jframe.setVisible(true);
         dispose();
     }
 
-    private void erstellenButtonLogik() {
-        new AufgabeErstellenStartView(jframe, aktuellerBenutzer);
-        dispose();
-    }
-
-    private void loeschenButtonLogik() {
+    private void einsehenButtonLogik() {
         if (aufgabenliste.size() <= 0) {
-            JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Löschen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Einsehen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
         } else {
             int selectedRow = tableAufgaben.getSelectedRow();
             if (selectedRow < 0) {
-                JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe zum Löschen ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe zum Einsehen ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
-                boolean loeschenGewuenscht = false;
                 Aufgabe aufgabe = aufgabenliste.get(selectedRow);
-                if (!aufgabe.darfDozentAufgabeLoeschen(aktuellerBenutzer)) {
-                    JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, diese Aufgabe zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
-                } else if (aufgabe.getVerwendungen().size() > 0) {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
-                } else {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
-                }
-                if(loeschenGewuenscht) {
-                    aufgabenliste.remove(aufgabe);
-                    aufgabeTableModel.fireTableDataChanged();
-                    DatabaseService.getInstance().saveDeleteAufgabeFromDatabase(aufgabe);
-                    JOptionPane.showMessageDialog(this, "Die ausgewählte Aufgabe wurde gelöscht", "Aufgabe gelöscht", JOptionPane.INFORMATION_MESSAGE);
-                }
+                new TestatErstellenAufgabenPreview(aufgabe);
             }
         }
     }
