@@ -26,6 +26,8 @@ import java.util.List;
  *
  * @author Jonas Herbst
  * @version 04.05.22
+ *
+ * 20.05.22: Preview Button hinzugefügt
  */
 public class AufgabenKatalogView extends JFrame implements ActionListener {
 
@@ -207,7 +209,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
                 } else {
                     loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
                 }
-                if(loeschenGewuenscht) {
+                if (loeschenGewuenscht) {
                     aufgabenliste.remove(aufgabe);
                     aufgabeTableModel.fireTableDataChanged();
                     DatabaseService.getInstance().saveDeleteAufgabeFromDatabase(aufgabe);
@@ -232,6 +234,4 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
 
         }
     }
-
-
 }
