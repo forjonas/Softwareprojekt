@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Jonas Herbst
  * @version 04.05.22
- *
+ * <p>
  * 20.05.22: Preview Button hinzugefügt
  */
 public class AufgabenKatalogView extends JFrame implements ActionListener {
@@ -225,12 +225,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
-            TestatErstellenAufgabenPreview preview = new TestatErstellenAufgabenPreview(aufgabe);
-            if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-                preview.showMcPanel();
-            } else {
-                preview.hideMcPanel();
-            }
+            new TestatErstellenAufgabenPreview(aufgabe);
 
         }
     }

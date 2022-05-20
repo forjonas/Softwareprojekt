@@ -2,6 +2,7 @@ package View;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.enums.Aufgabentyp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
     private JRadioButton antwort3;
     private JRadioButton antwort4;
     private JPanel mcPanel;
+    private JLabel lblAufgabentypWert;
 
 
     private Aufgabe aufgabe;
@@ -37,13 +39,20 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
         this.setContentPane(mainPanel);
         btnZurueckButton.addActionListener(this);
 
+        if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+            showMcPanel();
+        } else {
+            hideMcPanel();
+        }
+
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + " P.");
+        lblAufgabentypWert.setText((aufgabe.getAufgabentyp().getCode()));
 
-        if (aufgabe.getAufgabenstellungsbild()!= null){
+        if (aufgabe.getAufgabenstellungsbild() != null) {
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
 

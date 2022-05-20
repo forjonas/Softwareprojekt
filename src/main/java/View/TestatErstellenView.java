@@ -276,12 +276,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
-            TestatErstellenAufgabenPreview preview = new TestatErstellenAufgabenPreview(aufgabe);
-            if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-                preview.showMcPanel();
-            } else {
-                preview.hideMcPanel();
-            }
+            new TestatErstellenAufgabenPreview(aufgabe);
         }
     }
 
