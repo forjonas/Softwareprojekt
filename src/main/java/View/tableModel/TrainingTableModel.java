@@ -110,4 +110,5 @@ public class TrainingTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         return false;
     }
+
 }

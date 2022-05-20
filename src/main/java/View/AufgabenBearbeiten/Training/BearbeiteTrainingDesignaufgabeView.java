@@ -124,7 +124,9 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 		}
 		if (e.getSource() == this.btnNaechsteAufgabeTraining) {
 			String userloesungString = textArea.getText();
-			userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+			//userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+			//ToDo: Userlösung in Form von ByteArray bekommen (über FileChooserDialog und Convert der File in ByteArray, dafür wird eine eine DBService Methode geben
+			userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, null, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
 			trainingController.addUserloesung(userloesung);
 			if(trainingController.isIndexNotLast()) {
 				trainingController.weiter();

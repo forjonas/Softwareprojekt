@@ -33,4 +33,5 @@ public class KategorieConverter implements AttributeConverter<Kategorie, String>
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
 }

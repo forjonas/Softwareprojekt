@@ -87,4 +87,5 @@ public class TestatTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         return false;
     }
+
 }

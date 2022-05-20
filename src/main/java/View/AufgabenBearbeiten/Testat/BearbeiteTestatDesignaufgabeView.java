@@ -118,7 +118,9 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
             String userloesungString = textArea.getText();
-            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            //userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            //ToDo: Userlösung in Form von ByteArray bekommen (über FileChooserDialog und Convert der File in ByteArray, dafür wird eine eine DBService Methode geben
+            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, null, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
             if(testatController.isIndexNotLast()) {
                 testatController.weiter();

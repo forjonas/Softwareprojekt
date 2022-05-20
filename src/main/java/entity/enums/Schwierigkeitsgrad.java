@@ -7,6 +7,7 @@ package entity.enums;
  * @version 04.05.22
  */
 public enum Schwierigkeitsgrad {
+
     Leicht("Leicht"), Mittel("Mittel"), Schwer("Schwer");
 
     private String code;
@@ -18,4 +19,5 @@ public enum Schwierigkeitsgrad {
     public String getCode() {
         return code;
     }
+
 }

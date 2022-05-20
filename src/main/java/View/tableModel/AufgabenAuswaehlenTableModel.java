@@ -127,4 +127,5 @@ public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
                 return false;
         }
     }
+
 }

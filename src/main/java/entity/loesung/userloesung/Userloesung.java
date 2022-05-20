@@ -27,7 +27,7 @@ public abstract class Userloesung extends Loesung {
     @ManyToOne(cascade = CascadeType.PERSIST)
     //@JoinColumn(name = "userloesungErsteller_benutzerid")
     private Benutzer userloesungErsteller;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     //@JoinColumn(name = "aufgabensammlung_aufgabesammlungid")
     private Aufgabensammlung aufgabensammlung;
 

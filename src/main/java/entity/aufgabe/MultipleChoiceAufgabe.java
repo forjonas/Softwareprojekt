@@ -55,7 +55,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param antwortmoeglichkeiten Antwortmöglichkeiten der Aufgabe
      * @param musterloesung         Musterlösung der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten, MusterloesungMultipleChoiceAufgabe musterloesung) {
+    public MultipleChoiceAufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten, MusterloesungMultipleChoiceAufgabe musterloesung) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.aufgabentyp = Aufgabentyp.MultipleChoice;
@@ -74,7 +74,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      * @param antwortmoeglichkeiten Antwortmöglichkeiten der Aufgabe
      */
-    public MultipleChoiceAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten) {
+    public MultipleChoiceAufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, List<String> antwortmoeglichkeiten) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
         this.antwortmoeglichkeiten = antwortmoeglichkeiten;
         this.aufgabentyp = Aufgabentyp.MultipleChoice;

@@ -20,17 +20,23 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import entity.enums.*;
 
+import javax.swing.*;
+
 /**
  * Klasse, die sich um das Persistieren und Laden von Entitäten kümmert
  *
  * @author Jonas Herbst
- * @version 10.05.22
+ * @version 20.05.22
  */
 public class DatabaseService<T> {
     private static DatabaseService ds;
@@ -374,6 +380,46 @@ public class DatabaseService<T> {
         for(TestatBearbeitung tb : readTestatBearbeitungenFromDatabase()) {
             saveDeleteTestatBearbeitungFromDatabase(tb);
         }
+    }
+
+    /**
+     * Führt einen FileChooser-Dialog durch und gibt die ausgewählte Datei zurück.
+     * Achtung: Beinhaltet keinerlei Error-Handling bezüglich der zurückgegebenen Datei
+     * --> Dieses wird von der Methode convertFileToByteArray übernommen
+     *
+     * @param ueberdeckterFrame JFrame, der vom FileChooser-Dialog überdeckt/blockiert werden soll
+     * @return Datei, die im FileChooser-Dialog ausgewählt wurde
+     */
+    public static File dateiOeffnen(JFrame ueberdeckterFrame) {
+        File file = null;
+        JFileChooser jfc = new JFileChooser();
+        int retVal = jfc.showOpenDialog(ueberdeckterFrame);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            file = jfc.getSelectedFile();
+        }
+        return file;
+    }
+
+    /**
+     * Konvertiert die übergebene (Bild-)Datei in ein ByteArray
+     * Beinhaltet Error-Handling zur übergebenen Datei, bei Fehlern wird ein MessageDialog geöffnet
+     *
+     * @param file (Bild-)Datei, die in ein ByteArray konvertiert werden soll
+     * @param ueberdeckterFrame JFrame, der von bei Fehlern auftretenden MessageDialogen überdeckt/blockiert werden soll
+     * @return ByteArray, in das die übergebene Datei konvertiert wurde
+     */
+    public static byte[] convertFileToByteArray(File file, JFrame ueberdeckterFrame) {
+        byte[] imgInBytes = new byte[(int) file.length()];
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            fileInputStream.read(imgInBytes);
+        } catch (NullPointerException npe) {
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Sie haben keine Datei ausgewählt.", "Keine Datei ausgewählt", JOptionPane.WARNING_MESSAGE);
+        } catch (FileNotFoundException fnf) {
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Die gewählte Datei wurde nicht gefunden.", "Datei nicht gefunden", JOptionPane.WARNING_MESSAGE);
+        } catch (IOException io) {
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Beim Lesen der Datei ist ein Fehler aufgetreten.", "Fehler beim Lesen der Datei\"", JOptionPane.WARNING_MESSAGE);
+        }
+        return imgInBytes;
     }
 
     /**
