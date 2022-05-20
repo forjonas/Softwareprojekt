@@ -17,7 +17,6 @@ import java.io.File;
  * Die View zur Erstellung einer UML Aufgabe
  *
  * @author Jannik Oehme
- * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
@@ -56,10 +55,10 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private JTextField punkteTF;
     //Files
     private File designFile;
-    private String loesungString;
+    private byte[] loesungByteArray;
     private File musterloesungFile;
 
-    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Design Aufgabe Erstellen");
@@ -72,6 +71,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     private void AufgabeErstellenUMLViewFuellen() {
         //Panels
         gl.setVgap(25);
@@ -144,6 +144,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         AufgabeErstellenUMLPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenUMLPnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -158,6 +159,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
             musterloesungFile = filcV.fileChooser();
         }
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
@@ -181,10 +183,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
@@ -197,24 +196,14 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit,
-                "a", //Eigentlich designFile
-                kat,
-                punkte,
-                schw,
-                aufText,
-                aufgTitel,
-                doz,
-                null);
+        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, null, //ToDo: Mit ByteArray ersetzen
+                kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungString);
+        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, loesungByteArray); //ToDo: loesungByteArray mit Inhalt füllen
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Musterlösung setzten fehlgeschlagen",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);

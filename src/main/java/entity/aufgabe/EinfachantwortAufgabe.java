@@ -45,7 +45,7 @@ public class EinfachantwortAufgabe extends Aufgabe {
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      * @param musterloesung         Musterlösung der Aufgabe
      */
-    public EinfachantwortAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungEinfachantwort musterloesung) {
+    public EinfachantwortAufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungEinfachantwort musterloesung) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
         this.aufgabentyp = Aufgabentyp.Einfachantwort;
     }
@@ -63,7 +63,7 @@ public class EinfachantwortAufgabe extends Aufgabe {
      * @param name                  Name der Aufgabe
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public EinfachantwortAufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
+    public EinfachantwortAufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
         this.aufgabentyp = Aufgabentyp.Einfachantwort;
     }

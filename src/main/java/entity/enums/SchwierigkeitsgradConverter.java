@@ -33,4 +33,5 @@ public class SchwierigkeitsgradConverter implements AttributeConverter<Schwierig
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
 }

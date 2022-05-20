@@ -24,7 +24,7 @@ public class Training extends Aufgabensammlung {
     private Schwierigkeitsgrad schwierigkeitsgrad;
     @ElementCollection
     private List<Aufgabentyp> aufgabentypen;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "trainingsErsteller_benutzerid")
     private Benutzer trainingsErsteller;
 

@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
+//Nur Test
 @Entity(name = "ImageTest")
 public class ImageTest {
     @Id
@@ -49,12 +50,14 @@ public class ImageTest {
 
 class ImagePersistence {
 
+    //Nur Test
     public static void main(String[] args) {
         //removeImagesFromDatabase();
         //writeTestImagesToDatabase();
         writeTestImagesToFiles();
     }
 
+    //Nur Test
     private static void removeImagesFromDatabase() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
@@ -67,6 +70,7 @@ class ImagePersistence {
         em.getTransaction().commit();
     }
 
+    //Nur Test
     private static void writeTestImagesToFiles() {
         for (ImageTest img : readImageTestsFromDatabase()) {
             File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\loadedImages\\" + img.getName() + ".txt");
@@ -74,6 +78,7 @@ class ImagePersistence {
         }
     }
 
+    //Nur Test
     public static List<ImageTest> readImageTestsFromDatabase() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
@@ -82,51 +87,57 @@ class ImagePersistence {
         return resultList;
     }
 
+    //Nur Test
     private static void writeTestImagesToDatabase() {
         File file1 = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img1.png");
         File file2 = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img2.png");
         File file3 = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img3.png");
         File file4 = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img4.jpg");
-        ImageTest img1 = new ImageTest("Peter", convertFileToByteArray(file1));
-        ImageTest img2 = new ImageTest("Karl", convertFileToByteArray(file2));
-        ImageTest img3 = new ImageTest("Dieter", convertFileToByteArray(file3));
-        ImageTest img4 = new ImageTest("Otto", convertFileToByteArray(file4));
+        ImageTest img1 = new ImageTest("Peter", convertFileToByteArray(file1, null));
+        ImageTest img2 = new ImageTest("Karl", convertFileToByteArray(file2, null));
+        ImageTest img3 = new ImageTest("Dieter", convertFileToByteArray(file3, null));
+        ImageTest img4 = new ImageTest("Otto", convertFileToByteArray(file4, null));
         List<ImageTest> imgListe = Arrays.asList(new ImageTest[]{img1, img2, img3, img4});
         DatabaseService.getInstance().persistObjects(imgListe);
     }
 
+    //Nur Test
     private static void writeImageToDatabaseWithDialog() {
         ImageTest img = new ImageTest();
         img.setName("Dieter");
-        File file = dateiOeffnen();
-        byte[] imgInBytes = convertFileToByteArray(file);
+        File file = dateiOeffnen(null);
+        byte[] imgInBytes = convertFileToByteArray(file, null);
         img.setImage(imgInBytes);
         DatabaseService.getInstance().persistObject(img);
     }
 
-    private static File dateiOeffnen() {
+    //In DatabaseService hinzufügen
+    private static File dateiOeffnen(JFrame ueberdeckterFrame) {
         File file = null;
         JFileChooser jfc = new JFileChooser();
-        int retVal = jfc.showOpenDialog(null);
-        if (retVal == JFileChooser.APPROVE_OPTION)
+        int retVal = jfc.showOpenDialog(ueberdeckterFrame);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
             file = jfc.getSelectedFile();
+        }
         return file;
     }
 
-    private static byte[] convertFileToByteArray(File file) {
+    //In DatabaseService hinzufügen
+    private static byte[] convertFileToByteArray(File file, JFrame ueberdeckterFrame) {
         byte[] imgInBytes = new byte[(int) file.length()];
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             fileInputStream.read(imgInBytes);
         } catch (NullPointerException npe) {
-            JOptionPane.showMessageDialog(null, "Du hast keine Datei ausgewählt", "NullPointerException", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Sie haben keine Datei ausgewählt.", "Keine Datei ausgewählt", JOptionPane.WARNING_MESSAGE);
         } catch (FileNotFoundException fnf) {
-            JOptionPane.showMessageDialog(null, "Die gewählte Datei wurde nicht gefunden", "FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Die gewählte Datei wurde nicht gefunden.", "Datei nicht gefunden", JOptionPane.WARNING_MESSAGE);
         } catch (IOException io) {
-            JOptionPane.showMessageDialog(null, "Fehler beim Lesen der Datei", "IOException", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(ueberdeckterFrame, "Beim Lesen der Datei ist ein Fehler aufgetreten.", "Fehler beim Lesen der Datei\"", JOptionPane.WARNING_MESSAGE);
         }
         return imgInBytes;
     }
 
+    //In DatabaseService hinzufügen --> wird nicht benötigt, das wir für die ImageIcons nur das ByteArray brauchen
     private static File convertByteArrayToFile(byte[] byteArray, File file) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(byteArray);
@@ -141,6 +152,7 @@ class ImagePersistence {
     }
 }
 
+//Nur Test, der demonstriert, wie man ein ImageIcon aus einem ByteArray erstellt (Problem: Auflösung des Bilds)
 class ImageJFrame extends JFrame {
 
     private JPanel contentPane;

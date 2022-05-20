@@ -15,6 +15,8 @@ import entity.loesung.Loesung;
 import entity.loesung.musterloesung.*;
 import entity.loesung.userloesung.*;
 
+import javax.xml.crypto.Data;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,12 +31,12 @@ public class PersistenceTest {
         System.out.println("Methode zum Testen der Persistenz");
         DatabaseService ds = DatabaseService.getInstance();
 
-        createTestData();
+        //createTestData();
         //ds.clearDatabase();
         //deleteTestData();
         //testRelations();
         //readTestData(65);
-
+        createAufgabeWithImage();
         System.out.println("Testprogramm terminiert");
     }
 
@@ -47,10 +49,10 @@ public class PersistenceTest {
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
         List<Benutzer> benutzerListe = Arrays.asList(new Benutzer[]{student1, student2, student3, dozent1, dozent2});
 
-        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent2);
-        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent2);
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent2);
+        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent2);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
         List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         dozent2.addErstellteAufgabe(a1);
         dozent2.addErstellteAufgabe(a2);
@@ -89,15 +91,15 @@ public class PersistenceTest {
         ds.persistObjects(Arrays.asList(new TestatBearbeitung[]{t1, t2}));*/
 
         Musterloesung ml1 = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Lösungshinweis", "Lösung");
-        //Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", "Lösung");
+        Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", null);
         Musterloesung ml3 = new MusterloesungProgrammieraufgabe((Programmieraufgabe) a3, "Lösungshinweis", "Lösung");
         Musterloesung ml4 = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Lösungshinweis", Arrays.asList(new Boolean[]{true, false, false}));
         a1.setMusterloesung(ml1);
-        //a2.setMusterloesung(ml2);
+        a2.setMusterloesung(ml2);
         a3.setMusterloesung(ml3);
         a4.setMusterloesung(ml4);
         Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung", student1, testat1);
-        Userloesung ul2 = new UserloesungDesignaufgabe((Designaufgabe) a2, false, "Lösung", student1, testat1);
+        Userloesung ul2 = new UserloesungDesignaufgabe((Designaufgabe) a2, false, null, student1, testat1);
         Userloesung ul3 = new UserloesungProgrammieraufgabe((Programmieraufgabe) a3, false, "Lösung", student1, testat1);
         Userloesung ul4 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, true, Arrays.asList(new Boolean[]{true, false, false}), student1, testat1);
         testat1.addUserloesung(ul1);
@@ -116,6 +118,20 @@ public class PersistenceTest {
         //List<Loesung> loesungsliste = Arrays.asList(new Loesung[]{ml1, ml2, ml3, ml4, ul1, ul2, ul3, ul4});
         // ds.persistObjects(loesungsliste);
 
+    }
+
+    public static void createAufgabeWithImage() throws Exception {
+        File dateiFuerAufgabenstellungsBild = DatabaseService.dateiOeffnen(null);
+        byte[] aufgabenstellungsBildByteArray = DatabaseService.convertFileToByteArray(dateiFuerAufgabenstellungsBild, null);
+        Designaufgabe aufgabe = new Designaufgabe(15, aufgabenstellungsBildByteArray, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
+        File dateiFuerMusterloesungsBild = DatabaseService.dateiOeffnen(null);
+        byte[] muesterloesungsBildByteArray = DatabaseService.convertFileToByteArray(dateiFuerMusterloesungsBild, null);
+        Musterloesung musterloesung = new MusterloesungDesignaufgabe(aufgabe, "Lösungshinweis", muesterloesungsBildByteArray);
+        aufgabe.setMusterloesung(musterloesung);
+        File dateiFuerUserloesungsBild = DatabaseService.dateiOeffnen(null);
+        byte[] userloesungsBildByteArray = DatabaseService.convertFileToByteArray(dateiFuerUserloesungsBild, null);
+        Userloesung userloesung = new UserloesungDesignaufgabe(aufgabe, false, userloesungsBildByteArray, null, null);
+        DatabaseService.getInstance().persistObject(aufgabe);
     }
 
     public static void deleteTestData() throws Exception {

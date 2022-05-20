@@ -17,7 +17,6 @@ import java.io.File;
  * Die View zur Erstellung einer Einfachantwort Aufgabe
  *
  * @author Jannik Oehme
- * @version 09.05.2022 Layout gefixed Funktionalität geadded schreibt passig in die Datenbank.
  * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
@@ -59,7 +58,8 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JTextField punkteTF;
     //Files
     File bspBild;
-    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame,Dozent doz) {
+
+    public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Einfach Antwort");
@@ -149,6 +149,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -160,10 +161,12 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             bspBild = filcV.fileChooser();
         }
     }
+
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -184,10 +187,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             punkte = Integer.parseInt(punkteTF.getText());
             loesung = loesungTA.getText();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Eine Eingabe entsprach nicht dem nötigen Datentyp",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
@@ -195,28 +195,18 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
+
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(
-                bearbeitungsZeit,
-                "asd", // Eigentlich bspBild
-                kat,
-                punkte,
-                schw,
-                aufText,
-                aufgTitel,
-                doz,
-                null);
+        //ToDo: Aufgabenbild als ByteArray übergeben
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {
             neueAufgabe.setMusterloesung(mlp);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Musterlösung setzten fehlgeschlagen",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
