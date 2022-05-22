@@ -1,10 +1,10 @@
-package View.AufgabenBearbeiten.Testat;
+package testenKristin;
 
 import app.TestatController;
-import entity.aufgabe.*;
+import entity.aufgabe.Designaufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
+import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
  * @version4: 18.05.22
  * @version5: 20.05.22 Beenden Button versteckt
  */
-public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
+public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTextArea textArea;
@@ -33,10 +33,10 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private boolean hinweisVerwendet;
 
     private TestatController testatController;
-    private EinfachantwortAufgabe aufgabe;
-    private UserloesungEinfachantwort userloesung;
+    private Designaufgabe aufgabe;
+    private UserloesungDesignaufgabe userloesung; //noch String
 
-    public BearbeiteTestatEinfachantwortAufgabeView(TestatController testatController, EinfachantwortAufgabe aufgabe) {
+    public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) {
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
@@ -112,40 +112,38 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             }
         }
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            if (testatController.isIndexNotFirst()) {
+            if(testatController.isIndexNotFirst()) {
                 testatController.zurueckTestat();
                 this.dispose();
-                //getaktuelleLoesung();
             } else {
                 testatController.zurueckTestat();
             }
         }
-
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
             String userloesungString = textArea.getText();
-            userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            //userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            //ToDo: Userlösung in Form von ByteArray bekommen (über FileChooserDialog und Convert der File in ByteArray, dafür wird eine eine DBService Methode geben
+            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, null, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
-            if (testatController.isIndexNotLast()) {
+            if(testatController.isIndexNotLast()) {
                 testatController.weiter();
                 this.dispose();
             } else {
                 testatController.weiter();
             }
         }
-        if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
+        if (e.getSource() == this.btnTestatBeenden) {
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatController.persistTestat();
             this.dispose();
-            //BearbeiteTestatKatalogView.main(null);
-
         }
     }
 
-    public void setUserloesung(Userloesung userloesung) {
-        String eingabeText = ((UserloesungEinfachantwort) userloesung).getUserloesung();
-        this.textArea.setText(eingabeText);
-
+    public void setUserloesung (Userloesung userloesung){
+       // String eingabeText = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
+       // this.textArea.setText(eingabeText);
     }
+
 
     public void hideButton() {
         this.btnTestatBeenden.setVisible(false);

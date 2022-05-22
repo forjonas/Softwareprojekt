@@ -1,9 +1,9 @@
-package View.AufgabenBearbeiten.Testat;
+package testenKristin;
 
 import app.TestatController;
-import entity.aufgabe.Designaufgabe;
+import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungDesignaufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import java.awt.*;
@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
  * @version4: 18.05.22
  * @version5: 20.05.22 Beenden Button versteckt
  */
-public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
+public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTextArea textArea;
@@ -33,26 +33,33 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     private boolean hinweisVerwendet;
 
     private TestatController testatController;
-    private Designaufgabe aufgabe;
-    private UserloesungDesignaufgabe userloesung; //noch String
+    private Programmieraufgabe aufgabe;
+    private UserloesungProgrammieraufgabe userloesung;
 
-    public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) {
+    /**
+     * Create the frame.
+     */
+    public BearbeiteTestatProgrammieraufgabeView(TestatController testatController, Programmieraufgabe aufgabe) { //angepasst
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setBounds(100, 100, 674, 435);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout(0, 0));
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
-
         JLabel lblTextbeschreibung = new JLabel(aufgabe.getTextbeschreibung()); //Text mit Textbeschreibung
         panelNorth.add(lblTextbeschreibung);
+
+        /**
+         * Optionales Bild hinzufügen
+         */
 
         JPanel panelCenter = new JPanel();
         contentPane.add(panelCenter, BorderLayout.CENTER);
@@ -101,7 +108,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
             testatController.setNewTestatKatalog();
-
         }
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -111,8 +117,9 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
+
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            if(testatController.isIndexNotFirst()) {
+            if (testatController.isIndexNotFirst()) {
                 testatController.zurueckTestat();
                 this.dispose();
             } else {
@@ -121,33 +128,33 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
             String userloesungString = textArea.getText();
-            //userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
-            //ToDo: Userlösung in Form von ByteArray bekommen (über FileChooserDialog und Convert der File in ByteArray, dafür wird eine eine DBService Methode geben
-            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, null, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, userloesungString, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
-            if(testatController.isIndexNotLast()) {
+            if (testatController.isIndexNotLast()) {
                 testatController.weiter();
                 this.dispose();
             } else {
                 testatController.weiter();
             }
         }
-        if (e.getSource() == this.btnTestatBeenden) {
+        if (e.getSource() == this.btnTestatBeenden) { //Abfrage wenn nicht letzte Aufgabe noch hinzufuegen
             JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
             testatController.persistTestat();
             this.dispose();
         }
+
+
     }
 
     public void setUserloesung (Userloesung userloesung){
-       // String eingabeText = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
-       // this.textArea.setText(eingabeText);
+        String eingabeText = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
+        this.textArea.setText(eingabeText);
     }
-
 
     public void hideButton() {
         this.btnTestatBeenden.setVisible(false);
         this.update(this.getGraphics());
     }
+
 
 }

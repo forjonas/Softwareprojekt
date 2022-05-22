@@ -1,9 +1,6 @@
 package app;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatDesignaufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatMultipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatProgrammieraufgabeView;
+import View.AufgabenBearbeiten.Testat.*;
 import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
@@ -22,6 +19,7 @@ import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,13 +43,23 @@ public class TestatController {
     private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
     private JFrame hauptmenueFrame;
-    private List<Userloesung> userloesungen;
+    protected List<Userloesung> userloesungen;
+    public File halten;
+    public Object eingaben1;
+
+    public void setFile(File file) {
+        this.halten = file;
+
+    }
 
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
         this.testat = testat;
         this.userloesungen = new ArrayList<>();
+        for (int i = 0; i < testat.getAnzahlAufgaben(); i++) {
+            userloesungen.add(i, null);
+        }
         this.aktuellerBenutzer = aktuellerBenutzer;
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat.addBearbeitung(testatBearbeitung);
@@ -72,64 +80,111 @@ public class TestatController {
         }
         // Passende View zusammen mit Aufgabe öffnen
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
-            BearbeiteTestatEinfachantwortAufgabeView frame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
-            if (userloesungen.size() >= index + 1) {
-                frame.setUserloesung(userloesungen.get(index));
+            BearbeiteTestatEinfachantwortAufgabeView2 frame = new BearbeiteTestatEinfachantwortAufgabeView2(this, (EinfachantwortAufgabe) aufgabe);
+
+            if(userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
             }
+            else frame.setUserloesung(userloesungen.get(index));
+
+
 
             this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index+1 < testat.getAnzahlAufgaben()) {
+            if (index + 1 < testat.getAnzahlAufgaben()) {
                 frame.hideButton();
+            }else {
+                frame.setNaechsteZuSpeichern();
+            }
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+            BearbeiteTestatMuktipleChoiceAufgabeView2 frame = new BearbeiteTestatMuktipleChoiceAufgabeView2(this, (MultipleChoiceAufgabe) aufgabe);
+           // frame.setUserloesung(userloesungen.get(index));
+
+            if(userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            }
+            else frame.setUserloesung(userloesungen.get(index));
+
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }else {
+                frame.setNaechsteZuSpeichern();
             }
 
 
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-
-            BearbeiteTestatMultipleChoiceAufgabeView frame = new BearbeiteTestatMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+            /*
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
-
-
-
-
             this.aktuellerFrame = frame;
-            if (index+1 < testat.getAnzahlAufgaben()) {
+            if (index + 1 < testat.getAnzahlAufgaben()) {
                 frame.hideButton();
             }
+             */
 
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
-            BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView(this, (Programmieraufgabe) aufgabe);
+            BearbeiteTestatProgrammieraufgabeView3 frame = new BearbeiteTestatProgrammieraufgabeView3((Programmieraufgabe) aufgabe, this);
+            if(userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            }
+            else frame.setUserloesung(userloesungen.get(index));
+
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }else {
+                frame.setNaechsteZuSpeichern();
+            }
+            /*
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
-
-
-
             this.aktuellerFrame = frame;
-            if (index+1 < testat.getAnzahlAufgaben()) {
+            if (index + 1 < testat.getAnzahlAufgaben()) {
                 frame.hideButton();
             }
+             */
+
 
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
-            BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(this, (Designaufgabe) aufgabe);
+            BearbeiteTestatDesignaufgabeView2 frame = new BearbeiteTestatDesignaufgabeView2(this, (Designaufgabe) aufgabe);
+            if(userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            }
+            else frame.setUserloesung(userloesungen.get(index));
+
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }else {
+                frame.setNaechsteZuSpeichern();
+            }
+
+
+            /*
+            frame.setUserloesung(userloesungen.get(index));
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 < testat.getAnzahlAufgaben()) {
+                frame.hideButton();
+            }
+             */
+
+            /*
             if (userloesungen.size() >= index + 1) {
                 frame.setUserloesung(userloesungen.get(index));
             }
-
-
-
             this.aktuellerFrame = frame;
-            if (index+1 < testat.getAnzahlAufgaben()) {
+            if (index + 1 < testat.getAnzahlAufgaben()) {
                 frame.hideButton();
             }
+             */
         }
         this.aktuellerFrame.setVisible(true);
     }
 
     public void weiter() {
         if (this.index < testat.getAnzahlAufgaben() - 1) {
-            this.index++;
+            this.index++;  //Index fuer Controller erhoet
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
@@ -146,12 +201,14 @@ public class TestatController {
     }
 
     public void addUserloesung(Userloesung userloesung) {
+        userloesungen.set(this.index, userloesung);
+        /*
+        //füge hinzu (mache Liste groeßer) oder setzte neu
         if (userloesungen.size() < this.index + 1) {
             userloesungen.add(userloesung);
         } else {
-            userloesungen.set(this.index, userloesung);
         }
-
+         */
     }
 
     public void persistTestat() {//usereingaben Liste persistieren
@@ -163,9 +220,15 @@ public class TestatController {
             }
             userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
+
+        /*
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
         ds.persistObject(testatBearbeitung);
+         */
+        System.out.println(userloesungen);
+
+
         new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
@@ -187,10 +250,17 @@ public class TestatController {
 
     public static void main(String[] args) throws Exception {
 
+
+        List<String> antwortmoeglichkeiten = new ArrayList<>();
+        antwortmoeglichkeiten.add("Test1");
+        antwortmoeglichkeiten.add("Test2");
+        antwortmoeglichkeiten.add("Test3");
+      //  antwortmoeglichkeiten.add("Test4");
+
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten);
 
         MusterloesungEinfachantwort m1 = new MusterloesungEinfachantwort();
         a1.setMusterloesung(m1);
@@ -211,9 +281,17 @@ public class TestatController {
         java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1});
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
+
+        java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a1, a1, a1, a1});
+        java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a3, a1, a3, a1});
+        java.util.List<Aufgabe> aufgabenListe6 = Arrays.asList(new Aufgabe[]{a4, a1, a3, a4});
+        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
+
+
+
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenListe5, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
