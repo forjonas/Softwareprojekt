@@ -7,7 +7,6 @@ import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,7 @@ import static persistence.DatabaseService.dateiOeffnen;
  * @version4: 18.05.22
  * @version5: 20.05.22 Beenden Button versteckt
  */
-public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionListener {
+public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblAufgabenText;
     private JLabel lblBild;
@@ -40,10 +39,10 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
     private JButton btnLoesungshinweisTestat;
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
-    private JButton btnTestatBeenden;
     private JButton btnUpload;
+    //private JTextArea textArea1;
 
-    private File fileBild = new File("Test.txt");
+    private File fileBild = null;// = new File("Test");
     byte[] eingabe;
     private boolean hinweisVerwendet;
 
@@ -52,7 +51,7 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
     private UserloesungDesignaufgabe userloesung;
 
 
-    public BearbeiteTestatDesignaufgabeView2(TestatController testatController, Designaufgabe aufgabe) {
+    public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
@@ -67,6 +66,7 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
@@ -75,7 +75,6 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         btnLoesungshinweisTestat.addActionListener(this);
         btnVoherigeAufgabeTestat.addActionListener(this);
         btnNaechsteAufgabeTestat.addActionListener(this);
-        btnTestatBeenden.addActionListener(this);
         btnUpload.addActionListener(this);
 
         super.pack();
@@ -101,102 +100,59 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
 
         } else if (e.getSource() == this.btnVoherigeAufgabeTestat) {
 
-
-
-            eingabe = convertFileToByteArray(fileBild, this);
-            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
-            testatController.addUserloesung(userloesung);
-            //if (testatController.isIndexNotLast()) {
+            userEingabenSpeichern();
             testatController.zurueckTestat();
-            /*
-
-            // if (testatController.isIndexNotFirst()) {
-            testatController.zurueckTestat();
-            this.dispose();
-            //getaktuelleLoesung();
-            // }
-            // else {
-            testatController.zurueckTestat();
-             */
-
         } else if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-            //ToDo: Userlösung in Form von ByteArray bekommen (über FileChooserDialog und Convert der File in ByteArray, dafür wird eine eine DBService Methode geben
+            String buttonWechsel = btnNaechsteAufgabeTestat.getText();
+            userEingabenSpeichern();
 
-
-            eingabe = convertFileToByteArray(fileBild, this);
-            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
-            testatController.addUserloesung(userloesung);
-            //if (testatController.isIndexNotLast()) {
-            testatController.weiter();
-
-            /*
-            //Wenn eingabe 1= null dann convert und add byte anonsten add null
-            if (eingabe == null && testatController.halten.exists()) { // Wenn eingaben = 0 und file existiert dann convert, add und gehe weiter ansonsten gehe nur weiter
-                byte[] userloesungByte = convertFileToByteArray(fileBild, this);
-                userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, userloesungByte, testatController.getAktuellerBenutzer(), testatController.getTestat());
-                testatController.addUserloesung(userloesung);
-                //if (testatController.isIndexNotLast()) {
-                testatController.weiter();
+            if (buttonWechsel.equals("Testat beenden")) {
+                testatController.persistTestat();
+                JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                 this.dispose();
-                //} else {
-                // testatController.weiter();
-                // }
             } else {
                 testatController.weiter();
-                this.dispose();
             }
-             */
-
-
-
         } else if (e.getSource() == this.btnUpload) {
 
             fileBild = dateiOeffnen(this);
-            testatController.setFile(fileBild);
-
-            //JFileChooser --> Bild oeffnen --> File in Liste hinzufuegen -->"Beenden" --> File zu Bild convertieren
-
-        } else if (e.getSource() == this.btnTestatBeenden) {
-            JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
-            testatController.persistTestat();
-            this.dispose();
-            //BearbeiteTestatKatalogView.main(null);
-
+            String text = fileBild.getName();
+            btnUpload.setText(text);
+            this.update(this.getGraphics());
         }
     }
-    public void setUserloesungNull() {
-        eingabe =  new byte[0];
-    }
-
-    public void setUserloesung(Userloesung userloesung) {
-
-        eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
-
-    }
-
-    /*
-    public void setUserloesung(Userloesung userloesung) {
-
-        if (eingabe == null) {
-            eingabe = new byte[0];
-        } else {
-            eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
-            //this.fileBild.setUserloesung(eingabe);
-        }
-
-
-    }
-     */
 
     public void setNaechsteZuSpeichern() {
-
-        btnNaechsteAufgabeTestat.setText("Eingabe Speichern");
-
+        btnNaechsteAufgabeTestat.setText("Testat beenden");
     }
 
-    public void hideButton() {
-        this.btnTestatBeenden.setVisible(false);
-        this.update(this.getGraphics());
+    public void userEingabenSpeichern() {
+        if (fileBild != null) {
+            eingabe = convertFileToByteArray(fileBild, this);
+            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            testatController.addUserloesung(userloesung);
+        } else if (fileBild == null) {
+            userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            testatController.addUserloesung(userloesung);
+        }
+    }
+
+    public void setUserloesungNull() {
+        eingabe = new byte[0];
+        //fileBild = new File("Keine Lösung");
+    }
+
+    public void setUserloesung(Userloesung userloesung) {
+        eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
+        if (eingabe.length <= 0) {
+            String name = "Bild fehlt";   //String.valueOf(eingabe.getClass());
+            btnUpload.setText(name);
+            this.update(this.getGraphics());
+        } else {
+            String name = "Bild vorhanden";
+            btnUpload.setText(name);
+            this.update(this.getGraphics());
+        }
     }
 
     {
@@ -219,11 +175,8 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(5, 8, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        lblAufgabenText = new JLabel();
-        lblAufgabenText.setText("Aufgabentext");
-        panel1.add(lblAufgabenText, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         lblBild = new JLabel();
-        lblBild.setText("Bild");
+        lblBild.setText("");
         panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -263,7 +216,7 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         final Spacer spacer2 = new Spacer();
         panel1.add(spacer2, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panel7.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel7, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnAbbrechenTestat = new JButton();
         btnAbbrechenTestat.setText("Abbrechen");
@@ -277,9 +230,6 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         btnNaechsteAufgabeTestat = new JButton();
         btnNaechsteAufgabeTestat.setText("Nächste Aufgabe");
         panel7.add(btnNaechsteAufgabeTestat, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnTestatBeenden = new JButton();
-        btnTestatBeenden.setText("Testat Beenden");
-        panel7.add(btnTestatBeenden, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
@@ -292,6 +242,13 @@ public class BearbeiteTestatDesignaufgabeView2 extends JFrame implements ActionL
         btnUpload = new JButton();
         btnUpload.setText("Bild hochladen");
         panel8.add(btnUpload, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        scrollPane1.setHorizontalScrollBarPolicy(30);
+        scrollPane1.setVerticalScrollBarPolicy(20);
+        panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        lblAufgabenText = new JLabel();
+        lblAufgabenText.setText("Label");
+        scrollPane1.setViewportView(lblAufgabenText);
     }
 
     /**
