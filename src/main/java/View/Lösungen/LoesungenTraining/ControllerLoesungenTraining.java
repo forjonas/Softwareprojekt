@@ -75,15 +75,13 @@ public class ControllerLoesungenTraining {
                 }break;
             }
             case MultipleChoice: {
-                try {
                     assert aufgabe instanceof MultipleChoiceAufgabe;
                     LoesungTrainingMultipleChoiceAufgabeView lTMCV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                     lTMCV.versteckeVorherigeAufgabe();
                     if (training.getAnzahlAufgaben() == 1) {
                         lTMCV.versteckeNaechsteAufgabe();
                     }
-                } catch (Exception ignored) {
-                }break;
+                break;
             }
             case Design: {
                 try {
@@ -127,6 +125,7 @@ public class ControllerLoesungenTraining {
                 break;
             }
             case MultipleChoice: {
+
                 assert aufgabe instanceof MultipleChoiceAufgabe;
                 LoesungTrainingMultipleChoiceAufgabeView lTMCAV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                 if (index == training.getAnzahlAufgaben() - 1) {

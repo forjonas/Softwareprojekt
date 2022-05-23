@@ -81,10 +81,23 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
         MultipleChoiceAufgabe mCAufgabe = (MultipleChoiceAufgabe) this.aufgabe;
         List moeglichkeiten = mCAufgabe.getAntwortmoeglichkeiten();
 
-        antwort1.setText((String) moeglichkeiten.get(0));
-        antwort2.setText((String) moeglichkeiten.get(1));
-        antwort3.setText((String) moeglichkeiten.get(2));
-        antwort4.setText((String) moeglichkeiten.get(3));
+        if (moeglichkeiten.size() == 4) {
+            antwort1.setText((String) moeglichkeiten.get(0));
+            antwort2.setText((String) moeglichkeiten.get(1));
+            antwort3.setText((String) moeglichkeiten.get(2));
+            antwort4.setText((String) moeglichkeiten.get(3));
+        } else if (moeglichkeiten.size() == 3) {
+            antwort1.setText((String) moeglichkeiten.get(0));
+            antwort2.setText((String) moeglichkeiten.get(1));
+            antwort3.setText((String) moeglichkeiten.get(2));
+            antwort4.setVisible(false);
+        }
+        else {
+            antwort1.setText((String) moeglichkeiten.get(0));
+            antwort2.setText((String) moeglichkeiten.get(1));
+            antwort3.setVisible(false);
+            antwort4.setVisible(false);
+        }
         antwort1.setEnabled(false);
         antwort2.setEnabled(false);
         antwort3.setEnabled(false);
