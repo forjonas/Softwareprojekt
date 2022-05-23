@@ -58,7 +58,12 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JTextField punkteTF;
     //Files
     File bspBild;
-
+    /**
+     * @param aufgabeErstellenStartViewFrame
+     * @param doz
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
+     * Setzt Parameter des JFrames und ruft AufgabeErstellenEinfachAntwortViewFuellen() auf.
+     */
     public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
@@ -72,7 +77,9 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
-
+    /**
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     */
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         gl.setVgap(25);
         gl.setHgap(25);
@@ -149,7 +156,9 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
-
+    /**
+     * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -161,12 +170,17 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             bspBild = filcV.fileChooser();
         }
     }
-
+    /**
+     * disposed diesen frame und ruft den vorherigen frame auf. Bzw setzt diesen wieder Visible.
+     */
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
-
+    /**
+     * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
+     * Ruft createObjectandPersist auf.
+     */
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -190,17 +204,27 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
         if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, doz, loesung);
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung);
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
-
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, Dozent doz, String loesung) {
+    /**
+     * @param aufgTitel Titel der Aufgabe
+     * @param aufText Text der Aufgabe
+     * @param loesungshinweis loesungshinweis der Aufgabe
+     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
+     * @param punkte maximale punkte der Aufgabe
+     * @param kat kategorie der Aufgabe
+     * @param schw schwierigkeit der Aufgabe
+     * @param loesung loesung der Aufgabe
+     * Erstellt eine Aufgabe vom Typ Einfachantwortaufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     */
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        //ToDo: Aufgabenbild als ByteArray übergeben
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, null, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        byte [] bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,bspBildByteArray , kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {
