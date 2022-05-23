@@ -17,7 +17,7 @@ import jakarta.persistence.*;
 @Entity
 public class UserloesungDesignaufgabe extends Userloesung {
 
-    private String userloesung; //ToDo: Filetype
+    private byte[] userloesung;
 
     /**
      * Leerer Konstruktor für Klasse UserloesungDesignaufgabe
@@ -35,7 +35,7 @@ public class UserloesungDesignaufgabe extends Userloesung {
      * @param userloesungErsteller Ersteller der Userlösung
      * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
-    public UserloesungDesignaufgabe(Designaufgabe aufgabe, boolean hinweisVerwendet, String userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
+    public UserloesungDesignaufgabe(Designaufgabe aufgabe, boolean hinweisVerwendet, byte[] userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
         super(aufgabe, hinweisVerwendet, userloesungErsteller, aufgabensammlung);
         this.userloesung = userloesung;
     }
@@ -45,7 +45,7 @@ public class UserloesungDesignaufgabe extends Userloesung {
      *
      * @return Userlösung in Form einer Bilddatei
      */
-    public String getUserloesung() {
+    public byte[] getUserloesung() {
         return userloesung;
     }
 
@@ -54,7 +54,7 @@ public class UserloesungDesignaufgabe extends Userloesung {
      *
      * @param userloesung Userlösung in Form einer Bilddatei
      */
-    public void setUserloesung(String userloesung) {
+    public void setUserloesung(byte[] userloesung) {
         this.userloesung = userloesung;
     }
 

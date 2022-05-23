@@ -45,7 +45,7 @@ public class Programmieraufgabe extends Aufgabe {
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      * @param musterloesung         Musterlösung der Aufgabe
      */
-    public Programmieraufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungProgrammieraufgabe musterloesung) {
+    public Programmieraufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller, MusterloesungProgrammieraufgabe musterloesung) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller, musterloesung);
         this.aufgabentyp = Aufgabentyp.Programmieren;
     }
@@ -63,7 +63,7 @@ public class Programmieraufgabe extends Aufgabe {
      * @param name                  Name der Aufgabe
      * @param aufgabenErsteller     Dozent, der die Aufgabe erstellt hat
      */
-    public Programmieraufgabe(int bearbeitungszeit, String aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
+    public Programmieraufgabe(int bearbeitungszeit, byte[] aufgabenstellungsbild, Kategorie kategorie, int punktewert, Schwierigkeitsgrad schwierigkeitsgrad, String textbeschreibung, String name, Dozent aufgabenErsteller) {
         super(bearbeitungszeit, aufgabenstellungsbild, kategorie, punktewert, schwierigkeitsgrad, textbeschreibung, name, aufgabenErsteller);
         this.aufgabentyp = Aufgabentyp.Programmieren;
     }

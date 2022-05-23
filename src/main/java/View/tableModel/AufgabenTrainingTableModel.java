@@ -132,4 +132,5 @@ public class AufgabenTrainingTableModel extends AbstractTableModel {
                 return false;
         }
     }
+
 }

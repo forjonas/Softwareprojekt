@@ -2,6 +2,7 @@ package View.AufgabenBearbeiten.Testat;
 
 import app.TestatController;
 import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt
  */
 public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
@@ -142,7 +144,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            if(testatController.isIndexNotFirst()) {
+            if (testatController.isIndexNotFirst()) {
                 testatController.zurueckTestat();
                 this.dispose();
             } else {
@@ -170,7 +172,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
 
             userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung); //antwort wird in UListe hinzugefügt und gehalten
-            if(testatController.isIndexNotLast()) {
+            if (testatController.isIndexNotLast()) {
                 testatController.weiter();
                 this.dispose();
             } else {
@@ -183,6 +185,33 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
             this.dispose();
             //BearbeiteTestatKatalogView.main(null);
         }
+
+
     }
 
+    public void setUserloesung(Userloesung userloesung) {
+        List<Boolean> geklickt = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
+
+
+        for (int i = 0; i < geklickt.size(); i++) {
+            Boolean wert = geklickt.get(i);
+            if (i == 0) {
+                button1.setSelected(wert);
+            }
+            if (i == 1) {
+                button1.setSelected(wert);
+            }
+            if (i == 2) {
+                button1.setSelected(wert);
+            }
+            if (i == 3) {
+                button1.setSelected(wert);
+            }
+        }
+    }
+
+    public void hideButton() {
+        this.btnTestatBeenden.setVisible(false);
+        this.update(this.getGraphics());
+    }
 }

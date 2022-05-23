@@ -17,7 +17,7 @@ import jakarta.persistence.*;
 @Entity
 public class UserloesungEinfachantwort extends Userloesung {
 
-    private String userloesung; //Typ icon
+    private String userloesung;
 
     /**
      * Leerer Konstruktor für Klasse UserloesungDesignaufgabe

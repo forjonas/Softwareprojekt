@@ -33,8 +33,10 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JTable tableTestate;
     private TestatTableModel testatTableModel;
     private JButton btnZurueck;
-    private JButton btnLoeschen;
     private JButton btnErstellen;
+    private JButton btnAufgabenEinsehen;
+    private JButton btnLoeschen;
+
     private Dozent aktuellerBenutzer;
     private List<Testat> testatliste;
     private JFrame jframe;
@@ -50,8 +52,8 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                 try {
                     Dozent dozent3 = new Dozent();
                     List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
-                    for(Dozent dozent: dozenten) {
-                        if(dozent.getBenutzername().equals("mmustermann")){
+                    for (Dozent dozent : dozenten) {
+                        if (dozent.getBenutzername().equals("mmustermann")) {
                             dozent3 = dozent;
                         }
                     }
@@ -67,10 +69,10 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     }
 
     private List<Testat> getTestData() {
-        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
+        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
         List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
@@ -106,9 +108,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         contentPane.add(panelNorth, BorderLayout.NORTH);
 
         GridBagLayout gbl_panelNorth = new GridBagLayout();
-        gbl_panelNorth.columnWidths = new int[]{0, 0, 0, 0};
+        gbl_panelNorth.columnWidths = new int[]{0, 0, 0, 0, 0};
         gbl_panelNorth.rowHeights = new int[]{0, 0};
-        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+        gbl_panelNorth.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_panelNorth.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panelNorth.setLayout(gbl_panelNorth);
 
@@ -123,22 +125,33 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         btnZurueck = new JButton("Zurück");
         panelLeftNorth.add(btnZurueck);
 
-        JPanel panelCenterNorth = new JPanel();
-        GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
-        gbc_panelCenterNorth.anchor = GridBagConstraints.CENTER;
-        gbc_panelCenterNorth.fill = GridBagConstraints.VERTICAL;
-        gbc_panelCenterNorth.gridx = 1;
-        gbc_panelCenterNorth.gridy = 0;
-        panelNorth.add(panelCenterNorth, gbc_panelCenterNorth);
+        JPanel panelCenterLeftNorth = new JPanel();
+        GridBagConstraints gbc_panelCenterLeftNorth = new GridBagConstraints();
+        gbc_panelCenterLeftNorth.anchor = GridBagConstraints.CENTER;
+        gbc_panelCenterLeftNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelCenterLeftNorth.gridx = 1;
+        gbc_panelCenterLeftNorth.gridy = 0;
+        panelNorth.add(panelCenterLeftNorth, gbc_panelCenterLeftNorth);
 
         btnErstellen = new JButton("Neues Testat erstellen");
-        panelCenterNorth.add(btnErstellen);
+        panelCenterLeftNorth.add(btnErstellen);
+
+        JPanel panelCenterRightNorth = new JPanel();
+        GridBagConstraints gbc_panelCenterRightNorth = new GridBagConstraints();
+        gbc_panelCenterRightNorth.anchor = GridBagConstraints.CENTER;
+        gbc_panelCenterRightNorth.fill = GridBagConstraints.VERTICAL;
+        gbc_panelCenterRightNorth.gridx = 2;
+        gbc_panelCenterRightNorth.gridy = 0;
+        panelNorth.add(panelCenterRightNorth, gbc_panelCenterRightNorth);
+
+        btnAufgabenEinsehen = new JButton("Aufgaben einsehen");
+        panelCenterRightNorth.add(btnAufgabenEinsehen);
 
         JPanel panelRightNorth = new JPanel();
         GridBagConstraints gbc_panelRightNorth = new GridBagConstraints();
         gbc_panelRightNorth.anchor = GridBagConstraints.EAST;
         gbc_panelRightNorth.fill = GridBagConstraints.VERTICAL;
-        gbc_panelRightNorth.gridx = 2;
+        gbc_panelRightNorth.gridx = 3;
         gbc_panelRightNorth.gridy = 0;
         panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
@@ -156,6 +169,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
 
         btnLoeschen.addActionListener(this);
         btnErstellen.addActionListener(this);
+        btnAufgabenEinsehen.addActionListener(this);
         btnZurueck.addActionListener(this);
 
         super.pack();
@@ -172,6 +186,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnErstellen) {
             erstellenButtonLogik();
         }
+        if (e.getSource() == this.btnAufgabenEinsehen) {
+            aufgabenEinsehenButtonLogik();
+        }
         if (e.getSource() == this.btnLoeschen) {
             loeschenButtonLogik();
         }
@@ -185,6 +202,24 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private void erstellenButtonLogik() {
         new TestatErstellenView(jframe, aktuellerBenutzer);
         dispose();
+    }
+
+    private void aufgabenEinsehenButtonLogik() {
+        if (testatliste.size() <= 0) {
+            JOptionPane.showMessageDialog(this, "Es gibt keine Testate, in denen die Aufgaben eingesehen werden können.", "Keine Testate", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int selectedRow = tableTestate.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Es wurde kein Testat zum Einsehen der Aufgaben ausgewählt.", "Kein Testat ausgewählt", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Testat testat = testatliste.get(selectedRow);
+                if(testat.getAnzahlAufgaben() == 0) {
+                    JOptionPane.showMessageDialog(this, "Das gewählte Testat enthält keine Aufgaben.", "Kein Aufgaben einsehbar", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    new AufgabenEinesTestatsView(testat);
+                }
+            }
+        }
     }
 
     private void loeschenButtonLogik() {

@@ -7,6 +7,7 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Dozent;
+import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -25,6 +26,8 @@ import java.util.List;
  *
  * @author Jonas Herbst
  * @version 04.05.22
+ * <p>
+ * 20.05.22: Preview Button hinzugefügt (Timo u. Kristin)
  */
 public class AufgabenKatalogView extends JFrame implements ActionListener {
 
@@ -33,6 +36,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnLoeschen;
+    private JButton btnPreview;
     private JButton btnBearbeiten;
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
@@ -63,10 +67,10 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private List<Aufgabe> getTestData() {
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, "umlDesign", Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
-        Aufgabe a2 = new Designaufgabe(15, "umlDesign", Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
+        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
         Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, "umlDesign", Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
+        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
         Aufgabe a5 = new EinfachantwortAufgabe();
         List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
         List<Aufgabe> aufgabenListe2 = new LinkedList<Aufgabe>(aufgabenListe1);
@@ -135,6 +139,11 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen = new JButton("Löschen");
         panelRightNorth.add(btnLoeschen);
 
+
+        btnPreview = new JButton("Preview");
+        panelRightNorth.add(btnPreview);
+
+
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
@@ -147,6 +156,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen.addActionListener(this);
         btnErstellen.addActionListener(this);
         btnZurueck.addActionListener(this);
+        btnPreview.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -165,6 +175,11 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnLoeschen) {
             loeschenButtonLogik();
         }
+
+        if (e.getSource() == this.btnPreview) {
+            previewButtonLogik();
+        }
+
     }
 
     private void zurueckButtonLogik() {
@@ -194,7 +209,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
                 } else {
                     loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
                 }
-                if(loeschenGewuenscht) {
+                if (loeschenGewuenscht) {
                     aufgabenliste.remove(aufgabe);
                     aufgabeTableModel.fireTableDataChanged();
                     DatabaseService.getInstance().saveDeleteAufgabeFromDatabase(aufgabe);
@@ -204,4 +219,14 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    private void previewButtonLogik() {
+        int selectedRow = tableAufgaben.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe für die Preview ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Aufgabe aufgabe = aufgabenliste.get(selectedRow);
+            new TestatErstellenAufgabenPreview(aufgabe);
+
+        }
+    }
 }

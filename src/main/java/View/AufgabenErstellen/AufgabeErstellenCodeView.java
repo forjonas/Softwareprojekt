@@ -62,6 +62,11 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private File codeBspFile;
     private JFileChooser FC;
 
+    /**
+     * @param doz                            Ein Dozent
+     * @param aufgabeErstellenStartViewFrame dervorherige Frame
+     *                                       Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
+     */
     public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
@@ -78,6 +83,9 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    /**
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     */
     private void AufgabeErstellenCodeViewFuellen() {
         gl.setVgap(25);
         gl.setHgap(25);
@@ -156,6 +164,9 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         this.add(AufgabeErstellenCodePnl);
     }
 
+    /**
+     * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -168,11 +179,18 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * disposed diesen frame und ruft den vorherigen frame auf. Bzw setzt diesen wieder Visible.
+     */
     private void zurueck() {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
 
+    /**
+     * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
+     * Ruft createObjectandPersist auf.
+     */
     private void speichern() {
         String aufgTitel = null;
         String aufText = null;
@@ -204,10 +222,22 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         }
     }
 
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung /**String codeText,**/) {
-
+    /**
+     * Erstellt eine Aufgabe vom Typ Proggramieraufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     *
+     * @param aufgTitel        Titel der Aufgabe
+     * @param aufText          Text der Aufgabe
+     * @param loesungshinweis  loesungshinweis der Aufgabe
+     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
+     * @param punkte           maximale punkte der Aufgabe
+     * @param kat              kategorie der Aufgabe
+     * @param schw             schwierigkeit der Aufgabe
+     * @param loesung          loesung der Aufgabe
+     */
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
         DatabaseService ds = DatabaseService.getInstance();
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, "asd", kat, punkte, schw, aufText, aufgTitel, doz, null);
+        byte[] codeBspByteArray = DatabaseService.convertFileToByteArray(codeBspFile, this);
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, codeBspByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
         MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
         doz.addErstellteAufgabe(neueAufgabe);
         try {
@@ -215,6 +245,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
 
