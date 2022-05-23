@@ -152,71 +152,47 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
         }
 
         if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-
-            if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
-            } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
-            } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
-            } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
-            }
-
-            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
-            testatController.addUserloesung(userloesung); //antwort wird in UListe hinzugefügt und gehalten
-
-            /*
-             if (testatController.isIndexNotLast()) {
-                testatController.weiter();
-                this.dispose();
-            } else {
-            }
-             */
+            userEingabenSpeichern();
             testatController.zurueckTestat();
 
         }
         if (e.getSource() == this.btnNaechsteAufgabeTestat) {
-
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-
-            if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
-            } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
-            } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
-            } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
-            }
-
+            userEingabenSpeichern();
             String wechsel = btnNaechsteAufgabeTestat.getText();
+
+
             if (wechsel.equals("Testat beenden")) {
-                userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
-                testatController.addUserloesung(userloesung);
                 JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                 testatController.persistTestat();
                 this.dispose();
 
             } else {
-                userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
-                testatController.addUserloesung(userloesung);
                 testatController.weiter();
-
             }
         }
     }
+
+    public void userEingabenSpeichern() {
+        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
+
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+
+        if (btnantwort1.isSelected()) {
+            userloesungBooleanArray.set(0, true);
+        } else if (btnantwort2.isSelected()) {
+            userloesungBooleanArray.set(1, true);
+        } else if (btnantwort3.isSelected()) {
+            userloesungBooleanArray.set(2, true);
+        } else if (btnantwort4.isSelected()) {
+            userloesungBooleanArray.set(3, true);
+        }
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+        testatController.addUserloesung(userloesung);
+    }
+
 
     public void noVisible() {
         btnantwort4.setVisible(false);
