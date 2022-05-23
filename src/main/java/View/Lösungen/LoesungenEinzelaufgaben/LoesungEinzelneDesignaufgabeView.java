@@ -46,7 +46,7 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         if (aufgabe.getAufgabenstellungsbild() != null) {
             //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
-        lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
+        lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();         //Beschaffen der Musterlösung über die Aufgabe
         //lblPlaceholderMusterloesung.setIcon(mLD.getMusterloesung());

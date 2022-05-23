@@ -22,7 +22,8 @@ import java.awt.event.ActionListener;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
- * @version5: 20.05.22 Beenden Button versteckt
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements ActionListener {
     private JLabel lblAufgabenText;
@@ -47,7 +48,12 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe userloesung;
 
-
+    /**
+     * Konstruktor für Klasse BearbeiteTestatProgrammieraufgabeView
+     *
+     * @param testatController
+     * @param aufgabe
+     */
     public BearbeiteTestatProgrammieraufgabeView(Programmieraufgabe aufgabe, TestatController testatController) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -80,6 +86,11 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
 
 
@@ -115,21 +126,35 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         }
     }
 
+    /**
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTestat.setText("Testat beenden");
 
     }
 
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
     public void userEingabenSpeichern() {
         eingabe = txtUsereingabe.getText();
         userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
         testatController.addUserloesung(userloesung);
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new String();
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);

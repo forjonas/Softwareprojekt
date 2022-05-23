@@ -16,6 +16,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
     private JLabel lblAufgabenText;
@@ -49,7 +57,12 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe userloesung;
 
-
+    /**
+     * Konstruktor für Klasse BearbeiteTrainingMultipleChoiceAufgabeView
+     *
+     * @param trainingController
+     * @param aufgabe
+     */
     public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingController trainingController, MultipleChoiceAufgabe aufgabe) {
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
@@ -111,7 +124,11 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         super.setVisible(true);
     }
 
-
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
@@ -184,14 +201,25 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
     }
 
+    /**
+     * verändert "Nächste" Button zu "Training Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTraining.setText("Training beenden");
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new ArrayList<>();
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
         for (int i = 0; i < eingabe.size(); i++) {

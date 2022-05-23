@@ -27,9 +27,10 @@ import java.util.List;
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
- * * @version2: 13.05.22
- * * @version3: 16.05.22
- * * @version4: 18.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
+ * @version5: 23.05.22 Anpassungen u.v.m
  * Schnittstelle um ein Training auszuführen
  */
 
@@ -43,7 +44,12 @@ public class TrainingController {
     private Aufgabe aufgabe;
     private List<Userloesung> userloesungen; // = new ArrayList<>();
 
-
+    /**
+     * Konstruktor für Klasse TrainingController
+     * @param training
+     * @param aktuellerBenutzer
+     * @param hauptmenueFrame
+     */
     public TrainingController(Training training, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
@@ -58,6 +64,10 @@ public class TrainingController {
     public void setNewTrainingKatalog() {
         new EinsehenTrainingKatalogView(hauptmenueFrame, (Dozent) aktuellerBenutzer);
     }
+
+    /**
+     * Zeigt die aktuelle Aufgabe die zu bearbeiten ist an
+     */
     public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
         aufgabe = training.getAufgaben().get(this.index); //Aufgabe am Index erhalten
 
@@ -107,6 +117,9 @@ public class TrainingController {
         this.aktuellerFrame.setVisible(true);
     }
 
+    /**
+     * Erhöht den Index und zeigt die nächste Aufgabe die zu bearbeiten ist an
+     */
     public void weiter() {
         if (this.index < training.getAnzahlAufgaben() - 1) {
             this.index++;  //Index fuer Controller erhoet
@@ -116,6 +129,9 @@ public class TrainingController {
         }
     }
 
+    /**
+     * Verringert den Index und zeigt die vorherige Aufgabe die bearbeitet wurde an
+     */
     public void zurueckTraining() {
         if (this.index > 0) {
             this.index--;
@@ -125,11 +141,17 @@ public class TrainingController {
         }
     }
 
+    /**
+     * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     * @param userloesung
+     */
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);
     }
 
-
+    /**
+     * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
+     */
     public void persistTraining() {//usereingaben Liste persistieren
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
@@ -157,10 +179,18 @@ public class TrainingController {
         return (index < training.getAnzahlAufgaben() - 1);
     }
 
+    /**
+     *
+     * @return das aktuelle Training
+     */
     public Training getTraining() {
         return training;
     }
 
+    /**
+     *
+     * @return den aktuelle Benutzer
+     */
     public Benutzer getAktuellerBenutzer() {
         return aktuellerBenutzer;
     }

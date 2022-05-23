@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
@@ -52,6 +58,13 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe userloesung;
 
+    /**
+     * Konstruktor für Klasse BearbeiteEinzelneMultipleChoiceAufgabeView
+     *
+     * @param aufgabe
+     * @param benutzer
+     * @param frame
+     */
     public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -111,6 +124,11 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");

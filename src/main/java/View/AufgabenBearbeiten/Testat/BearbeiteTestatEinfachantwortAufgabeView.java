@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
  * @version3: 16.05.22
  * @version4: 18.05.22
  * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -47,7 +48,12 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     private EinfachantwortAufgabe aufgabe;
     private UserloesungEinfachantwort userloesung;
 
-
+    /**
+     * Konstruktor für Klasse BearbeiteTestatEinfachantwortAufgabeView
+     *
+     * @param testatController
+     * @param aufgabe
+     */
     public BearbeiteTestatEinfachantwortAufgabeView(TestatController testatController, EinfachantwortAufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -79,6 +85,11 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
@@ -113,24 +124,39 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
     }
 
+    /**
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTestat.setText("Testat beenden");
     }
 
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
     public void userEingabenSpeichern() {
         eingabe = txtUsereingabe.getText();
         userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
         testatController.addUserloesung(userloesung);
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new String();
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);
     }
+
 
     public static void main(String[] args) throws Exception {
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);

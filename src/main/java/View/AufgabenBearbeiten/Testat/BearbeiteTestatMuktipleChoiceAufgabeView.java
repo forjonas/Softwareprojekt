@@ -20,6 +20,15 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblAufgabenText;
@@ -51,7 +60,12 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
     private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe userloesung;
 
-
+    /**
+     * Konstruktor für Klasse BearbeiteTestatMuktipleChoiceAufgabeView
+     *
+     * @param testatController
+     * @param aufgabe
+     */
     public BearbeiteTestatMuktipleChoiceAufgabeView(TestatController testatController, MultipleChoiceAufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -95,16 +109,13 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
                    //btnantwort4.setVisible(false);
                    }
                  */
-
-
             }
-            ButtonGroup bg = new ButtonGroup();
-            bg.add(btnantwort1);
-            bg.add(btnantwort2);
-            bg.add(btnantwort3);
-            bg.add(btnantwort4);
-
         }
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(btnantwort1);
+        bg.add(btnantwort2);
+        bg.add(btnantwort3);
+        bg.add(btnantwort4);
 
         btnAbbrechenTestat.addActionListener(this);
         btnLoesungshinweisTestat.addActionListener(this);
@@ -117,6 +128,11 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
         super.setVisible(true);
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -202,14 +218,35 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
         }
     }
 
+    public void noVisible() {
+        btnantwort4.setVisible(false);
+        btnantwort3.setVisible(false);
+    }
+
+    public void noVisiblefour() {
+        btnantwort4.setVisible(false);
+
+    }
+
+    /**
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTestat.setText("Testat beenden");
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new ArrayList<>();
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
         for (int i = 0; i < eingabe.size(); i++) {

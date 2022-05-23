@@ -32,6 +32,7 @@ import java.util.List;
  * @version4: 18.05.22
  * @version5: 19.05.22 Vorher Button mit Inhalt
  * @version6: 20.05.22 "Beenden" Button auf setVisible(false)
+ * @version7: 23.05.22 Button von "nächste" zu "beenden" u.v.m
  * Schnittstelle um ein Testat auszuführen
  */
 public class TestatController {
@@ -45,6 +46,12 @@ public class TestatController {
     private JFrame hauptmenueFrame;
     private List<Userloesung> userloesungen;
 
+    /**
+     * Konstruktor für Klasse TestatController
+     * @param testat
+     * @param aktuellerBenutzer
+     * @param hauptmenueFrame
+     */
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) { //Konstruktor: bekomme das Testat mit
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
@@ -59,11 +66,16 @@ public class TestatController {
         zeigeAktuelleAufgabe(); //für manche relevant ???????
     }
 
+    /**
+     * Setzt TestatKatalog
+     */
     public void setNewTestatKatalog() {
         new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
-
+    /**
+     * Zeigt die aktuelle Aufgabe die zu bearbeiten ist an
+     */
     public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
         aufgabe = testat.getAufgaben().get(this.index); //Aufgabe am Index erhalten
 
@@ -88,6 +100,16 @@ public class TestatController {
             this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
             if (index + 1 >= testat.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
+                /*
+                int anzahl = ((MultipleChoiceAufgabe) aufgabe).getAntwortmoeglichkeiten().size();
+                if (anzahl < 4) {
+                    if (anzahl < 3) {
+                        frame.noVisible();
+                    } else if (anzahl < 4 && anzahl > 2) {
+                        frame.noVisiblefour();
+                    }
+                }
+                 */
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
             BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
@@ -111,6 +133,9 @@ public class TestatController {
         this.aktuellerFrame.setVisible(true);
     }
 
+    /**
+     * Erhöht den Index und zeigt die nächste Aufgabe die zu bearbeiten ist an
+     */
     public void weiter() {
         if (this.index < testat.getAnzahlAufgaben() - 1) {
             this.index++;  //Index fuer Controller erhoet
@@ -120,6 +145,9 @@ public class TestatController {
         }
     }
 
+    /**
+     * Verringert den Index und zeigt die vorherige Aufgabe die bearbeitet wurde an
+     */
     public void zurueckTestat() {
         if (this.index > 0) {
             this.index--;
@@ -129,10 +157,18 @@ public class TestatController {
         }
     }
 
+    /**
+     * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     * @param userloesung
+     */
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);
     }
 
+    /**
+     * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
+     * Fügt den aktuellerBenutzer die testatBearbeitung hinzu
+     */
     public void persistTestat() {//usereingaben Liste persistieren
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
@@ -144,13 +180,12 @@ public class TestatController {
         }
 
 
-        /*
         aktuellerBenutzer.addBearbeitetesTestat(testatBearbeitung);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
         ds.persistObject(testat);//nötig????
         ds.persistObject(testatBearbeitung);
-         */
+
         System.out.println(userloesungen);
         new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
@@ -163,10 +198,18 @@ public class TestatController {
         return (index < testat.getAnzahlAufgaben() - 1);
     }
 
+    /**
+     *
+     * @return das aktuelle Testat
+     */
     public Testat getTestat() {
         return testat;
     }
 
+    /**
+     *
+     * @return den aktuelle Benutzer
+     */
     public Benutzer getAktuellerBenutzer() {
         return aktuellerBenutzer;
     }
@@ -180,12 +223,26 @@ public class TestatController {
         antwortmoeglichkeiten.add("Test1");
         antwortmoeglichkeiten.add("Test2");
         antwortmoeglichkeiten.add("Test3");
-        //  antwortmoeglichkeiten.add("Test4");
+
+        List<String> antwortmoeglichkeiten1 = new ArrayList<>();
+        antwortmoeglichkeiten.add("Test1");
+        antwortmoeglichkeiten.add("Test2");
+        antwortmoeglichkeiten.add("Test3");
+        antwortmoeglichkeiten.add("Test4");
+
+        List<String> antwortmoeglichkeiten2 = new ArrayList<>();
+        antwortmoeglichkeiten.add("Test1");
+        antwortmoeglichkeiten.add("Test2");
+
 
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
         Aufgabe a3 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten);
+
+        Aufgabe a5 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten1);
+        Aufgabe a6 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten2);
+
 
         MusterloesungEinfachantwort m1 = new MusterloesungEinfachantwort();
         a1.setMusterloesung(m1);
@@ -209,7 +266,7 @@ public class TestatController {
         java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a3, a4});
         java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2, a3, a3, a4, a4});
 
-        java.util.List<Aufgabe> aufgabenListe6 = Arrays.asList(new Aufgabe[]{a3, a3, a3, a4,});
+        java.util.List<Aufgabe> aufgabenListe6 = Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
         java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a1, a3, a2, a4});
 
 

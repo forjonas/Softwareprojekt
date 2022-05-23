@@ -16,6 +16,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblAufgabenText;
@@ -40,7 +48,12 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     private EinfachantwortAufgabe aufgabe;
     private UserloesungEinfachantwort userloesung;
 
-
+    /**
+     * Konstruktor für Klasse BearbeiteTrainingEinfachantwortAufgabeView
+     *
+     * @param trainingController
+     * @param aufgabe
+     */
     public BearbeiteTrainingEinfachantwortAufgabeView(TrainingController trainingController, EinfachantwortAufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -72,7 +85,11 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         super.setVisible(true);
     }
 
-
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
@@ -99,7 +116,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
             if (buttonWechsel.equals("Testat beenden")) {
                 trainingController.persistTraining();
-                JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                 this.dispose();
 
             } else {
@@ -109,20 +126,34 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
     }
 
+    /**
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTraining.setText("Testat beenden");
     }
 
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
     public void userEingabenSpeichern() {
         eingabe = txtUsereingabe.getText();
         userloesung = new UserloesungEinfachantwort(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
         trainingController.addUserloesung(userloesung);
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new String();
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);

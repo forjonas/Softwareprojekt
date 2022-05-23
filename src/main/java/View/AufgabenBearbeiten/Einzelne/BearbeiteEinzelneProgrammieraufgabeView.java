@@ -17,6 +17,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -39,6 +45,13 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     private Benutzer benutzer;
     private JFrame frame;
 
+    /**
+     * Konstruktor für Klasse BearbeiteEinzelneProgrammieraufgabeView
+     *
+     * @param aufgabe
+     * @param benutzer
+     * @param frame
+     */
     public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -70,6 +83,11 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenEinzel) {

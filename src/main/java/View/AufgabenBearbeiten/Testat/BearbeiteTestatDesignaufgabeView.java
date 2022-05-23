@@ -23,7 +23,8 @@ import static persistence.DatabaseService.dateiOeffnen;
  * @version2: 13.05.22
  * @version3: 16.05.22
  * @version4: 18.05.22
- * @version5: 20.05.22 Beenden Button versteckt
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -51,6 +52,12 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     private UserloesungDesignaufgabe userloesung;
 
 
+    /**
+     * Konstruktor für Klasse BearbeiteTestatDesignaufgabeView
+     *
+     * @param testatController
+     * @param aufgabe
+     */
     public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -84,6 +91,11 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTestat) {
@@ -116,16 +128,27 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         } else if (e.getSource() == this.btnUpload) {
 
             fileBild = dateiOeffnen(this);
-            String text = fileBild.getName();
-            btnUpload.setText(text);
-            this.update(this.getGraphics());
+            if (fileBild == null) {
+                btnUpload.setText("kein Bild");
+            } else {
+                String text = fileBild.getName();
+                btnUpload.setText(text);
+                this.update(this.getGraphics());
+            }
+
         }
     }
 
+    /**
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTestat.setText("Testat beenden");
     }
 
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
     public void userEingabenSpeichern() {
         if (fileBild != null) {
             eingabe = convertFileToByteArray(fileBild, this);
@@ -137,11 +160,19 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
         }
     }
 
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new byte[0];
         //fileBild = new File("Keine Lösung");
     }
 
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
         if (eingabe.length <= 0) {

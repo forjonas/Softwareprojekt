@@ -11,14 +11,22 @@ import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 import static persistence.DatabaseService.convertFileToByteArray;
 import static persistence.DatabaseService.dateiOeffnen;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
@@ -43,6 +51,13 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     private Designaufgabe aufgabe;
     private UserloesungDesignaufgabe userloesung;
 
+    /**
+     * Konstruktor für Klasse BearbeiteEinzelneDesignaufgabeView
+     *
+     * @param aufgabe
+     * @param benutzer
+     * @param frame
+     */
     public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -74,7 +89,11 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
 
     }
 
-
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenEinzel) {

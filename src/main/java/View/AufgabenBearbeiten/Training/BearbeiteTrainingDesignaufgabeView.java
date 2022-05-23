@@ -17,6 +17,14 @@ import java.io.File;
 import static persistence.DatabaseService.convertFileToByteArray;
 import static persistence.DatabaseService.dateiOeffnen;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 10.05.22
+ * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ */
 public class BearbeiteTrainingDesignaufgabeView extends JFrame implements ActionListener {
     private JLabel lblAufgabenText;
     private JLabel lblBild;
@@ -41,6 +49,12 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
     private Designaufgabe aufgabe;
     private UserloesungDesignaufgabe userloesung;
 
+    /**
+     * Konstruktor für Klasse BearbeiteTrainingDesignaufgabeView
+     *
+     * @param trainingController
+     * @param aufgabe
+     */
     public BearbeiteTrainingDesignaufgabeView(TrainingController trainingController, Designaufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
@@ -71,7 +85,11 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
     }
-
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenTraining) {
@@ -112,11 +130,15 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
             this.update(this.getGraphics());
         }
     }
-
+    /**
+     * verändert "Nächste" Button zu "Training Beenden" Button
+     */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTraining.setText("Training beenden");
     }
-
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
     public void userEingabenSpeichern() {
         if (fileBild != null) {
             eingabe = convertFileToByteArray(fileBild, this);
@@ -127,12 +149,18 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
             trainingController.addUserloesung(userloesung);
         }
     }
-
+    /**
+     * Setzt leere Usereingabe
+     */
     public void setUserloesungNull() {
         eingabe = new byte[0];
         //fileBild = new File("Keine Lösung");
     }
-
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
         if (eingabe.length <= 0) {
