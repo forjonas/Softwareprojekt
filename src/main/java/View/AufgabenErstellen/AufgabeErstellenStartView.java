@@ -25,7 +25,12 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     private JComboBox <String> DDM;
     private JFrame dozentAnsichtFrame;
    private Dozent doz;
-
+    /**
+     * @param doz
+     * @param dozentAnsichtFrame
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
+     * Setzt Parameter des JFrames und ruft AufgabeErstellenEInfachANtwortViewFuellen() auf.
+     */
     public AufgabeErstellenStartView(JFrame dozentAnsichtFrame,Dozent doz) {
         this.doz = doz;
         this.dozentAnsichtFrame = dozentAnsichtFrame;
@@ -39,6 +44,9 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+    /**
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     */
     private void AufgabeErstellenFrameFuellen() {
         //Panels
         centerPnl =new JPanel();
@@ -64,6 +72,9 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         this.add(northPnl,BorderLayout.NORTH);
         this.add(southPnl,BorderLayout.SOUTH);
     }
+    /**
+     * Führt Aktionen der JButtons aus und ruft ggf. weitere Methoden auf.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.zurueckBtn) {
@@ -90,11 +101,19 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
             default:    this.setVisible(false);
         }
     }
+    /**
+     * disposed diesen frame und ruft den vorherigen frame auf. Bzw setzt diesen wieder Visible.
+     */
     private void zurueck() {
         this.dispose();
         dozentAnsichtFrame.setVisible(true);
     }
-
+    /**
+     * @param bearbeitungsZeit bearbeitungsZeit der gegebenen aufgabe
+     * @param punkte maximale punkte der gegebenen Aufgabe
+     * @param testFrame Frame der Aufrufenden Klasse
+     * überprüft den input und gibt einen boolean zurück
+     */
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte,Frame testFrame) {
         if(bearbeitungsZeit >= 60 || bearbeitungsZeit<=1 ||punkte >=100 || punkte <= 0){
             JOptionPane.showMessageDialog(testFrame,

@@ -20,11 +20,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Ansicht in der ein Testat erstellt werden kann, indem Aufgaben aus einer
- * Tabelle ausgewählt werden und ein Passwort gesetzt wird.
+ * Ansicht in der ein Training erstellt werden kann, indem Aufgaben aus einer Tabelle ausgewählt werden.
  *
- * @author Jonas Herbst
- * @version 04.05.22
+ * @author Martin Bergen
+ * @version 23.05.22
  */
 public class TrainingGenerierenView extends JFrame implements ActionListener {
 
@@ -36,22 +35,26 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
     private JFrame jframe;
-    private String[] schwierigkeitArray = {"Leicht", "Mittel", "Schwer"};
-    private String[] kategorieArray = {"Software Engineering", "Java Programmierung", "Java Grundlagen", "Klassendiagramme", "Datenbanken"};
-
-    private JComboBox<String> kategorieCBox = new JComboBox<>(kategorieArray);
-    private JComboBox<String> schwierigkeitCBox = new JComboBox<>(schwierigkeitArray);
-    ;
+    private Kategorie kategorie;
+    private Schwierigkeitsgrad schwierigkeitsgrad;
     private int gesamtzeit;
 
 
     /**
-     * Create the frame.
+     * Konstruktor für die Klasse TrainingGenerierenView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
+     *
+     * @param aktuellerBenutzer  Benutzer, der diese Fenster gerade Aufruft
+     * @param jframe             JFrame, aus dem die TrainingGenerierenView gestartet wurde,bzw. das Benutzerfenster
+     * @param kategorie          Kategorie der Aufgaben, die im Training ebenfalls gespeichert werden müssen
+     * @param schwierigkeitsgrad Schwierigkeit der Aufgaben, die ebenfalls im Training gespeichert werden müssen
+     * @param aufgabenliste      Eine Lister aller Aufgaben aus der Datenbank, die die angegebene Kategorie und Schwierigkeit haben
      */
-    public TrainingGenerierenView(JFrame jframe, Benutzer aktuellerBenutzer, List<Aufgabe> aufgabenliste) {
+    public TrainingGenerierenView(JFrame jframe, Benutzer aktuellerBenutzer, List<Aufgabe> aufgabenliste, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad) {
         this.jframe = jframe;
+        this.kategorie = kategorie;
+        this.schwierigkeitsgrad = schwierigkeitsgrad;
         this.aktuellerBenutzer = aktuellerBenutzer;
-        this.aufgabenliste=aufgabenliste;
+        this.aufgabenliste = aufgabenliste;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Training erstellen");
         contentPane = new JPanel();
@@ -103,11 +106,6 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel pnlTrainingConfigSetzen = new JPanel();
-        pnlTrainingConfigSetzen.add(schwierigkeitCBox);
-        pnlTrainingConfigSetzen.add(kategorieCBox);
-        panelCenterNorth.add(pnlTrainingConfigSetzen);
-
         tableAufgaben = new JTable();
         aufgabenAuswahlTableModel = new AufgabenAuswaehlenTableModel(aufgabenliste);
         tableAufgaben.setModel(aufgabenAuswahlTableModel);
@@ -150,43 +148,11 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
-    public String getValueCBox(JComboBox combo) {
-        return (String) combo.getSelectedItem();
-    }
-
-    public void setAufgabenliste(List<Aufgabe> aufgabenliste)
-    {
-        this.aufgabenliste=aufgabenliste;
-    }
-
-    public Kategorie readKategorie() {
-        switch (getValueCBox(kategorieCBox)) {
-            case "Software Engineering":
-                return Kategorie.Software_Engineering;
-            case "Java Programmierung":
-                return Kategorie.Java_Programmierung;
-            case "Java Grundlagen":
-                return Kategorie.Java_Grundlagen;
-            case "Klassendiagramme":
-                return Kategorie.Klassendiagramme;
-            case "Datenbanken":
-                return Kategorie.Datenbanken;
-        }
-        return null;
-    }
-
-    public Schwierigkeitsgrad schwierigkeitsgradSetzen() {
-        switch (getValueCBox(schwierigkeitCBox)) {
-            case "leicht":
-                return Schwierigkeitsgrad.Leicht;
-            case "mittel":
-                return Schwierigkeitsgrad.Mittel;
-            case "schwer":
-                return Schwierigkeitsgrad.Schwer;
-        }
-        return Schwierigkeitsgrad.Leicht;
-    }
-
+    /**
+     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -197,6 +163,10 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Eine Methode zum Fenster schließen und zurückkehren zur voherigen Ansicht, mit Überprüfung ob das wirklich gewünscht ist.
+     * Zugehörig zu dem Button @param btnZurueck
+     */
     private void zurueckButtonLogik() {
         boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.WARNING_MESSAGE));
         if (schliessenGewuenscht) {
@@ -205,19 +175,29 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Eine Methode zum Erstellen des Trainings und anschließender Anzeige der gewählten Aufgaben, mit Überprüfung ob eine gewählt wurde.
+     * Zugehörig zu dem Button @param erstellenBtn
+     */
     private void erstellenButtonLogik() {
         List<Aufgabe> ausgewaehlteAufgaben = aufgabenAuswaehlenLogik();
         if (ausgewaehlteAufgaben != null) {
-            Training training = new Training(ausgewaehlteAufgaben, gesamtzeit, readKategorie(), schwierigkeitsgradSetzen(), readAufgabentyp(), aktuellerBenutzer);
+            Training training = new Training(ausgewaehlteAufgaben, gesamtzeit, kategorie, schwierigkeitsgrad, readAufgabentyp(), aktuellerBenutzer);
             for (Aufgabe a : ausgewaehlteAufgaben) {
                 a.addVerwendung(training);
             }
             DatabaseService.getInstance().persistObject(training);
-            new TrainingController(training,aktuellerBenutzer,jframe).zeigeAktuelleAufgabe();
+            new TrainingController(training, aktuellerBenutzer, jframe).zeigeAktuelleAufgabe();
             dispose();
         }
     }
 
+    /**
+     * Methode zum Auswählen der Aufgaben, die dem Training hinzugefügt werden sollen.
+     * Methode gibt eine List<Aufgabe> zurück.
+     *
+     * @return ausgewaehlteAufgaben
+     */
     private List<Aufgabe> aufgabenAuswaehlenLogik() {
         gesamtzeit = 0;
         if (aufgabenliste.size() <= 0) {
@@ -233,7 +213,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
                 }
             }
             if (ausgewaehlteAufgaben.size() <= 0) {
-                JOptionPane.showMessageDialog(this, "Es wurden keine Aufgaben für das Trainings ausgewählt", "Keine Aufgaben ausgewählt", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Es wurden keine Aufgaben für das Training ausgewählt", "Keine Aufgaben ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 if (gesamtzeit < 10) {
                     JOptionPane.showMessageDialog(this, "Die gesamte Bearbeitungszeit des Trainings muss mindestens 10 Minuten betragen.\nBitte mehr Aufgaben auswählen.", "Zu wenige Aufgaben", JOptionPane.WARNING_MESSAGE);
@@ -247,6 +227,12 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         return null;
     }
 
+    /**
+     * Methode zum Speichern und wiedergeben der Aufgabentypen, die in der ausgewaehlteAufgaben List vertreten sind.
+     * Methode gibt eine List<Aufgabentyp> zurück, die dann im Training gespeichert wird.
+     *
+     * @return aufgabentypList;
+     */
     public List<Aufgabentyp> readAufgabentyp() {
         boolean code = false, design = false, multi = false, ea = false;
         List<Aufgabentyp> aufgabentypList = new ArrayList<>();
@@ -254,16 +240,16 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         for (int i = 0; i < aufgabenList.size(); i++) {
             if (aufgabenList.get(i).getAufgabentyp() == Aufgabentyp.MultipleChoice && !multi) {
                 aufgabentypList.add(Aufgabentyp.MultipleChoice);
-                multi=true;
+                multi = true;
             } else if (aufgabenList.get(i).getAufgabentyp() == Aufgabentyp.Design && !design) {
                 aufgabentypList.add(Aufgabentyp.Design);
-                design=true;
+                design = true;
             } else if (aufgabenList.get(i).getAufgabentyp() == Aufgabentyp.Programmieren && !code) {
                 aufgabentypList.add(Aufgabentyp.Programmieren);
-                code=true;
+                code = true;
             } else if (aufgabenList.get(i).getAufgabentyp() == Aufgabentyp.Einfachantwort && !ea) {
                 aufgabentypList.add(Aufgabentyp.Einfachantwort);
-                ea=true;
+                ea = true;
             }
         }
         return aufgabentypList;

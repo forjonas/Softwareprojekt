@@ -17,13 +17,9 @@ import java.util.List;
 
 public class LoginView extends JFrame implements ActionListener, KeyListener {
 
-
     persistence.DatabaseService ds = DatabaseService.getInstance();
-    private JButton studentAnmeldenBtn;
-    private JButton dozentAnmeldenBtn;
     private JButton registrierenBtn;
     private JButton einloggenBtn;
-    private JPanel generalPnl;
     private JLabel einloggenLbl = new JLabel("Einloggen", SwingConstants.CENTER);
     private JLabel usernameLbl = new JLabel("Benutzername:", SwingConstants.LEADING);
     private JLabel passwortLbl = new JLabel("Kennwort:", SwingConstants.LEADING);
@@ -34,19 +30,12 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         new LoginView();
     }
 
+    /**
+     * Konstruktor der Klasse LoginView, die ein Fenster und die ausgewählten Bausteine verbindet und erstellt.
+     */
     public LoginView() {
         this.setName("Home");
         this.setTitle("Log-In");
-        this.getContentPane().add(generalPnl = new JPanel());
-
-        /*Deaktivierung der Buttons aufgrund von Anmeldestruktur
-        studentAnmeldenBtn = new JButton("Student");
-        studentAnmeldenBtn.addActionListener(this);
-        studentAnmeldenBtn.setPreferredSize(new Dimension(70, 30));
-        dozentAnmeldenBtn = new JButton("Dozent");
-        dozentAnmeldenBtn.addActionListener(this);
-        dozentAnmeldenBtn.setPreferredSize(new Dimension(70, 30));
-        */
 
         registrierenBtn = new JButton("Registrieren");
         registrierenBtn.addActionListener(this);
@@ -65,7 +54,9 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         this.setVisible(true);
     }
 
-
+    /**
+     * Methode um Bausteine der View zu erstellen und zu verbinden, Methode wird im Konstruktor aufgerufen.
+     */
     public void fuelleHomeFrame() {
         JPanel tempPanel = new JPanel(new BorderLayout());
 
@@ -138,6 +129,9 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         this.add(tempPanel3);
     }
 
+    /**
+     * Methode, die die Funktionalität des Einloggen bildet.
+     */
     public void einloggenSequenz() {
         if (usernameTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Bitte Benutzernamen eingeben.");
@@ -158,30 +152,48 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
                     this.dispose();
                     return;
                 }
-            }else JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
+            } else JOptionPane.showMessageDialog(this, "Benutzername ist nicht bekannt.");
         }
     }
 
-    public boolean userIstStudent(String name) {
+    /**
+     * Methode die überprüft, ob der sich anmeldende Benutzer Student ist
+     *
+     * @param username Username des anmeldenden Benutzers
+     * @return boolean-Wert
+     */
+    public boolean userIstStudent(String username) {
         List<Student> list = ds.readStudentenFromDatabase();
         for (int i = 0; i < list.size(); i++) {
-            if (name.equals(list.get(i).getBenutzername())) {
+            if (username.equals(list.get(i).getBenutzername())) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean userIstDozent(String name) {
+    /**
+     * Methode die überprüft, ob der sich anmeldende Benutzer Dozent ist
+     *
+     * @param username Username des anmeldenden Benutzers
+     * @return boolean-Wert
+     */
+    public boolean userIstDozent(String username) {
         List<Dozent> list = ds.readDozentenFromDatabase();
         for (int i = 0; i < list.size(); i++) {
-            if (name.equals(list.get(i).getBenutzername())) {
+            if (username.equals(list.get(i).getBenutzername())) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Methode die überprüft, ob das eingegebene Passwort dem User-Passwort übergibt
+     *
+     * @param user Benutzer dessen Passwort überprüft wird
+     * @return boolean-Wert
+     */
     public boolean checkPasswort(Benutzer user) {
         if (Arrays.equals(passwortTxt.getPassword(), user.getPasswort().toCharArray())) {
             return true;
@@ -191,15 +203,15 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == this.studentAnmeldenBtn) {
-            //new StudentMainView();//anmeldungStudent();
-            //this.setVisible(false);
-        } else if (e.getSource() == this.dozentAnmeldenBtn) {
-            //d
-        } else if (e.getSource() == this.registrierenBtn) {
+        if (e.getSource() == this.registrierenBtn) {
             new RegistrierenView(this);
         } else if (e.getSource() == this.einloggenBtn) {
             einloggenSequenz();
