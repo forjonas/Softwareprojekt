@@ -116,8 +116,8 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             userEingabenSpeichern();
 
             if (buttonWechsel.equals("Testat beenden")) {
-                testatController.persistTestat();
                 JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                testatController.persistTestat();
                 this.dispose();
 
             } else {

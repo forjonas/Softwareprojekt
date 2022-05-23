@@ -116,7 +116,6 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
 
             if (buttonWechsel.equals("Training beenden")) {
                 trainingController.persistTraining();
-                JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                 this.dispose();
 
             } else {
