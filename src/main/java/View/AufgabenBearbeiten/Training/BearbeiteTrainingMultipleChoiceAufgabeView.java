@@ -6,6 +6,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.Userloesung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import javax.swing.*;
@@ -145,61 +146,46 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
             }
         } else if (e.getSource() == this.btnVoherigeAufgabeTraining) {
 
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-
-            if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
-            } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
-            } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
-            } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
-            }
-
-            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
-            trainingController.addUserloesung(userloesung); //antwort wird in UListe hinzugefügt und gehalten
+            userEingabenSpeichern();
             trainingController.zurueckTraining();
 
+
         } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
+            userEingabenSpeichern();
+            String buttonWechsel = btnNaechsteAufgabeTraining.getText();
 
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-
-            if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
-            } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
-            } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
-            } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
-            }
-
-            String wechsel = btnNaechsteAufgabeTraining.getText();
-            if (wechsel.equals("Testat beenden")) {
-                userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
-                trainingController.addUserloesung(userloesung);
-                JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+            if (buttonWechsel.equals("Training beenden")) {
                 trainingController.persistTraining();
                 this.dispose();
-            } else {
-                userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
 
-                trainingController.addUserloesung(userloesung);
+            } else {
                 trainingController.weiter();
             }
         }
 
     }
+
+    public void userEingabenSpeichern() {
+        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
+
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+        userloesungBooleanArray.add(false);
+
+        if (btnantwort1.isSelected()) {
+            userloesungBooleanArray.set(0, true);
+        } else if (btnantwort2.isSelected()) {
+            userloesungBooleanArray.set(1, true);
+        } else if (btnantwort3.isSelected()) {
+            userloesungBooleanArray.set(2, true);
+        } else if (btnantwort4.isSelected()) {
+            userloesungBooleanArray.set(3, true);
+        }
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+        trainingController.addUserloesung(userloesung);
+    }
+
 
     /**
      * verändert "Nächste" Button zu "Training Beenden" Button
