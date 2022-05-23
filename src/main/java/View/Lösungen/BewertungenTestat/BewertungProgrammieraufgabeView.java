@@ -31,23 +31,29 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JLabel lblMaximalPunktzahl;
     private JTextField txtfUserPunktzahl;
     private JButton btnBewertungSpeichern;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserBild;
+    private JLabel lblMusterBild;
 
 
     public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate cont) {
         this.cont = cont;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
+        System.out.println("Program");
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
@@ -56,7 +62,7 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);        //Beschaffen der Userlösung aus der DB über die Aufgabe
         this.uLP = uLP;
         txtfUserLoesung.setText(uLP.getUserloesung());
-        txtfUserPunktzahl.setText(uLP.getErreichtePunkte()+ "");                                                  //Die vom Studenten erreichten Punkte
+        txtfUserPunktzahl.setText(uLP.getErreichtePunkte()+ "");                                                 //Die vom Studenten erreichten Punkte
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
