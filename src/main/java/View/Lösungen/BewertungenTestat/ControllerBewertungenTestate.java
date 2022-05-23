@@ -14,6 +14,15 @@ import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Controller-Klasse welche die Interaktion zwischen den Lösungsviews von Testatbearbeitungen darstellen und Klassen,
+ * die diese aufrufen wollen, steuert.
+ * Stellt zusätzlich die Funktionalitäten für die Bewertung von Testaten und der Persistierung der Eingaben.
+ *
+ * @author Timo Joswig
+ * @version 19.05.22
+ */
+
 public class ControllerBewertungenTestate {
     private TestatBearbeitung testatBearbeitung;
     private Testat testat;
@@ -24,6 +33,13 @@ public class ControllerBewertungenTestate {
     private List<Userloesung> userloesungList;
     private List<Boolean> bewertetStatus;
 
+    /**
+     * Konstruktor für einen Controller welcher die Logik hinter der Bewertung und Einsicht von Testatbearbeitungen bereitstellt
+     *
+     * @param testatBearbeitung Objekt welches das von einem Nutzer bearbeitetes Testat darsellt
+     * @param benutzer          Der zur Zeit angemeldete Benutzer
+     * @param frame             Das Hauptmenü der Klasse des angemeldeten Benutzers
+     */
     public ControllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame frame) {
         this.jframe = frame;
         this.testatBearbeitung = testatBearbeitung;
@@ -37,9 +53,6 @@ public class ControllerBewertungenTestate {
                 userloesungList.add(ul);
             }
         }
-//        for(Userloesung ul : userloesungList) {
-//            System.out.println(ul.getUserloesungErsteller() + "  " + ul.getAufgabe().getName());
-//        }
         this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
@@ -48,17 +61,16 @@ public class ControllerBewertungenTestate {
         startBewertungTestat();
     }
 
+    /**
+     * Eine Funktion welche eine nachträgliche Änderung der Testatbearbeitung ermöglicht
+     *
+     * @param testatBearbeitung die Testatbearbeitung die nun dargestellt werden soll
+     */
     public void setTestatBearbeitung(TestatBearbeitung testatBearbeitung) {
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
         this.userloesungList = new LinkedList<Userloesung>();
-//        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
-//        for(Userloesung ul : datenbankliste) {
-//            if(ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
-//                userloesungList.add(ul);
-//            }
-//        }
         this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
         this.bewertetStatus = new LinkedList<>();
         for (int i = 0; i < userloesungList.size(); i++) {
@@ -68,6 +80,12 @@ public class ControllerBewertungenTestate {
         startBewertungTestat();
     }
 
+    /**
+     * Funktion die aus der bereits geladenen Liste aller Userlösungen die eine zurückgibt, welche zur angegebenen Aufgabe passt
+     *
+     * @param aufgabe Die Aufgabe zu welcher die passende Userlösung zurückgegeben werden soll
+     * @return die passende Userlösung
+     */
     public Userloesung getUserloesung(Aufgabe aufgabe) {
         Userloesung userloesung = null;
         for (Userloesung uDB : userloesungList) {
@@ -78,14 +96,23 @@ public class ControllerBewertungenTestate {
         return userloesung;
     }
 
+
     public boolean userIstDozent() {
         return benutzer.getClass().equals(Dozent.class);
     }
 
+    /**
+     * Setzt in der internen Boolean-Liste des Controllers den Eintrag an der zur Zeit bearbeiteten Stelle auf true, nachdem dieser erfolgreich bewertet wurde
+     */
     public void setBewertet() {
         bewertetStatus.set(index, true);
     }
 
+    /**
+     * Überprüft, ob für jeden Eintrag in der internen Boolean-Liste jeder Eintrag als erfolgreich bewertet eingetragen wurde
+     *
+     * @return true, falls für jede Aufgabe eine Bewertung gespeichert wurde und false, falls es nicht der Fall ist
+     */
     public boolean bewertungVollstaendig() {
         boolean result = true;
         for (boolean b : bewertetStatus) {
@@ -94,6 +121,12 @@ public class ControllerBewertungenTestate {
         return result;
     }
 
+    /**
+     * Im Falle, dass ein Dozent seine Bewertung abschließen möchte, wird zunächst die Gesamtpunktzahl des Testates errechnet,
+     * der Dozent als Bewerter gesetzt und schließlich werden die geänderten Daten persistiert
+     * <p>
+     * Falls ein Student bloß seine Bewertung eingesehen hat, wird nur ein neuer TestatKatalogView erstellt
+     */
     public void beendeBewertungTestat() {
         if (benutzer.getClass().equals(Dozent.class)) {
             int counter = 0;
@@ -110,6 +143,10 @@ public class ControllerBewertungenTestate {
         }
     }
 
+    /**
+     * Beim Abbruch einer laufenden Testatbewertung oder bei der Einsicht eines bewerteten Testats durch einen Studenten wird
+     * entsprechend der nächste View geladen
+     */
     public void abbrechenBewertungTestat() {
         if (benutzer.getClass().equals(Dozent.class)) {
             new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
@@ -118,10 +155,12 @@ public class ControllerBewertungenTestate {
         }
     }
 
+    /**
+     * Initialisierung des ersten Views des Testats abhängig vom Aufgabentyps der ersten Aufgabe.
+     * Im Falle einer Bewertung eines Testats durch einen Dozenten wird dem View dies mitgeteilt
+     */
     public void startBewertungTestat() {
-        System.out.println("Bewertung einer Aufgabe");
         Aufgabe aufgabe = testat.getAufgaben().get(0);
-        System.out.println(aufgabe.getAufgabentyp().getCode());
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
@@ -187,9 +226,14 @@ public class ControllerBewertungenTestate {
         }
     }
 
+    /**
+     * Initialisierung des Views der nächsten Aufgabe im Testat, abhängig vom internen Index und des entsprechenden
+     * Aufgabentyps
+     */
     public void naechsteAufgabe() {
         index++;
         Aufgabe aufgabe = testat.getAufgaben().get(index);
+
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {
@@ -249,9 +293,14 @@ public class ControllerBewertungenTestate {
         }
     }
 
+    /**
+     * Initialisierung des Views der vorherigen Aufgabe im Testat, abhängig vom internen Index und des entsprechenden
+     * Aufgabentyps
+     */
     public void vorherigeAufgabe() {
         index--;
         Aufgabe aufgabe = testat.getAufgaben().get(index);
+
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 try {

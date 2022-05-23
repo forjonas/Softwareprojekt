@@ -29,6 +29,9 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JLabel lblBearbeitungszeitString;
     private JLabel lblBearbeitungszeit;
     private JTextField txtfUserPunktzahl;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserBild;
+    private JLabel lblMusterBild;
     private JButton btnBewertungSpeichern;
 
 
@@ -36,26 +39,29 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         this.cont = cont;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
+        System.out.println("Musterlösung pre");
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();       //Beschaffen der Musterlösung über die Aufgabe
-        //lblMusterloesung.setIcon(mLD.getMusterloesung());
+        lblMusterloesung.setIcon(new ImageIcon(mLD.getMusterloesung()));
         UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe) cont.getUserloesung(aufgabe);         //Beschaffen der Userlösung aus der DB über die Aufgabe
         this.uLD = uLD;
-        //lblUserloesung.setIcon(uLD.getUserloesung());
-        txtfUserPunktzahl.setText(uLD.getErreichtePunkte()+ "");                                         //Die vom Studenten erreichten Punkte
+        lblUserloesung.setIcon(new ImageIcon(uLD.getUserloesung()));
+        txtfUserPunktzahl.setText(uLD.getErreichtePunkte()+ "");                                        //Die vom Studenten erreichten Punkte
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();

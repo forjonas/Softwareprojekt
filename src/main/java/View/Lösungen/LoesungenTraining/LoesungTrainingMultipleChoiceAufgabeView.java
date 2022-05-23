@@ -38,6 +38,9 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserloesungString;
+    private JLabel lblMusterloesungString;
     private final MultipleChoiceAufgabe aufgabe;
 
 
@@ -50,11 +53,13 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
@@ -145,7 +150,8 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
      *
      * @noinspection ALL
      */
-    private void $$$setupUI$$$() {
+    private void $$$setupUI$$$()
+    {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(5, 7, new Insets(10, 10, 15, 10), -1, -1));
         txtfAufgabentext = new JTextField();
