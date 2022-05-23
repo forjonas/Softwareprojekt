@@ -29,6 +29,9 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
     private JLabel lblBearbeitungszeitString;
     private JLabel lblBearbeitungszeit;
     private JPanel panelBearbeitungszeit;
+    private JLabel lblMusterloesungString;
+    private JLabel lblUserloesungString;
+    private JLabel lblAufgabeBildString;
     private final EinfachantwortAufgabe aufgabe;
 
     public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, ControllerLoesungenTraining cont) {
@@ -40,11 +43,13 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");

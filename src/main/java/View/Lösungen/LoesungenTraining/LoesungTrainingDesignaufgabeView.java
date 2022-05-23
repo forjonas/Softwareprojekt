@@ -29,6 +29,9 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblMaximalPunktzahl;
     private JLabel lblBearbeitungszeitString;
     private JPanel panelBearbeitungszeit;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserloesungString;
+    private JLabel lblMusterloesungString;
     private final Designaufgabe aufgabe;
 
 
@@ -41,18 +44,20 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                                                //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();   //Beschaffen der Musterlösung über die Aufgabe
-        //lblMusterloesung.setIcon(mLD.getMusterloesung());
+        lblMusterloesung.setIcon(new ImageIcon(mLD.getMusterloesung()));
         UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe)  cont.getUserloesung(aufgabe);    //Beschaffen der Userlösung aus der DB über die Aufgabe
-        //lblUserloesung.setIcon(uLD.getUserloesung());
+        lblUserloesung.setIcon(new ImageIcon(uLD.getUserloesung()));
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();

@@ -29,6 +29,9 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JPanel panelBearbeitungszeit;
     private JLabel lblBearbeitungszeitString;
     private JLabel lblBearbeitungszeit;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserloesungString;
+    private JLabel lblMusterloesungString;
     private final Programmieraufgabe aufgabe;
 
     public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining cont) {
@@ -40,10 +43,12 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         btnHinweis.addActionListener(this);
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert()+ "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
