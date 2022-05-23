@@ -43,6 +43,9 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JLabel lblMaximalPunktzahl;
     private JTextField txtfUserPunktzahl;
     private JButton btnBewertungSpeichern;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserBild;
+    private JLabel lblMusterBild;
 
 
     public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerBewertungenTestate cont) {
@@ -55,11 +58,13 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");

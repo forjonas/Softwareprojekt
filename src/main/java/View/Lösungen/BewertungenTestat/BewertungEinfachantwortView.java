@@ -34,6 +34,9 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblMaximalPunktzahl;
     private JTextField txtfUserPunktzahl;
     private JButton btnBewertungSpeichern;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserBild;
+    private JLabel lblMusterBild;
 
 
     public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate cont) {
@@ -46,18 +49,20 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
+        lblAufgabeBildString.setVisible(false);
 
         //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                        //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();        //Beschaffen der Musterlösung über die Aufgabe
-        txtfMusterloesung.setText(mLE.getMusterloesung());
-        UserloesungEinfachantwort uLE = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);          //Beschaffen der Userlösung aus der DB über die Aufgabe
-        this.uLE = uLE;
+        MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();        //Beschaffen der Musterlösung über die Aufgabe
+        txtfMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
+        UserloesungEinfachantwort userloesungEinfachantwort = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);          //Beschaffen der Userlösung aus der DB über die Aufgabe
+        this.uLE = userloesungEinfachantwort;
         txtfUserLoesung.setText(uLE.getUserloesung());
         txtfUserPunktzahl.setText(uLE.getErreichtePunkte() + "");                                            //Die vom Studenten erreichten Punkte
 
