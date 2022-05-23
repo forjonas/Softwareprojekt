@@ -53,6 +53,7 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         UserloesungEinfachantwort uLE = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);               //Beschaffen der Userlösung aus der DB über die Aufgabe
         txtfUserLoesung.setText(uLE.getUserloesung());
 
+
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);

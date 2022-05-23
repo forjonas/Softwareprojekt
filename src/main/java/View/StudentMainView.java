@@ -9,10 +9,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht in der ein Fenster für einen Studenten erstellt wird, wo der Student unterschiedliche Funtkionen aufrufen kann.
+ *
+ * @author Martin Bergen
+ * @version 23.05.2022
+ */
 public class StudentMainView extends JFrame implements ActionListener {
 
-    /**------Attribute------ */
-    DatabaseService ds=DatabaseService.getInstance();
+    /**
+     * ------Attribute------
+     */
     private JPanel studentPnl;
     private JButton meineTestateBtn;
     private JButton generiereTrainingBtn;
@@ -22,34 +29,35 @@ public class StudentMainView extends JFrame implements ActionListener {
 
     /**------Attribute Ende------ */
 
-    public StudentMainView(Student student)//ID für individuelle Angabe
+    /**
+     * Konstruktor der Klasse StudentMainView, die ein Fenster und die ausgewählten Bausteine erstellt und verbindet.
+     *
+     * @param student Student, der sich in der EinloggenView angemeldet hat und in der Klasse gespeichert wird, damit bestimmte Funktionalitäten gewährleistet werden
+     */
+    public StudentMainView(Student student)
     {
-        this.student=student;
-        studentPnl= new JPanel();
+        this.student = student;
+        studentPnl = new JPanel();
         studentPnl.setLayout(new BorderLayout());
-        JLabel textLbl = new JLabel("Willkommen "+student.getVorname()+" "+student.getNachname()+" Matrikelnummer:"+student.getMatrikelnummer());//+Benutzer.getStudentenID());
-        JPanel tempNorthPnl= new JPanel(new FlowLayout());
-        JPanel tempCenterPnl= new JPanel(new FlowLayout());
-        JPanel tempSouthPnl= new JPanel(new FlowLayout());
+        JLabel textLbl = new JLabel("Willkommen " + student.getVorname() + " " + student.getNachname() + " Matrikelnummer:" + student.getMatrikelnummer());
+        JPanel tempNorthPnl = new JPanel(new FlowLayout());
+        JPanel tempCenterPnl = new JPanel(new FlowLayout());
+        JPanel tempSouthPnl = new JPanel(new FlowLayout());
 
-
-        //Drei Buttons laut Mock-Up
         generiereTrainingBtn = new JButton("Training generieren");
         generiereTrainingBtn.addActionListener(this);
-        generiereTrainingBtn.setPreferredSize(new Dimension(160,80));
+        generiereTrainingBtn.setPreferredSize(new Dimension(160, 80));
         meineTestateBtn = new JButton("Meine Testate");
         meineTestateBtn.addActionListener(this);
-        meineTestateBtn.setPreferredSize(new Dimension(160,80));
+        meineTestateBtn.setPreferredSize(new Dimension(160, 80));
         einzelneAufgabeBtn = new JButton("Einzelne Aufgabe bearbeiten");
         einzelneAufgabeBtn.addActionListener(this);
-        einzelneAufgabeBtn.setPreferredSize(new Dimension(160,80));
+        einzelneAufgabeBtn.setPreferredSize(new Dimension(160, 80));
 
-
-        abmeldenBtn=new JButton("Abmelden");
+        abmeldenBtn = new JButton("Abmelden");
         abmeldenBtn.addActionListener(this);
-        abmeldenBtn.setPreferredSize(new Dimension(70,30));
+        abmeldenBtn.setPreferredSize(new Dimension(70, 30));
         abmeldenBtn.setFont(new Zeichenstruktur().schriftKleinerButton());
-
 
         tempCenterPnl.add(generiereTrainingBtn);
         tempCenterPnl.add(meineTestateBtn);
@@ -61,27 +69,29 @@ public class StudentMainView extends JFrame implements ActionListener {
         studentPnl.add(tempSouthPnl, BorderLayout.SOUTH);
         this.add(studentPnl);
 
-        this.setSize(600,600);
+        this.setSize(600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-        if(e.getSource() == this.meineTestateBtn){
+    /**
+     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     *
+     * @param e the event to be processed
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.meineTestateBtn) {
             new MeineTestateKatalogView(this, student);
             this.setVisible(false);
-        }
-        else if(e.getSource() == this.abmeldenBtn){
+        } else if (e.getSource() == this.abmeldenBtn) {
             this.dispose();
             new LoginView();
-        }
-        else if(e.getSource() == this.generiereTrainingBtn){
-            new CreateFrageView(this,student);
+        } else if (e.getSource() == this.generiereTrainingBtn) {
+            new CreateFrageView(this, student);
             this.setVisible(false);
-        }else if(e.getSource() == this.einzelneAufgabeBtn){
+        } else if (e.getSource() == this.einzelneAufgabeBtn) {
             new BearbeiteEinzelneAufgabeKatalogView(this, student);
             this.setVisible(false);
         }

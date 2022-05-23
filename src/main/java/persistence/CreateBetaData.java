@@ -13,11 +13,9 @@ import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.*;
-import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
-import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
-import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
+import entity.loesung.userloesung.*;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -271,21 +269,59 @@ public class CreateBetaData {
     }
 
     public void createBetaUserLösungen() throws Exception {
-        ul1 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, Arrays.asList(false, false, false, true), student3, training3);
+        byte [] testBild = DatabaseService.convertFileToByteArray(new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img1.jpg"),new JFrame());
+        ul1 = new UserloesungDesignaufgabe(da1,false,testBild,student3,training3);
         ul2 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student3, training3);
-        ul3 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea4, false, "System.out.println()", student3, training3);
+        ul3 = new UserloesungDesignaufgabe(da2,false,testBild,student3,training3);
         ul4 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student3, training3);
         ul5 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa4, true, "Code", student3, training3);
+        ul6 = new UserloesungDesignaufgabe(da4,false,testBild,student3,training3);
+        ul7 = new UserloesungProgrammieraufgabe(pa2,false,"assa",student3,training3);
         student3.addErstellteLoesung(ul1);
         student3.addErstellteLoesung(ul2);
         student3.addErstellteLoesung(ul3);
         student3.addErstellteLoesung(ul4);
         student3.addErstellteLoesung(ul5);
+        student3.addErstellteLoesung(ul6);
+        student3.addErstellteLoesung(ul7);
         training3.addUserloesung(ul1);
         training3.addUserloesung(ul2);
         training3.addUserloesung(ul3);
         training3.addUserloesung(ul4);
         training3.addUserloesung(ul5);
+        training3.addUserloesung(ul6);
+        training3.addUserloesung(ul7);
+
+
+        Userloesung test1 = new UserloesungEinfachantwort(ea1,false,"pong",student4,training2);
+        Userloesung test2 = new UserloesungMultipleChoiceAufgabe(ma1, false, Arrays.asList(false,false,false,true),student4,training2);
+        Userloesung test3 = new UserloesungDesignaufgabe(da1,false,testBild,student4,training2);
+        Userloesung test4 = new UserloesungProgrammieraufgabe(pa1,false,"asdasd",student4,training2);
+        student4.addErstellteLoesung(test1);
+        student4.addErstellteLoesung(test2);
+        student4.addErstellteLoesung(test3);
+        student4.addErstellteLoesung(test4);
+        training2.addUserloesung(test1);
+        training2.addUserloesung(test2);
+        training2.addUserloesung(test3);
+        training2.addUserloesung(test4);
+
+
+        Userloesung a = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, Arrays.asList(false, false, false, true), student2, training1);
+        Userloesung b = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student2, training1);
+        Userloesung c = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea4, false, "System.out.println()", student2, training1);
+        Userloesung d = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student2, training1);
+        Userloesung e = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa4, true, "Code", student2, training1);
+        student2.addErstellteLoesung(a);
+        student2.addErstellteLoesung(b);
+        student2.addErstellteLoesung(c);
+        student2.addErstellteLoesung(d);
+        student2.addErstellteLoesung(e);
+        training1.addUserloesung(a);
+        training1.addUserloesung(b);
+        training1.addUserloesung(c);
+        training1.addUserloesung(d);
+        training1.addUserloesung(e);
 
         List<Boolean> ul6List = Arrays.asList(true, false, false, true);
         List<Boolean> ul7List = Arrays.asList(true, true, true, false);
@@ -299,6 +335,7 @@ public class CreateBetaData {
         testat2.addUserloesung(ul7);
         testat2.addUserloesung(ul8);
         testat2.addUserloesung(ul9);
+
 
         testatBearbeitung = new TestatBearbeitung(testat2, 15, student1, dozent2);
         student1.addErstellteLoesung(ul6);
@@ -338,7 +375,7 @@ public class CreateBetaData {
     private byte[] getRandomTestImage() {
         //int randomNumber = (int)(Math.random()*(max-min+1)+min);
         int randomNumber = (int) ((Math.random() * 4) + 1);
-        File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img" + randomNumber + ".png");
+        File file = new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img" + randomNumber + ".jpg");
         byte[] byteArray = DatabaseService.convertFileToByteArray(file, null);
         return byteArray;
     }
