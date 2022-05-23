@@ -125,9 +125,13 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
         } else if (e.getSource() == this.btnUpload) {
 
             fileBild = dateiOeffnen(this);
-            String text = fileBild.getName();
-            btnUpload.setText(text);
-            this.update(this.getGraphics());
+            if (fileBild == null) {
+                btnUpload.setText("kein Bild");
+            } else {
+                String text = fileBild.getName();
+                btnUpload.setText(text);
+                this.update(this.getGraphics());
+            }
         }
     }
     /**

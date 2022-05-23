@@ -83,9 +83,7 @@ public class TrainingController {
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
-        }
-
-        else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
             BearbeiteTrainingMultipleChoiceAufgabeView frame = new BearbeiteTrainingMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
@@ -95,7 +93,7 @@ public class TrainingController {
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
-        }else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
             BearbeiteTrainingProgrammieraufgabeView frame = new BearbeiteTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
@@ -143,6 +141,7 @@ public class TrainingController {
 
     /**
      * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     *
      * @param userloesung
      */
     public void addUserloesung(Userloesung userloesung) {
@@ -161,13 +160,13 @@ public class TrainingController {
             }
             userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
-        /*
+
         aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        ds.persistObject(training);
+        //ds.persistObject(training); //nötig????
         System.out.println(userloesungen);
-         */
+
         new ControllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
     }
 
@@ -180,7 +179,6 @@ public class TrainingController {
     }
 
     /**
-     *
      * @return das aktuelle Training
      */
     public Training getTraining() {
@@ -188,12 +186,12 @@ public class TrainingController {
     }
 
     /**
-     *
      * @return den aktuelle Benutzer
      */
     public Benutzer getAktuellerBenutzer() {
         return aktuellerBenutzer;
     }
+
     public void setUserFrameVisible() {
         hauptmenueFrame.setVisible(true);
     }
@@ -243,14 +241,14 @@ public class TrainingController {
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
 
-        Training training1 = new Training(aufgabenliste,10,Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer,dozent1);
+        Training training1 = new Training(aufgabenliste, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-       // java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+        // java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
         TrainingController trainingController = new TrainingController(training1, dozent2, null);
-       // trainingController.zeigeAktuelleAufgabe();
+        // trainingController.zeigeAktuelleAufgabe();
 
     }
 
