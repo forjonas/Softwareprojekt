@@ -37,7 +37,6 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
 
 
     public TestatErstellenAufgabenPreview(Aufgabe aufgabe) {
-
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         btnZurueckButton.addActionListener(this);
