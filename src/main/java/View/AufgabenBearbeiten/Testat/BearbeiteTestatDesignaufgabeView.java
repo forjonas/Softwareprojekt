@@ -119,8 +119,8 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             userEingabenSpeichern();
 
             if (buttonWechsel.equals("Testat beenden")) {
-                testatController.persistTestat();
                 JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                testatController.persistTestat();
                 this.dispose();
             } else {
                 testatController.weiter();

@@ -113,8 +113,8 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
             userEingabenSpeichern();
 
             if (buttonWechsel.equals("Testat beenden")) {
-                testatController.persistTestat();
                 JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                testatController.persistTestat();
                 this.dispose();
 
             } else {

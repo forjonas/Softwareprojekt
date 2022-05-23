@@ -165,7 +165,6 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
                 JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                 testatController.persistTestat();
                 this.dispose();
-
             } else {
                 testatController.weiter();
             }

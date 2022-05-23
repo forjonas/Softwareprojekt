@@ -114,9 +114,8 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
             String buttonWechsel = btnNaechsteAufgabeTraining.getText();
             userEingabenSpeichern();
 
-            if (buttonWechsel.equals("Testat beenden")) {
+            if (buttonWechsel.equals("Training beenden")) {
                 trainingController.persistTraining();
-                JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                 this.dispose();
 
             } else {
