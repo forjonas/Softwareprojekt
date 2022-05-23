@@ -13,6 +13,12 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Ansicht in der ein neuer Benutzer sich Registrieren kann
+ *
+ * @author Martin Bergen
+ * @version 23.05.2022
+ */
 public class RegistrierenView extends JFrame implements ActionListener {
 
     DatabaseService ds = DatabaseService.getInstance();
@@ -36,6 +42,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
     private JPasswordField passwortWiederholenTxt = new JPasswordField(40);
 
 
+    /**
+     * Konstruktor der Klasse RegistrierenView, die ein Fenster und die ausgewählten Bausteine verbindet und erstellt.
+     *
+     * @param hauptmenueView JFrame der EinloggenView, dient zur Logik des Zurück-Buttons
+     */
     public RegistrierenView(JFrame hauptmenueView) {
         this.setTitle("Registrieren");
         this.setName("Home");
@@ -61,6 +72,9 @@ public class RegistrierenView extends JFrame implements ActionListener {
         einloggenView.setVisible(false);
     }
 
+    /**
+     * Methode um Bausteine der View zu erstellen und zu verbinden, Methode wird im Konstruktor aufgerufen.
+     */
     public void fuelleRegistrierenFrame() {
         NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
@@ -103,6 +117,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
         this.add(registrierePnl);
     }
 
+    /**
+     * Methode zum überprüfen, ob das Passwort und die Wiederholung identisch sind.
+     *
+     * @return boolean-Wert
+     */
     public boolean isPasswortIdentisch() {
         if (Arrays.equals(passwortTxt.getPassword(), passwortWiederholenTxt.getPassword())) {
             return true;
@@ -112,6 +131,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Methode zum überprüfen, ob der gewählte Benutzername bereits existiert.
+     *
+     * @return boolean-Wert
+     */
     public boolean isUsernameTaken() {
         List<Benutzer> list = ds.readBenutzerFromDatabase();
         for (Benutzer b : list) {
@@ -122,6 +146,9 @@ public class RegistrierenView extends JFrame implements ActionListener {
         return false;
     }
 
+    /**
+     * Methode zum Hinzufügen eines Studenten der sich registriert hat. Benötigt die MEthoden isUsernameTaken() und isPasswortIdentisch().
+     */
     public void addStudent() {
         if (anyFieldNull() || anyFieldEmpty()) {
             JOptionPane.showMessageDialog(this, "Bitte alle Felder füllen", "Felder leer", JOptionPane.WARNING_MESSAGE);
@@ -141,6 +168,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Methode die überprüft, ob ein Eingabefeld null ist.
+     *
+     * @return boolean-Wert
+     */
     public boolean anyFieldNull() {
         if (usernameTxt.getText() == null || vornameTxt.getText() == null || nachnameTxt.getText() == null || matrikelTxt.getText() == null || passwortTxt.getPassword() == null || passwortWiederholenTxt.getPassword() == null) {
             return true;
@@ -148,6 +180,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
         return false;
     }
 
+    /**
+     * Methode die überprüft, ob ein Eingabefeld nicht gefüllt ist.
+     *
+     * @return boolean-Wert
+     */
     public boolean anyFieldEmpty() {
         if (usernameTxt.getText().equals("") || vornameTxt.getText().equals("") || nachnameTxt.getText().equals("") || matrikelTxt.getText().equals("") || passwortTxt.getPassword().equals("") || passwortWiederholenTxt.getPassword().equals("")) {
             return true;
@@ -155,6 +192,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
         return false;
     }
 
+    /**
+     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     *
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == this.registrierenBtn) {
