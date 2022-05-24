@@ -234,6 +234,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
                         TestatController testatController = new TestatController(testat, aktuellerBenutzer, jframe);
+                        testatController.zeigeAktuelleAufgabe(); //Methoden aufruf hinzugefuegt
                         dispose();
                     } else if (passwort != null) {
                         JOptionPane.showMessageDialog(this, "Fehler: Falsches Passwort eingegeben", "Falsches Passwort", JOptionPane.ERROR_MESSAGE);

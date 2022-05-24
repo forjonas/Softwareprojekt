@@ -1,153 +1,218 @@
 package View.AufgabenBearbeiten.Einzelne;
 
 import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
+import entity.aufgabe.Aufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
-import java.awt.*;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
+ * @version2: 13.05.22
+ * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
-
-    private JPanel contentPane;
-    private JTextArea textArea;
-    private JButton btnAbbrechen;
+    private JLabel lblBild;
+    private JLabel lblBearbeitungszeitWert;
+    private JLabel lblBearbeitungszeit;
+    private JLabel lblPunktzahl;
+    private JLabel lblPunktzahlWert;
+    private JLabel lblAufgabentyp;
+    private JLabel lblAufgabentypWert;
+    private JButton btnAbbrechenEinzel;
     private JButton btnLoesungshinweisEinzel;
-    private JButton btnAufgabeBeendenEinzel;
-    private final EinfachantwortAufgabe aufgabe;  //Im Frame die Aufgabe
-    private UserloesungEinfachantwort u1;
+    private JButton btnZeigeLoesungEinzel;
+    private JTextArea txtUsereingabe;
+    private JLabel lblAufgabenText;
+    private JPanel mainPanel;
+
+    private String eingabe;
+    private boolean hinweisVerwendet;
+    private EinfachantwortAufgabe aufgabe;
+    private UserloesungEinfachantwort userloesung;
     private Benutzer benutzer;
     private JFrame frame;
 
     /**
-     * public static void main(String[] args) {
+     * Konstruktor für Klasse BearbeiteEinzelneEinfachantwortAufgabeView
      *
-     *         EinfachantwortAufgabe a1 = new EinfachantwortAufgabe();
-     *         Designaufgabe a2 = new Designaufgabe();
-     *         Programmieraufgabe a3 = new Programmieraufgabe();
-     *         MultipleChoiceAufgabe a4 = new MultipleChoiceAufgabe();
-     *         Benutzer benutzer = new Student();
-     *         EventQueue.invokeLater(new Runnable() {
-     *             public void run() {
-     *                 try {
-     *                     BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView(a1, benutzer);
-     *                     frame.setVisible(true);
-     *                 } catch (Exception e) {
-     *                     e.printStackTrace();
-     *                 }
-     *             }
-     *         });
-     *     }
-     */
-
-
-    /**
-     * Create the frame.
+     * @param aufgabe
+     * @param benutzer
+     * @param frame
      */
     public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
+
+        this.setContentPane($$$getRootComponent$$$());
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
         this.frame = frame;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setBounds(100, 100, 674, 435);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout(0, 0));
-// Frame festlegen
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panelNorth = new JPanel();
-        contentPane.add(panelNorth, BorderLayout.NORTH);
-        JLabel lblNewLabel1 = new JLabel(aufgabe.getTextbeschreibung());
-        panelNorth.add(lblNewLabel1);
-// Textbeschreibung
+        //Setzen der Daten
+        lblAufgabenText.setText(aufgabe.getTextbeschreibung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
+        lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
+        lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
-        /**
-         * Optionales Bild hinzufügen
-         */
-
-        JPanel panelCenter = new JPanel();
-        contentPane.add(panelCenter, BorderLayout.CENTER);
-        textArea = new JTextArea(18, 50);
-        panelCenter.add(textArea);
-//Antwortmöglichkeit
-
-        JPanel panelWest = new JPanel();
-        contentPane.add(panelWest, BorderLayout.WEST);
-        JLabel lblNewLabel_1 = new JLabel("Antwort:");
-        panelWest.add(lblNewLabel_1);
-//Antwort Label
-
-        JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        contentPane.add(panelSouth, BorderLayout.SOUTH);
-// im BorderLayout Panel mit FlowLayout
-
-        btnAbbrechen = new JButton("Abbrechen");
-        panelSouth.add(btnAbbrechen);
-        btnLoesungshinweisEinzel = new JButton("Loesungshinweis");
-        panelSouth.add(btnLoesungshinweisEinzel);
-        btnAufgabeBeendenEinzel = new JButton("Aufgabe Beenden");
-        panelSouth.add(btnAufgabeBeendenEinzel);
-//im Panel Panel die Buttons
-
-        this.btnAbbrechen.addActionListener(this);
-        this.btnLoesungshinweisEinzel.addActionListener(this);
-        this.btnAufgabeBeendenEinzel.addActionListener(this);
-//addActionListener
+        btnAbbrechenEinzel.addActionListener(this);
+        btnLoesungshinweisEinzel.addActionListener(this);
+        btnZeigeLoesungEinzel.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
+
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnAbbrechen) {
-            /**
-             * if (textArea.getText().isEmpty()) {
-             *                 // int i1 = 0;
-             *                 JOptionPane.showConfirmDialog(null, "Sollen alle Daten verschwinden?", "Daten gehen verloren", JOptionPane.YES_NO_OPTION);
-             *                 int i1 = 0;
-             *                 if (i1 == JOptionPane.YES_OPTION) {
-             *                     this.dispose();
-             *                     BearbeiteEinzelneAufgabeKatalogView.main(null);
-             *                 } else {
-             *
-             *                 }
-             *             }
-             */
-            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
-            dispose();
-        }
-        if (e.getSource() == this.btnLoesungshinweisEinzel) {
+
+        if (e.getSource() == this.btnAbbrechenEinzel) {
+            JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
+            this.dispose();
+            BearbeiteEinzelneAufgabeKatalogView.main(null);
+        } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
-        }
-        if (e.getSource() == this.btnAufgabeBeendenEinzel) {
+        } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
 
-            u1 = new UserloesungEinfachantwort();
-            String u2 = textArea.getText();
-            u1.setUserloesung(u2);
+            eingabe = txtUsereingabe.getText();
+            userloesung = new UserloesungEinfachantwort();
+            userloesung.setUserloesung(eingabe);
             this.dispose();
-            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, u1, benutzer, frame);
-
+            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, userloesung, benutzer, frame);
         }
+    }
 
+    public static void main(String[] args) {
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
+        Benutzer benutzer = new Student();
+        BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) a1, benutzer, null);
+        frame.setVisible(true);
+
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(5, 8, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        lblBild = new JLabel();
+        lblBild.setText("");
+        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel3.add(spacer1, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.add(panel4, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        lblBearbeitungszeitWert = new JLabel();
+        lblBearbeitungszeitWert.setText("10");
+        panel4.add(lblBearbeitungszeitWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, -1), null, 0, false));
+        lblBearbeitungszeit = new JLabel();
+        lblBearbeitungszeit.setText("Bearbeitungszeit:");
+        panel4.add(lblBearbeitungszeit, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.add(panel5, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        lblPunktzahl = new JLabel();
+        lblPunktzahl.setText("Punktzahl:");
+        panel5.add(lblPunktzahl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        lblPunktzahlWert = new JLabel();
+        lblPunktzahlWert.setText("10");
+        panel5.add(lblPunktzahlWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, 16), null, 0, false));
+        final JPanel panel6 = new JPanel();
+        panel6.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.add(panel6, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        lblAufgabentyp = new JLabel();
+        lblAufgabentyp.setText("Aufgabentyp:");
+        panel6.add(lblAufgabentyp, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        lblAufgabentypWert = new JLabel();
+        lblAufgabentypWert.setText("Einfachantwort");
+        panel6.add(lblAufgabentypWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, -1), null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel1.add(spacer2, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JPanel panel7 = new JPanel();
+        panel7.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel7, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnAbbrechenEinzel = new JButton();
+        btnAbbrechenEinzel.setText("Abbrechen");
+        panel7.add(btnAbbrechenEinzel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnLoesungshinweisEinzel = new JButton();
+        btnLoesungshinweisEinzel.setText("Loesungshinweis");
+        panel7.add(btnLoesungshinweisEinzel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnZeigeLoesungEinzel = new JButton();
+        btnZeigeLoesungEinzel.setText("Lösung");
+        panel7.add(btnZeigeLoesungEinzel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer3 = new Spacer();
+        panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        panel1.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer5 = new Spacer();
+        panel1.add(spacer5, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        txtUsereingabe = new JTextArea();
+        txtUsereingabe.setEditable(true);
+        txtUsereingabe.setText("");
+        panel1.add(txtUsereingabe, new GridConstraints(1, 2, 2, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        lblAufgabenText = new JLabel();
+        lblAufgabenText.setText("Aufgabentext");
+        scrollPane1.setViewportView(lblAufgabenText);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return mainPanel;
     }
 }
