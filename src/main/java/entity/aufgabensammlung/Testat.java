@@ -1,7 +1,6 @@
 package entity.aufgabensammlung;
 
 import entity.aufgabe.Aufgabe;
-import entity.aufgabensammlung.Aufgabensammlung;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import jakarta.persistence.*;
@@ -32,7 +31,6 @@ public class Testat extends Aufgabensammlung {
     public Testat() {
         super();
         bearbeitungen = new LinkedList<>();
-        //Nothing to do
     }
 
     /**
@@ -119,7 +117,7 @@ public class Testat extends Aufgabensammlung {
      *
      * @param bearbeitung Testatbearbeitung des Testats
      */
-    public void addBearbeitung (TestatBearbeitung bearbeitung) {
+    public void addBearbeitung(TestatBearbeitung bearbeitung) {
         this.bearbeitungen.add(bearbeitung);
     }
 
@@ -128,7 +126,7 @@ public class Testat extends Aufgabensammlung {
      *
      * @param bearbeitung Testatbearbeitung des Testats
      */
-    public void removeBearbeitung (TestatBearbeitung bearbeitung) {
+    public void removeBearbeitung(TestatBearbeitung bearbeitung) {
         this.bearbeitungen.remove(bearbeitung);
     }
 

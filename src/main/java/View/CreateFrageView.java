@@ -1,6 +1,5 @@
 package View;
 
-import entity.aufgabe.Aufgabe;
 import entity.benutzer.Benutzer;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
@@ -10,13 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
- *  Ansicht in der ein Schwierigkeitsgrad und eine Kategorie gewählt werden kann, um dann eine TrainingGenerierenView mit diesen Werten zu erstellen
+ * Ansicht in der ein Schwierigkeitsgrad und eine Kategorie gewählt werden kann, um dann eine TrainingGenerierenView mit diesen Werten zu erstellen
  *
- *  @author Martin Bergen
- *  @version 23.05.22
+ * @author Martin Bergen
+ * @version 23.05.22
  */
 public class CreateFrageView extends JFrame implements ActionListener {
 

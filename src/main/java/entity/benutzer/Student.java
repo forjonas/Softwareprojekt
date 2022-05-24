@@ -1,6 +1,5 @@
 package entity.benutzer;
 
-import entity.benutzer.Benutzer;
 import jakarta.persistence.Entity;
 
 import java.io.Serializable;
@@ -21,7 +20,6 @@ public class Student extends Benutzer implements Serializable {
      */
     public Student() {
         super();
-        //Nothing to do
     }
 
     /**
@@ -64,6 +62,6 @@ public class Student extends Benutzer implements Serializable {
      */
     @Override
     public String toString() {
-        return "Student: {"+super.toString()+"}";
+        return "Student: {" + super.toString() + "}";
     }
 }

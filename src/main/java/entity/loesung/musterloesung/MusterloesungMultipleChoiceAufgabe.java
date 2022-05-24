@@ -1,7 +1,6 @@
 package entity.loesung.musterloesung;
 
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.*;
 
@@ -60,12 +59,11 @@ public class MusterloesungMultipleChoiceAufgabe extends Musterloesung {
     /**
      * Setzt die zur Lösung gehörende Aufgabe
      *
-     * @param aufgabe
-     * @return zur Lösung gehörende Aufgabe
+     * @param aufgabe Aufgabe die zur entsprechenden Lösung gesetzt werden soll
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if(aufgabe == null) {
+        if (aufgabe == null) {
             this.aufgabe = null;
         } else {
             if (aufgabe.getClass() == MultipleChoiceAufgabe.class) {

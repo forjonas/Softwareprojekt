@@ -24,7 +24,6 @@ import java.util.List;
 public class CreateBetaData {
 
 
-
     /**
      * Beta-Data Attribute
      * <p>
@@ -167,9 +166,9 @@ public class CreateBetaData {
 
         //70% der Aufgaben erhalten ein zufälliges Bild als Aufgabenstellungsbild
         //Da das Bild optional ist, erhalten nicht alle Aufgaben ein Bild
-        for(Aufgabe a : aufgabenliste) {
+        for (Aufgabe a : aufgabenliste) {
             double randomNumber = Math.random();
-            if(randomNumber < 0.7) {
+            if (randomNumber < 0.7) {
                 a.setAufgabenstellungsbild(getRandomTestImage());
             }
         }
@@ -239,28 +238,28 @@ public class CreateBetaData {
         List<Aufgabe> aufgabenliste5 = Arrays.asList(ea3, ea4, ma4, pa4, pa1);
 
         testat1 = new Testat(aufgabenliste1, "000", "Testat für Anfänger", dozent1);
-        for(Aufgabe a : aufgabenliste1)
+        for (Aufgabe a : aufgabenliste1)
             a.addVerwendung(testat1);
         dozent1.addErstelltesTestat(testat1);
         testat2 = new Testat(aufgabenliste3, "000", "Testat nur MultipleChoice-Aufgaben", dozent2);
-        for(Aufgabe a : aufgabenliste3)
+        for (Aufgabe a : aufgabenliste3)
             a.addVerwendung(testat2);
         dozent2.addErstelltesTestat(testat2);
         testat3 = new Testat(aufgabenliste2, "000", "Frühlingstestat", dozent1);
-        for(Aufgabe a : aufgabenliste2)
+        for (Aufgabe a : aufgabenliste2)
             a.addVerwendung(testat3);
         dozent1.addErstelltesTestat(testat3);
 
         training1 = new Training(aufgabenliste5, 50, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Mittel, student2);
-        for(Aufgabe a : aufgabenliste5)
+        for (Aufgabe a : aufgabenliste5)
             a.addVerwendung(training1);
         student2.addBearbeitetesTraining(training1);
         training2 = new Training(aufgabenliste4, 30, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student4);
-        for(Aufgabe a : aufgabenliste4)
+        for (Aufgabe a : aufgabenliste4)
             a.addVerwendung(training2);
         student4.addBearbeitetesTraining(training2);
         training3 = new Training(aufgabenliste1, 90, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student3);
-        for(Aufgabe a : aufgabenliste1)
+        for (Aufgabe a : aufgabenliste1)
             a.addVerwendung(training3);
         student3.addBearbeitetesTraining(training3);
 
@@ -269,14 +268,14 @@ public class CreateBetaData {
     }
 
     public void createBetaUserLösungen() throws Exception {
-        byte [] testBild = DatabaseService.convertFileToByteArray(new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img1.jpg"),new JFrame());
-        ul1 = new UserloesungDesignaufgabe(da1,false,testBild,student3,training3);
+        byte[] testBild = DatabaseService.convertFileToByteArray(new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img1.jpg"), new JFrame());
+        ul1 = new UserloesungDesignaufgabe(da1, false, testBild, student3, training3);
         ul2 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student3, training3);
-        ul3 = new UserloesungDesignaufgabe(da2,false,testBild,student3,training3);
+        ul3 = new UserloesungDesignaufgabe(da2, false, testBild, student3, training3);
         ul4 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student3, training3);
         ul5 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa4, true, "Code", student3, training3);
-        ul6 = new UserloesungDesignaufgabe(da4,false,testBild,student3,training3);
-        ul7 = new UserloesungProgrammieraufgabe(pa2,false,"assa",student3,training3);
+        ul6 = new UserloesungDesignaufgabe(da4, false, testBild, student3, training3);
+        ul7 = new UserloesungProgrammieraufgabe(pa2, false, "assa", student3, training3);
         student3.addErstellteLoesung(ul1);
         student3.addErstellteLoesung(ul2);
         student3.addErstellteLoesung(ul3);
@@ -293,10 +292,10 @@ public class CreateBetaData {
         training3.addUserloesung(ul7);
 
 
-        Userloesung test1 = new UserloesungEinfachantwort(ea1,false,"pong",student4,training2);
-        Userloesung test2 = new UserloesungMultipleChoiceAufgabe(ma1, false, Arrays.asList(false,false,false,true),student4,training2);
-        Userloesung test3 = new UserloesungDesignaufgabe(da1,false,testBild,student4,training2);
-        Userloesung test4 = new UserloesungProgrammieraufgabe(pa1,false,"asdasd",student4,training2);
+        Userloesung test1 = new UserloesungEinfachantwort(ea1, false, "pong", student4, training2);
+        Userloesung test2 = new UserloesungMultipleChoiceAufgabe(ma1, false, Arrays.asList(false, false, false, true), student4, training2);
+        Userloesung test3 = new UserloesungDesignaufgabe(da1, false, testBild, student4, training2);
+        Userloesung test4 = new UserloesungProgrammieraufgabe(pa1, false, "asdasd", student4, training2);
         student4.addErstellteLoesung(test1);
         student4.addErstellteLoesung(test2);
         student4.addErstellteLoesung(test3);

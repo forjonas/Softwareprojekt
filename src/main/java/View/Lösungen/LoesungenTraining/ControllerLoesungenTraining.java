@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ControllerLoesungenTraining {
 
-    private Training training;
-    private JFrame frame;
+    private final Training training;
+    private final JFrame frame;
     private int index;
     public Benutzer benutzer;
     private DatabaseService ds = DatabaseService.getInstance();
@@ -31,20 +31,11 @@ public class ControllerLoesungenTraining {
         startLoesungTraining();
     }
 
-    public void setTraining(Training training) {
-        this.training = training;
-        this.index = 0;
-
-        this.userloesungList = ds.readUserloesungVonTraining(training, training.getTrainingsErsteller());
-
-        startLoesungTraining();
-    }
-
     public Userloesung getUserloesung(Aufgabe aufgabe) {
         Userloesung userloesung = null;
-        for (Userloesung uDB : userloesungList) {
-            if (uDB.getAufgabe().equals(aufgabe)) {
-                userloesung = uDB;
+        for (Userloesung userloesungDB : userloesungList) {
+            if (userloesungDB.getAufgabe().equals(aufgabe)) {
+                userloesung = userloesungDB;
             }
         }
         return userloesung;
@@ -54,45 +45,42 @@ public class ControllerLoesungenTraining {
         Aufgabe aufgabe = training.getAufgaben().get(0);
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
-                try {
-                    LoesungTrainingEinfachantwortaufgabeView lTEV = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
-                    lTEV.versteckeVorherigeAufgabe();
-                    if (training.getAnzahlAufgaben() == 1) {
-                        lTEV.versteckeNaechsteAufgabe();
-                    }
-                } catch (Exception ignored) {
-                }break;
+
+                LoesungTrainingEinfachantwortaufgabeView loesungTrainingEinfachantwortaufgabeView = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
+                loesungTrainingEinfachantwortaufgabeView.versteckeVorherigeAufgabe();
+                if (training.getAnzahlAufgaben() == 1) {
+                    loesungTrainingEinfachantwortaufgabeView.versteckeNaechsteAufgabe();
+                }
+                break;
             }
             case Programmieren: {
-                try {
-                    assert aufgabe instanceof Programmieraufgabe;
-                    LoesungTrainingProgrammieraufgabeView lTPV = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-                    lTPV.versteckeVorherigeAufgabe();
-                    if (training.getAnzahlAufgaben() == 1) {
-                        lTPV.versteckeNaechsteAufgabe();
-                    }
-                } catch (Exception ignored) {
-                }break;
+
+                assert aufgabe instanceof Programmieraufgabe;
+                LoesungTrainingProgrammieraufgabeView loesungTrainingProgrammieraufgabeView = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                loesungTrainingProgrammieraufgabeView.versteckeVorherigeAufgabe();
+                if (training.getAnzahlAufgaben() == 1) {
+                    loesungTrainingProgrammieraufgabeView.versteckeNaechsteAufgabe();
+                }
+                break;
             }
             case MultipleChoice: {
-                    assert aufgabe instanceof MultipleChoiceAufgabe;
-                    LoesungTrainingMultipleChoiceAufgabeView lTMCV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
-                    lTMCV.versteckeVorherigeAufgabe();
-                    if (training.getAnzahlAufgaben() == 1) {
-                        lTMCV.versteckeNaechsteAufgabe();
-                    }
+                assert aufgabe instanceof MultipleChoiceAufgabe;
+                LoesungTrainingMultipleChoiceAufgabeView loesungTrainingMultipleChoiceAufgabeView = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                loesungTrainingMultipleChoiceAufgabeView.versteckeVorherigeAufgabe();
+                if (training.getAnzahlAufgaben() == 1) {
+                    loesungTrainingMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
+                }
                 break;
             }
             case Design: {
-                try {
-                    assert aufgabe instanceof Designaufgabe;
-                    LoesungTrainingDesignaufgabeView lDV = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
-                    lDV.versteckeVorherigeAufgabe();
-                    if (training.getAnzahlAufgaben() == 1) {
-                        lDV.versteckeNaechsteAufgabe();
-                    }
-                } catch (Exception ignored) {
-                }break;
+
+                assert aufgabe instanceof Designaufgabe;
+                LoesungTrainingDesignaufgabeView loesungTrainingDesignaufgabeView = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
+                loesungTrainingDesignaufgabeView.versteckeVorherigeAufgabe();
+                if (training.getAnzahlAufgaben() == 1) {
+                    loesungTrainingDesignaufgabeView.versteckeNaechsteAufgabe();
+                }
+                break;
             }
         }
     }
@@ -110,34 +98,34 @@ public class ControllerLoesungenTraining {
         Aufgabe aufgabe = training.getAufgaben().get(index);
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
-                LoesungTrainingEinfachantwortaufgabeView lTEV = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
+                LoesungTrainingEinfachantwortaufgabeView loesungTrainingEinfachantwortaufgabeView = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
                 if (index == training.getAnzahlAufgaben() - 1) {
-                    lTEV.versteckeNaechsteAufgabe();
+                    loesungTrainingEinfachantwortaufgabeView.versteckeNaechsteAufgabe();
                 }
                 break;
             }
             case Programmieren: {
                 assert aufgabe instanceof Programmieraufgabe;
-                LoesungTrainingProgrammieraufgabeView lTPV = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                LoesungTrainingProgrammieraufgabeView loesungTrainingProgrammieraufgabeView = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
                 if (index == training.getAnzahlAufgaben() - 1) {
-                    lTPV.versteckeNaechsteAufgabe();
+                    loesungTrainingProgrammieraufgabeView.versteckeNaechsteAufgabe();
                 }
                 break;
             }
             case MultipleChoice: {
 
                 assert aufgabe instanceof MultipleChoiceAufgabe;
-                LoesungTrainingMultipleChoiceAufgabeView lTMCAV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                LoesungTrainingMultipleChoiceAufgabeView loesungTrainingMultipleChoiceAufgabeView = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                 if (index == training.getAnzahlAufgaben() - 1) {
-                    lTMCAV.versteckeNaechsteAufgabe();
+                    loesungTrainingMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
                 }
                 break;
             }
             case Design: {
                 assert aufgabe instanceof Designaufgabe;
-                LoesungTrainingDesignaufgabeView lDV = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
+                LoesungTrainingDesignaufgabeView loesungTrainingDesignaufgabeView = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
                 if (index == training.getAnzahlAufgaben() - 1) {
-                    lDV.versteckeNaechsteAufgabe();
+                    loesungTrainingDesignaufgabeView.versteckeNaechsteAufgabe();
                 }
                 break;
             }
@@ -150,33 +138,33 @@ public class ControllerLoesungenTraining {
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
                 assert aufgabe instanceof EinfachantwortAufgabe;
-                LoesungTrainingEinfachantwortaufgabeView lTEV = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
+                LoesungTrainingEinfachantwortaufgabeView loesungTrainingEinfachantwortaufgabeView = new LoesungTrainingEinfachantwortaufgabeView((EinfachantwortAufgabe) aufgabe, this);
                 if (index == 0) {
-                    lTEV.versteckeVorherigeAufgabe();
+                    loesungTrainingEinfachantwortaufgabeView.versteckeVorherigeAufgabe();
                 }
                 break;
             }
             case Programmieren: {
                 assert aufgabe instanceof Programmieraufgabe;
-                LoesungTrainingProgrammieraufgabeView lTPV = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                LoesungTrainingProgrammieraufgabeView loesungTrainingProgrammieraufgabeView = new LoesungTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
                 if (index == 0) {
-                    lTPV.versteckeVorherigeAufgabe();
+                    loesungTrainingProgrammieraufgabeView.versteckeVorherigeAufgabe();
                 }
                 break;
             }
             case MultipleChoice: {
                 assert aufgabe instanceof MultipleChoiceAufgabe;
-                LoesungTrainingMultipleChoiceAufgabeView lTMCAV = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                LoesungTrainingMultipleChoiceAufgabeView loesungTrainingMultipleChoiceAufgabeView = new LoesungTrainingMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
                 if (index == 0) {
-                    lTMCAV.versteckeVorherigeAufgabe();
+                    loesungTrainingMultipleChoiceAufgabeView.versteckeVorherigeAufgabe();
                 }
                 break;
             }
             case Design: {
                 assert aufgabe instanceof Designaufgabe;
-                LoesungTrainingDesignaufgabeView lDV = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
+                LoesungTrainingDesignaufgabeView loesungTrainingDesignaufgabeView = new LoesungTrainingDesignaufgabeView((Designaufgabe) aufgabe, this);
                 if (index == 0) {
-                    lDV.versteckeVorherigeAufgabe();
+                    loesungTrainingDesignaufgabeView.versteckeVorherigeAufgabe();
                 }
                 break;
             }

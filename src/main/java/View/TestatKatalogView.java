@@ -36,55 +36,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JButton btnErstellen;
     private JButton btnAufgabenEinsehen;
     private JButton btnLoeschen;
-
     private Dozent aktuellerBenutzer;
     private List<Testat> testatliste;
     private JFrame jframe;
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
-        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Dozent dozent3 = new Dozent();
-                    List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
-                    for (Dozent dozent : dozenten) {
-                        if (dozent.getBenutzername().equals("mmustermann")) {
-                            dozent3 = dozent;
-                        }
-                    }
-                    TestatKatalogView frame = new TestatKatalogView(null, dozent1);
-                    //TestatKatalogView frame = new TestatKatalogView(dozent2);
-                    //TestatKatalogView frame = new TestatKatalogView(dozent3);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private List<Testat> getTestData() {
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
-        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
-        List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        Testat t4 = new Testat();
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t4});
-        return testatliste;
-    }
 
     /**
      * Create the frame.
@@ -92,11 +46,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     public TestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
+
         testatliste = DatabaseService.getInstance().readTestateFromDatabase();
-        //Test
-        //testatliste = new LinkedList<Testat>();
-        //testatliste = getTestData();
-        testatliste = new LinkedList<Testat>(testatliste);
+        testatliste = new LinkedList<>(testatliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testatkatalog");
         contentPane = new JPanel();
@@ -213,7 +165,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Es wurde kein Testat zum Einsehen der Aufgaben ausgewählt.", "Kein Testat ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 Testat testat = testatliste.get(selectedRow);
-                if(testat.getAnzahlAufgaben() == 0) {
+                if (testat.getAnzahlAufgaben() == 0) {
                     JOptionPane.showMessageDialog(this, "Das gewählte Testat enthält keine Aufgaben.", "Kein Aufgaben einsehbar", JOptionPane.WARNING_MESSAGE);
                 } else {
                     new AufgabenEinesTestatsView(testat);
@@ -248,5 +200,4 @@ public class TestatKatalogView extends JFrame implements ActionListener {
             }
         }
     }
-
 }

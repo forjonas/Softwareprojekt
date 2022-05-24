@@ -4,10 +4,7 @@ import app.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
@@ -61,18 +58,16 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
-
 
         btnAbbrechenTraining.addActionListener(this);
         btnLoesungshinweisTraining.addActionListener(this);
@@ -95,11 +90,9 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
         if (e.getSource() == this.btnAbbrechenTraining) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            //new ControllerLoesungenTraining(trainingController.getTraining(),trainingController.getAktuellerBenutzer(), hauptmenueFrame);
-            //trainingController.setNewTrainingKatalog();
         } else if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
@@ -108,7 +101,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
 
             userEingabenSpeichern();
             trainingController.zurueckTraining();
-            //if (testatController.isIndexNotFirst())
 
         } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             String buttonWechsel = btnNaechsteAufgabeTraining.getText();
@@ -122,7 +114,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
                 trainingController.weiter();
             }
         }
-
     }
 
     /**
@@ -145,7 +136,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new String();
+        eingabe = "";
     }
 
     /**
@@ -156,11 +147,6 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);
-    }
-
-    public static void main(String[] args) throws Exception {
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        new BearbeiteTrainingEinfachantwortAufgabeView(null, (EinfachantwortAufgabe) a1);
     }
 
     {

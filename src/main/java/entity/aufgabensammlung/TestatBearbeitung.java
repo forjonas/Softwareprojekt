@@ -1,6 +1,5 @@
 package entity.aufgabensammlung;
 
-import entity.aufgabensammlung.Testat;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import jakarta.persistence.*;
@@ -32,7 +31,6 @@ public class TestatBearbeitung {
      * Leerer Konstruktor für Klasse TestatBearbeitung
      */
     public TestatBearbeitung() {
-        //Nothing to do
     }
 
     /**
@@ -168,7 +166,7 @@ public class TestatBearbeitung {
      */
     public boolean darfDozentTestatBearbeitungBewerten(Dozent dozent) {
         boolean leereTestatbearbeitung = (this.getTestat() == null || this.getTestat().getTestatErsteller() == null || this.getTestat().getAnzahlAufgaben() == 0);
-        if(!leereTestatbearbeitung) {
+        if (!leereTestatbearbeitung) {
             boolean selbstErstellt = (this.getTestat().getTestatErsteller() == dozent);
             boolean isAdmin = (dozent.getBenutzername().equals("admin"));
             return (selbstErstellt || isAdmin);

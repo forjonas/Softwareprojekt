@@ -1,7 +1,6 @@
 package app;
 
 import View.AufgabenBearbeiten.Testat.*;
-import View.EinsehenTrainingKatalogView;
 import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
@@ -48,6 +47,7 @@ public class TestatController {
 
     /**
      * Konstruktor für Klasse TestatController
+     *
      * @param testat
      * @param aktuellerBenutzer
      * @param hauptmenueFrame
@@ -63,7 +63,7 @@ public class TestatController {
         this.aktuellerBenutzer = aktuellerBenutzer;
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat.addBearbeitung(testatBearbeitung);
-        zeigeAktuelleAufgabe(); //für manche relevant ???????
+        zeigeAktuelleAufgabe();
     }
 
     /**
@@ -76,47 +76,37 @@ public class TestatController {
     /**
      * Zeigt die aktuelle Aufgabe die zu bearbeiten ist an
      */
-    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
-        aufgabe = testat.getAufgaben().get(this.index); //Aufgabe am Index erhalten
+    public void zeigeAktuelleAufgabe() {
+        aufgabe = testat.getAufgaben().get(this.index);
 
-        if (this.aktuellerFrame != null) { //Alte (aktuelle) Ansicht der Aufgabe schließen (Fenster schließen)
+        if (this.aktuellerFrame != null) {
             this.aktuellerFrame.dispose();
-        }// Passende View zusammen mit Aufgabe öffnen
+        }
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
             BearbeiteTestatEinfachantwortAufgabeView frame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= testat.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteTestatMuktipleChoiceAufgabeView frame = new BearbeiteTestatMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
+            BearbeiteTestatMultipleChoiceAufgabeView frame = new BearbeiteTestatMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= testat.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
-                /*
-                int anzahl = ((MultipleChoiceAufgabe) aufgabe).getAntwortmoeglichkeiten().size();
-                if (anzahl < 4) {
-                    if (anzahl < 3) {
-                        frame.noVisible();
-                    } else if (anzahl < 4 && anzahl > 2) {
-                        frame.noVisiblefour();
-                    }
-                }
-                 */
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
             BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= testat.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -125,7 +115,7 @@ public class TestatController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= testat.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -138,7 +128,7 @@ public class TestatController {
      */
     public void weiter() {
         if (this.index < testat.getAnzahlAufgaben() - 1) {
-            this.index++;  //Index fuer Controller erhoet
+            this.index++;
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
@@ -159,6 +149,7 @@ public class TestatController {
 
     /**
      * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     *
      * @param userloesung
      */
     public void addUserloesung(Userloesung userloesung) {
@@ -169,7 +160,7 @@ public class TestatController {
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
      * Fügt den aktuellerBenutzer die testatBearbeitung hinzu
      */
-    public void persistTestat() {//usereingaben Liste persistieren
+    public void persistTestat() {
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
@@ -183,7 +174,7 @@ public class TestatController {
         aktuellerBenutzer.addBearbeitetesTestat(testatBearbeitung);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        ds.persistObject(testat);//nötig????
+        ds.persistObject(testat);
         ds.persistObject(testatBearbeitung);
 
         System.out.println(userloesungen);
@@ -199,7 +190,6 @@ public class TestatController {
     }
 
     /**
-     *
      * @return das aktuelle Testat
      */
     public Testat getTestat() {
@@ -207,7 +197,6 @@ public class TestatController {
     }
 
     /**
-     *
      * @return den aktuelle Benutzer
      */
     public Benutzer getAktuellerBenutzer() {

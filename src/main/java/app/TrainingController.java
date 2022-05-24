@@ -42,10 +42,11 @@ public class TrainingController {
     private JFrame aktuellerFrame;
     private Benutzer aktuellerBenutzer;
     private Aufgabe aufgabe;
-    private List<Userloesung> userloesungen; // = new ArrayList<>();
+    private List<Userloesung> userloesungen;
 
     /**
      * Konstruktor für Klasse TrainingController
+     *
      * @param training
      * @param aktuellerBenutzer
      * @param hauptmenueFrame
@@ -58,9 +59,10 @@ public class TrainingController {
         this.userloesungen = new ArrayList<>();
         for (int i = 0; i < training.getAnzahlAufgaben(); i++) {
             userloesungen.add(i, null);
-            zeigeAktuelleAufgabe(); //für manche relevant ???????
+            zeigeAktuelleAufgabe();
         }
     }
+
     public void setNewTrainingKatalog() {
         new EinsehenTrainingKatalogView(hauptmenueFrame, (Dozent) aktuellerBenutzer);
     }
@@ -68,8 +70,8 @@ public class TrainingController {
     /**
      * Zeigt die aktuelle Aufgabe die zu bearbeiten ist an
      */
-    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
-        aufgabe = training.getAufgaben().get(this.index); //Aufgabe am Index erhalten
+    public void zeigeAktuelleAufgabe() {
+        aufgabe = training.getAufgaben().get(this.index);
 
         if (this.aktuellerFrame != null) {
             this.aktuellerFrame.dispose();
@@ -79,17 +81,16 @@ public class TrainingController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
             BearbeiteTrainingMultipleChoiceAufgabeView frame = new BearbeiteTrainingMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -98,7 +99,7 @@ public class TrainingController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -107,7 +108,7 @@ public class TrainingController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= training.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -120,7 +121,7 @@ public class TrainingController {
      */
     public void weiter() {
         if (this.index < training.getAnzahlAufgaben() - 1) {
-            this.index++;  //Index fuer Controller erhoet
+            this.index++;
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
@@ -151,7 +152,7 @@ public class TrainingController {
     /**
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
      */
-    public void persistTraining() {//usereingaben Liste persistieren
+    public void persistTraining() {
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
@@ -160,11 +161,9 @@ public class TrainingController {
             }
             userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
-
         aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        //ds.persistObject(training); //nötig????
         System.out.println(userloesungen);
 
         new ControllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
@@ -190,10 +189,6 @@ public class TrainingController {
      */
     public Benutzer getAktuellerBenutzer() {
         return aktuellerBenutzer;
-    }
-
-    public void setUserFrameVisible() {
-        hauptmenueFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws Exception {
