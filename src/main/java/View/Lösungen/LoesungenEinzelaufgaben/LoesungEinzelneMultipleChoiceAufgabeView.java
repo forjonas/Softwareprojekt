@@ -41,6 +41,9 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
+    private JLabel lblAufgabeBildString;
+    private JLabel lblUserBild;
+    private JLabel lblMusterBild;
 
 
     public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe, Benutzer benutzer, JFrame frame) {
@@ -50,16 +53,16 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                                 //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungMultipleChoiceAufgabe mLMCA = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung(); //Beschaffen der Musterlösung über die Aufgabe
-        List<Boolean> musterLoesungen = mLMCA.getMusterloesung();
-        List<Boolean> userLoesungen = userloesungMultipleChoiceAufgabe.getUserloesung();                            //Beschaffen der Userlösung über das mitgegebene Userlösungsobjekt
+        MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
+        List<Boolean> musterLoesungen = musterloesungMultipleChoiceAufgabe.getMusterloesung();
+        List<Boolean> userLoesungen = userloesungMultipleChoiceAufgabe.getUserloesung();
         btnMusterloesung1.setSelected(musterLoesungen.get(0));
         btnUserloesung1.setSelected(userLoesungen.get(0));
         if (userLoesungen.size() == 4) {
@@ -94,7 +97,7 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }

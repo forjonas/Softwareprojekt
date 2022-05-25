@@ -32,6 +32,9 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
+    private JLabel lblMusterBild;
+    private JLabel lblUserBild;
+    private JLabel lblAufgabeBildString;
 
     public LoesungEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, UserloesungProgrammieraufgabe userloesungProgrammieraufgabe, Benutzer benutzer, JFrame frame) {
         this.frame = frame;
@@ -42,16 +45,16 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();     //Beschaffen der Musterlösung über die Aufgabe
-        txtfMusterloesung.setText(mLP.getMusterloesung());
-        txtfUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());                                //Beschaffen der Userlösung aus der DB über die Aufgabe
+        MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
+        txtfMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
+        txtfUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -65,7 +68,7 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }

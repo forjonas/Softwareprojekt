@@ -87,7 +87,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
             this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(this.frame, this.benutzer);
         } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());

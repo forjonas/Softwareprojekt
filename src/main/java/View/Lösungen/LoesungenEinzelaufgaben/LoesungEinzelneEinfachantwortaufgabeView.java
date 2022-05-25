@@ -34,6 +34,9 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
+    private JLabel lblMusterBild;
+    private JLabel lblUserBild;
+    private JLabel lblAufgabeBildString;
 
 
     public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer, JFrame frame) {
@@ -45,16 +48,16 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            //lblAufgabenstellungsbild.setIcon(aufgabe.getAufgabenstellungsbild());                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabeBildString.setVisible(true);
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungEinfachantwort mLE = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();             //Beschaffen der Musterlösung über die Aufgabe
-        txtfMusterloesung.setText(mLE.getMusterloesung());
-        txtfUserLoesung.setText(userloesungEinfachantwort.getUserloesung());                                    //Beschaffen der Userlösung über das mitgegebene Userlösungsobjekt
+        MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
+        txtfMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
+        txtfUserLoesung.setText(userloesungEinfachantwort.getUserloesung());
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -62,14 +65,13 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         this.setVisible(true);
     }
 
-
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }

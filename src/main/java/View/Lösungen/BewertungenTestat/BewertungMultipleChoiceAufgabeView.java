@@ -102,7 +102,11 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();

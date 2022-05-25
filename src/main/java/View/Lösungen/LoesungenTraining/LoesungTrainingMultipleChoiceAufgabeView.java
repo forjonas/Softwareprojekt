@@ -96,7 +96,11 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -111,18 +115,11 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     }
 
     private void naechsteAufgabe() {
-        try {
-            controllerLoesungenTraining.naechsteAufgabe();
-        } catch (Exception ignored) {
-
-        }
+        controllerLoesungenTraining.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        try {
-            controllerLoesungenTraining.vorherigeAufgabe();
-        } catch (Exception ignored) {
-        }
+        controllerLoesungenTraining.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

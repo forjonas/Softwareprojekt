@@ -6,16 +6,11 @@ import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
@@ -23,7 +18,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,36 +36,6 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
     private JFrame jFrame;
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(null, student1);
-                    //BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(dozent1);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private List<Aufgabe> getTestData() {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent1);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent1, Arrays.asList(new String[]{"char", "int", "double"}));
-        Aufgabe a5 = new EinfachantwortAufgabe();
-        List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
-        return aufgabenListe;
-    }
 
     /**
      * Create the frame.
