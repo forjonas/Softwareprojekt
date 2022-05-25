@@ -4,6 +4,7 @@ import View.AufgabenBearbeiten.Training.*;
 import View.EinsehenTrainingKatalogView;
 import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
 import entity.aufgabe.*;
+import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
@@ -37,6 +38,8 @@ import java.util.List;
 public class TrainingController {
 
     private Training training;
+    private Training testat;
+
     private JFrame hauptmenueFrame;
     private int index;
     private JFrame aktuellerFrame;
@@ -53,6 +56,14 @@ public class TrainingController {
     public TrainingController(Training training, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.hauptmenueFrame = hauptmenueFrame;
         this.index = 0;
+        /*
+        if (sammlung.getClass().equals(training.getClass())){
+            this.training = (Training) sammlung;
+        }
+        else if(sammlung.getClass().equals(testat.getClass())){
+            this.testat= (Training) sammlung;
+        }
+         */
         this.training = training;
         this.aktuellerBenutzer = aktuellerBenutzer;
         this.userloesungen = new ArrayList<>();

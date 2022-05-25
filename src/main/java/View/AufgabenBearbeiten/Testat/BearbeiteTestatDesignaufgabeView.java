@@ -111,7 +111,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
             }
 
         } else if (e.getSource() == this.btnVoherigeAufgabeTestat) {
-
             userEingabenSpeichern();
             testatController.zurueckTestat();
         } else if (e.getSource() == this.btnNaechsteAufgabeTestat) {

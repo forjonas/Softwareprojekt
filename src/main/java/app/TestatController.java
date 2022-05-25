@@ -225,14 +225,14 @@ public class TestatController {
         antwortmoeglichkeiten.add("Test3");
 
         List<String> antwortmoeglichkeiten1 = new ArrayList<>();
-        antwortmoeglichkeiten.add("Test1");
-        antwortmoeglichkeiten.add("Test2");
-        antwortmoeglichkeiten.add("Test3");
-        antwortmoeglichkeiten.add("Test4");
+        antwortmoeglichkeiten1.add("Test1");
+        antwortmoeglichkeiten1.add("Test2");
+        antwortmoeglichkeiten1.add("Test3");
+        antwortmoeglichkeiten1.add("Test4");
 
         List<String> antwortmoeglichkeiten2 = new ArrayList<>();
-        antwortmoeglichkeiten.add("Test1");
-        antwortmoeglichkeiten.add("Test2");
+        antwortmoeglichkeiten2.add("Test1");
+        antwortmoeglichkeiten2.add("Test2");
 
 
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
@@ -266,13 +266,15 @@ public class TestatController {
         java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a3, a4});
         java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2, a3, a3, a4, a4});
 
-        java.util.List<Aufgabe> aufgabenListe6 = Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
-        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a1, a3, a2, a4});
+        java.util.List<Aufgabe> aufgabenListe6 = new ArrayList<>(); //= Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
+        aufgabenListe6.add(0, a4);
+        aufgabenListe6.add(0, a5);
+        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a4, a4, a5, a6});
 
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenliste, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});

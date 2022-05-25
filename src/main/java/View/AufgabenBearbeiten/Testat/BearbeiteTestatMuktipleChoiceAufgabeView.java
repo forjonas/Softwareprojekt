@@ -87,30 +87,30 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        int lokalerIndex = 0;
+        if (lokalerIndex < mIndex) {
+            for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
 
-            if (i == 0) {
-                antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
-                btnantwort1.setText(antwort1);
-            } else if (i == 1) {
-                antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
-                btnantwort2.setText(antwort2);
+                if (i == 0) {
+                    antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
+                    btnantwort1.setText(antwort1);
+                } else if (i == 1) {
+                    antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
+                    btnantwort2.setText(antwort2);
 
-            } else if (i == 2) {
-                antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
-                btnantwort3.setText(antwort3);
+                } else if (i == 2) {
+                    antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
+                    btnantwort3.setText(antwort3);
 
-            } else if (i == 3) {
-                antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
-                btnantwort4.setText(antwort4);
-                /*
-                if (antwort4.equals("")) {
-                   boolean b4 = false;
-                   //btnantwort4.setVisible(false);
-                   }
-                 */
+                } else if (i == 3) {
+                    antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
+                    btnantwort4.setText(antwort4);
+                }
+
             }
+            lokalerIndex++;
         }
+
         ButtonGroup bg = new ButtonGroup();
         bg.add(btnantwort1);
         bg.add(btnantwort2);
@@ -171,6 +171,9 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
         }
     }
 
+    /**
+     * Usereingaben speichern
+     */
     public void userEingabenSpeichern() {
         List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
 
