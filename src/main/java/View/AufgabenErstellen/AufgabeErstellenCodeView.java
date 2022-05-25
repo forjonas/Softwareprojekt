@@ -17,7 +17,7 @@ import java.io.File;
  * Die View zur Erstellung einer Code Aufgabe
  *
  * @author Jannik Oehme
- * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
+ * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JFrame aufgabeErstellenStartViewFrame;
@@ -50,7 +50,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JTextField punkteTF;
     private JTextArea loesungTA;
     private File codeBspFile;
-    private JFileChooser FC;
+    byte [] bspBildByteArray;
 
     /**
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
@@ -167,6 +167,8 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.codeHochBtn) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             codeBspFile = filcV.fileChooser();
+            if(codeBspFile != null)
+                bspBildByteArray = DatabaseService.convertFileToByteArray(codeBspFile, this);
         }
     }
 
@@ -204,10 +206,13 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung);
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Eine eingabe Fehlt", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -225,8 +230,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
         DatabaseService ds = DatabaseService.getInstance();
-        byte[] codeBspByteArray = DatabaseService.convertFileToByteArray(codeBspFile, this);
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, codeBspByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
         MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
         doz.addErstellteAufgabe(neueAufgabe);
         try {

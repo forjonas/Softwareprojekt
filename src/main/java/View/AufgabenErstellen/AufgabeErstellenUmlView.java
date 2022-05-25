@@ -5,6 +5,7 @@ import entity.benutzer.Dozent;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import org.eclipse.persistence.internal.jpa.ExceptionFactory;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLOutput;
 
 /**
  * Die View zur Erstellung einer UML Aufgabe
@@ -201,10 +203,8 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw);
-            this.dispose();
-            aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
 
@@ -220,20 +220,26 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
      * @param schw             Schwierigkeitsgrd der Aufgabe
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw) {
+        if(designFile != null && musterloesungFile != null) {
+            DatabaseService ds = DatabaseService.getInstance();
+            byte[] designByteArray = DatabaseService.convertFileToByteArray(designFile, this);
+            byte[] musterloesungByteArray = DatabaseService.convertFileToByteArray(musterloesungFile, this);
+            Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, designByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
+            doz.addErstellteAufgabe(neueAufgabe);
+            MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, musterloesungByteArray);
 
-        DatabaseService ds = DatabaseService.getInstance();
-        byte[] designByteArray = DatabaseService.convertFileToByteArray(designFile, this);
-        byte[] musterloesungByteArray = DatabaseService.convertFileToByteArray(musterloesungFile, this);
-        Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, designByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
-        doz.addErstellteAufgabe(neueAufgabe);
-        MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, musterloesungByteArray);
-        try {
-            neueAufgabe.setMusterloesung(mlp);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                neueAufgabe.setMusterloesung(mlp);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen überprüfen sie ihre eingaben", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            ds.persistObject(neueAufgabe);
+            ds.persistObject(mlp);
+            this.dispose();
+            aufgabeErstellenStartViewFrame.setVisible(true);
         }
-
-        ds.persistObject(neueAufgabe);
-        ds.persistObject(mlp);
+        else {
+            JOptionPane.showMessageDialog(this, "Sie müssen einen DesignFile und einen MusterlösungsFile auswählen", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
