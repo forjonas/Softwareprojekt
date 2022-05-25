@@ -269,7 +269,7 @@ public class CreateBetaData {
     }
 
     public void createBetaUserLösungen() throws Exception {
-        byte [] testBild = DatabaseService.convertFileToByteArray(new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img1.jpg"),new JFrame());
+        byte [] testBild = getRandomTestImage();
         ul1 = new UserloesungDesignaufgabe(da1,false,testBild,student3,training3);
         ul2 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student3, training3);
         ul3 = new UserloesungDesignaufgabe(da2,false,testBild,student3,training3);

@@ -58,6 +58,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JTextField punkteTF;
     //Files
     File bspBild;
+    byte [] bspBildByteArray;
     /**
      * @param aufgabeErstellenStartViewFrame
      * @param doz
@@ -168,6 +169,8 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         } else if (e.getSource() == this.bspBildBtn) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             bspBild = filcV.fileChooser();
+            if(bspBild != null)
+                bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         }
     }
     /**
@@ -203,7 +206,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung);
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
@@ -223,7 +226,6 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        byte [] bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,bspBildByteArray , kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
