@@ -115,7 +115,7 @@ public class BearbeiteTrainingEinfachantwortAufgabeView extends JFrame implement
             userEingabenSpeichern();
 
             if (buttonWechsel.equals("Training beenden")) {
-                trainingController.persistTraining();
+              //  trainingController.persistTraining();
                 this.dispose();
 
             } else {

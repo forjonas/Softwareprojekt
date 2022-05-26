@@ -1,6 +1,7 @@
 package app;
 
 import View.AufgabenBearbeiten.Training.*;
+import View.AufgabenBearbeiten.bearbeitungsController;
 import View.EinsehenTrainingKatalogView;
 import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
 import entity.aufgabe.*;
@@ -35,95 +36,26 @@ import java.util.List;
  * Schnittstelle um ein Training auszuführen
  */
 
-public class TrainingController {
+public class TrainingController extends bearbeitungsController {
 
-    private Training training;
-    private Training testat;
+    protected Training training;
 
-    private JFrame hauptmenueFrame;
-    private int index;
-    private JFrame aktuellerFrame;
-    private Benutzer aktuellerBenutzer;
-    private Aufgabe aufgabe;
-    private List<Userloesung> userloesungen; // = new ArrayList<>();
-
-    /**
-     * Konstruktor für Klasse TrainingController
-     * @param training
-     * @param aktuellerBenutzer
-     * @param hauptmenueFrame
-     */
-    public TrainingController(Training training, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
-        this.hauptmenueFrame = hauptmenueFrame;
-        this.index = 0;
-        /*
-        if (sammlung.getClass().equals(training.getClass())){
-            this.training = (Training) sammlung;
-        }
-        else if(sammlung.getClass().equals(testat.getClass())){
-            this.testat= (Training) sammlung;
-        }
-         */
-        this.training = training;
-        this.aktuellerBenutzer = aktuellerBenutzer;
-        this.userloesungen = new ArrayList<>();
-        for (int i = 0; i < training.getAnzahlAufgaben(); i++) {
-            userloesungen.add(i, null);
-            zeigeAktuelleAufgabe(); //für manche relevant ???????
-        }
+    public TrainingController(Training training, Benutzer aktuellerBenutzer,JFrame hauptmenueFrame){
+        super(training, aktuellerBenutzer, hauptmenueFrame);
+        this.training= training;
+        super.zeigeAktuelleAufgabe();
     }
+
+
+
     public void setNewTrainingKatalog() {
-        new EinsehenTrainingKatalogView(hauptmenueFrame, (Dozent) aktuellerBenutzer);
+        new EinsehenTrainingKatalogView(this.hauptmenueFrame, (Dozent) aktuellerBenutzer);
     }
 
     /**
      * Zeigt die aktuelle Aufgabe die zu bearbeiten ist an
      */
-    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
-        aufgabe = training.getAufgaben().get(this.index); //Aufgabe am Index erhalten
-
-        if (this.aktuellerFrame != null) {
-            this.aktuellerFrame.dispose();
-        }
-        if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
-            BearbeiteTrainingEinfachantwortAufgabeView frame = new BearbeiteTrainingEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= training.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteTrainingMultipleChoiceAufgabeView frame = new BearbeiteTrainingMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= training.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
-            BearbeiteTrainingProgrammieraufgabeView frame = new BearbeiteTrainingProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= training.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
-            BearbeiteTrainingDesignaufgabeView frame = new BearbeiteTrainingDesignaufgabeView(this, (Designaufgabe) aufgabe);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= training.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        }
-        this.aktuellerFrame.setVisible(true);
+    public void zeigeAktuelleAufgabe() {
     }
 
     /**
@@ -132,7 +64,7 @@ public class TrainingController {
     public void weiter() {
         if (this.index < training.getAnzahlAufgaben() - 1) {
             this.index++;  //Index fuer Controller erhoet
-            zeigeAktuelleAufgabe();
+            super.zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
         }
@@ -144,7 +76,7 @@ public class TrainingController {
     public void zurueckTraining() {
         if (this.index > 0) {
             this.index--;
-            zeigeAktuelleAufgabe();
+            super.zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
         }
@@ -162,7 +94,7 @@ public class TrainingController {
     /**
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
      */
-    public void persistTraining() {//usereingaben Liste persistieren
+    public void persistSammlung() {//usereingaben Liste persistieren
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {

@@ -112,7 +112,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
             userEingabenSpeichern();
 
             if (buttonWechsel.equals("Training beenden")) {
-                trainingController.persistTraining();
+               // trainingController.persistTraining();
                 this.dispose();
 
             } else {

@@ -1,5 +1,6 @@
 package View.AufgabenBearbeiten.Testat;
 
+import View.AufgabenBearbeiten.bearbeitungsController;
 import app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -41,7 +42,6 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
     private JButton btnVoherigeAufgabeTestat;
     private JButton btnNaechsteAufgabeTestat;
     private JButton btnUpload;
-    //private JTextArea textArea1;
 
     private File fileBild = null;// = new File("Test");
     byte[] eingabe;
@@ -58,7 +58,7 @@ public class BearbeiteTestatDesignaufgabeView extends JFrame implements ActionLi
      * @param testatController
      * @param aufgabe
      */
-    public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) {
+    public BearbeiteTestatDesignaufgabeView(TestatController testatController, Designaufgabe aufgabe) { //auch nur mit controller möglich
 
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;

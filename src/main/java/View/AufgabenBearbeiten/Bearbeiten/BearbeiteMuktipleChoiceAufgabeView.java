@@ -1,12 +1,12 @@
-package View.AufgabenBearbeiten.Training;
+package View.AufgabenBearbeiten.Bearbeiten;
 
-import app.TrainingController;
+import View.AufgabenBearbeiten.bearbeitungsController;
+import app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import javax.swing.*;
@@ -17,17 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
- * @version6: 23.05.22 Kommentare + weitere Anpassungen
- */
-public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-
-    private JLabel lblAufgabenText;
+public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
+    private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
     private JLabel lblBearbeitungszeit;
@@ -35,17 +26,17 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     private JLabel lblPunktzahlWert;
     private JLabel lblAufgabentyp;
     private JLabel lblAufgabentypWert;
-    private JButton btnAbbrechenTraining;
-    private JButton btnLoesungshinweisTraining;
-    private JButton btnVoherigeAufgabeTraining;
-    private JButton btnNaechsteAufgabeTraining;
+    private JButton btnAbbrechen;
+    private JButton btnLoesungshinweis;
+    private JButton btnVoherigeAufgabe;
+    private JButton btnNaechsteAufgabe;
     private JRadioButton btnantwort1;
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private JPanel mainPanel;
-
+    private JLabel lblAufgabenText;
     private List<Boolean> eingabe;
+
 
     private String antwort1;
     private String antwort2;
@@ -54,21 +45,14 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
     private boolean hinweisVerwendet;
 
-    private TrainingController trainingController;
+    private TestatController testatController;
     private MultipleChoiceAufgabe aufgabe;
     private UserloesungMultipleChoiceAufgabe userloesung;
 
-    /**
-     * Konstruktor für Klasse BearbeiteTrainingMultipleChoiceAufgabeView
-     *
-     * @param trainingController
-     * @param aufgabe
-     */
-    public BearbeiteTrainingMultipleChoiceAufgabeView(TrainingController trainingController, MultipleChoiceAufgabe aufgabe) {
-        this.setContentPane($$$getRootComponent$$$());
+    public BearbeiteMuktipleChoiceAufgabeView(bearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
-        this.trainingController = trainingController;
+        this.testatController = (TestatController) controller;
 
         setTitle(aufgabe.getName()); //Name der Aufgabe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,40 +68,40 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        int lokalerIndex = 0;
+        if (lokalerIndex < mIndex) {
+            for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
 
-            if (i == 0) {
-                antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
-                btnantwort1.setText(antwort1);
-            } else if (i == 1) {
-                antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
-                btnantwort2.setText(antwort2);
+                if (i == 0) {
+                    antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
+                    btnantwort1.setText(antwort1);
+                } else if (i == 1) {
+                    antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
+                    btnantwort2.setText(antwort2);
 
-            } else if (i == 2) {
-                antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
-                btnantwort3.setText(antwort3);
+                } else if (i == 2) {
+                    antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
+                    btnantwort3.setText(antwort3);
 
-            } else if (i == 3) {
-                antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
-                btnantwort4.setText(antwort4);
-                /*
-                if (antwort4.equals("")) {
-                   boolean b4 = false;
-                   //btnantwort4.setVisible(false);
-                   }
-                 */
+                } else if (i == 3) {
+                    antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
+                    btnantwort4.setText(antwort4);
+                }
+
             }
-            ButtonGroup bg = new ButtonGroup();
-            bg.add(btnantwort1);
-            bg.add(btnantwort2);
-            bg.add(btnantwort3);
-            bg.add(btnantwort4);
-
+            lokalerIndex++;
         }
-        btnAbbrechenTraining.addActionListener(this);
-        btnLoesungshinweisTraining.addActionListener(this);
-        btnVoherigeAufgabeTraining.addActionListener(this);
-        btnNaechsteAufgabeTraining.addActionListener(this);
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(btnantwort1);
+        bg.add(btnantwort2);
+        bg.add(btnantwort3);
+        bg.add(btnantwort4);
+
+        btnAbbrechen.addActionListener(this);
+        btnLoesungshinweis.addActionListener(this);
+        btnVoherigeAufgabe.addActionListener(this);
+        btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -125,46 +109,46 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         super.setVisible(true);
     }
 
-    /**
-     * Funktionslogik hinter den Buttons
-     *
-     * @param e
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnAbbrechenTraining) {
+        if (e.getSource() == this.btnAbbrechen) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            //new ControllerLoesungenTraining(trainingController.getTraining(),trainingController.getAktuellerBenutzer(), hauptmenueFrame);
-            //trainingController.setNewTrainingKatalog();
-        } else if (e.getSource() == this.btnLoesungshinweisTraining) {
+            testatController.setNewTestatKatalog();
+        }
+
+        if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-
-            userEingabenSpeichern();
-            trainingController.zurueckTraining();
-
-
-        } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            userEingabenSpeichern();
-            String buttonWechsel = btnNaechsteAufgabeTraining.getText();
-
-            if (buttonWechsel.equals("Training beenden")) {
-              //  trainingController.persistTraining();
-                this.dispose();
-
-            } else {
-                trainingController.weiter();
-            }
         }
 
+        if (e.getSource() == this.btnVoherigeAufgabe) {
+            userEingabenSpeichern();
+            testatController.zurueckTestat();
+
+        }
+        if (e.getSource() == this.btnNaechsteAufgabe) {
+            userEingabenSpeichern();
+            String wechsel = btnNaechsteAufgabe.getText();
+
+
+            if (wechsel.equals("Testat beenden")) {
+                JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                testatController.persistTestat();
+                this.dispose();
+            } else {
+                testatController.weiter();
+            }
+        }
     }
 
+    /**
+     * Usereingaben speichern
+     */
     public void userEingabenSpeichern() {
         List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
 
@@ -182,16 +166,26 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         } else if (btnantwort4.isSelected()) {
             userloesungBooleanArray.set(3, true);
         }
-        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
-        trainingController.addUserloesung(userloesung);
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+        testatController.addUserloesung(userloesung);
     }
 
 
+    public void noVisible() {
+        btnantwort4.setVisible(false);
+        btnantwort3.setVisible(false);
+    }
+
+    public void noVisiblefour() {
+        btnantwort4.setVisible(false);
+
+    }
+
     /**
-     * verändert "Nächste" Button zu "Training Beenden" Button
+     * verändert "Nächste" Button zu "Testat Beenden" Button
      */
     public void setNaechsteZuSpeichern() {
-        btnNaechsteAufgabeTraining.setText("Training beenden");
+        btnNaechsteAufgabe.setText("Testat beenden");
     }
 
     /**
@@ -289,22 +283,22 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         final JPanel panel7 = new JPanel();
         panel7.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel7, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btnAbbrechenTraining = new JButton();
-        btnAbbrechenTraining.setText("Abbrechen");
-        panel7.add(btnAbbrechenTraining, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnLoesungshinweisTraining = new JButton();
-        btnLoesungshinweisTraining.setText("Loesungshinweis");
-        panel7.add(btnLoesungshinweisTraining, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabeTraining = new JButton();
-        btnVoherigeAufgabeTraining.setText("Voherige Aufgabe");
-        panel7.add(btnVoherigeAufgabeTraining, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnNaechsteAufgabeTraining = new JButton();
-        btnNaechsteAufgabeTraining.setText("Nächste Aufgabe");
-        panel7.add(btnNaechsteAufgabeTraining, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnAbbrechen = new JButton();
+        btnAbbrechen.setText("Abbrechen");
+        panel7.add(btnAbbrechen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnLoesungshinweis = new JButton();
+        btnLoesungshinweis.setText("Loesungshinweis");
+        panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVoherigeAufgabe = new JButton();
+        btnVoherigeAufgabe.setText("Voherige Aufgabe");
+        panel7.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnNaechsteAufgabe = new JButton();
+        btnNaechsteAufgabe.setText("Nächste Aufgabe");
+        panel7.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(14, 206), null, 0, false));
         final Spacer spacer4 = new Spacer();
-        panel1.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel1.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(14, 206), null, 0, false));
         final Spacer spacer5 = new Spacer();
         panel1.add(spacer5, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
@@ -336,5 +330,4 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }

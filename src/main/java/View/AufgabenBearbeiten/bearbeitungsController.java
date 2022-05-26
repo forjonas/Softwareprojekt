@@ -1,12 +1,19 @@
-package app;
+package View.AufgabenBearbeiten;
 
-import View.AufgabenBearbeiten.Testat.*;
-import View.AufgabenBearbeiten.bearbeitungsController;
-import View.EinsehenTrainingKatalogView;
-import View.MeineTestateKatalogView;
+import View.AufgabenBearbeiten.Bearbeiten.BearbeiteDesignaufgabeView;
+import View.AufgabenBearbeiten.Bearbeiten.BearbeiteEinfachantwortAufgabeView;
+import View.AufgabenBearbeiten.Bearbeiten.BearbeiteMuktipleChoiceAufgabeView;
+import View.AufgabenBearbeiten.Bearbeiten.BearbeiteProgrammieraufgabeView;
+import View.AufgabenBearbeiten.Training.BearbeiteTrainingDesignaufgabeView;
+import View.AufgabenBearbeiten.Training.BearbeiteTrainingEinfachantwortAufgabeView;
+import View.AufgabenBearbeiten.Training.BearbeiteTrainingMultipleChoiceAufgabeView;
+import View.AufgabenBearbeiten.Training.BearbeiteTrainingProgrammieraufgabeView;
+import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
+import app.TestatController;
 import entity.aufgabe.*;
+import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
-import entity.aufgabensammlung.TestatBearbeitung;
+import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
@@ -18,6 +25,7 @@ import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -25,124 +33,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
- * @version5: 19.05.22 Vorher Button mit Inhalt
- * @version6: 20.05.22 "Beenden" Button auf setVisible(false)
- * @version7: 23.05.22 Button von "nächste" zu "beenden" u.v.m
- * Schnittstelle um ein Testat auszuführen
- */
-public class TestatController extends bearbeitungsController {
+public abstract class bearbeitungsController {
 
-    protected Testat testat;
-    protected TestatBearbeitung testatBearbeitung;
-    protected int index;
-    protected JFrame aktuellerFrame;
+    protected int index = 0;
+
+    protected Aufgabensammlung sammlung;
     protected Benutzer aktuellerBenutzer;
-    protected Aufgabe aufgabe;
     protected JFrame hauptmenueFrame;
+    protected Aufgabe aufgabe;
+    protected JFrame aktuellerFrame;
     protected List<Userloesung> userloesungen;
 
-    /**
-     * Konstruktor für Klasse TestatController
-     * @param testat
-     * @param aktuellerBenutzer
-     * @param hauptmenueFrame
-     */
-    public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
-        super(testat,aktuellerBenutzer,hauptmenueFrame);
 
-        this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
+    public bearbeitungsController(Aufgabensammlung sammlung, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
+        this.sammlung = sammlung;
+        this.aktuellerBenutzer = aktuellerBenutzer;
+        this.hauptmenueFrame = hauptmenueFrame;
 
-       // this.testat.addBearbeitung(testatBearbeitung);
-        super.zeigeAktuelleAufgabe(); //für manche relevant ???????
-    }
-
-    /**
-     * Setzt TestatKatalog
-     */
-    public void setNewTestatKatalog() {
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
-    }
-    /*
-
-    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
-        aufgabe = testat.getAufgaben().get(this.index); //Aufgabe am Index erhalten
-
-        if (this.aktuellerFrame != null) { //Alte (aktuelle) Ansicht der Aufgabe schließen (Fenster schließen)
-            this.aktuellerFrame.dispose();
-        }// Passende View zusammen mit Aufgabe öffnen
-        if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
-            BearbeiteTestatEinfachantwortAufgabeView frame = new BearbeiteTestatEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= testat.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteTestatMuktipleChoiceAufgabeView frame = new BearbeiteTestatMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= testat.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-                /*
-                int anzahl = ((MultipleChoiceAufgabe) aufgabe).getAntwortmoeglichkeiten().size();
-                if (anzahl < 4) {
-                    if (anzahl < 3) {
-                        frame.noVisible();
-                    } else if (anzahl < 4 && anzahl > 2) {
-                        frame.noVisiblefour();
-                    }
-                }
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
-            BearbeiteTestatProgrammieraufgabeView frame = new BearbeiteTestatProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= testat.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
-        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
-            BearbeiteTestatDesignaufgabeView frame = new BearbeiteTestatDesignaufgabeView(this, (Designaufgabe) aufgabe);
-            if (userloesungen.get(index) == null) {
-                frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
-            if (index + 1 >= testat.getAnzahlAufgaben()) {
-                frame.setNaechsteZuSpeichern();
-            }
+        this.userloesungen = new ArrayList<>();
+        for (int i = 0; i < sammlung.getAnzahlAufgaben(); i++) {
+            userloesungen.add(i, null);
         }
-        this.aktuellerFrame.setVisible(true);
-    }
-     */
 
-    /**
-     * Erhöht den Index und zeigt die nächste Aufgabe die zu bearbeiten ist an
-     */
-    public void weiter() {
-        if (this.index < testat.getAnzahlAufgaben() - 1) {
-            this.index++;  //Index fuer Controller erhoet
-            zeigeAktuelleAufgabe();
-        } else {
-            JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
-        }
+
     }
 
-    /**
-     * Verringert den Index und zeigt die vorherige Aufgabe die bearbeitet wurde an
-     */
-    public void zurueckTestat() {
+    public void zurueck() {
         if (this.index > 0) {
             this.index--;
             zeigeAktuelleAufgabe();
@@ -150,68 +66,89 @@ public class TestatController extends bearbeitungsController {
             JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
         }
     }
-
-    /**
-     * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
-     * @param userloesung
+    /*
+     public void zurueck() {
+        if (this.index > 0) {
+            this.index--;
+            zeigeAktuelleAufgabe();
+        } else {
+            JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
+        }
+    }
      */
+
+    public void weiter() {
+
+    }
+
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);
+
     }
 
-    /**
-     * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
-     * Fügt den aktuellerBenutzer die testatBearbeitung hinzu
-     */
-    public void persistTestat() {//usereingaben Liste persistieren
-        for (Userloesung userloesung : userloesungen) {
-            userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
-            try {
-                userloesung.getAufgabe().addUserloesung(userloesung);
-            } catch (Exception ignored) {
-            }
-            userloesung.getAufgabensammlung().addUserloesung(userloesung);
-        }
 
-
-        aktuellerBenutzer.addBearbeitetesTestat(testatBearbeitung);
-        DatabaseService ds = DatabaseService.getInstance();
-        ds.persistObjects(userloesungen);
-        ds.persistObject(testat);//nötig????
-        ds.persistObject(testatBearbeitung);
-
-        System.out.println(userloesungen);
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
-    }
-
-    public boolean isIndexNotFirst() {
-        return (index > 0);
-    }
-
-    public boolean isIndexNotLast() {
-        return (index < testat.getAnzahlAufgaben() - 1);
-    }
-
-    /**
-     *
-     * @return das aktuelle Testat
-     */
-    public Testat getTestat() {
-        return testat;
-    }
-
-    /**
-     *
-     * @return den aktuelle Benutzer
-     */
     public Benutzer getAktuellerBenutzer() {
-        return aktuellerBenutzer;
+
+        return null;
+    }
+
+    public void setNaechsteZuSpeichern() {
+    }
+
+
+
+    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
+        aufgabe = sammlung.getAufgaben().get(this.index); //Aufgabe am Index erhalten
+
+        if (this.aktuellerFrame != null) {
+            this.aktuellerFrame.dispose();
+        }
+        if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Einfachantwort)) {
+            BearbeiteEinfachantwortAufgabeView frame = new BearbeiteEinfachantwortAufgabeView(this, (EinfachantwortAufgabe) aufgabe);
+            if (userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            } else frame.setUserloesung(userloesungen.get(index));
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 >= sammlung.getAnzahlAufgaben()) {
+                frame.setNaechsteZuSpeichern();
+            }
+        }
+        else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+            // frame.setUserloesung(userloesungen.get(index));
+            if (userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            } else frame.setUserloesung(userloesungen.get(index));
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 >= sammlung.getAnzahlAufgaben()) {
+                frame.setNaechsteZuSpeichern();
+            }
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Programmieren)) {
+            BearbeiteProgrammieraufgabeView frame = new BearbeiteProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+            if (userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            } else frame.setUserloesung(userloesungen.get(index));
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 >= sammlung.getAnzahlAufgaben()) {
+                frame.setNaechsteZuSpeichern();
+            }
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.Design)) {
+            BearbeiteDesignaufgabeView frame = new BearbeiteDesignaufgabeView(this, (Designaufgabe) aufgabe);
+            if (userloesungen.get(index) == null) {
+                frame.setUserloesungNull();
+            } else frame.setUserloesung(userloesungen.get(index));
+            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            if (index + 1 >= sammlung.getAnzahlAufgaben()) {
+                frame.setNaechsteZuSpeichern();
+            }
+        }
+        this.aktuellerFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws Exception {
-        DatabaseService ds = DatabaseService.getInstance();
-        List<Aufgabe> aufgabenliste;
-        aufgabenliste = ds.readAufgabenFromDatabase();
+       //DatabaseService ds = DatabaseService.getInstance();
+       //List<Aufgabe> aufgabenliste;
+       //aufgabenliste = ds.readAufgabenFromDatabase();
 
         List<String> antwortmoeglichkeiten = new ArrayList<>();
         antwortmoeglichkeiten.add("Test1");
@@ -268,15 +205,13 @@ public class TestatController extends bearbeitungsController {
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenListe2, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
         TestatController testatApp = new TestatController(t1, dozent2, null);
-        testatApp.zeigeAktuelleAufgabe();
-
     }
 
 }
