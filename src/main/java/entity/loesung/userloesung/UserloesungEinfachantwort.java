@@ -10,7 +10,7 @@ import jakarta.persistence.*;
  * Userlösung eines Benutzers für eine Aufgabe des Typs Einfachantwort.
  *
  * @author Timo Joswig
- * @version 10.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -19,7 +19,7 @@ public class UserloesungEinfachantwort extends Userloesung {
     private String userloesung;
 
     /**
-     * Leerer Konstruktor für Klasse UserloesungDesignaufgabe
+     * Leerer Konstruktor für Klasse UserloesungEinfachantwort
      */
     public UserloesungEinfachantwort() {
         super();

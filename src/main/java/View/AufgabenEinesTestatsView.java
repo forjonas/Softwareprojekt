@@ -1,7 +1,7 @@
 package View;
 
 import View.tableModel.AufgabeTableModel;
-import entity.aufgabe.*;
+import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Testat;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.util.List;
  * Ansicht, die eine tabellarische Übersicht der Aufgaben in einem Testat zeigt
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class AufgabenEinesTestatsView extends JDialog implements ActionListener {
 
@@ -29,12 +29,14 @@ public class AufgabenEinesTestatsView extends JDialog implements ActionListener 
     private Testat testat;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param testat Testat, dessen Aufgaben angezeigt werden sollen
      */
     public AufgabenEinesTestatsView(Testat testat) {
         this.testat = testat;
         aufgabenliste = testat.getAufgaben();
-        aufgabenliste = new LinkedList<>(aufgabenliste);
+        aufgabenliste = new LinkedList<Aufgabe>(aufgabenliste);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setTitle("Aufgaben des Testats \"" + testat.getName() + "\"");
         setModalityType(ModalityType.APPLICATION_MODAL);
@@ -101,6 +103,9 @@ public class AufgabenEinesTestatsView extends JDialog implements ActionListener 
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -111,10 +116,16 @@ public class AufgabenEinesTestatsView extends JDialog implements ActionListener 
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Einsehen-Buttons
+     */
     private void einsehenButtonLogik() {
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Einsehen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);

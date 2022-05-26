@@ -1,30 +1,22 @@
 package View.AufgabenBearbeiten.Einzelne;
 
 import View.tableModel.BearbeiteAufgabeTableModel;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.*;
 import entity.benutzer.Benutzer;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Ansicht in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
+ * Ansicht, in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements ActionListener {
 
@@ -38,7 +30,10 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     private JFrame jFrame;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public BearbeiteEinzelneAufgabeKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
         this.jFrame = jframe;
@@ -101,6 +96,9 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -111,12 +109,18 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jFrame.setVisible(true);
         dispose();
     }
 
-    private void bearbeitenButtonLogik() { // Konstruktor angepasst(kristin)
+    /**
+     * Beinhaltet die Logik des Bearbeiten-Buttons
+     */
+    private void bearbeitenButtonLogik() {
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Bearbeiten", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
         } else {

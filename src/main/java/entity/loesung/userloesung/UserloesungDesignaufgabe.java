@@ -10,7 +10,7 @@ import jakarta.persistence.*;
  * Userlösung eines Benutzers für eine Aufgabe des Typs Design.
  *
  * @author Timo Joswig
- * @version 10.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -74,4 +74,5 @@ public class UserloesungDesignaufgabe extends Userloesung {
             }
         }
     }
+
 }

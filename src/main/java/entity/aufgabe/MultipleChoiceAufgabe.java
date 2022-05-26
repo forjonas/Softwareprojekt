@@ -18,7 +18,7 @@ import java.util.List;
  * Aufgabe mit mehreren Antwortmöglichkeiten
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class MultipleChoiceAufgabe extends Aufgabe {
@@ -37,7 +37,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
 
     /**
      * Konstruktor für Klasse MultipleChoiceAufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
-     * * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
+     * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
      * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist

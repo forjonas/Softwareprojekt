@@ -12,7 +12,7 @@ import java.util.List;
  * Aufgabensammlung, die von einem Dozenten erstellt und bewertet und von einem Studenten bearbeitet wird
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class Testat extends Aufgabensammlung {
@@ -59,9 +59,9 @@ public class Testat extends Aufgabensammlung {
     }
 
     /**
-     * Setzt die Bewertung des Testats
+     * Setzt das Passwort des Testats
      *
-     * @param passwort Bewertung des Testats
+     * @param passwort Passwort des Testats
      */
     public void setPasswort(String passwort) {
         this.passwort = passwort;
@@ -143,7 +143,7 @@ public class Testat extends Aufgabensammlung {
      * Gibt zurück, ob das Testat bereits vom übergebenen Benutzer bearbeitet wurde
      *
      * @param benutzer Benutzer, für den überprüft wird, ob er das Testat bearbeitet hat
-     * @return Wahrheitswert, der angibt ob der übergebene Benutzer das Testat bearbeitet hat
+     * @return Wahrheitswert, der angibt, ob der übergebene Benutzer das Testat bearbeitet hat
      */
     public boolean isTestatVonUserBearbeitetWorden(Benutzer benutzer) {
         List<TestatBearbeitung> bearbeitungen = this.getBearbeitungen();

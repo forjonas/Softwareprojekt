@@ -16,7 +16,7 @@ import java.util.List;
  * Abstrakte Superklasse für Aufgaben
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

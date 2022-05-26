@@ -366,7 +366,7 @@ public class CreateBetaData {
     private byte[] getRandomTestImage() {
         //int randomNumber = (int)(Math.random()*(max-min+1)+min);
         int randomNumber = (int) ((Math.random() * 4) + 1);
-        File file = new File("C:\\Users\\joehm\\Desktop\\TestBilder\\img" + randomNumber + ".jpg");
+        File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img" + randomNumber + ".png");
         byte[] byteArray = DatabaseService.convertFileToByteArray(file, null);
         return byteArray;
     }

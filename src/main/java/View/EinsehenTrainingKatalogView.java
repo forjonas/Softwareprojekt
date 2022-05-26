@@ -1,18 +1,9 @@
 package View;
 
-import View.tableModel.TrainingTableModel;
 import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import View.tableModel.TrainingTableModel;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -20,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +19,7 @@ import java.util.List;
  * aus der Trainings zur Einsicht ausgewählt werden können.
  *
  * @author Jonas Herbst
- * @version 09.05.22
+ * @version 26.05.22
  */
 public class EinsehenTrainingKatalogView extends JFrame implements ActionListener {
 
@@ -43,12 +33,14 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
     private JFrame jframe;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame öffnet
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public EinsehenTrainingKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
-
         trainingsliste = DatabaseService.getInstance().readTrainingsFromDatabase();
         trainingsliste = new LinkedList<Training>(trainingsliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,6 +100,9 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -118,11 +113,17 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Einsehen-Buttons
+     */
     private void einsehenButtonLogik() {
         if (trainingsliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Trainings zum Einsehen", "Keine Trainings", JOptionPane.WARNING_MESSAGE);
@@ -132,7 +133,8 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
                 JOptionPane.showMessageDialog(this, "Es wurde kein Training zum Einsehen ausgewählt", "Keine Training ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 Training training = trainingsliste.get(selectedRow);
-                if (training.getAnzahlAufgaben() > 0) {
+                if(training.getAnzahlAufgaben() > 0) {
+                    //In meinem Branch noch ohne Option, um den aktuellen Benutzter zu übergeben
                     new ControllerLoesungenTraining(training, aktuellerBenutzer, jframe);
                     dispose();
                 } else {
@@ -141,4 +143,5 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
             }
         }
     }
+
 }

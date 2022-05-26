@@ -1,15 +1,8 @@
 package View;
 
 import View.tableModel.TestatTableModel;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -17,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +17,7 @@ import java.util.List;
  * Ansicht in der die bestehenden Testate administriert und neue hinzugefügt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class TestatKatalogView extends JFrame implements ActionListener {
 
@@ -41,14 +33,16 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public TestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
-
         testatliste = DatabaseService.getInstance().readTestateFromDatabase();
-        testatliste = new LinkedList<>(testatliste);
+        testatliste = new LinkedList<Testat>(testatliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testatkatalog");
         contentPane = new JPanel();
@@ -130,6 +124,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -146,16 +143,25 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Erstellen-Buttons
+     */
     private void erstellenButtonLogik() {
         new TestatErstellenView(jframe, aktuellerBenutzer);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Aufgaben-Einsehen-Buttons
+     */
     private void aufgabenEinsehenButtonLogik() {
         if (testatliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testate, in denen die Aufgaben eingesehen werden können.", "Keine Testate", JOptionPane.WARNING_MESSAGE);
@@ -165,7 +171,7 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Es wurde kein Testat zum Einsehen der Aufgaben ausgewählt.", "Kein Testat ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 Testat testat = testatliste.get(selectedRow);
-                if (testat.getAnzahlAufgaben() == 0) {
+                if(testat.getAnzahlAufgaben() == 0) {
                     JOptionPane.showMessageDialog(this, "Das gewählte Testat enthält keine Aufgaben.", "Kein Aufgaben einsehbar", JOptionPane.WARNING_MESSAGE);
                 } else {
                     new AufgabenEinesTestatsView(testat);
@@ -174,6 +180,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Löschen-Buttons
+     */
     private void loeschenButtonLogik() {
         if (testatliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testate zum Löschen", "Keine Testate", JOptionPane.WARNING_MESSAGE);
@@ -187,9 +196,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                 if (!testat.darfDozentTestatLoeschen(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, dieses Testat zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
                 } else if (testat.getBearbeitungen() != null && testat.getBearbeitungen().size() > 0) {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?\nAchtung! Es gibt zu ihm Testatbearbeitungen, die beim Löschen ebenfalls gelöscht werden.", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?\nAchtung! Es gibt zu ihm Testatbearbeitungen, die beim Löschen ebenfalls gelöscht werden.", "Testat löschen", JOptionPane.YES_NO_OPTION));
                 } else {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?", "Testat löschen", JOptionPane.YES_NO_OPTION));
                 }
                 if (loeschenGewuenscht) {
                     testatliste.remove(testat);
@@ -200,4 +209,5 @@ public class TestatKatalogView extends JFrame implements ActionListener {
             }
         }
     }
+
 }

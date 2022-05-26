@@ -2,17 +2,8 @@ package View;
 
 import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
 import View.tableModel.KorrigiereTestatTableModel;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
-import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -20,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +18,7 @@ import java.util.List;
  * Ansicht in der aus einer Tabelle ein Testat zum Korrigieren ausgewählt werden kann.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class KorrigiereTestatKatalogView extends JFrame implements ActionListener {
 
@@ -42,12 +32,14 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     private JFrame jframe;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public KorrigiereTestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
-
         testatBearbeitungsListe = DatabaseService.getInstance().readTestatBearbeitungenFromDatabase();
         testatBearbeitungsListe = new LinkedList<TestatBearbeitung>(testatBearbeitungsListe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,6 +98,9 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -116,11 +111,17 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Korrigieren-Buttons
+     */
     private void korrigierenButtonLogik() {
         if (testatBearbeitungsListe.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testatbearbeitungen zum Korrigieren", "Keine Testatbearbeitungen", JOptionPane.WARNING_MESSAGE);
@@ -132,15 +133,19 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                 TestatBearbeitung testatBearbeitung = testatBearbeitungsListe.get(selectedRow);
                 if (testatBearbeitung.getTestatBewerter() != null) {
                     JOptionPane.showMessageDialog(this, "Die Testatbearbeitung wurde bereits korrigiert", "Testatbearbeitung bereits korrigiert", JOptionPane.WARNING_MESSAGE);
-                } else if (!testatBearbeitung.darfDozentTestatBearbeitungBewerten(aktuellerBenutzer)) {
+                }
+                else if (!testatBearbeitung.darfDozentTestatBearbeitungBewerten(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie verfügen nicht über die Berechtigung, die Testatbearbeitung zu korrigieren", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
-                } else if (testatBearbeitung.getTestat() == null || testatBearbeitung.getTestat().getAnzahlAufgaben() == 0) {
+                }
+                else if (testatBearbeitung.getTestat() == null || testatBearbeitung.getTestat().getAnzahlAufgaben() == 0) {
                     JOptionPane.showMessageDialog(this, "Fehler: Testatbearbeitung enthält keine Aufgaben", "Testatbearbeitung konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    new ControllerBewertungenTestate(testatBearbeitung, aktuellerBenutzer, jframe);
+                }
+                else {
+                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer, jframe);
                     dispose();
                 }
             }
         }
     }
+
 }
