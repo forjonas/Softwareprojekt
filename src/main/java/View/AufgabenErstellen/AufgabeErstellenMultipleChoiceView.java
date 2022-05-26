@@ -22,25 +22,25 @@ import java.util.ArrayList;
  */
 public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
     private Dozent doz;
-    //Frames
+
     private JFrame aufgabeErstellenStartViewFrame;
-    //Panels
+
     private JPanel AufgabeErstellenMultipleChoicePnl;
     private JPanel centerPnl;
     private JPanel northPnl;
     private JPanel southPnl;
-    //Layouts
+
     private BorderLayout bl = new BorderLayout();
     private GridLayout gl = new GridLayout(15, 1);
-    //JComboBoxen
+
     private JComboBox schwierigkeitCB;
     private JComboBox kategorienCB;
     private JComboBox anzCB;
-    //Buttons
+
     private JButton zurueckBtn;
     private JButton speichernBtn;
     private JButton bspBildBtn;
-    //Labels
+
     private JLabel bspBildLbl;
     private JLabel kategorieLbl;
     private JLabel schwierigkeitLbl;
@@ -56,10 +56,10 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JLabel antwort3Lbl;
     private JLabel antwort4Lbl;
     private JLabel anzAntLbl;
-    //TextAreas
+
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
-    //TextFields
+
     private JTextField titelTF;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
@@ -68,7 +68,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JTextField antwort2TF;
     private JTextField antwort3TF;
     private JTextField antwort4TF;
-    //Files
+
     private File bspBild;
     byte [] bspBildByteArray;
     /**
@@ -88,11 +88,12 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     /**
      * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
      */
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        //Panels
+
         gl.setVgap(10);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);
@@ -101,7 +102,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         southPnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl = new JPanel();
         AufgabeErstellenMultipleChoicePnl.setLayout(bl);
-        //JComboboxen
+
         Integer[] anz = {2, 3, 4};
         anzCB = new JComboBox(anz);
         anzCB.addActionListener(this);
@@ -111,7 +112,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
-        //Buttons
+
         bspBildBtn = new JButton("Beispiel Bild Hochladen");
         bspBildBtn.addActionListener(this);
 
@@ -120,7 +121,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
-        //TextAreas
+
         titelTF = new JTextField();
 
         aufgabenTextTA = new JTextArea();
@@ -128,7 +129,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
 
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setLineWrap(true);
-        //TextFields
+
         bearbeitungsZeitTF = new JTextField();
         punkteTF = new JTextField();
         loesungTF = new JTextField();
@@ -136,7 +137,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         antwort2TF = new JTextField();
         antwort3TF = new JTextField();
         antwort4TF = new JTextField();
-        //Label
+
         bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
         anzAntLbl = new JLabel("Anzahl der Antwortmöglichkeiten");
         schwierigkeitLbl = new JLabel("Schwierigkeit");
@@ -152,7 +153,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         antwort2Lbl = new JLabel("Antwort 2:");
         antwort3Lbl = new JLabel("Antwort 3:");
         antwort4Lbl = new JLabel("Antwort 4:");
-        //ComponentsAdden
+
         centerPnl.add(titelLbl);
         centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
@@ -191,7 +192,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         centerPnl.add(antwort4TF);
         antwort4TF.setVisible(false);
 
-
         northPnl.add(zurueckBtn);
         southPnl.add(speichernBtn);
 
@@ -200,6 +200,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         AufgabeErstellenMultipleChoicePnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenMultipleChoicePnl);
     }
+
     /**
      * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
      */
@@ -218,8 +219,9 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
                 bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         }
     }
+
     /**
-     *  Ändert die Visibility der JTextlabels und JTextfields abhängig von der zuvor ausgewählten aufgaben anzahl.
+     * Ändert die Visibility der JTextlabels und JTextfields abhängig von der zuvor ausgewählten aufgaben anzahl.
      */
     private void switchVisibility() {
         int switcher = (Integer) anzCB.getSelectedItem();
@@ -257,6 +259,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             default:
         }
     }
+
     /**
      * disposed diesen frame und ruft den vorherigen frame auf. Bzw setzt diesen wieder Visible.
      */
@@ -264,6 +267,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     /**
      * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
      * Ruft createObjectandPersist auf.
@@ -277,8 +281,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         Kategorie kat = null;
         Schwierigkeitsgrad schw = null;
         ArrayList<String> listefinal = mcSpeichern();
-        String loesungsText = null;
-        ArrayList<Boolean> loesung = null;
+        int loesungsWert = -1;
+
         try {
             aufgTitel = titelTF.getText();
             aufText = aufgabenTextTA.getText();
@@ -287,56 +291,19 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
-            loesungsText = loesungTF.getText();
-            loesung = getLoesung(loesungsText);
+            loesungsWert = Integer.parseInt(loesungTF.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesung);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !(loesungsWert < 1 || loesungsWert > 4)) {
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesungsWert);
 
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
-    /**
-     * @param loesungText
-     * Gibt eine ArrayList<Boolean> aus welche per switchcase erstellt wird. Welche für die Lösungsdarstellung benötigt wird.
-     */
-    private ArrayList<Boolean> getLoesung(String loesungText) {
-        int switcher = Integer.parseInt(loesungText);
-        ArrayList<Boolean> loesung = new ArrayList<Boolean>();
-        switch (switcher) {
-            case 1:
-                loesung.add(true);
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(false);
-                return loesung;
-            case 2:
-                loesung.add(false);
-                loesung.add(true);
-                loesung.add(false);
-                loesung.add(false);
-                return loesung;
-            case 3:
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(true);
-                loesung.add(false);
-                return loesung;
-            case 4:
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(true);
-                return loesung;
 
-            default:
-                return loesung;
-        }
-    }
     /**
      * Erstellt eine ArrayList<String> in welcher die Antwortmöglichkeiten der Multiplechoice gespeichert werden.
      */
@@ -365,18 +332,19 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     }
 
     /**
-     * @param aufgTitel Titel der Aufgabe
-     * @param aufText Text der Aufgabe
-     * @param loesungshinweis loesungshinweis der Aufgabe
+     * Erstellt eine Aufgabe vom Typ MultipleChoiceAufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     *
+     * @param aufgTitel        Titel der Aufgabe
+     * @param aufText          Text der Aufgabe
+     * @param loesungshinweis  loesungshinweis der Aufgabe
      * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
-     * @param punkte maximale punkte der Aufgabe
-     * @param kat kategorie der Aufgabe
-     * @param schw schwierigkeitsgrad der Aufgabe
-     * @param antworten antwortmöglichkeiten der Aufgabe
-     * @param loesung loesung der Aufgabe
-     * Erstellt eine Aufgabe vom Typ Multiplchoiceaufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     * @param punkte           maximale punkte der Aufgabe
+     * @param kat              kategorie der Aufgabe
+     * @param schw             schwierigkeitsgrad der Aufgabe
+     * @param antworten        antwortmöglichkeiten der Aufgabe
+     * @param loesung          loesung der Aufgabe
      */
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, ArrayList<Boolean> loesung) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, int loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);
@@ -387,6 +355,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
     }

@@ -4,10 +4,7 @@ import app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
@@ -61,18 +58,16 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
-
 
         btnAbbrechenTestat.addActionListener(this);
         btnLoesungshinweisTestat.addActionListener(this);
@@ -100,7 +95,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
             testatController.setNewTestatKatalog();
         } else if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
@@ -147,7 +142,7 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new String();
+        eingabe = "";
     }
 
     /**
@@ -158,11 +153,6 @@ public class BearbeiteTestatProgrammieraufgabeView extends JFrame implements Act
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);
-    }
-
-    public static void main(String[] args) throws Exception {
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        new BearbeiteTestatProgrammieraufgabeView((Programmieraufgabe) a3, null);
     }
 
     {

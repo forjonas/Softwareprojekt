@@ -13,9 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungProgrammieraufgabeView extends JFrame implements ActionListener {
-    private ControllerBewertungenTestate cont;
+    private final ControllerBewertungenTestate controllerBewertungenTestate;
     private final Programmieraufgabe aufgabe;
-    private UserloesungProgrammieraufgabe uLP;
+    private final UserloesungProgrammieraufgabe userloesungProgrammieraufgabe;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JTextField txtfUserLoesung;
@@ -39,11 +39,10 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JLabel lblMusterBild;
 
 
-    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate cont) {
-        this.cont = cont;
+    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+        this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
-        System.out.println("Program");
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
@@ -52,7 +51,6 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
@@ -60,12 +58,12 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();      //Beschaffen der Musterlösung über die Aufgabe
-        txtfMusterloesung.setText(mLP.getMusterloesung());
-        UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);        //Beschaffen der Userlösung aus der DB über die Aufgabe
-        this.uLP = uLP;
-        txtfUserLoesung.setText(uLP.getUserloesung());
-        txtfUserPunktzahl.setText(uLP.getErreichtePunkte() + "");                                                 //Die vom Studenten erreichten Punkte
+        MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
+        txtfMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
+        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        this.userloesungProgrammieraufgabe = userloesungProgrammieraufgabe;
+        txtfUserLoesung.setText(userloesungProgrammieraufgabe.getUserloesung());
+        txtfUserPunktzahl.setText(userloesungProgrammieraufgabe.getErreichtePunkte() + "");
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,7 +75,11 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -96,31 +98,31 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
                 JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
                 return;
             }
-            uLP.setErreichtePunkte(bewertung);
-            cont.setBewertet();
+            userloesungProgrammieraufgabe.setErreichtePunkte(bewertung);
+            controllerBewertungenTestate.setBewertet();
         }
     }
 
     private void beenden() {
-        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
             this.dispose();
-            cont.beendeBewertungTestat();
+            controllerBewertungenTestate.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                cont.abbrechenBewertungTestat();
+                controllerBewertungenTestate.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        cont.naechsteAufgabe();
+        controllerBewertungenTestate.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        cont.vorherigeAufgabe();
+        controllerBewertungenTestate.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {
@@ -229,6 +231,7 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         mainPanel.add(lblMusterBild, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
@@ -238,4 +241,5 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

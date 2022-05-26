@@ -6,15 +6,14 @@ import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.enums.Aufgabentyp;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-/*
-20.05 T.Joswig u. K.Kubisch Preview
+/**
+ * 20.05 T.Joswig u. K.Kubisch Preview
  */
 public class TestatErstellenAufgabenPreview extends JDialog implements ActionListener {
     private JTextField txtfAufgabenstellung;
@@ -32,9 +31,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
     private JPanel mcPanel;
     private JLabel lblAufgabentypWert;
 
-
     private Aufgabe aufgabe;
-
 
     public TestatErstellenAufgabenPreview(Aufgabe aufgabe) {
         this.aufgabe = aufgabe;
@@ -47,7 +44,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
             hideMcPanel();
         }
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
@@ -60,7 +57,6 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
 
         this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -69,8 +65,6 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-
         if (e.getSource() == this.btnZurueckButton) {
 
             this.dispose();
@@ -93,8 +87,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
             antwort2.setText((String) moeglichkeiten.get(1));
             antwort3.setText((String) moeglichkeiten.get(2));
             antwort4.setVisible(false);
-        }
-        else {
+        } else {
             antwort1.setText((String) moeglichkeiten.get(0));
             antwort2.setText((String) moeglichkeiten.get(1));
             antwort3.setVisible(false);
@@ -109,7 +102,6 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
     }
 
     public void hideMcPanel() {
-
         this.mcPanel.setVisible(false);
         this.update(this.getGraphics());
     }

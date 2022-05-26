@@ -3,7 +3,6 @@ package View.tableModel;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 

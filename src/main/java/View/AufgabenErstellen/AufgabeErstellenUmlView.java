@@ -22,26 +22,26 @@ import java.sql.SQLOutput;
  * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
-    //JFrames
+
     private JFrame aufgabeErstellenStartViewFrame;
     private Dozent doz;
-    //Panels
+
     private JPanel AufgabeErstellenUMLPnl;
     private JPanel centerPnl;
     private JPanel northPnl;
     private JPanel southPnl;
-    //Layouts
+
     private BorderLayout bl = new BorderLayout();
     private GridLayout gl = new GridLayout(10, 2);
-    //Buttons
+
     private JButton zurueckBtn;
     private JButton speichernBtn;
     private JButton UMLHochladenBtn;
     private JButton musterloesungBtn;
-    //JComboboxen
+
     private JComboBox kategorienCB;
     private JComboBox schwierigkeitCB;
-    //Labels
+
     private JLabel titelLbl;
     private JLabel aufgabenTxtLbl;
     private JLabel loesungsHinweisLbl;
@@ -49,13 +49,13 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
     private JLabel kategorienLbl;
     private JLabel bearbeitungszeitLbl;
     private JLabel punkteLbl;
-    //TextAreas
+
     private JTextField titelTF;
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
-    //Files
+
     private File designFile;
     private File musterloesungFile;
 
@@ -76,11 +76,12 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     /**
      * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
      */
     private void AufgabeErstellenUMLViewFuellen() {
-        //Panels
+
         gl.setVgap(25);
         gl.setHgap(25);
         centerPnl = new JPanel(gl);
@@ -89,7 +90,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         AufgabeErstellenUMLPnl = new JPanel();
         AufgabeErstellenUMLPnl.setLayout(bl);
-        //Buttons
+
         zurueckBtn = new JButton("Zurück");
         zurueckBtn.addActionListener(this);
 
@@ -101,23 +102,23 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
 
         musterloesungBtn = new JButton("Musterlösung Hochladen");
         musterloesungBtn.addActionListener(this);
-        //TextAreas
+
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
 
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setLineWrap(true);
-        //TextFields
+
         punkteTF = new JTextField();
         bearbeitungsZeitTF = new JTextField();
         titelTF = new JTextField();
-        //ComboBoxes
+
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
-        //Labels
+
         kategorienLbl = new JLabel("Kategorie: ");
         titelLbl = new JLabel("Aufgaben Titel");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
@@ -125,7 +126,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
         punkteLbl = new JLabel("Punkte: ");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
-        //ComponentsAdden
+
         centerPnl.add(titelLbl);
         centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
@@ -151,6 +152,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         AufgabeErstellenUMLPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenUMLPnl);
     }
+
     /**
      * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
      */
@@ -176,6 +178,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     /**
      * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
      * Ruft createObjectandPersist auf.
@@ -204,15 +207,17 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw);
         }
     }
+
     /**
-     * @param aufgTitel Titel der aufgabe
-     * @param aufText AufgabenText
-     * @param loesungshinweis loesungshinweis der Aufgabe
-     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
-     * @param punkte maximale punkte der Aufgabe
-     * @param kat kategorie der Aufgabe
-     * @param schw Schwierigkeitsgrd der Aufgabe
      * Erstellt eine Aufgabe vom Typ Designaufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     *
+     * @param aufgTitel        Titel der aufgabe
+     * @param aufText          AufgabenText
+     * @param loesungshinweis  loesungshinweis der Aufgabe
+     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
+     * @param punkte           maximale punkte der Aufgabe
+     * @param kat              kategorie der Aufgabe
+     * @param schw             Schwierigkeitsgrd der Aufgabe
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw) {
         if(designFile != null && musterloesungFile != null) {

@@ -58,18 +58,16 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
-
 
         btnAbbrechenTraining.addActionListener(this);
         btnLoesungshinweisTraining.addActionListener(this);
@@ -92,21 +90,16 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         if (e.getSource() == this.btnAbbrechenTraining) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            //new ControllerLoesungenTraining(trainingController.getTraining(),trainingController.getAktuellerBenutzer(), hauptmenueFrame);
-            //trainingController.setNewTrainingKatalog();
         } else if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-
             userEingabenSpeichern();
             trainingController.zurueckTraining();
-            //if (testatController.isIndexNotFirst())
-
         } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             String buttonWechsel = btnNaechsteAufgabeTraining.getText();
             userEingabenSpeichern();
@@ -119,7 +112,6 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
                 trainingController.weiter();
             }
         }
-
     }
 
     /**
@@ -136,14 +128,13 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         eingabe = txtUsereingabe.getText();
         userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
         trainingController.addUserloesung(userloesung);
-
     }
 
     /**
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new String();
+        eingabe = "";
     }
 
     /**

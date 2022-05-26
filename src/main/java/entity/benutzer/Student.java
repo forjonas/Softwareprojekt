@@ -62,7 +62,7 @@ public class Student extends Benutzer implements Serializable {
      */
     @Override
     public String toString() {
-        return "Student: {"+super.toString()+"}";
+        return "Student: {" + super.toString() + "}";
     }
 
 }

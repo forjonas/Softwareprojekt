@@ -1,7 +1,6 @@
 package View.tableModel;
 
 import entity.aufgabe.Aufgabe;
-
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 

@@ -1,7 +1,6 @@
 package View.tableModel;
 
 import entity.aufgabensammlung.Testat;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 

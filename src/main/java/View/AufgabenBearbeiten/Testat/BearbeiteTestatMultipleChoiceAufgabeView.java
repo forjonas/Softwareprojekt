@@ -4,10 +4,7 @@ import app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
@@ -16,7 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +25,7 @@ import java.util.List;
  * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
-public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
+public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblAufgabenText;
     private JLabel lblBild;
@@ -47,8 +43,7 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private List<Boolean> eingabe;
-
+    private int eingabe;
     private String antwort1;
     private String antwort2;
     private String antwort3;
@@ -66,20 +61,19 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
      * @param testatController
      * @param aufgabe
      */
-    public BearbeiteTestatMuktipleChoiceAufgabeView(TestatController testatController, MultipleChoiceAufgabe aufgabe) {
+    public BearbeiteTestatMultipleChoiceAufgabeView(TestatController testatController, MultipleChoiceAufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -87,7 +81,7 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        for (int i = 0; i < mIndex; i++) {
 
             if (i == 0) {
                 antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
@@ -103,12 +97,6 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
             } else if (i == 3) {
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
-                /*
-                if (antwort4.equals("")) {
-                   boolean b4 = false;
-                   //btnantwort4.setVisible(false);
-                   }
-                 */
             }
         }
         ButtonGroup bg = new ButtonGroup();
@@ -144,7 +132,7 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
 
         if (e.getSource() == this.btnLoesungshinweisTestat) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
@@ -172,35 +160,19 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
     }
 
     public void userEingabenSpeichern() {
-        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
+        int userloesungWert = -1;
 
         if (btnantwort1.isSelected()) {
-            userloesungBooleanArray.set(0, true);
+            userloesungWert = 1;
         } else if (btnantwort2.isSelected()) {
-            userloesungBooleanArray.set(1, true);
+            userloesungWert = 2;
         } else if (btnantwort3.isSelected()) {
-            userloesungBooleanArray.set(2, true);
+            userloesungWert = 3;
         } else if (btnantwort4.isSelected()) {
-            userloesungBooleanArray.set(3, true);
+            userloesungWert = 4;
         }
-        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungWert, testatController.getAktuellerBenutzer(), testatController.getTestat());
         testatController.addUserloesung(userloesung);
-    }
-
-
-    public void noVisible() {
-        btnantwort4.setVisible(false);
-        btnantwort3.setVisible(false);
-    }
-
-    public void noVisiblefour() {
-        btnantwort4.setVisible(false);
-
     }
 
     /**
@@ -214,7 +186,7 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new ArrayList<>();
+        eingabe = -1;
     }
 
     /**
@@ -224,27 +196,18 @@ public class BearbeiteTestatMuktipleChoiceAufgabeView extends JFrame implements 
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
-        for (int i = 0; i < eingabe.size(); i++) {
-            Boolean wert = eingabe.get(i);
-            if (i == 0) {
-                btnantwort1.setSelected(wert);
-            }
-            if (i == 1) {
-                btnantwort2.setSelected(wert);
-            }
-            if (i == 2) {
-                btnantwort3.setSelected(wert);
-            }
-            if (i == 3) {
-                btnantwort4.setSelected(wert);
-            }
+        if (eingabe == 1) {
+            btnantwort1.setSelected(true);
         }
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
-        new BearbeiteTestatMuktipleChoiceAufgabeView(null, (MultipleChoiceAufgabe) a4);
+        if (eingabe == 2) {
+            btnantwort2.setSelected(true);
+        }
+        if (eingabe == 3) {
+            btnantwort3.setSelected(true);
+        }
+        if (eingabe == 4) {
+            btnantwort4.setSelected(true);
+        }
     }
 
     {

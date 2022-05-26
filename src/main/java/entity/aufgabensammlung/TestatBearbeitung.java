@@ -166,7 +166,7 @@ public class TestatBearbeitung {
      */
     public boolean darfDozentTestatBearbeitungBewerten(Dozent dozent) {
         boolean leereTestatbearbeitung = (this.getTestat() == null || this.getTestat().getTestatErsteller() == null || this.getTestat().getAnzahlAufgaben() == 0);
-        if(!leereTestatbearbeitung) {
+        if (!leereTestatbearbeitung) {
             boolean selbstErstellt = (this.getTestat().getTestatErsteller() == dozent);
             boolean isAdmin = (dozent.getBenutzername().equals("admin"));
             return (selbstErstellt || isAdmin);

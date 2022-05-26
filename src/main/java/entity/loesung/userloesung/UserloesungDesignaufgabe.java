@@ -60,12 +60,11 @@ public class UserloesungDesignaufgabe extends Userloesung {
     /**
      * Setzt die zur Lösung gehörende Aufgabe
      *
-     * @param aufgabe
-     * @return zur Lösung gehörende Aufgabe
+     * @param aufgabe Aufgabe die zur entsprechenden Lösung gesetzt werden soll
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if(aufgabe == null) {
+        if (aufgabe == null) {
             this.aufgabe = null;
         } else {
             if (aufgabe.getClass() == Designaufgabe.class) {

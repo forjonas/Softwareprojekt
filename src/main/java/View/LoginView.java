@@ -60,8 +60,6 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
     public void fuelleHomeFrame() {
         JPanel tempPanel = new JPanel(new BorderLayout());
 
-
-        //GridLayout Instanziierung.
         JPanel tempPanel3 = new JPanel(new GridBagLayout());
         tempPanel3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         GridBagConstraints c = new GridBagConstraints();
@@ -124,7 +122,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         c.gridy = 5;
         c.insets = new Insets(20, 7, 0, 7);
         tempPanel3.add(registrierenBtn, c);
-        //Ende GridLayout Instanziierung.
+
         tempPanel.add(tempPanel3, BorderLayout.CENTER);
         this.add(tempPanel3);
     }
@@ -164,8 +162,8 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
      */
     public boolean userIstStudent(String username) {
         List<Student> list = ds.readStudentenFromDatabase();
-        for (int i = 0; i < list.size(); i++) {
-            if (username.equals(list.get(i).getBenutzername())) {
+        for (Student student : list) {
+            if (username.equals(student.getBenutzername())) {
                 return true;
             }
         }
@@ -180,8 +178,8 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
      */
     public boolean userIstDozent(String username) {
         List<Dozent> list = ds.readDozentenFromDatabase();
-        for (int i = 0; i < list.size(); i++) {
-            if (username.equals(list.get(i).getBenutzername())) {
+        for (Dozent dozent : list) {
+            if (username.equals(dozent.getBenutzername())) {
                 return true;
             }
         }

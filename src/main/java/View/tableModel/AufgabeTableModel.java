@@ -1,7 +1,6 @@
 package View.tableModel;
 
 import entity.aufgabe.Aufgabe;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -104,8 +103,8 @@ public class AufgabeTableModel extends AbstractTableModel {
                 }
             }
             case 2: {
-                if (aufgabenliste.get(rowIndex).getBearbeitungszeit() == 0) {
-                    return "Fehler, Beabreitungszeit ist 0";
+                if(aufgabenliste.get(rowIndex).getBearbeitungszeit() == 0) {
+                    return "Fehler, Bearbeitungszeit ist 0";
                 } else {
                     return aufgabenliste.get(rowIndex).getBearbeitungszeit() + " Min";
                 }

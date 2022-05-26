@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-
 /**
  * Die View zur Erstellung einer Code Aufgabe
  *
@@ -21,25 +20,19 @@ import java.io.File;
  * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
-    //JFrame
     private JFrame aufgabeErstellenStartViewFrame;
     private Dozent doz;
-    //Panels
     private JPanel AufgabeErstellenCodePnl;
     private JPanel centerPnl;
     private JPanel northPnl;
     private JPanel southPnl;
-    //Layouts
     private BorderLayout bl = new BorderLayout();
     private GridLayout gl = new GridLayout(10, 2);
-    //Buttons
     private JButton codeHochBtn;
     private JButton zurueckBtn;
     private JButton speichernBtn;
-    //JComboBoxen
     private JComboBox kategorienCB;
     private JComboBox schwierigkeitCB;
-    //Labels
     private JLabel codeBspHochLbl;
     private JLabel codeBeispiel;
     private JLabel kategorieLbl;
@@ -50,22 +43,20 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     private JLabel bearbeitungszeitLbl;
     private JLabel punkteLbl;
     private JLabel loesungLbl;
-    //TextAreas
-    //private JTextArea codeTA;
     private JTextField titelTF;
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
     private JTextArea loesungTA;
-    //File
     private File codeBspFile;
     byte [] bspBildByteArray;
 
     /**
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
+     *
      * @param doz                            Ein Dozent
      * @param aufgabeErstellenStartViewFrame dervorherige Frame
-     *                                       Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
      */
     public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
@@ -92,11 +83,11 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
-        //Panels
+
         AufgabeErstellenCodePnl = new JPanel();
         AufgabeErstellenCodePnl.setLayout(bl);
         centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
-        //Buttons
+
         codeHochBtn = new JButton("Optionales Java Design Hochladen");
         codeHochBtn.addActionListener(this);
 
@@ -106,13 +97,13 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
 
-        //ComboBoxes
+
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
-        //TextAreas
+
         loesungTA = new JTextArea();
         loesungTA.setLineWrap(true);
 
@@ -121,11 +112,11 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
 
         loesungshinwTA = new JTextArea();
         loesungshinwTA.setLineWrap(true);
-        //TextFields
+
         titelTF = new JTextField();
         bearbeitungsZeitTF = new JTextField();
         punkteTF = new JTextField();
-        //Labels
+
         codeBspHochLbl = new JLabel("Optionales Java Design ");
         kategorieLbl = new JLabel("Kategorien");
         titelLbl = new JLabel("Aufgaben Titel");
@@ -135,7 +126,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         punkteLbl = new JLabel("Punkte: ");
         loesungLbl = new JLabel("Lösung");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
-        //Components Adden
+
         centerPnl.add(titelLbl);
         centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
@@ -226,7 +217,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     }
 
     /**
-     * Erstellt eine Aufgabe vom Typ Proggramieraufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     * Erstellt eine Aufgabe vom Typ Programmieraufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
      *
      * @param aufgTitel        Titel der Aufgabe
      * @param aufText          Text der Aufgabe
@@ -250,6 +241,5 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
 
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
-
     }
 }

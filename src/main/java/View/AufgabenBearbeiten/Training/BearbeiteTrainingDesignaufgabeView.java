@@ -41,7 +41,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
     private JButton btnUpload;
     private JPanel mainPanel;
 
-    private File fileBild = null;// = new File("Test");
+    private File fileBild = null;
     byte[] eingabe;
     private boolean hinweisVerwendet;
 
@@ -62,13 +62,12 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -85,6 +84,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
     }
+
     /**
      * Funktionslogik hinter den Buttons
      *
@@ -95,8 +95,6 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
         if (e.getSource() == this.btnAbbrechenTraining) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            //new ControllerLoesungenTraining(trainingController.getTraining(),trainingController.getAktuellerBenutzer(), hauptmenueFrame);
-            //trainingController.setNewTrainingKatalog();
         } else if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
@@ -105,24 +103,18 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-
             userEingabenSpeichern();
             trainingController.zurueckTraining();
-            //if (testatController.isIndexNotFirst())
-
         } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             String buttonWechsel = btnNaechsteAufgabeTraining.getText();
             userEingabenSpeichern();
-
             if (buttonWechsel.equals("Training beenden")) {
                 trainingController.persistTraining();
                 this.dispose();
-
             } else {
                 trainingController.weiter();
             }
         } else if (e.getSource() == this.btnUpload) {
-
             fileBild = dateiOeffnen(this);
             if (fileBild == null) {
                 btnUpload.setText("kein Bild");
@@ -133,12 +125,14 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
             }
         }
     }
+
     /**
      * verändert "Nächste" Button zu "Training Beenden" Button
      */
     public void setNaechsteZuSpeichern() {
         btnNaechsteAufgabeTraining.setText("Training beenden");
     }
+
     /**
      * Speichert Usereingaben in Userlösungsliste
      */
@@ -152,13 +146,14 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
             trainingController.addUserloesung(userloesung);
         }
     }
+
     /**
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
         eingabe = new byte[0];
-        //fileBild = new File("Keine Lösung");
     }
+
     /**
      * Setzt eingegebene Userlösung
      *
@@ -167,7 +162,7 @@ public class BearbeiteTrainingDesignaufgabeView extends JFrame implements Action
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
         if (eingabe.length <= 0) {
-            String name = "Bild fehlt";   //String.valueOf(eingabe.getClass());
+            String name = "Bild fehlt";
             btnUpload.setText(name);
             this.update(this.getGraphics());
         } else {
