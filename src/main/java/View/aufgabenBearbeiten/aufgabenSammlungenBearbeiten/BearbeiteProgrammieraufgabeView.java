@@ -1,18 +1,13 @@
-package View.AufgabenBearbeiten.Bearbeiten;
+package View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
-import View.AufgabenBearbeiten.Testat.BearbeiteTestatProgrammieraufgabeView;
-import View.AufgabenBearbeiten.bearbeitungsController;
-import app.TestatController;
-import app.TrainingController;
+import View.aufgabenBearbeiten.BearbeitungsController;
+import View.aufgabenBearbeiten.app.TestatController;
+import View.aufgabenBearbeiten.app.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Programmieraufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import javax.swing.*;
@@ -36,49 +31,50 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     private JTextArea txtUsereingabe;
     private JLabel lblAufgabenText;
 
+    private boolean hinweisVerwendet;
     private String eingabe;
 
-    private boolean hinweisVerwendet;
 
     private TestatController testatController;
     private TrainingController trainingController;
     private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe userloesung;
 
-    public BearbeiteProgrammieraufgabeView(Programmieraufgabe aufgabe, bearbeitungsController controller) {
+    public BearbeiteProgrammieraufgabeView(Programmieraufgabe aufgabe, BearbeitungsController controller) {
 
+        setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
 
-        if (controller.getClass() == testatController.getClass()) {
+        if (controller.getClass() == TestatController.class) {
             this.testatController = (TestatController) controller;
-        } else if (controller.getClass() == trainingController.getClass()) {
+        } else if (controller.getClass() == TrainingController.class) {
             this.trainingController = (TrainingController) controller;
-
-
-            setTitle(aufgabe.getName()); //Name der Aufgabe
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            //Setzen der Daten
-            lblAufgabenText.setText(aufgabe.getTextbeschreibung());
-            if (aufgabe.getAufgabenstellungsbild() != null) {
-                lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
-            }
-            lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
-            lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
-            lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
-
-
-            btnAbbrechen.addActionListener(this);
-            btnLoesungshinweis.addActionListener(this);
-            btnVoherigeAufgabe.addActionListener(this);
-            btnNaechsteAufgabe.addActionListener(this);
-
-            super.pack();
-            Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
-            super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
-            super.setVisible(true);
         }
+
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Setzen der Daten
+        lblAufgabenText.setText(aufgabe.getTextbeschreibung());
+        if (aufgabe.getAufgabenstellungsbild() != null) {
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+        }
+        lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
+        lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
+        lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
+
+
+        btnAbbrechen.addActionListener(this);
+        btnLoesungshinweis.addActionListener(this);
+        btnVoherigeAufgabe.addActionListener(this);
+        btnNaechsteAufgabe.addActionListener(this);
+
+        super.pack();
+        Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
+        super.setVisible(true);
+
     }
 
     @Override
@@ -103,9 +99,9 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
 
             userEingabenSpeichern();
             if (testatController != null) {
-                testatController.zurueckTestat();
+                testatController.zurueck();
             } else {
-                trainingController.zurueckTraining();
+                trainingController.zurueck();
             }
 
 
@@ -125,7 +121,8 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
             } else if (trainingController != null) {
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
-                    trainingController.persistSammlung();
+                    trainingController.persistTraining();
+                    this.dispose();
                 } else {
                     trainingController.weiter();
 
@@ -175,15 +172,10 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
      * @param userloesung
      */
     public void setUserloesung(Userloesung userloesung) {
-        eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
+        eingabe = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);
     }
 
-
-    public static void main(String[] args) throws Exception {
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        new BearbeiteTestatProgrammieraufgabeView((Programmieraufgabe) a3, null);
-    }
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer

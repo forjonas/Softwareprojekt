@@ -1,16 +1,16 @@
-package View.AufgabenBearbeiten.Einzelne;
+package View.aufgabenBearbeiten.einzelAufgaben;
 
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneProgrammieraufgabeView;
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
  * @version2: 13.05.22
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
-public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
+public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
     private JLabel lblBearbeitungszeit;
@@ -40,19 +40,19 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
 
     private String eingabe;
     private boolean hinweisVerwendet;
-    private Programmieraufgabe aufgabe;
-    private UserloesungProgrammieraufgabe userloesung;
+    private EinfachantwortAufgabe aufgabe;
+    private UserloesungEinfachantwort userloesung;
     private Benutzer benutzer;
     private JFrame frame;
 
     /**
-     * Konstruktor für Klasse BearbeiteEinzelneProgrammieraufgabeView
+     * Konstruktor für Klasse BearbeiteEinzelneEinfachantwortAufgabeView
      *
      * @param aufgabe
      * @param benutzer
      * @param frame
      */
-    public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, Benutzer benutzer, JFrame frame) {
+    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
         this.aufgabe = aufgabe;
@@ -61,6 +61,7 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
@@ -80,7 +81,6 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
 
-
     }
 
     /**
@@ -90,9 +90,11 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
             this.dispose();
+            //
             BearbeiteEinzelneAufgabeKatalogView.main(null);
         } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
@@ -104,17 +106,17 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
 
             eingabe = txtUsereingabe.getText();
-            userloesung = new UserloesungProgrammieraufgabe();
+            userloesung = new UserloesungEinfachantwort();
             userloesung.setUserloesung(eingabe);
             this.dispose();
-            new LoesungEinzelneProgrammieraufgabeView(aufgabe, userloesung, benutzer, frame);
+            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, userloesung, benutzer, frame);
         }
     }
 
     public static void main(String[] args) {
-        Aufgabe a2 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Benutzer benutzer = new Student();
-        BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView((Programmieraufgabe) a2, benutzer, null);
+        BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) a1, benutzer, null);
         frame.setVisible(true);
 
     }

@@ -1,14 +1,11 @@
 package testenKristin;
 
-import View.AufgabenBearbeiten.bearbeitungsController;
-import app.TestatController;
+import View.aufgabenBearbeiten.BearbeitungsController;
+import View.aufgabenBearbeiten.app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
@@ -55,7 +52,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
      * @param controller
      * @param aufgabe
      */
-    public BearbeiteTestatEinfachantwortAufgabeView(bearbeitungsController controller, EinfachantwortAufgabe aufgabe) {
+    public BearbeiteTestatEinfachantwortAufgabeView(BearbeitungsController controller, EinfachantwortAufgabe aufgabe) {
 
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
@@ -105,7 +102,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         } else if (e.getSource() == this.btnVoherigeAufgabeTestat) {
 
             userEingabenSpeichern();
-            testatController.zurueckTestat();
+            testatController.zurueck();
           //  bearbeitungsController.zurueck();
             //if (testatController.isIndexNotFirst())
 

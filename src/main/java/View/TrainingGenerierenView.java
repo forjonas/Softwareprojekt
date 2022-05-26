@@ -1,7 +1,7 @@
 package View;
 
 import View.tableModel.AufgabenAuswaehlenTableModel;
-import app.TrainingController;
+import View.aufgabenBearbeiten.app.TrainingController;
 import entity.aufgabe.Aufgabe;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;

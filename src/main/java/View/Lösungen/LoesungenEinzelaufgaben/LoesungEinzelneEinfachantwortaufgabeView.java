@@ -1,6 +1,6 @@
 package View.Lösungen.LoesungenEinzelaufgaben;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
+import View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneAufgabeKatalogView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;

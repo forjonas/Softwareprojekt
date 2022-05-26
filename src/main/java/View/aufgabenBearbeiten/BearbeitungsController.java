@@ -1,15 +1,11 @@
-package View.AufgabenBearbeiten;
+package View.aufgabenBearbeiten;
 
-import View.AufgabenBearbeiten.Bearbeiten.BearbeiteDesignaufgabeView;
-import View.AufgabenBearbeiten.Bearbeiten.BearbeiteEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Bearbeiten.BearbeiteMuktipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Bearbeiten.BearbeiteProgrammieraufgabeView;
-import View.AufgabenBearbeiten.Training.BearbeiteTrainingDesignaufgabeView;
-import View.AufgabenBearbeiten.Training.BearbeiteTrainingEinfachantwortAufgabeView;
-import View.AufgabenBearbeiten.Training.BearbeiteTrainingMultipleChoiceAufgabeView;
-import View.AufgabenBearbeiten.Training.BearbeiteTrainingProgrammieraufgabeView;
-import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
-import app.TestatController;
+import View.aufgabenBearbeiten.app.TestatController;
+import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteDesignaufgabeView;
+import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteEinfachantwortAufgabeView;
+import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteMuktipleChoiceAufgabeView;
+import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteProgrammieraufgabeView;
+import View.aufgabenBearbeiten.app.TrainingController;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
@@ -25,78 +21,41 @@ import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
-import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class bearbeitungsController {
+public abstract class BearbeitungsController {
 
     protected int index = 0;
-
+    protected JFrame aktuellerFrame;
+    protected JFrame hauptmenueFrame;
     protected Aufgabensammlung sammlung;
     protected Benutzer aktuellerBenutzer;
-    protected JFrame hauptmenueFrame;
     protected Aufgabe aufgabe;
-    protected JFrame aktuellerFrame;
     protected List<Userloesung> userloesungen;
 
-
-    public bearbeitungsController(Aufgabensammlung sammlung, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
+    /**
+     *
+     * @param sammlung
+     * @param aktuellerBenutzer
+     * @param hauptmenueFrame
+     */
+    public BearbeitungsController(Aufgabensammlung sammlung, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.sammlung = sammlung;
         this.aktuellerBenutzer = aktuellerBenutzer;
         this.hauptmenueFrame = hauptmenueFrame;
-
         this.userloesungen = new ArrayList<>();
         for (int i = 0; i < sammlung.getAnzahlAufgaben(); i++) {
             userloesungen.add(i, null);
         }
-
-
     }
 
-    public void zurueck() {
-        if (this.index > 0) {
-            this.index--;
-            zeigeAktuelleAufgabe();
-        } else {
-            JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
-        }
-    }
-    /*
-     public void zurueck() {
-        if (this.index > 0) {
-            this.index--;
-            zeigeAktuelleAufgabe();
-        } else {
-            JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
-        }
-    }
+    /**
+     *
      */
-
-    public void weiter() {
-
-    }
-
-    public void addUserloesung(Userloesung userloesung) {
-        userloesungen.set(this.index, userloesung);
-
-    }
-
-
-    public Benutzer getAktuellerBenutzer() {
-
-        return null;
-    }
-
-    public void setNaechsteZuSpeichern() {
-    }
-
-
-
     public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
         aufgabe = sammlung.getAufgaben().get(this.index); //Aufgabe am Index erhalten
 
@@ -112,8 +71,7 @@ public abstract class bearbeitungsController {
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
-        }
-        else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
+        } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
             BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
@@ -145,10 +103,47 @@ public abstract class bearbeitungsController {
         this.aktuellerFrame.setVisible(true);
     }
 
+    /**
+     *
+     */
+    public void zurueck() {
+        if (this.index > 0) {
+            this.index--;
+            zeigeAktuelleAufgabe();
+        } else {
+            JOptionPane.showMessageDialog(null, "Keine vorherige Aufgabe");
+        }
+    }
+
+    /**
+     * weiter
+     */
+    public void weiter() {
+        if (this.index < sammlung.getAnzahlAufgaben() - 1) {
+            this.index++;  //Index fuer Controller erhoet
+            zeigeAktuelleAufgabe();
+        } else {
+            JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
+        }
+    }
+
+    /**
+     * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     *
+     * @param userloesung
+     */
+    public void addUserloesung(Userloesung userloesung) {
+        userloesungen.set(this.index, userloesung);
+    }
+
+    public Benutzer getAktuellerBenutzer() {
+        return aktuellerBenutzer;
+    }
+
     public static void main(String[] args) throws Exception {
-       //DatabaseService ds = DatabaseService.getInstance();
-       //List<Aufgabe> aufgabenliste;
-       //aufgabenliste = ds.readAufgabenFromDatabase();
+        //DatabaseService ds = DatabaseService.getInstance();
+        //List<Aufgabe> aufgabenliste;
+        //aufgabenliste = ds.readAufgabenFromDatabase();
 
         List<String> antwortmoeglichkeiten = new ArrayList<>();
         antwortmoeglichkeiten.add("Test1");
@@ -205,13 +200,16 @@ public abstract class bearbeitungsController {
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe2, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
-        TestatController testatApp = new TestatController(t1, dozent2, null);
+       TestatController testatApp = new TestatController(t1, dozent2, null);
+        Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
+      //TrainingController trainingController = new TrainingController(training1, dozent2, null);
+
     }
 
 }

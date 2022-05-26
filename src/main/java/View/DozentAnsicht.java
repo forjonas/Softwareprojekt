@@ -1,6 +1,6 @@
 package View;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
+import View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneAufgabeKatalogView;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import entity.benutzer.Dozent;
 

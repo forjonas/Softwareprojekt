@@ -1,4 +1,4 @@
-package View.AufgabenBearbeiten.Einzelne;
+package View.aufgabenBearbeiten.einzelAufgaben;
 
 import View.tableModel.BearbeiteAufgabeTableModel;
 import entity.aufgabe.Aufgabe;
@@ -165,21 +165,21 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
                 Aufgabe aufgabe = aufgabenliste.get(selectedRow);
                 switch (aufgabe.getAufgabentyp()) {
                     case Design: {
-                        new View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer, jFrame);
+                        new View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) aufgabe, aktuellerBenutzer);
                         break;
                     }
                     case Einfachantwort: {
-                        new View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer, jFrame);
+                        new View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) aufgabe, aktuellerBenutzer);
                         break;
                     }
                     case MultipleChoice: {
-                        new View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer, jFrame);
+                        new View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer, jFrame);
                         //Noch nicht implementiert in meinem Branch
                         //new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, aktuellerBenutzer);

@@ -1,8 +1,7 @@
 package View;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
+import View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneAufgabeKatalogView;
 import entity.benutzer.Student;
-import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;

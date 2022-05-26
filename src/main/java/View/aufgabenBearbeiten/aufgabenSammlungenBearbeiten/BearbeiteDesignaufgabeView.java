@@ -1,15 +1,13 @@
-package View.AufgabenBearbeiten.Einzelne;
+package View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneDesignaufgabeView;
+import View.aufgabenBearbeiten.BearbeitungsController;
+import View.aufgabenBearbeiten.app.TestatController;
+import View.aufgabenBearbeiten.app.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
-import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
 import javax.swing.*;
@@ -20,14 +18,16 @@ import java.io.File;
 
 import static persistence.DatabaseService.convertFileToByteArray;
 import static persistence.DatabaseService.dateiOeffnen;
-
 /**
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
+ * @version3: 16.05.22
+ * @version4: 18.05.22
+ * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
-public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements ActionListener {
+public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -36,50 +36,55 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     private JLabel lblPunktzahlWert;
     private JLabel lblAufgabentyp;
     private JLabel lblAufgabentypWert;
-    private JButton btnAbbrechenEinzel;
-    private JButton btnLoesungshinweisEinzel;
+    private JButton btnAbbrechen;
+    private JButton btnLoesungshinweis;
+    private JButton btnVoherigeAufgabe;
+    private JButton btnNaechsteAufgabe;
     private JButton btnUpload;
     private JLabel lblAufgabenText;
-    private JButton btnZeigeLoesungEinzel;
 
-    private File fileBild;
+    private File fileBild = null;// = new File("Test");
     byte[] eingabe;
     private boolean hinweisVerwendet;
-    private Benutzer benutzer;
-    private JFrame frame;
-
+    private TestatController testatController;
+    private TrainingController trainingController;
     private Designaufgabe aufgabe;
     private UserloesungDesignaufgabe userloesung;
 
+
     /**
-     * Konstruktor für Klasse BearbeiteEinzelneDesignaufgabeView
-     *
+     * Konstruktor für Klasse BearbeiteDesignaufgabeView
+     * @param controller
      * @param aufgabe
-     * @param benutzer
-     * @param frame
      */
-    public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
+    public BearbeiteDesignaufgabeView(BearbeitungsController controller, Designaufgabe aufgabe) {
 
-        this.setContentPane($$$getRootComponent$$$());
+        setContentPane($$$getRootComponent$$$());
+        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
-        this.benutzer = benutzer;
-        this.frame = frame;
-        setTitle(aufgabe.getName());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(aufgabe.getName()); //Name der Aufgabe
 
-        //Setzen der Daten
+        if (controller.getClass() == TestatController.class) {
+            this.testatController = (TestatController) controller;
+        } else if (controller.getClass() == TrainingController.class) {
+            this.trainingController = (TrainingController) controller;
+        }
+
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
+
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
-        btnAbbrechenEinzel.addActionListener(this);
-        btnLoesungshinweisEinzel.addActionListener(this);
-        btnZeigeLoesungEinzel.addActionListener(this);
+        btnAbbrechen.addActionListener(this);
+        btnLoesungshinweis.addActionListener(this);
+        btnVoherigeAufgabe.addActionListener(this);
+        btnNaechsteAufgabe.addActionListener(this);
         btnUpload.addActionListener(this);
 
         super.pack();
@@ -91,52 +96,132 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
 
     /**
      * Funktionslogik hinter den Buttons
-     *
      * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnAbbrechenEinzel) {
-            JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
+        if (e.getSource() == this.btnAbbrechen) {
+            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
-        } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
+            if (testatController != null) {
+                testatController.setNewTestatKatalog();
+            } else {
+                trainingController.setNewTrainingKatalog();
+            }
+        } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
-            userloesung = new UserloesungDesignaufgabe();
-            userloesung.setUserloesung(eingabe);
-            this.dispose();
-            new LoesungEinzelneDesignaufgabeView(aufgabe, userloesung, benutzer, frame);
-        } else if (e.getSource() == this.btnUpload) {
-            //fileBild = new File("");
-            fileBild = dateiOeffnen(this);
 
+        } else if (e.getSource() == this.btnVoherigeAufgabe) {
+
+            userEingabenSpeichern();
+            if (testatController != null) {
+                testatController.zurueck();
+            } else {
+                trainingController.zurueck();
+            }
+
+
+        } else if (e.getSource() == this.btnNaechsteAufgabe) {
+            String buttonWechsel = btnNaechsteAufgabe.getText();
+            userEingabenSpeichern();
+
+            if (testatController != null) {
+                if (buttonWechsel.equals("Testat beenden")) {
+                    JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
+                    testatController.persistTestat();
+                    this.dispose();
+                } else {
+                    testatController.weiter();
+                }
+
+            } else if (trainingController != null) {
+                if (buttonWechsel.equals("Training beenden")) {
+                    JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
+                    trainingController.persistTraining();
+                    this.dispose();
+                } else {
+                    trainingController.weiter();
+
+                }
+            }
+        } else if (e.getSource() == this.btnUpload) {
+
+            fileBild = dateiOeffnen(this);
             if (fileBild == null) {
                 btnUpload.setText("kein Bild");
             } else {
                 String text = fileBild.getName();
                 btnUpload.setText(text);
                 this.update(this.getGraphics());
-                convert(fileBild);
+            }
+
+        }
+    }
+
+    public void setNaechsteZuSpeichern() {
+        if (trainingController != null) {
+            btnNaechsteAufgabe.setText("Training beenden");
+
+        } else {
+            btnNaechsteAufgabe.setText("Testat beenden");
+
+        }
+    }
+
+    /**
+     * Speichert Usereingaben in Userlösungsliste
+     */
+    public void userEingabenSpeichern() {
+        if (testatController != null) {
+            if (fileBild != null) {
+                eingabe = convertFileToByteArray(fileBild, this);
+                userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
+                testatController.addUserloesung(userloesung);
+            } else if (fileBild == null) {
+                userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
+                testatController.addUserloesung(userloesung);
+            }
+        } else if (trainingController != null) {
+            if (fileBild != null) {
+                eingabe = convertFileToByteArray(fileBild, this);
+                userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+                trainingController.addUserloesung(userloesung);
+            } else if (fileBild == null) {
+                userloesung = new UserloesungDesignaufgabe(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+                trainingController.addUserloesung(userloesung);
             }
         }
     }
 
-    public void convert(File file) {
-        eingabe = convertFileToByteArray(file, this);
+    /**
+     * Setzt leere Usereingabe
+     */
+    public void setUserloesungNull() {
+        eingabe = new byte[0];
+        //fileBild = new File("Keine Lösung");
     }
 
-    public static void main(String[] args) {
-        Aufgabe a3 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Benutzer benutzer = new Student();
-        BearbeiteEinzelneDesignaufgabeView frame = new BearbeiteEinzelneDesignaufgabeView((Designaufgabe) a3, benutzer, null);
-        frame.setVisible(true);
-
+    /**
+     * Setzt eingegebene Userlösung
+     *
+     * @param userloesung
+     */
+    public void setUserloesung(Userloesung userloesung) {
+        eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
+        if (eingabe.length <= 0) {
+            String name = "Bild fehlt";   //String.valueOf(eingabe.getClass());
+            btnUpload.setText(name);
+            this.update(this.getGraphics());
+        } else {
+            String name = "Bild vorhanden";
+            btnUpload.setText(name);
+            this.update(this.getGraphics());
+        }
     }
 
     {
@@ -200,17 +285,20 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         final Spacer spacer2 = new Spacer();
         panel1.add(spacer2, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel7.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel7, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btnAbbrechenEinzel = new JButton();
-        btnAbbrechenEinzel.setText("Abbrechen");
-        panel7.add(btnAbbrechenEinzel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnLoesungshinweisEinzel = new JButton();
-        btnLoesungshinweisEinzel.setText("Loesungshinweis");
-        panel7.add(btnLoesungshinweisEinzel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnZeigeLoesungEinzel = new JButton();
-        btnZeigeLoesungEinzel.setText("Lösung");
-        panel7.add(btnZeigeLoesungEinzel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnAbbrechen = new JButton();
+        btnAbbrechen.setText("Abbrechen");
+        panel7.add(btnAbbrechen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnLoesungshinweis = new JButton();
+        btnLoesungshinweis.setText("Loesungshinweis");
+        panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVoherigeAufgabe = new JButton();
+        btnVoherigeAufgabe.setText("Voherige Aufgabe");
+        panel7.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnNaechsteAufgabe = new JButton();
+        btnNaechsteAufgabe.setText("Nächste Aufgabe");
+        panel7.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
@@ -238,5 +326,4 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }
