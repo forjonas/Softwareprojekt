@@ -6,15 +6,16 @@ import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungEinfachantwortView extends JFrame implements ActionListener {
-    private ControllerBewertungenTestate cont;
+    private final ControllerBewertungenTestate controllerBewertungenTestate;
     private final EinfachantwortAufgabe aufgabe;
-    private UserloesungEinfachantwort uLE;
+    private final UserloesungEinfachantwort userloesungEinfachantwort;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JTextField txtfUserLoesung;
@@ -29,7 +30,6 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblBearbeitungszeit;
     private JPanel panelPunktzahl;
     private JLabel lblPunktzahlString;
-    private JLabel lblUserPunktzahl;
     private JLabel lblDash;
     private JLabel lblMaximalPunktzahl;
     private JTextField txtfUserPunktzahl;
@@ -39,8 +39,8 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblMusterBild;
 
 
-    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate cont) {
-        this.cont = cont;
+    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+        this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -51,7 +51,6 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
@@ -59,12 +58,11 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();        //Beschaffen der Musterlösung über die Aufgabe
+        MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         txtfMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
-        UserloesungEinfachantwort userloesungEinfachantwort = (UserloesungEinfachantwort) cont.getUserloesung(aufgabe);          //Beschaffen der Userlösung aus der DB über die Aufgabe
-        this.uLE = userloesungEinfachantwort;
-        txtfUserLoesung.setText(uLE.getUserloesung());
-        txtfUserPunktzahl.setText(uLE.getErreichtePunkte() + "");                                            //Die vom Studenten erreichten Punkte
+        this.userloesungEinfachantwort = (UserloesungEinfachantwort) controllerBewertungenTestate.getUserloesung(aufgabe);
+        txtfUserLoesung.setText(this.userloesungEinfachantwort.getUserloesung());
+        txtfUserPunktzahl.setText(this.userloesungEinfachantwort.getErreichtePunkte() + "");
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -76,7 +74,11 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -95,31 +97,31 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
                 JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
                 return;
             }
-            uLE.setErreichtePunkte(bewertung);
-            cont.setBewertet();
+            userloesungEinfachantwort.setErreichtePunkte(bewertung);
+            controllerBewertungenTestate.setBewertet();
         }
     }
 
     private void beenden() {
-        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
             this.dispose();
-            cont.beendeBewertungTestat();
+            controllerBewertungenTestate.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                cont.abbrechenBewertungTestat();
+                controllerBewertungenTestate.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        cont.naechsteAufgabe();
+        controllerBewertungenTestate.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        cont.vorherigeAufgabe();
+        controllerBewertungenTestate.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {
@@ -229,6 +231,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         mainPanel.add(lblMusterBild, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 

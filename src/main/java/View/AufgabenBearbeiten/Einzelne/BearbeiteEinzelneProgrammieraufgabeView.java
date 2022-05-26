@@ -4,12 +4,8 @@ import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneProgrammieraufgabeV
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 
 import javax.swing.*;
@@ -37,7 +33,6 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     private JTextArea txtUsereingabe;
     private JLabel lblAufgabenText;
     private JPanel mainPanel;
-
     private String eingabe;
     private boolean hinweisVerwendet;
     private Programmieraufgabe aufgabe;
@@ -60,12 +55,11 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         this.frame = frame;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -93,30 +87,21 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
             this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(this.frame, this.benutzer);
         } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
-
             eingabe = txtUsereingabe.getText();
             userloesung = new UserloesungProgrammieraufgabe();
             userloesung.setUserloesung(eingabe);
             this.dispose();
             new LoesungEinzelneProgrammieraufgabeView(aufgabe, userloesung, benutzer, frame);
         }
-    }
-
-    public static void main(String[] args) {
-        Aufgabe a2 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Benutzer benutzer = new Student();
-        BearbeiteEinzelneProgrammieraufgabeView frame = new BearbeiteEinzelneProgrammieraufgabeView((Programmieraufgabe) a2, benutzer, null);
-        frame.setVisible(true);
-
     }
 
     {

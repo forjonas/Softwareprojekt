@@ -1,8 +1,5 @@
 package entity.enums;
 
-import entity.aufgabe.MultipleChoiceAufgabe;
-import jakarta.persistence.TypedQuery;
-
 /**
  * Enum für die vier Aufgabentypen
  *
@@ -12,9 +9,9 @@ import jakarta.persistence.TypedQuery;
 public enum Aufgabentyp {
     MultipleChoice("Multiple-Choice"), Einfachantwort("Einfachantwort"), Design("Design"), Programmieren("Programmieren");
 
-    private String code;
+    private final String code;
 
-    private Aufgabentyp(String code) {
+    Aufgabentyp(String code) {
         this.code = code;
     }
 

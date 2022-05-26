@@ -24,7 +24,6 @@ public abstract class Musterloesung extends Loesung {
      */
     public Musterloesung() {
         super();
-        //Noting to do
     }
 
     /**

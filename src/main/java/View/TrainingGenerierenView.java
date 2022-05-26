@@ -149,7 +149,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     * Überprüft ob einer der Buttons betätigt wurde und führt dementsprechend, die gesetze Methode aus
      *
      * @param e the event to be processed
      */
@@ -164,7 +164,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Eine Methode zum Fenster schließen und zurückkehren zur voherigen Ansicht, mit Überprüfung ob das wirklich gewünscht ist.
+     * Eine Methode zum Fenster schließen und zurückkehren zur vorherigen Ansicht, mit Überprüfung, ob das wirklich gewünscht ist.
      * Zugehörig zu dem Button @param btnZurueck
      */
     private void zurueckButtonLogik() {
@@ -176,7 +176,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Eine Methode zum Erstellen des Trainings und anschließender Anzeige der gewählten Aufgaben, mit Überprüfung ob eine gewählt wurde.
+     * Eine Methode zum Erstellen des Trainings und anschließender Anzeige der gewählten Aufgaben, mit Überprüfung, ob eine gewählt wurde.
      * Zugehörig zu dem Button @param erstellenBtn
      */
     private void erstellenButtonLogik() {
@@ -254,5 +254,4 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         }
         return aufgabentypList;
     }
-
 }

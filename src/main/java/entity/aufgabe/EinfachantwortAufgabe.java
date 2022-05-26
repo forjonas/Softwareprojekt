@@ -5,10 +5,8 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 import jakarta.persistence.Entity;
 

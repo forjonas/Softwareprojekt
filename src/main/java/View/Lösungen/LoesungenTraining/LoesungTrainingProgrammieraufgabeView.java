@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
-    private ControllerLoesungenTraining cont;
+    private final ControllerLoesungenTraining controllerLoesungenTraining;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JTextField txtfUserLoesung;
@@ -34,8 +34,8 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JLabel lblMusterloesungString;
     private final Programmieraufgabe aufgabe;
 
-    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining cont) {
-        this.cont = cont;
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining controllerLoesungenTraining) {
+        this.controllerLoesungenTraining = controllerLoesungenTraining;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -45,18 +45,17 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         btnNaechsteAufgabe.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
-            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
-        MusterloesungProgrammieraufgabe mLP = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();          //Beschaffen der Musterlösung über die Aufgabe
-        txtfMusterloesung.setText(mLP.getMusterloesung());
-        UserloesungProgrammieraufgabe uLP = (UserloesungProgrammieraufgabe) cont.getUserloesung(aufgabe);            //Beschaffen der Userlösung aus der DB über die Aufgabe
-        txtfUserLoesung.setText(uLP.getUserloesung());
+        MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
+        txtfMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
+        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        txtfUserLoesung.setText(userloesungProgrammieraufgabe.getUserloesung());
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -69,7 +68,11 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -80,22 +83,15 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     }
 
     private void beenden() {
-        cont.beendeLoesungTraining();
+        controllerLoesungenTraining.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
-        try {
-            cont.naechsteAufgabe();
-        } catch (Exception ignored) {
-
-        }
+        controllerLoesungenTraining.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        try {
-            cont.vorherigeAufgabe();
-        } catch (Exception ignored) {
-        }
+        controllerLoesungenTraining.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

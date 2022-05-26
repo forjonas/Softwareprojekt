@@ -10,7 +10,6 @@ import java.io.Serializable;
  * @author Jonas Herbst
  * @version 22.04.22
  */
-//Wird bald gelöscht werden
 @Entity
 public class Administrator extends Benutzer implements BenutzerMitDozentenrechten, Serializable {
 
@@ -19,7 +18,6 @@ public class Administrator extends Benutzer implements BenutzerMitDozentenrechte
      */
     public Administrator() {
         super();
-        //Nothing to do
     }
 
     /**
@@ -41,6 +39,6 @@ public class Administrator extends Benutzer implements BenutzerMitDozentenrechte
      */
     @Override
     public String toString() {
-        return "Administrator: {"+super.toString()+"}";
+        return "Administrator: {" + super.toString() + "}";
     }
 }

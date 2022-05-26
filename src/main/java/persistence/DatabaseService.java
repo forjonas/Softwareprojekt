@@ -184,7 +184,7 @@ public class DatabaseService<T> {
     //CopyOnWriteArrayList ist hier sehr wichtig, da sonst eine ConcurrentModificationException
     //wegen Zugriff von verschiedenen Threads auf die Listen geworfen wird
     public synchronized void saveDeleteAufgabeFromDatabase(Aufgabe aufgabe) {
-        if(aufgabe.getAufgabenErsteller() != null) {
+        if (aufgabe.getAufgabenErsteller() != null) {
             aufgabe.getAufgabenErsteller().removeErstellteAufgabe(aufgabe);
             aufgabe.setAufgabenErsteller(null);
         }
@@ -193,7 +193,7 @@ public class DatabaseService<T> {
             a.removeAufgabe(aufgabe);
             aufgabe.removeVerwendung(a);
         }
-        if(aufgabe.getMusterloesung() != null) {
+        if (aufgabe.getMusterloesung() != null) {
             saveDeleteMusterloesungFromDatabase(aufgabe.getMusterloesung());
         }
         CopyOnWriteArrayList<Userloesung> userloesungen = new CopyOnWriteArrayList<Userloesung>(aufgabe.getUserloesungen());
@@ -205,7 +205,7 @@ public class DatabaseService<T> {
 
     public synchronized void saveDeleteMusterloesungFromDatabase(Musterloesung musterloesung) {
         try {
-            if(musterloesung.getAufgabe() != null) {
+            if (musterloesung.getAufgabe() != null) {
                 Aufgabe aufgabe = musterloesung.getAufgabe();
                 aufgabe.setMusterloesung(null);
                 musterloesung.setAufgabe(null);
@@ -219,15 +219,15 @@ public class DatabaseService<T> {
 
     public synchronized void saveDeleteUserloesungFromDatabase(Userloesung userloesung) {
         try {
-            if(userloesung.getAufgabe() != null) {
+            if (userloesung.getAufgabe() != null) {
                 userloesung.getAufgabe().removeUserloesung(userloesung);
                 userloesung.setAufgabe(null);
             }
-            if(userloesung.getUserloesungErsteller() != null) {
+            if (userloesung.getUserloesungErsteller() != null) {
                 userloesung.getUserloesungErsteller().removeErstellteLoesung(userloesung);
                 userloesung.setUserloesungErsteller(null);
             }
-            if(userloesung.getAufgabensammlung() != null) {
+            if (userloesung.getAufgabensammlung() != null) {
                 userloesung.getAufgabensammlung().removeUserloesung(userloesung);
                 userloesung.setAufgabensammlung(null);
             }
@@ -255,7 +255,7 @@ public class DatabaseService<T> {
 
     public synchronized void saveDeleteTrainingFromDatabase(Training training) {
         removeRelationsFromAufgabensammlung(training);
-        if(training.getTrainingsErsteller() != null) {
+        if (training.getTrainingsErsteller() != null) {
             training.getTrainingsErsteller().removeBearbeitetesTraining(training);
             training.setTrainingsErsteller(null);
         }
@@ -266,7 +266,7 @@ public class DatabaseService<T> {
     //wegen Zugriff von verschiedenen Threads auf die Listen geworfen wird
     public synchronized void saveDeleteTestatFromDatabase(Testat testat) {
         removeRelationsFromAufgabensammlung(testat);
-        if(testat.getTestatErsteller() != null) {
+        if (testat.getTestatErsteller() != null) {
             testat.getTestatErsteller().removeErstelltesTestat(testat);
             testat.setTestatErsteller(null);
         }
@@ -280,15 +280,15 @@ public class DatabaseService<T> {
     }
 
     public synchronized void saveDeleteTestatBearbeitungFromDatabase(TestatBearbeitung testatBearbeitung) {
-        if(testatBearbeitung.getTestat() != null) {
+        if (testatBearbeitung.getTestat() != null) {
             testatBearbeitung.getTestat().removeBearbeitung(testatBearbeitung);
             testatBearbeitung.setTestat(null);
         }
-        if(testatBearbeitung.getTestatBearbeiter() != null) {
+        if (testatBearbeitung.getTestatBearbeiter() != null) {
             testatBearbeitung.getTestatBearbeiter().removeBearbeitetesTestat(testatBearbeitung);
             testatBearbeitung.setTestatBearbeiter(null);
         }
-        if(testatBearbeitung.getTestatBewerter() != null) {
+        if (testatBearbeitung.getTestatBewerter() != null) {
             testatBearbeitung.getTestatBewerter().removeBewertetesTestat(testatBearbeitung);
             testatBearbeitung.setTestatBewerter(null);
         }
@@ -328,17 +328,17 @@ public class DatabaseService<T> {
     public synchronized void saveDeleteDozentFromDatabase(Dozent dozent) {
         removeRelationsFromBenutzer(dozent);
         CopyOnWriteArrayList<TestatBearbeitung> bewerteteTestate = new CopyOnWriteArrayList<TestatBearbeitung>(dozent.getBewerteteTestate());
-        for(TestatBearbeitung testatBearbeitung : bewerteteTestate) {
+        for (TestatBearbeitung testatBearbeitung : bewerteteTestate) {
             testatBearbeitung.setTestatBewerter(null);
             dozent.removeBewertetesTestat(testatBearbeitung);
         }
         CopyOnWriteArrayList<Testat> testate = new CopyOnWriteArrayList<Testat>(dozent.getErstellteTestate());
-        for(Testat testat : testate) {
+        for (Testat testat : testate) {
             testat.setTestatErsteller(null);
             dozent.removeErstelltesTestat(testat);
         }
         CopyOnWriteArrayList<Aufgabe> aufgaben = new CopyOnWriteArrayList<Aufgabe>(dozent.getErstellteAufgaben());
-        for(Aufgabe aufgabe : aufgaben) {
+        for (Aufgabe aufgabe : aufgaben) {
             aufgabe.setAufgabenErsteller(null);
             dozent.removeErstellteAufgabe(aufgabe);
         }
@@ -353,10 +353,10 @@ public class DatabaseService<T> {
 
     public synchronized void clearDatabase() {
         for (Benutzer b : readBenutzerFromDatabase()) {
-            if(b.getClass() == Student.class) {
+            if (b.getClass() == Student.class) {
                 saveDeleteStudentFromDatabase((Student) b);
             }
-            if(b.getClass() == Dozent.class) {
+            if (b.getClass() == Dozent.class) {
                 saveDeleteDozentFromDatabase((Dozent) b);
             }
         }
@@ -364,20 +364,20 @@ public class DatabaseService<T> {
             saveDeleteAufgabeFromDatabase(a);
         }
         for (Aufgabensammlung as : readAufgabensammlungFromDatabase()) {
-            if(as.getClass() == Testat.class) {
+            if (as.getClass() == Testat.class) {
                 saveDeleteTestatFromDatabase((Testat) as);
             }
-            if(as.getClass() == Training.class) {
+            if (as.getClass() == Training.class) {
                 saveDeleteTrainingFromDatabase((Training) as);
             }
         }
-        for(Userloesung ul : readUserloesungenFromDatabse()) {
+        for (Userloesung ul : readUserloesungenFromDatabse()) {
             saveDeleteUserloesungFromDatabase(ul);
         }
-        for(Musterloesung ml : readMusterloesungenFromDatabse()) {
+        for (Musterloesung ml : readMusterloesungenFromDatabse()) {
             saveDeleteMusterloesungFromDatabase(ml);
         }
-        for(TestatBearbeitung tb : readTestatBearbeitungenFromDatabase()) {
+        for (TestatBearbeitung tb : readTestatBearbeitungenFromDatabase()) {
             saveDeleteTestatBearbeitungFromDatabase(tb);
         }
     }
@@ -404,7 +404,7 @@ public class DatabaseService<T> {
      * Konvertiert die übergebene (Bild-)Datei in ein ByteArray
      * Beinhaltet Error-Handling zur übergebenen Datei, bei Fehlern wird ein MessageDialog geöffnet
      *
-     * @param file (Bild-)Datei, die in ein ByteArray konvertiert werden soll
+     * @param file              (Bild-)Datei, die in ein ByteArray konvertiert werden soll
      * @param ueberdeckterFrame JFrame, der von bei Fehlern auftretenden MessageDialogen überdeckt/blockiert werden soll
      * @return ByteArray, in das die übergebene Datei konvertiert wurde
      */
@@ -465,9 +465,8 @@ public class DatabaseService<T> {
         }
     }
 
-    public synchronized List<Aufgabe> readAufgabenmitKatSchwierigkeit(Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad)
-    {
-        TypedQuery<Aufgabe> query = em.createQuery("SELECT s FROM Aufgabe s WHERE s.kategorie= :kategorie AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Aufgabe.class).setParameter("kategorie",kategorie).setParameter("schwierigkeitsgrad",schwierigkeitsgrad);
+    public synchronized List<Aufgabe> readAufgabenmitKatSchwierigkeit(Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad) {
+        TypedQuery<Aufgabe> query = em.createQuery("SELECT s FROM Aufgabe s WHERE s.kategorie= :kategorie AND s.schwierigkeitsgrad= :schwierigkeitsgrad", Aufgabe.class).setParameter("kategorie", kategorie).setParameter("schwierigkeitsgrad", schwierigkeitsgrad);
         List<Aufgabe> aufgabenList = query.getResultList();
         return aufgabenList;
     }

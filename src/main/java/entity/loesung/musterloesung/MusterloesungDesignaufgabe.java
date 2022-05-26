@@ -2,10 +2,7 @@ package entity.loesung.musterloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.*;
-
-import java.io.File;
 
 /**
  * Musterlösung des Dozenten für eine Aufgabe des Typs Design.
@@ -60,12 +57,11 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
     /**
      * Setzt die zur Lösung gehörende Aufgabe
      *
-     * @param aufgabe
-     * @return zur Lösung gehörende Aufgabe
+     * @param aufgabe Aufgabe die zur entsprechenden Lösung gesetzt werden soll
      */
     @Override
     public void setAufgabe(Aufgabe aufgabe) throws Exception {
-        if(aufgabe == null) {
+        if (aufgabe == null) {
             this.aufgabe = null;
         } else {
             if (aufgabe.getClass() == Designaufgabe.class) {

@@ -34,7 +34,6 @@ public class Training extends Aufgabensammlung {
     public Training() {
         super();
         this.aufgabentypen = new LinkedList<Aufgabentyp>();
-        //Nothing to do
     }
 
     /**

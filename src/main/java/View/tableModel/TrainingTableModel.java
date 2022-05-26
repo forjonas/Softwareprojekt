@@ -1,12 +1,11 @@
 package View.tableModel;
 
 import entity.aufgabensammlung.Training;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * TabelModel für die tabellarische Übersicht der bearbeiteten Trainings
+ * TableModel für die tabellarische Übersicht der bearbeiteten Trainings
  *
  * @author Jonas Herbst
  * @version 09.05.22

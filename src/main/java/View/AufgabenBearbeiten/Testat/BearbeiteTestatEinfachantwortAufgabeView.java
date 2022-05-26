@@ -4,10 +4,7 @@ import app.TestatController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 
@@ -61,13 +58,12 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
         this.aufgabe = aufgabe;
         this.testatController = testatController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -106,7 +102,6 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
 
             userEingabenSpeichern();
             testatController.zurueckTestat();
-            //if (testatController.isIndexNotFirst())
 
         } else if (e.getSource() == this.btnNaechsteAufgabeTestat) {
             String buttonWechsel = btnNaechsteAufgabeTestat.getText();
@@ -144,7 +139,7 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new String();
+        eingabe = "";
     }
 
     /**
@@ -155,12 +150,6 @@ public class BearbeiteTestatEinfachantwortAufgabeView extends JFrame implements 
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
         this.txtUsereingabe.setText(eingabe);
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        new BearbeiteTestatEinfachantwortAufgabeView(null, (EinfachantwortAufgabe) a1);
     }
 
 

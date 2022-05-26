@@ -10,9 +10,9 @@ public enum Schwierigkeitsgrad {
 
     Leicht("Leicht"), Mittel("Mittel"), Schwer("Schwer");
 
-    private String code;
+    private final String code;
 
-    private Schwierigkeitsgrad(String code) {
+    Schwierigkeitsgrad(String code) {
         this.code = code;
     }
 

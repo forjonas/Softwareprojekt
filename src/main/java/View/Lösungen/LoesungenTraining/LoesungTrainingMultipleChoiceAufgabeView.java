@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private ControllerLoesungenTraining cont;
+    private final ControllerLoesungenTraining controllerLoesungenTraining;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -44,8 +44,8 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private final MultipleChoiceAufgabe aufgabe;
 
 
-    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerLoesungenTraining cont) {
-        this.cont = cont;
+    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerLoesungenTraining controllerLoesungenTraining) {
+        this.controllerLoesungenTraining = controllerLoesungenTraining;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -55,35 +55,44 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         btnNaechsteAufgabe.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
-            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));                             //verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungMultipleChoiceAufgabe mLMCA = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();         //Beschaffen der Musterlösung über die Aufgabe
-        List<Boolean> musterLoesungen = mLMCA.getMusterloesung();
-        UserloesungMultipleChoiceAufgabe uLMCA = (UserloesungMultipleChoiceAufgabe) cont.getUserloesung(aufgabe);           //Beschaffen der Userlösung aus der DB über die Aufgabe
-        List<Boolean> userLoesungen = uLMCA.getUserloesung();
-        btnMusterloesung1.setSelected(musterLoesungen.get(0));
-        btnUserloesung1.setSelected(musterLoesungen.get(0));
-        if (userLoesungen.size() == 4) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnMusterloesung4.setSelected(musterLoesungen.get(3));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-            btnUserloesung4.setSelected(userLoesungen.get(3));
-        } else if (userLoesungen.size() == 3) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-        } else if (userLoesungen.size() == 2) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
+        MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
+        int musterloesung = musterloesungMultipleChoiceAufgabe.getMusterloesung();
+        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        int userloesung = userloesungMultipleChoiceAufgabe.getUserloesung();
+        if (aufgabe.getAntwortmoeglichkeiten().size() == 4) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setSelected(musterloesung == 4);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setSelected(userloesung == 4);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 3) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setVisible(false);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 2) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setVisible(false);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setVisible(false);
+            btnUserloesung4.setVisible(false);
         }
 
         this.pack();
@@ -97,7 +106,11 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
             this.dispose();
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -108,22 +121,15 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     }
 
     private void beenden() {
-        cont.beendeLoesungTraining();
+        controllerLoesungenTraining.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
-        try {
-            cont.naechsteAufgabe();
-        } catch (Exception ignored) {
-
-        }
+        controllerLoesungenTraining.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        try {
-            cont.vorherigeAufgabe();
-        } catch (Exception ignored) {
-        }
+        controllerLoesungenTraining.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

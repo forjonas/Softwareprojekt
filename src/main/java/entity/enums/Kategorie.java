@@ -10,9 +10,9 @@ public enum Kategorie {
 
     Software_Engineering("Software Engineering"), Datenbanken("Datenbanken"), Java_Programmierung("Java-Programmierung"), Java_Grundlagen("Java-Grundlagen"), Klassendiagramme("Klassendiagramme");
 
-    private String code;
+    private final String code;
 
-    private Kategorie(String code) {
+    Kategorie(String code) {
         this.code = code;
     }
 

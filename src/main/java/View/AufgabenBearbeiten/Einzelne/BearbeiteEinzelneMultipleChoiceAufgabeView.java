@@ -4,19 +4,14 @@ import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufga
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Aufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,9 +38,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JRadioButton btnantwort2;
     private JLabel lblAufgabenText;
     private JButton btnZeigeLoesungEinzel;
-
-
-    private List<Boolean> eingabe;
+    private int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -75,19 +68,18 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
 
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        for (int i = 0; i < mIndex; i++) {
 
             if (i == 0) {
                 antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
@@ -103,7 +95,6 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
             } else if (i == 3) {
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
-
 
             }
             ButtonGroup bg = new ButtonGroup();
@@ -133,51 +124,35 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
             this.dispose();
-            BearbeiteEinzelneAufgabeKatalogView.main(null);
+            new BearbeiteEinzelneAufgabeKatalogView(this.frame, this.benutzer);
         } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
 
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
+            int userloesungWert = -1;
 
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
 
             if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
+                userloesungWert = 1;
             } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
+                userloesungWert = 2;
             } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
+                userloesungWert = 3;
             } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
+                userloesungWert = 4;
             }
 
-            eingabe = userloesungBooleanArray;
+            eingabe = userloesungWert;
             userloesung = new UserloesungMultipleChoiceAufgabe();
             userloesung.setUserloesung(eingabe);
             this.dispose();
             new LoesungEinzelneMultipleChoiceAufgabeView(aufgabe, userloesung, benutzer, frame);
         }
-    }
-
-    public static void main(String[] args) {
-        List<String> antwortmoeglichkeiten = new ArrayList<>();
-        antwortmoeglichkeiten.add("Test1");
-        antwortmoeglichkeiten.add("Test2");
-        antwortmoeglichkeiten.add("Test3");
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten);
-        Benutzer benutzer = new Student();
-        BearbeiteEinzelneMultipleChoiceAufgabeView frame = new BearbeiteEinzelneMultipleChoiceAufgabeView((MultipleChoiceAufgabe) a4, benutzer, null);
-        frame.setVisible(true);
-
     }
 
     {

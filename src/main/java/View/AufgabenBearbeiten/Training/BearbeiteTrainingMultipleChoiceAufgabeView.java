@@ -6,7 +6,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 
 import javax.swing.*;
@@ -45,7 +44,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
     private JRadioButton btnantwort2;
     private JPanel mainPanel;
 
-    private List<Boolean> eingabe;
+    private int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -70,21 +69,19 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         this.aufgabe = aufgabe;
         this.trainingController = trainingController;
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
-
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        for (int i = 0; i < mIndex; i++) {
 
             if (i == 0) {
                 antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
@@ -100,12 +97,6 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
             } else if (i == 3) {
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
-                /*
-                if (antwort4.equals("")) {
-                   boolean b4 = false;
-                   //btnantwort4.setVisible(false);
-                   }
-                 */
             }
             ButtonGroup bg = new ButtonGroup();
             bg.add(btnantwort1);
@@ -135,11 +126,9 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
         if (e.getSource() == this.btnAbbrechenTraining) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
-            //new ControllerLoesungenTraining(trainingController.getTraining(),trainingController.getAktuellerBenutzer(), hauptmenueFrame);
-            //trainingController.setNewTrainingKatalog();
         } else if (e.getSource() == this.btnLoesungshinweisTraining) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
@@ -148,7 +137,6 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
 
             userEingabenSpeichern();
             trainingController.zurueckTraining();
-
 
         } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
             userEingabenSpeichern();
@@ -162,30 +150,23 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
                 trainingController.weiter();
             }
         }
-
     }
 
     public void userEingabenSpeichern() {
-        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
+        int userloesungWert = -1;
 
         if (btnantwort1.isSelected()) {
-            userloesungBooleanArray.set(0, true);
+            userloesungWert = 1;
         } else if (btnantwort2.isSelected()) {
-            userloesungBooleanArray.set(1, true);
+            userloesungWert = 2;
         } else if (btnantwort3.isSelected()) {
-            userloesungBooleanArray.set(2, true);
+            userloesungWert = 3;
         } else if (btnantwort4.isSelected()) {
-            userloesungBooleanArray.set(3, true);
+            userloesungWert = 4;
         }
-        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungWert, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
         trainingController.addUserloesung(userloesung);
     }
-
 
     /**
      * verändert "Nächste" Button zu "Training Beenden" Button
@@ -198,7 +179,7 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new ArrayList<>();
+        eingabe = -1;
     }
 
     /**
@@ -208,22 +189,18 @@ public class BearbeiteTrainingMultipleChoiceAufgabeView extends JFrame implement
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
-        for (int i = 0; i < eingabe.size(); i++) {
-            Boolean wert = eingabe.get(i);
-            if (i == 0) {
-                btnantwort1.setSelected(wert);
-            }
-            if (i == 1) {
-                btnantwort2.setSelected(wert);
-            }
-            if (i == 2) {
-                btnantwort3.setSelected(wert);
-            }
-            if (i == 3) {
-                btnantwort4.setSelected(wert);
-            }
+        if (eingabe == 1) {
+            btnantwort1.setSelected(true);
         }
-
+        if (eingabe == 2) {
+            btnantwort2.setSelected(true);
+        }
+        if (eingabe == 3) {
+            btnantwort3.setSelected(true);
+        }
+        if (eingabe == 4) {
+            btnantwort4.setSelected(true);
+        }
     }
 
     {

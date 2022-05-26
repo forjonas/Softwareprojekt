@@ -6,15 +6,16 @@ import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
-    private ControllerBewertungenTestate cont;
+    private final ControllerBewertungenTestate controllerBewertungenTestate;
     private final Designaufgabe aufgabe;
-    private UserloesungDesignaufgabe uLD;
+    private final UserloesungDesignaufgabe userloesungDesignaufgabe;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
@@ -38,11 +39,10 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JButton btnBewertungSpeichern;
 
 
-    public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate cont) {
-        this.cont = cont;
+    public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+        this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
-        System.out.println("Musterlösung pre");
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
@@ -51,7 +51,6 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
@@ -59,12 +58,12 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungDesignaufgabe mLD = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();       //Beschaffen der Musterlösung über die Aufgabe
-        lblMusterloesung.setIcon(new ImageIcon(mLD.getMusterloesung()));
-        UserloesungDesignaufgabe uLD = (UserloesungDesignaufgabe) cont.getUserloesung(aufgabe);         //Beschaffen der Userlösung aus der DB über die Aufgabe
-        this.uLD = uLD;
-        lblUserloesung.setIcon(new ImageIcon(uLD.getUserloesung()));
-        txtfUserPunktzahl.setText(uLD.getErreichtePunkte() + "");                                        //Die vom Studenten erreichten Punkte
+        MusterloesungDesignaufgabe musterloesungDesignaufgabe = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
+        lblMusterloesung.setIcon(new ImageIcon(musterloesungDesignaufgabe.getMusterloesung()));
+        UserloesungDesignaufgabe userloesungDesignaufgabe = (UserloesungDesignaufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        this.userloesungDesignaufgabe = userloesungDesignaufgabe;
+        lblUserloesung.setIcon(new ImageIcon(userloesungDesignaufgabe.getUserloesung()));
+        txtfUserPunktzahl.setText(userloesungDesignaufgabe.getErreichtePunkte() + "");
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,7 +76,11 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -96,32 +99,32 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
                 return;
             }
-            uLD.setErreichtePunkte(bewertung);
-            cont.setBewertet();
+            userloesungDesignaufgabe.setErreichtePunkte(bewertung);
+            controllerBewertungenTestate.setBewertet();
         }
     }
 
 
     private void beenden() {
-        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
             this.dispose();
-            cont.beendeBewertungTestat();
+            controllerBewertungenTestate.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == JOptionPane.YES_OPTION) {
                 this.dispose();
-                cont.abbrechenBewertungTestat();
+                controllerBewertungenTestate.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        cont.naechsteAufgabe();
+        controllerBewertungenTestate.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        cont.vorherigeAufgabe();
+        controllerBewertungenTestate.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {
@@ -231,6 +234,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         mainPanel.add(lblMusterloesung, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
@@ -240,4 +244,5 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

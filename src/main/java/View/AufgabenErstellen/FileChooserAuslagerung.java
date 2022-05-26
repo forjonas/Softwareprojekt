@@ -8,9 +8,7 @@ import java.io.File;
 public class FileChooserAuslagerung {
     JFileChooser FC;
     File returnFile;
-    public void FileChooserView(){
 
-    }
     public File fileChooser() {
         FC = new JFileChooser();
         FC.setAcceptAllFileFilterUsed(false);

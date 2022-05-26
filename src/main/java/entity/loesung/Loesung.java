@@ -20,7 +20,6 @@ public abstract class Loesung {
      * Allgemeiner Konstruktor für Lösungen
      */
     public Loesung() {
-        //Nothing to do
     }
 
 }
