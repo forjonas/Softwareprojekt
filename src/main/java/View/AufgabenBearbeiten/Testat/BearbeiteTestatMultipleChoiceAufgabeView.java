@@ -43,7 +43,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private List<Boolean> eingabe;
+    private int eingabe;
     private String antwort1;
     private String antwort2;
     private String antwort3;
@@ -160,23 +160,18 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
     }
 
     public void userEingabenSpeichern() {
-        List<Boolean> userloesungBooleanArray = new LinkedList<>();
-
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
+        int userloesungWert = -1;
 
         if (btnantwort1.isSelected()) {
-            userloesungBooleanArray.set(0, true);
+            userloesungWert = 1;
         } else if (btnantwort2.isSelected()) {
-            userloesungBooleanArray.set(1, true);
+            userloesungWert = 2;
         } else if (btnantwort3.isSelected()) {
-            userloesungBooleanArray.set(2, true);
+            userloesungWert = 3;
         } else if (btnantwort4.isSelected()) {
-            userloesungBooleanArray.set(3, true);
+            userloesungWert = 4;
         }
-        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+        userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungWert, testatController.getAktuellerBenutzer(), testatController.getTestat());
         testatController.addUserloesung(userloesung);
     }
 
@@ -191,7 +186,7 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new ArrayList<>();
+        eingabe = -1;
     }
 
     /**
@@ -201,22 +196,18 @@ public class BearbeiteTestatMultipleChoiceAufgabeView extends JFrame implements 
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
-        for (int i = 0; i < eingabe.size(); i++) {
-            Boolean wert = eingabe.get(i);
-            if (i == 0) {
-                btnantwort1.setSelected(wert);
-            }
-            if (i == 1) {
-                btnantwort2.setSelected(wert);
-            }
-            if (i == 2) {
-                btnantwort3.setSelected(wert);
-            }
-            if (i == 3) {
-                btnantwort4.setSelected(wert);
-            }
+        if (eingabe == 1) {
+            btnantwort1.setSelected(true);
         }
-
+        if (eingabe == 2) {
+            btnantwort2.setSelected(true);
+        }
+        if (eingabe == 3) {
+            btnantwort3.setSelected(true);
+        }
+        if (eingabe == 4) {
+            btnantwort4.setSelected(true);
+        }
     }
 
     {

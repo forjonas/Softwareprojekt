@@ -281,8 +281,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         Kategorie kat = null;
         Schwierigkeitsgrad schw = null;
         ArrayList<String> listefinal = mcSpeichern();
-        String loesungsText = null;
-        ArrayList<Boolean> loesung = null;
+        int loesungsWert = -1;
 
         try {
             aufgTitel = titelTF.getText();
@@ -292,55 +291,16 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
             kat = (Kategorie) kategorienCB.getSelectedItem();
             punkte = Integer.parseInt(punkteTF.getText());
-            loesungsText = loesungTF.getText();
-            loesung = getLoesung(loesungsText);
+            loesungsWert = Integer.parseInt(loesungTF.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
-            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesung);
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !(loesungsWert < 1 || loesungsWert > 4)) {
+            createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesungsWert);
 
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);
-        }
-    }
-
-    /**
-     * @param loesungText
-     * @return Gibt eine ArrayList<Boolean> aus welche per switchcase erstellt wird. Welche für die Lösungsdarstellung benötigt wird.
-     */
-    private ArrayList<Boolean> getLoesung(String loesungText) {
-        int switcher = Integer.parseInt(loesungText);
-        ArrayList<Boolean> loesung = new ArrayList<Boolean>();
-        switch (switcher) {
-            case 1:
-                loesung.add(true);
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(false);
-                return loesung;
-            case 2:
-                loesung.add(false);
-                loesung.add(true);
-                loesung.add(false);
-                loesung.add(false);
-                return loesung;
-            case 3:
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(true);
-                loesung.add(false);
-                return loesung;
-            case 4:
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(false);
-                loesung.add(true);
-                return loesung;
-
-            default:
-                return loesung;
         }
     }
 
@@ -384,7 +344,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      * @param antworten        antwortmöglichkeiten der Aufgabe
      * @param loesung          loesung der Aufgabe
      */
-    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, ArrayList<Boolean> loesung) {
+    private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, int loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);

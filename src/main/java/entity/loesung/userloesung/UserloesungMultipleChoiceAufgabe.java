@@ -19,8 +19,7 @@ import java.util.List;
 public class UserloesungMultipleChoiceAufgabe extends Userloesung {
 
 
-    @ElementCollection
-    private List<Boolean> userloesung;
+    private int userloesung;
 
     /**
      * Leerer Konstruktor für Klasse UserloesungMultipleChoiceAufgabe
@@ -38,7 +37,7 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
      * @param userloesungErsteller Ersteller der Userlösung
      * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
-    public UserloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, boolean hinweisVerwendet, List<Boolean> userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
+    public UserloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, boolean hinweisVerwendet, int userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
         super(aufgabe, hinweisVerwendet, userloesungErsteller, aufgabensammlung);
         this.userloesung = userloesung;
     }
@@ -48,7 +47,7 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
      *
      * @return Userlösung in Form einer Boolean-Liste
      */
-    public List<Boolean> getUserloesung() {
+    public int getUserloesung() {
         return userloesung;
     }
 
@@ -57,7 +56,7 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
      *
      * @param userloesung Userlösung in Form einer Boolean-Liste
      */
-    public void setUserloesung(List<Boolean> userloesung) {
+    public void setUserloesung(int userloesung) {
         this.userloesung = userloesung;
     }
 

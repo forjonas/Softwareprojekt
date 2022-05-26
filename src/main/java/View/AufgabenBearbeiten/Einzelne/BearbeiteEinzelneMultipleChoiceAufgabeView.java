@@ -38,7 +38,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JRadioButton btnantwort2;
     private JLabel lblAufgabenText;
     private JButton btnZeigeLoesungEinzel;
-    private List<Boolean> eingabe;
+    private int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -134,24 +134,20 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
             }
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
 
-            List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
+            int userloesungWert = -1;
 
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
-            userloesungBooleanArray.add(false);
 
             if (btnantwort1.isSelected()) {
-                userloesungBooleanArray.set(0, true);
+                userloesungWert = 1;
             } else if (btnantwort2.isSelected()) {
-                userloesungBooleanArray.set(1, true);
+                userloesungWert = 2;
             } else if (btnantwort3.isSelected()) {
-                userloesungBooleanArray.set(2, true);
+                userloesungWert = 3;
             } else if (btnantwort4.isSelected()) {
-                userloesungBooleanArray.set(3, true);
+                userloesungWert = 4;
             }
 
-            eingabe = userloesungBooleanArray;
+            eingabe = userloesungWert;
             userloesung = new UserloesungMultipleChoiceAufgabe();
             userloesung.setUserloesung(eingabe);
             this.dispose();

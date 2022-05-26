@@ -63,26 +63,36 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
-        List<Boolean> musterLoesungen = musterloesungMultipleChoiceAufgabe.getMusterloesung();
+        int musterloesung = musterloesungMultipleChoiceAufgabe.getMusterloesung();
         UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
-        List<Boolean> userLoesungen = userloesungMultipleChoiceAufgabe.getUserloesung();
-        btnMusterloesung1.setSelected(musterLoesungen.get(0));
-        btnUserloesung1.setSelected(musterLoesungen.get(0));
-        if (userLoesungen.size() == 4) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnMusterloesung4.setSelected(musterLoesungen.get(3));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-            btnUserloesung4.setSelected(userLoesungen.get(3));
-        } else if (userLoesungen.size() == 3) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-        } else if (userLoesungen.size() == 2) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
+        int userloesung = userloesungMultipleChoiceAufgabe.getUserloesung();
+        if (aufgabe.getAntwortmoeglichkeiten().size() == 4) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setSelected(musterloesung == 4);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setSelected(userloesung == 4);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 3) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setVisible(false);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 2) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setVisible(false);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setVisible(false);
+            btnUserloesung4.setVisible(false);
         }
 
         this.pack();

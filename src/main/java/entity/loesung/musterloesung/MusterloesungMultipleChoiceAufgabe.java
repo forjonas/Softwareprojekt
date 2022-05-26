@@ -17,8 +17,7 @@ import java.util.*;
 @Entity
 public class MusterloesungMultipleChoiceAufgabe extends Musterloesung {
 
-    @ElementCollection
-    private List<Boolean> musterloesung;
+    private int musterloesung;
 
     /**
      * Leerer Konstruktor für Klasse MusterloesungEinfachantwort
@@ -34,7 +33,7 @@ public class MusterloesungMultipleChoiceAufgabe extends Musterloesung {
      * @param loesungshinweis zur Lösung gehörender Lösungshinweis
      * @param musterloesung   Musterlösung in Form einer Boolean-Liste
      */
-    public MusterloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, String loesungshinweis, List<Boolean> musterloesung) {
+    public MusterloesungMultipleChoiceAufgabe(MultipleChoiceAufgabe aufgabe, String loesungshinweis, int musterloesung) {
         super(aufgabe, loesungshinweis);
         this.musterloesung = musterloesung;
     }
@@ -44,7 +43,7 @@ public class MusterloesungMultipleChoiceAufgabe extends Musterloesung {
      *
      * @return Musterlösung in Form einer Boolean-Liste
      */
-    public List<Boolean> getMusterloesung() {
+    public int getMusterloesung() {
         return musterloesung;
     }
 
@@ -53,7 +52,7 @@ public class MusterloesungMultipleChoiceAufgabe extends Musterloesung {
      *
      * @param musterloesung in Form einer Boolean-Liste
      */
-    public void setMusterloesung(List<Boolean> musterloesung) {
+    public void setMusterloesung(int musterloesung) {
         this.musterloesung = musterloesung;
     }
 
