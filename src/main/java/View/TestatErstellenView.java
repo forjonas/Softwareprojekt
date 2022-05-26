@@ -38,22 +38,6 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TestatErstellenView frame = new TestatErstellenView(null, new Dozent());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Konstruktor, der den Frame erstellt
      *
      * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
@@ -196,7 +180,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
      * Beinhaltet die Logik des Zurück-Buttons
      */
     private void zurueckButtonLogik() {
-        boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.WARNING_MESSAGE));
+        boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.YES_NO_OPTION));
         if (schliessenGewuenscht) {
             jframe.setVisible(true);
             dispose();
@@ -211,9 +195,9 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         if (ausgewaehlteAufgaben != null) {
             String passwort = txtPasswort.getText().trim();
             String name = txtName.getText().trim();
-            if (name == null || name.equals("")) {
+            if (name.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bitte Namen für das Testat eingeben", "Keine Name eingegeben", JOptionPane.WARNING_MESSAGE);
-            } else if (passwort == null || passwort.equals("")) {
+            } else if (passwort.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bitte Passwort für das Testat eingeben", "Kein Passwort eingegeben", JOptionPane.WARNING_MESSAGE);
             } else {
                 Testat testat = new Testat(ausgewaehlteAufgaben, passwort, name, aktuellerBenutzer);

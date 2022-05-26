@@ -14,14 +14,14 @@ public enum Kategorie {
     Java_Grundlagen("Java-Grundlagen"),
     Klassendiagramme("Klassendiagramme");
 
-    private String code;
+    private final String code;
 
     /**
      * Konstruktor des Enums Kategorie
      *
      * @param code String, der zum Enum gehört
      */
-    private Kategorie(String code) {
+    Kategorie(String code) {
         this.code = code;
     }
 

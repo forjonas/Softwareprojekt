@@ -30,27 +30,10 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnPreview;
-    private JButton btnBearbeiten;
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
     private List<Aufgabe> aufgabenliste;
     private JFrame jframe;
-
-    /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(null, new Dozent());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Konstruktor, der den Frame erstellt
@@ -192,9 +175,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
                 if (!aufgabe.darfDozentAufgabeLoeschen(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, diese Aufgabe zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
                 } else if (aufgabe.getVerwendungen().size() > 0) {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.YES_NO_OPTION));
                 } else {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.YES_NO_OPTION));
                 }
                 if (loeschenGewuenscht) {
                     aufgabenliste.remove(aufgabe);

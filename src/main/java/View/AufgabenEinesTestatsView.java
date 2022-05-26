@@ -29,22 +29,6 @@ public class AufgabenEinesTestatsView extends JDialog implements ActionListener 
     private Testat testat;
 
     /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AufgabenEinesTestatsView frame = new AufgabenEinesTestatsView(new Testat());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Konstruktor, der den Frame erstellt
      *
      * @param testat Testat, dessen Aufgaben angezeigt werden sollen

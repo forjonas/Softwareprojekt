@@ -13,14 +13,14 @@ public enum Aufgabentyp {
     Design("Design"),
     Programmieren("Programmieren");
 
-    private String code;
+    private final String code;
 
     /**
      * Konstruktor des Enums Aufgabentyp
      *
      * @param code String, der zum Enum gehört
      */
-    private Aufgabentyp(String code) {
+    Aufgabentyp(String code) {
         this.code = code;
     }
 

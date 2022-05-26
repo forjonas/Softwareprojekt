@@ -12,14 +12,14 @@ public enum Schwierigkeitsgrad {
     Mittel("Mittel"),
     Schwer("Schwer");
 
-    private String code;
+    private final String code;
 
     /**
      * Konstruktor des Enums Schwierigkeitsgrad
      *
      * @param code String, der zum Enum gehört
      */
-    private Schwierigkeitsgrad(String code) {
+    Schwierigkeitsgrad(String code) {
         this.code = code;
     }
 

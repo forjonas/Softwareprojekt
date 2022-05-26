@@ -32,23 +32,6 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     private JFrame jframe;
 
     /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(null, new Dozent());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-    /**
      * Konstruktor, der den Frame erstellt
      *
      * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll

@@ -3,7 +3,6 @@ package View.AufgabenBearbeiten.Einzelne;
 import View.tableModel.BearbeiteAufgabeTableModel;
 import entity.aufgabe.*;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Ansicht in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
+ * Ansicht, in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
  *
  * @author Jonas Herbst
  * @version 26.05.22
@@ -29,22 +28,6 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
     private JFrame jFrame;
-
-    /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BearbeiteEinzelneAufgabeKatalogView frame = new BearbeiteEinzelneAufgabeKatalogView(null, new Student());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Konstruktor, der den Frame erstellt

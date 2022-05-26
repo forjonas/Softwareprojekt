@@ -6,7 +6,6 @@ import app.TestatController;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Student;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -33,23 +32,6 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
     private List<Testat> testatListe;
     private Benutzer aktuellerBenutzer;
     private JFrame jframe;
-
-
-    /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    MeineTestateKatalogView frame = new MeineTestateKatalogView(null, new Student());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Konstruktor, der den Frame erstellt

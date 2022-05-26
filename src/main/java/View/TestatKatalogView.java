@@ -33,22 +33,6 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Main-Methode, welche den Frame öffnet
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TestatKatalogView frame = new TestatKatalogView(null, new Dozent());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Konstruktor, der den Frame erstellt
      *
      * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
@@ -212,9 +196,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
                 if (!testat.darfDozentTestatLoeschen(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, dieses Testat zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
                 } else if (testat.getBearbeitungen() != null && testat.getBearbeitungen().size() > 0) {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?\nAchtung! Es gibt zu ihm Testatbearbeitungen, die beim Löschen ebenfalls gelöscht werden.", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?\nAchtung! Es gibt zu ihm Testatbearbeitungen, die beim Löschen ebenfalls gelöscht werden.", "Testat löschen", JOptionPane.YES_NO_OPTION));
                 } else {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?", "Testat löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie das Testat wirklich löschen?", "Testat löschen", JOptionPane.YES_NO_OPTION));
                 }
                 if (loeschenGewuenscht) {
                     testatliste.remove(testat);
