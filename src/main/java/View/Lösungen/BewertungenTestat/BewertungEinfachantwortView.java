@@ -231,6 +231,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         mainPanel.add(lblMusterBild, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 

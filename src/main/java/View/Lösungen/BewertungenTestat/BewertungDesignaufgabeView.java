@@ -234,6 +234,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         mainPanel.add(lblMusterloesung, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
@@ -243,4 +244,5 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

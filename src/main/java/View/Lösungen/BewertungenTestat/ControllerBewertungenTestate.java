@@ -149,7 +149,7 @@ public class ControllerBewertungenTestate {
                 if (testat.getAnzahlAufgaben() == 1) {
                     bewertungEinfachantwortView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungEinfachantwortView.bewertbar();
                 }
                 break;
@@ -161,7 +161,7 @@ public class ControllerBewertungenTestate {
                 if (testat.getAnzahlAufgaben() == 1) {
                     bewertungProgrammieraufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
@@ -173,7 +173,7 @@ public class ControllerBewertungenTestate {
                 if (testat.getAnzahlAufgaben() == 1) {
                     bewertungMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
@@ -185,7 +185,7 @@ public class ControllerBewertungenTestate {
                 if (testat.getAnzahlAufgaben() == 1) {
                     bewertungDesignaufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungDesignaufgabeView.bewertbar();
                 }
                 break;
@@ -209,7 +209,7 @@ public class ControllerBewertungenTestate {
                 if (index == testat.getAnzahlAufgaben() - 1) {
                     bewertungEinfachantwortView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungEinfachantwortView.bewertbar();
                 }
                 break;
@@ -220,7 +220,7 @@ public class ControllerBewertungenTestate {
                 if (index == testat.getAnzahlAufgaben() - 1) {
                     bewertungProgrammieraufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
@@ -231,7 +231,7 @@ public class ControllerBewertungenTestate {
                 if (index == testat.getAnzahlAufgaben() - 1) {
                     bewertungMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
@@ -242,7 +242,7 @@ public class ControllerBewertungenTestate {
                 if (index == testat.getAnzahlAufgaben() - 1) {
                     bewertungDesignaufgabeView.versteckeNaechsteAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungDesignaufgabeView.bewertbar();
                 }
                 break;
@@ -264,7 +264,7 @@ public class ControllerBewertungenTestate {
                 if (index == 0) {
                     bewertungEinfachantwortView.versteckeVorherigeAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungEinfachantwortView.bewertbar();
                 }
                 break;
@@ -275,7 +275,7 @@ public class ControllerBewertungenTestate {
                 if (index == 0) {
                     bewertungProgrammieraufgabeView.versteckeVorherigeAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
@@ -286,7 +286,7 @@ public class ControllerBewertungenTestate {
                 if (index == 0) {
                     bewertungMultipleChoiceAufgabeView.versteckeVorherigeAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
@@ -297,7 +297,7 @@ public class ControllerBewertungenTestate {
                 if (index == 0) {
                     bewertungDesignaufgabeView.versteckeVorherigeAufgabe();
                 }
-                if (userIstDozent()) {
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                     bewertungDesignaufgabeView.bewertbar();
                 }
                 break;

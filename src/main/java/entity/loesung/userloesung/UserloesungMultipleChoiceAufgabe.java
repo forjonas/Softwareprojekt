@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 public class UserloesungMultipleChoiceAufgabe extends Userloesung {
 
+
     @ElementCollection
     private List<Boolean> userloesung;
 
