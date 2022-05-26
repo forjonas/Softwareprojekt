@@ -1,12 +1,11 @@
 package View.tableModel;
 
 import entity.aufgabensammlung.Testat;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * TabelModel für die Katalog-Tabelle der Testate
+ * TableModel für die Katalog-Tabelle der Testate
  *
  * @author Jonas Herbst
  * @version 06.05.22

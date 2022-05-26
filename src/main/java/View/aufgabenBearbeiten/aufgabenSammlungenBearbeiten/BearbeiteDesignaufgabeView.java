@@ -159,7 +159,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
                 btnUpload.setText(text);
                 this.update(this.getGraphics());
             }
-
         }
     }
 

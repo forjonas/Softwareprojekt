@@ -24,7 +24,6 @@ import java.util.List;
 public class CreateBetaData {
 
 
-
     /**
      * Beta-Data Attribute
      * <p>
@@ -125,7 +124,7 @@ public class CreateBetaData {
 
         ma1 = new MultipleChoiceAufgabe(5, null, Kategorie.Java_Grundlagen, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Wahrheitswerte geeignet", "Datentypabfrage", dozent1, lma1);
         ma2 = new MultipleChoiceAufgabe(5, null, Kategorie.Java_Grundlagen, 5, Schwierigkeitsgrad.Leicht, "Welche der Datentypen ist kein primitiver Datentyp?", "Primitiver Datentyp", dozent2, lma2);
-        ma3 = new MultipleChoiceAufgabe(5, null, Kategorie.Klassendiagramme, 15, Schwierigkeitsgrad.Mittel, "welches ist keine Art der Beziehung in einem UML-Diagramm", "Beziehungen in UML", dozent1, lma3);
+        ma3 = new MultipleChoiceAufgabe(5, null, Kategorie.Klassendiagramme, 15, Schwierigkeitsgrad.Mittel, "Welche ist keine Art der Beziehung in einem UML-Diagramm", "Beziehungen in UML", dozent1, lma3);
         ma4 = new MultipleChoiceAufgabe(5, null, Kategorie.Java_Programmierung, 20, Schwierigkeitsgrad.Mittel, "Wie beendet man vorläufig eine Switch-Case-Anweisung?", "Switch-Case-Beenden", dozent2, lma4);
 
         ea1 = new EinfachantwortAufgabe(7, null, Kategorie.Datenbanken, 25, Schwierigkeitsgrad.Schwer, "Begründen Sie warum für diese Beziehung eine Komposition und nicht eine Aggregation gewählt wurde.", "BeziehungsbegründungDB", dozent2);
@@ -167,9 +166,9 @@ public class CreateBetaData {
 
         //70% der Aufgaben erhalten ein zufälliges Bild als Aufgabenstellungsbild
         //Da das Bild optional ist, erhalten nicht alle Aufgaben ein Bild
-        for(Aufgabe a : aufgabenliste) {
+        for (Aufgabe a : aufgabenliste) {
             double randomNumber = Math.random();
-            if(randomNumber < 0.7) {
+            if (randomNumber < 0.7) {
                 a.setAufgabenstellungsbild(getRandomTestImage());
             }
         }
@@ -194,14 +193,10 @@ public class CreateBetaData {
         pa3.setMusterloesung(mpa3);
         pa4.setMusterloesung(mpa4);
 
-        List<Boolean> lmma1 = Arrays.asList(false, false, false, true);
-        List<Boolean> lmma2 = Arrays.asList(false, true, false, false);
-        List<Boolean> lmma3 = Arrays.asList(false, false, false, true);
-        List<Boolean> lmma4 = Arrays.asList(true, false, true, false);
-        mma1 = new MusterloesungMultipleChoiceAufgabe(ma1, "Ich bin ein Lösungshinweis", lmma1);
-        mma2 = new MusterloesungMultipleChoiceAufgabe(ma2, "Nicht primitive Datentypen sind bspwl. Klassen", lmma2);
-        mma3 = new MusterloesungMultipleChoiceAufgabe(ma3, "Hier steht ein Lösungshinweis", lmma3);
-        mma4 = new MusterloesungMultipleChoiceAufgabe(ma4, "Die Schwitch-Case-Anweisung lässt sich auch mit dem beenden der Methode beenden.", lmma4);
+        mma1 = new MusterloesungMultipleChoiceAufgabe(ma1, "Ich bin ein Lösungshinweis", 4);
+        mma2 = new MusterloesungMultipleChoiceAufgabe(ma2, "Nicht primitive Datentypen sind bspw. Klassen", 2);
+        mma3 = new MusterloesungMultipleChoiceAufgabe(ma3, "Hier steht ein Lösungshinweis", 4);
+        mma4 = new MusterloesungMultipleChoiceAufgabe(ma4, "Die Switch-Case-Anweisung lässt sich auch mit dem beenden der Methode beenden.", 1);
         ma1.setMusterloesung(mma1);
         ma2.setMusterloesung(mma2);
         ma3.setMusterloesung(mma3);
@@ -239,28 +234,28 @@ public class CreateBetaData {
         List<Aufgabe> aufgabenliste5 = Arrays.asList(ea3, ea4, ma4, pa4, pa1);
 
         testat1 = new Testat(aufgabenliste1, "000", "Testat für Anfänger", dozent1);
-        for(Aufgabe a : aufgabenliste1)
+        for (Aufgabe a : aufgabenliste1)
             a.addVerwendung(testat1);
         dozent1.addErstelltesTestat(testat1);
         testat2 = new Testat(aufgabenliste3, "000", "Testat nur MultipleChoice-Aufgaben", dozent2);
-        for(Aufgabe a : aufgabenliste3)
+        for (Aufgabe a : aufgabenliste3)
             a.addVerwendung(testat2);
         dozent2.addErstelltesTestat(testat2);
         testat3 = new Testat(aufgabenliste2, "000", "Frühlingstestat", dozent1);
-        for(Aufgabe a : aufgabenliste2)
+        for (Aufgabe a : aufgabenliste2)
             a.addVerwendung(testat3);
         dozent1.addErstelltesTestat(testat3);
 
         training1 = new Training(aufgabenliste5, 50, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Mittel, student2);
-        for(Aufgabe a : aufgabenliste5)
+        for (Aufgabe a : aufgabenliste5)
             a.addVerwendung(training1);
         student2.addBearbeitetesTraining(training1);
         training2 = new Training(aufgabenliste4, 30, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student4);
-        for(Aufgabe a : aufgabenliste4)
+        for (Aufgabe a : aufgabenliste4)
             a.addVerwendung(training2);
         student4.addBearbeitetesTraining(training2);
         training3 = new Training(aufgabenliste1, 90, Kategorie.Java_Grundlagen, Schwierigkeitsgrad.Mittel, student3);
-        for(Aufgabe a : aufgabenliste1)
+        for (Aufgabe a : aufgabenliste1)
             a.addVerwendung(training3);
         student3.addBearbeitetesTraining(training3);
 
@@ -272,11 +267,11 @@ public class CreateBetaData {
         byte [] testBild = getRandomTestImage();
         ul1 = new UserloesungDesignaufgabe(da1,false,testBild,student3,training3);
         ul2 = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student3, training3);
-        ul3 = new UserloesungDesignaufgabe(da2,false,testBild,student3,training3);
+        ul3 = new UserloesungDesignaufgabe(da2, false, testBild, student3, training3);
         ul4 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student3, training3);
         ul5 = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa4, true, "Code", student3, training3);
-        ul6 = new UserloesungDesignaufgabe(da4,false,testBild,student3,training3);
-        ul7 = new UserloesungProgrammieraufgabe(pa2,false,"assa",student3,training3);
+        ul6 = new UserloesungDesignaufgabe(da4, false, testBild, student3, training3);
+        ul7 = new UserloesungProgrammieraufgabe(pa2, false, "assa", student3, training3);
         student3.addErstellteLoesung(ul1);
         student3.addErstellteLoesung(ul2);
         student3.addErstellteLoesung(ul3);
@@ -293,10 +288,10 @@ public class CreateBetaData {
         training3.addUserloesung(ul7);
 
 
-        Userloesung test1 = new UserloesungEinfachantwort(ea1,false,"pong",student4,training2);
-        Userloesung test2 = new UserloesungMultipleChoiceAufgabe(ma1, false, Arrays.asList(false,false,false,true),student4,training2);
-        Userloesung test3 = new UserloesungDesignaufgabe(da1,false,testBild,student4,training2);
-        Userloesung test4 = new UserloesungProgrammieraufgabe(pa1,false,"asdasd",student4,training2);
+        Userloesung test1 = new UserloesungEinfachantwort(ea1, false, "pong", student4, training2);
+        Userloesung test2 = new UserloesungMultipleChoiceAufgabe(ma1, false, 3, student4, training2);
+        Userloesung test3 = new UserloesungDesignaufgabe(da1, false, testBild, student4, training2);
+        Userloesung test4 = new UserloesungProgrammieraufgabe(pa1, false, "asdasd", student4, training2);
         student4.addErstellteLoesung(test1);
         student4.addErstellteLoesung(test2);
         student4.addErstellteLoesung(test3);
@@ -307,7 +302,7 @@ public class CreateBetaData {
         training2.addUserloesung(test4);
 
 
-        Userloesung a = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, Arrays.asList(false, false, false, true), student2, training1);
+        Userloesung a = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, 3, student2, training1);
         Userloesung b = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea3, false, "Erklärung", student2, training1);
         Userloesung c = new UserloesungEinfachantwort((EinfachantwortAufgabe) ea4, false, "System.out.println()", student2, training1);
         Userloesung d = new UserloesungProgrammieraufgabe((Programmieraufgabe) pa1, true, "Code", student2, training1);
@@ -323,14 +318,10 @@ public class CreateBetaData {
         training1.addUserloesung(d);
         training1.addUserloesung(e);
 
-        List<Boolean> ul6List = Arrays.asList(true, false, false, true);
-        List<Boolean> ul7List = Arrays.asList(true, true, true, false);
-        List<Boolean> ul8List = Arrays.asList(false, false, false, true);
-        List<Boolean> ul9List = Arrays.asList(true, false, false, true);
-        ul6 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul6List, student1, testat2);
-        ul7 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul7List, student1, testat2);
-        ul8 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul8List, student1, testat2);
-        ul9 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul9List, student1, testat2);
+        ul6 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, 4, student1, testat2);
+        ul7 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, 2, student1, testat2);
+        ul8 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, 3, student1, testat2);
+        ul9 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, 1, student1, testat2);
         testat2.addUserloesung(ul6);
         testat2.addUserloesung(ul7);
         testat2.addUserloesung(ul8);
@@ -349,10 +340,10 @@ public class CreateBetaData {
         List<Boolean> ul11List = Arrays.asList(true, false, true, false);
         List<Boolean> ul12List = Arrays.asList(false, false, true, false);
         List<Boolean> ul13List = Arrays.asList(true, false, false, true);
-        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, ul10List, student2, testat2);
-        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, ul11List, student2, testat2);
-        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, ul12List, student2, testat2);
-        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, ul13List, student2, testat2);
+        ul10 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma1, false, 4, student2, testat2);
+        ul11 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma2, false, 2, student2, testat2);
+        ul12 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma3, false, 3, student2, testat2);
+        ul13 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) ma4, false, 1, student2, testat2);
         testat2.addUserloesung(ul10);
         testat2.addUserloesung(ul11);
         testat2.addUserloesung(ul12);

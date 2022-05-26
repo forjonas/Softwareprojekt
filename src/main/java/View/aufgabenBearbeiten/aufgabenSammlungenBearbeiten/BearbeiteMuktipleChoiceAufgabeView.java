@@ -36,8 +36,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
     private JLabel lblAufgabenText;
-    private List<Boolean> eingabe;
-
+    private int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -174,8 +173,9 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
      * Usereingaben speichern
      */
     public void userEingabenSpeichern() {
-        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
 
+        /*
+        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
         userloesungBooleanArray.add(false);
         userloesungBooleanArray.add(false);
         userloesungBooleanArray.add(false);
@@ -190,26 +190,25 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         } else if (btnantwort4.isSelected()) {
             userloesungBooleanArray.set(3, true);
         }
+         */
 
+        if (btnantwort1.isSelected()) {
+            eingabe = 1;
+        } else if (btnantwort2.isSelected()) {
+            eingabe = 2;
+        } else if (btnantwort3.isSelected()) {
+            eingabe = 3;
+        } else if (btnantwort4.isSelected()) {
+            eingabe = 4;
+        }
         if (testatController != null) {
-            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, testatController.getAktuellerBenutzer(), testatController.getTestat());
+            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, eingabe, testatController.getAktuellerBenutzer(), testatController.getTestat());
             testatController.addUserloesung(userloesung);
         }
         if (trainingController != null) {
-            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, userloesungBooleanArray, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
+            userloesung = new UserloesungMultipleChoiceAufgabe(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
             trainingController.addUserloesung(userloesung);
         }
-
-    }
-
-
-    public void noVisible() {
-        btnantwort4.setVisible(false);
-        btnantwort3.setVisible(false);
-    }
-
-    public void noVisiblefour() {
-        btnantwort4.setVisible(false);
 
     }
 
@@ -230,7 +229,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
-        eingabe = new ArrayList<>();
+        eingabe = 0;
     }
 
     /**
@@ -240,22 +239,16 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
-        for (int i = 0; i < eingabe.size(); i++) {
-            Boolean wert = eingabe.get(i);
-            if (i == 0) {
-                btnantwort1.setSelected(wert);
-            }
-            if (i == 1) {
-                btnantwort2.setSelected(wert);
-            }
-            if (i == 2) {
-                btnantwort3.setSelected(wert);
-            }
-            if (i == 3) {
-                btnantwort4.setSelected(wert);
-            }
+        boolean wert = true;
+        if (eingabe == 1) {
+            btnantwort1.setSelected(wert);
+        } else if (eingabe == 2) {
+            btnantwort1.setSelected(wert);
+        } else if (eingabe == 3) {
+            btnantwort1.setSelected(wert);
+        } else if (eingabe == 4) {
+            btnantwort1.setSelected(wert);
         }
-
     }
 
     {

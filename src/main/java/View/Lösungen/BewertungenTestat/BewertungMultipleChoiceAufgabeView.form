@@ -294,6 +294,8 @@
         </constraints>
         <properties>
           <text value="Bewertung speichern"/>
+          <verifyInputWhenFocusTarget value="true"/>
+          <visible value="false"/>
         </properties>
       </component>
     </children>

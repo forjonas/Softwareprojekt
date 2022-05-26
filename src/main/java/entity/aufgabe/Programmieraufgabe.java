@@ -5,10 +5,8 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 import jakarta.persistence.Entity;
 

@@ -1,7 +1,6 @@
 package View.tableModel;
 
 import entity.aufgabe.Aufgabe;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class AufgabenAuswaehlenTableModel extends AbstractTableModel {
 
     public AufgabenAuswaehlenTableModel(List<Aufgabe> aufgabenliste) {
         this.aufgabenliste = aufgabenliste;
-        this.auswahlliste = new LinkedList<Boolean>();
+        this.auswahlliste = new LinkedList<>();
         for (Aufgabe a : aufgabenliste) {
             auswahlliste.add(false);
         }

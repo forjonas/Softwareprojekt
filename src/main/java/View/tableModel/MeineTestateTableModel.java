@@ -3,12 +3,11 @@ package View.tableModel;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * TabelModel für die Tabelle in der Bearbeiten-Ansicht der Testate
+ * TableModel für die Tabelle in der Bearbeiten-Ansicht der Testate
  *
  * @author Jonas Herbst
  * @version 06.05.22

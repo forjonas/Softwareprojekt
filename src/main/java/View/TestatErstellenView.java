@@ -7,7 +7,6 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
-import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.aufgabe.MultipleChoiceAufgabe;
@@ -23,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Ansicht in der ein Testat erstellt werden kann, indem Aufgaben aus einer
+ * Ansicht, in der ein Testat erstellt werden kann, indem Aufgaben aus einer
  * Tabelle ausgewählt werden und ein Passwort gesetzt wird.
  *
  * @author Jonas Herbst
@@ -37,7 +36,6 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private AufgabenAuswaehlenTableModel aufgabenAuswaehlenTableModel;
     private JButton btnZurueck;
     private JButton btnPreview;
-
     private JButton btnFreigeben;
     private JTextField txtPasswort;
     private JTextField txtName;
@@ -46,43 +44,13 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TestatErstellenView frame = new TestatErstellenView(null, dozent1);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private List<Aufgabe> getTestdata() {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent1);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent1, Arrays.asList(new String[]{"char", "int", "double"}));
-        Aufgabe a5 = new EinfachantwortAufgabe();
-        List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
-        return aufgabenListe;
-    }
-
-    /**
      * Create the frame.
      */
     public TestatErstellenView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
+
         aufgabenliste = DatabaseService.getInstance().readAufgabenFromDatabase();
-        //Test
-        //aufgabenliste = new LinkedList<>();
-        //aufgabenliste = getTestdata();
         aufgabenliste = new LinkedList<>(aufgabenliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testat erstellen");
@@ -122,7 +90,6 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnPreview = new JButton("Preview");
         panelRightNorth.add(btnPreview);
-
 
         JPanel panelCenterNorth = new JPanel();
         GridBagConstraints gbc_panelCenterNorth = new GridBagConstraints();
@@ -188,7 +155,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnZurueck.addActionListener(this);
         btnFreigeben.addActionListener(this);
-        btnPreview.addActionListener(this);//verändert
+        btnPreview.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -202,12 +169,9 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             zurueckButtonLogik();
         }
 
-
-        //verändert
         if (e.getSource() == this.btnPreview) {
             previewButtonLogik();
         }
-
 
         if (e.getSource() == this.btnFreigeben) {
             freigebenButtonLogik();
@@ -279,5 +243,4 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             new TestatErstellenAufgabenPreview(aufgabe);
         }
     }
-
 }

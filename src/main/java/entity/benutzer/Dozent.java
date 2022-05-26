@@ -34,7 +34,6 @@ public class Dozent extends Benutzer implements Serializable {
         this.bewerteteTestate = new LinkedList<TestatBearbeitung>();
         this.erstellteTestate = new LinkedList<Testat>();
         this.erstellteAufgaben = new LinkedList<Aufgabe>();
-        //Nothing to do
     }
 
     /**
@@ -164,19 +163,12 @@ public class Dozent extends Benutzer implements Serializable {
     }
 
     /**
-     * Setzt die Liste der erstellten Testate des Dozenten
-     * --> vielleicht rausnehmen oder auf private setzen
-     *
-     * @param erstellteTestate erstellte Testate des Doznenten
-     */
-
-    /**
      * Gibt den Dozenten als String aus
      *
      * @return Dozent als String
      */
     @Override
     public String toString() {
-        return "Dozent: {"+super.toString()+"}";
+        return "Dozent: {" + super.toString() + "}";
     }
 }

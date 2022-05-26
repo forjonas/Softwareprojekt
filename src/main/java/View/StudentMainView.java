@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Ansicht in der ein Fenster für einen Studenten erstellt wird, wo der Student unterschiedliche Funtkionen aufrufen kann.
+ * Ansicht, in der ein Fenster für einen Studenten erstellt wird, wo der Student unterschiedliche Funktionen aufrufen kann.
  *
  * @author Martin Bergen
  * @version 23.05.2022
@@ -26,18 +26,16 @@ public class StudentMainView extends JFrame implements ActionListener {
     private JButton abmeldenBtn;
     private Student student;
 
-    /**------Attribute Ende------ */
-
     /**
      * Konstruktor der Klasse StudentMainView, die ein Fenster und die ausgewählten Bausteine erstellt und verbindet.
      *
      * @param student Student, der sich in der EinloggenView angemeldet hat und in der Klasse gespeichert wird, damit bestimmte Funktionalitäten gewährleistet werden
      */
-    public StudentMainView(Student student)
-    {
+    public StudentMainView(Student student) {
         this.student = student;
         studentPnl = new JPanel();
         studentPnl.setLayout(new BorderLayout());
+
         JLabel textLbl = new JLabel("Willkommen " + student.getVorname() + " " + student.getNachname() + " Matrikelnummer:" + student.getMatrikelnummer());
         JPanel tempNorthPnl = new JPanel(new FlowLayout());
         JPanel tempCenterPnl = new JPanel(new FlowLayout());
@@ -69,14 +67,14 @@ public class StudentMainView extends JFrame implements ActionListener {
         this.add(studentPnl);
 
         this.setSize(600, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
     /**
-     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     * Überprüft ob einer der Buttons betätigt wurde und führt dementsprechend, die gesetze Methode aus
      *
      * @param e the event to be processed
      */
@@ -94,6 +92,5 @@ public class StudentMainView extends JFrame implements ActionListener {
             new BearbeiteEinzelneAufgabeKatalogView(this, student);
             this.setVisible(false);
         }
-
     }
 }

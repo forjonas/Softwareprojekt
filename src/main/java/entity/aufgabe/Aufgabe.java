@@ -50,7 +50,6 @@ public abstract class Aufgabe {
     public Aufgabe() {
         verwendungen = new LinkedList<Aufgabensammlung>();
         userloesungen = new LinkedList<Userloesung>();
-        //Nothing to do
     }
 
     /**

@@ -73,7 +73,6 @@ public class AufgabenTrainingTableModel extends AbstractTableModel {
                     return aufgabenliste.get(rowIndex).getName();
                 }
             }
-
             case 1: {
                 if (aufgabenliste.get(rowIndex).getKategorie() == null) {
                     return "Fehler, Kategorie ist Null";
@@ -81,7 +80,6 @@ public class AufgabenTrainingTableModel extends AbstractTableModel {
                     return aufgabenliste.get(rowIndex).getKategorie().getCode();
                 }
             }
-
             case 2: {
                 if (aufgabenliste.get(rowIndex).getBearbeitungszeit() == 0) {
                     return "Fehler, Beabreitungszeit ist 0";
@@ -132,5 +130,4 @@ public class AufgabenTrainingTableModel extends AbstractTableModel {
                 return false;
         }
     }
-
 }

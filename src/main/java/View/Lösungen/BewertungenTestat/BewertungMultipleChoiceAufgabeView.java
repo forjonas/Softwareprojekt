@@ -14,9 +14,9 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class BewertungMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private ControllerBewertungenTestate cont;
+    private final ControllerBewertungenTestate controllerBewertungenTestate;
     private final MultipleChoiceAufgabe aufgabe;
-    private UserloesungMultipleChoiceAufgabe uLMC;
+    private final UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe;
     private JPanel mainPanel;
     private JTextField txtfAufgabentext;
     private JPanel panelUserChoices;
@@ -48,8 +48,8 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JLabel lblMusterBild;
 
 
-    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerBewertungenTestate cont) {
-        this.cont = cont;
+    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+        this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -60,7 +60,6 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        //Setzen der Daten
         txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
@@ -68,30 +67,40 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         }
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
-        MusterloesungMultipleChoiceAufgabe mLMC = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung(); //Beschaffen der Musterlösung über die Aufgabe
-        List<Boolean> musterLoesungen = mLMC.getMusterloesung();
-        UserloesungMultipleChoiceAufgabe uLMC = (UserloesungMultipleChoiceAufgabe) cont.getUserloesung(aufgabe);   //Beschaffen der Userlösung aus der DB über die Aufgabe
-        List<Boolean> userLoesungen = uLMC.getUserloesung();
-        this.uLMC = uLMC;
-        btnMusterloesung1.setSelected(musterLoesungen.get(0));
-        btnUserloesung1.setSelected(userLoesungen.get(0));
-        if (userLoesungen.size() == 4) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnMusterloesung4.setSelected(musterLoesungen.get(3));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-            btnUserloesung4.setSelected(userLoesungen.get(3));
-        } else if (userLoesungen.size() == 3) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnMusterloesung3.setSelected(musterLoesungen.get(2));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
-            btnUserloesung3.setSelected(userLoesungen.get(2));
-        } else if (userLoesungen.size() == 2) {
-            btnMusterloesung2.setSelected(musterLoesungen.get(1));
-            btnUserloesung2.setSelected(userLoesungen.get(1));
+        MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
+        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        this.userloesungMultipleChoiceAufgabe = userloesungMultipleChoiceAufgabe;
+        int musterloesung = musterloesungMultipleChoiceAufgabe.getMusterloesung();
+        int userloesung = userloesungMultipleChoiceAufgabe.getUserloesung();
+        if (aufgabe.getAntwortmoeglichkeiten().size() == 4) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setSelected(musterloesung == 4);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setSelected(userloesung == 4);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 3) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setSelected(musterloesung == 3);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setSelected(userloesung == 3);
+            btnUserloesung4.setVisible(false);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 2) {
+            btnMusterloesung1.setSelected(musterloesung == 1);
+            btnMusterloesung2.setSelected(musterloesung == 2);
+            btnMusterloesung3.setVisible(false);
+            btnMusterloesung4.setVisible(false);
+            btnUserloesung1.setSelected(userloesung == 1);
+            btnUserloesung2.setSelected(userloesung == 2);
+            btnUserloesung3.setVisible(false);
+            btnUserloesung4.setVisible(false);
         }
-        txtfUserPunktzahl.setText(uLMC.getErreichtePunkte() + "");                                            //Die vom Studenten erreichten Punkte
+        txtfUserPunktzahl.setText(userloesungMultipleChoiceAufgabe.getErreichtePunkte() + "");
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -103,7 +112,11 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         if (e.getSource() == this.btnBeenden) {
             beenden();
         } else if (e.getSource() == this.btnHinweis) {
-            JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+            } else {
+                JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
+            }
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             this.dispose();
             naechsteAufgabe();
@@ -122,31 +135,31 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Diese Eingabe ist hinsichtlich der erreichbaren Punkte ungültig!");
                 return;
             }
-            uLMC.setErreichtePunkte(bewertung);
-            cont.setBewertet();
+            userloesungMultipleChoiceAufgabe.setErreichtePunkte(bewertung);
+            controllerBewertungenTestate.setBewertet();
         }
     }
 
     private void beenden() {
-        if (cont.bewertungVollstaendig() || !cont.userIstDozent()) {
+        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
             this.dispose();
-            cont.beendeBewertungTestat();
+            controllerBewertungenTestate.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                cont.abbrechenBewertungTestat();
+                controllerBewertungenTestate.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        cont.naechsteAufgabe();
+        controllerBewertungenTestate.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        cont.vorherigeAufgabe();
+        controllerBewertungenTestate.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {
@@ -287,6 +300,8 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         mainPanel.add(lblAufgabeBildString, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnBewertungSpeichern = new JButton();
         btnBewertungSpeichern.setText("Bewertung speichern");
+        btnBewertungSpeichern.setVerifyInputWhenFocusTarget(true);
+        btnBewertungSpeichern.setVisible(false);
         mainPanel.add(btnBewertungSpeichern, new GridConstraints(3, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();

@@ -24,9 +24,9 @@ import java.util.List;
  */
 
 public class ControllerBewertungenTestate {
-    private TestatBearbeitung testatBearbeitung;
-    private Testat testat;
-    private JFrame jframe;
+    private final TestatBearbeitung testatBearbeitung;
+    private final Testat testat;
+    private final JFrame jframe;
     private int index;
     public Benutzer benutzer;
     private DatabaseService ds = DatabaseService.getInstance();
@@ -34,10 +34,10 @@ public class ControllerBewertungenTestate {
     private List<Boolean> bewertetStatus;
 
     /**
-     * Konstruktor für einen Controller welcher die Logik hinter der Bewertung und Einsicht von Testatbearbeitungen bereitstellt
+     * Konstruktor für einen Controller der die Logik hinter der Bewertung und Einsicht von Testatbearbeitungen bereitstellt
      *
-     * @param testatBearbeitung Objekt welches das von einem Nutzer bearbeitetes Testat darsellt
-     * @param benutzer          Der zur Zeit angemeldete Benutzer
+     * @param testatBearbeitung Objekt welches das von einem Nutzer bearbeitetes Testat darstellt
+     * @param benutzer          Der zurzeit angemeldete Benutzer
      * @param frame             Das Hauptmenü der Klasse des angemeldeten Benutzers
      */
     public ControllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame frame) {
@@ -46,9 +46,9 @@ public class ControllerBewertungenTestate {
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
         this.benutzer = benutzer;
-        this.userloesungList = new LinkedList<Userloesung>();
-        List<Userloesung> datenbankliste = ds.readUserloesungenFromDatabse();
-        for (Userloesung ul : datenbankliste) {
+        this.userloesungList = new LinkedList<>();
+        List<Userloesung> datenbanklisteUserloesungen = ds.readUserloesungenFromDatabse();
+        for (Userloesung ul : datenbanklisteUserloesungen) {
             if (ul.getAufgabensammlung() == testat && ul.getUserloesungErsteller() == testatBearbeitung.getTestatBearbeiter()) {
                 userloesungList.add(ul);
             }
@@ -62,25 +62,6 @@ public class ControllerBewertungenTestate {
     }
 
     /**
-     * Eine Funktion welche eine nachträgliche Änderung der Testatbearbeitung ermöglicht
-     *
-     * @param testatBearbeitung die Testatbearbeitung die nun dargestellt werden soll
-     */
-    public void setTestatBearbeitung(TestatBearbeitung testatBearbeitung) {
-        this.testatBearbeitung = testatBearbeitung;
-        this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
-        this.index = 0;
-        this.userloesungList = new LinkedList<Userloesung>();
-        this.userloesungList = ds.readUserloesungVonTestat(testat, testatBearbeitung.getTestatBearbeiter());
-        this.bewertetStatus = new LinkedList<>();
-        for (int i = 0; i < userloesungList.size(); i++) {
-            bewertetStatus.add(false);
-        }
-
-        startBewertungTestat();
-    }
-
-    /**
      * Funktion die aus der bereits geladenen Liste aller Userlösungen die eine zurückgibt, welche zur angegebenen Aufgabe passt
      *
      * @param aufgabe Die Aufgabe zu welcher die passende Userlösung zurückgegeben werden soll
@@ -88,9 +69,9 @@ public class ControllerBewertungenTestate {
      */
     public Userloesung getUserloesung(Aufgabe aufgabe) {
         Userloesung userloesung = null;
-        for (Userloesung uDB : userloesungList) {
-            if (uDB.getAufgabe().equals(aufgabe)) {
-                userloesung = uDB;
+        for (Userloesung userloesungDB : userloesungList) {
+            if (userloesungDB.getAufgabe().equals(aufgabe)) {
+                userloesung = userloesungDB;
             }
         }
         return userloesung;
@@ -163,61 +144,49 @@ public class ControllerBewertungenTestate {
         Aufgabe aufgabe = testat.getAufgaben().get(0);
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
-                try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
-                    bEV.versteckeVorherigeAufgabe();
-                    if (testat.getAnzahlAufgaben() == 1) {
-                        bEV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bEV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                BewertungEinfachantwortView bewertungEinfachantwortView = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
+                bewertungEinfachantwortView.versteckeVorherigeAufgabe();
+                if (testat.getAnzahlAufgaben() == 1) {
+                    bewertungEinfachantwortView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungEinfachantwortView.bewertbar();
                 }
                 break;
             }
             case Programmieren: {
-                try {
-                    assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-                    bPV.versteckeVorherigeAufgabe();
-                    if (testat.getAnzahlAufgaben() == 1) {
-                        bPV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bPV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Programmieraufgabe;
+                BewertungProgrammieraufgabeView bewertungProgrammieraufgabeView = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                bewertungProgrammieraufgabeView.versteckeVorherigeAufgabe();
+                if (testat.getAnzahlAufgaben() == 1) {
+                    bewertungProgrammieraufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
             }
             case MultipleChoice: {
-                try {
-                    assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView bMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
-                    bMCV.versteckeVorherigeAufgabe();
-                    if (testat.getAnzahlAufgaben() == 1) {
-                        bMCV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bMCV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof MultipleChoiceAufgabe;
+                BewertungMultipleChoiceAufgabeView bewertungMultipleChoiceAufgabeView = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                bewertungMultipleChoiceAufgabeView.versteckeVorherigeAufgabe();
+                if (testat.getAnzahlAufgaben() == 1) {
+                    bewertungMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
             }
             case Design: {
-                try {
-                    assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
-                    bDV.versteckeVorherigeAufgabe();
-                    if (testat.getAnzahlAufgaben() == 1) {
-                        bDV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bDV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Designaufgabe;
+                BewertungDesignaufgabeView bewertungDesignaufgabeView = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
+                bewertungDesignaufgabeView.versteckeVorherigeAufgabe();
+                if (testat.getAnzahlAufgaben() == 1) {
+                    bewertungDesignaufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungDesignaufgabeView.bewertbar();
                 }
                 break;
             }
@@ -236,57 +205,45 @@ public class ControllerBewertungenTestate {
 
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
-                try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
-                    if (index == testat.getAnzahlAufgaben() - 1) {
-                        bEV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bEV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                BewertungEinfachantwortView bewertungEinfachantwortView = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
+                if (index == testat.getAnzahlAufgaben() - 1) {
+                    bewertungEinfachantwortView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungEinfachantwortView.bewertbar();
                 }
                 break;
             }
             case Programmieren: {
-                try {
-                    assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-                    if (index == testat.getAnzahlAufgaben() - 1) {
-                        bPV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bPV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Programmieraufgabe;
+                BewertungProgrammieraufgabeView bewertungProgrammieraufgabeView = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                if (index == testat.getAnzahlAufgaben() - 1) {
+                    bewertungProgrammieraufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
             }
             case MultipleChoice: {
-                try {
-                    assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView bMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
-                    if (index == testat.getAnzahlAufgaben() - 1) {
-                        bMCV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bMCV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof MultipleChoiceAufgabe;
+                BewertungMultipleChoiceAufgabeView bewertungMultipleChoiceAufgabeView = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                if (index == testat.getAnzahlAufgaben() - 1) {
+                    bewertungMultipleChoiceAufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
             }
             case Design: {
-                try {
-                    assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
-                    if (index == testat.getAnzahlAufgaben() - 1) {
-                        bDV.versteckeNaechsteAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bDV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Designaufgabe;
+                BewertungDesignaufgabeView bewertungDesignaufgabeView = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
+                if (index == testat.getAnzahlAufgaben() - 1) {
+                    bewertungDesignaufgabeView.versteckeNaechsteAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungDesignaufgabeView.bewertbar();
                 }
                 break;
             }
@@ -303,57 +260,45 @@ public class ControllerBewertungenTestate {
 
         switch (aufgabe.getAufgabentyp()) {
             case Einfachantwort: {
-                try {
-                    BewertungEinfachantwortView bEV = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
-                    if (index == 0) {
-                        bEV.versteckeVorherigeAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bEV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                BewertungEinfachantwortView bewertungEinfachantwortView = new BewertungEinfachantwortView((EinfachantwortAufgabe) aufgabe, this);
+                if (index == 0) {
+                    bewertungEinfachantwortView.versteckeVorherigeAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungEinfachantwortView.bewertbar();
                 }
                 break;
             }
             case Programmieren: {
-                try {
-                    assert aufgabe instanceof Programmieraufgabe;
-                    BewertungProgrammieraufgabeView bPV = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
-                    if (index == 0) {
-                        bPV.versteckeVorherigeAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bPV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Programmieraufgabe;
+                BewertungProgrammieraufgabeView bewertungProgrammieraufgabeView = new BewertungProgrammieraufgabeView((Programmieraufgabe) aufgabe, this);
+                if (index == 0) {
+                    bewertungProgrammieraufgabeView.versteckeVorherigeAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungProgrammieraufgabeView.bewertbar();
                 }
                 break;
             }
             case MultipleChoice: {
-                try {
-                    assert aufgabe instanceof MultipleChoiceAufgabe;
-                    BewertungMultipleChoiceAufgabeView bMCV = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
-                    if (index == 0) {
-                        bMCV.versteckeVorherigeAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bMCV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof MultipleChoiceAufgabe;
+                BewertungMultipleChoiceAufgabeView bewertungMultipleChoiceAufgabeView = new BewertungMultipleChoiceAufgabeView((MultipleChoiceAufgabe) aufgabe, this);
+                if (index == 0) {
+                    bewertungMultipleChoiceAufgabeView.versteckeVorherigeAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungMultipleChoiceAufgabeView.bewertbar();
                 }
                 break;
             }
             case Design: {
-                try {
-                    assert aufgabe instanceof Designaufgabe;
-                    BewertungDesignaufgabeView bDV = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
-                    if (index == 0) {
-                        bDV.versteckeVorherigeAufgabe();
-                    }
-                    if (userIstDozent()) {
-                        bDV.bewertbar();
-                    }
-                } catch (Exception ignored) {
+                assert aufgabe instanceof Designaufgabe;
+                BewertungDesignaufgabeView bewertungDesignaufgabeView = new BewertungDesignaufgabeView((Designaufgabe) aufgabe, this);
+                if (index == 0) {
+                    bewertungDesignaufgabeView.versteckeVorherigeAufgabe();
+                }
+                if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
+                    bewertungDesignaufgabeView.bewertbar();
                 }
                 break;
             }

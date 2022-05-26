@@ -1,17 +1,12 @@
 package entity.aufgabe;
 
 import entity.benutzer.Dozent;
-import entity.aufgabe.Aufgabe;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungDesignaufgabe;
-import entity.loesung.userloesung.UserloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -42,7 +37,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
 
     /**
      * Konstruktor für Klasse MultipleChoiceAufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
-     *      * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
+     * * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
      * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist
@@ -105,7 +100,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      */
     @Override
     public void setMusterloesung(Musterloesung musterloesung) throws Exception {
-        if(musterloesung == null) {
+        if (musterloesung == null) {
             this.musterloesung = null;
         } else {
             if (musterloesung.getClass() == MusterloesungMultipleChoiceAufgabe.class) {
@@ -137,7 +132,7 @@ public class MultipleChoiceAufgabe extends Aufgabe {
      */
     @Override
     public void setUserloesungen(List<Userloesung> userloesungen) throws Exception {
-        if(userloesungen == null) {
+        if (userloesungen == null) {
             this.userloesungen = null;
         } else {
             if (userloesungen.size() > 0) {

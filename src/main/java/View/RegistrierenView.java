@@ -41,7 +41,6 @@ public class RegistrierenView extends JFrame implements ActionListener {
     private JPasswordField passwortTxt = new JPasswordField(40);
     private JPasswordField passwortWiederholenTxt = new JPasswordField(40);
 
-
     /**
      * Konstruktor der Klasse RegistrierenView, die ein Fenster und die ausgewählten Bausteine verbindet und erstellt.
      *
@@ -65,7 +64,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
 
 
         this.setSize(600, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
@@ -82,7 +81,6 @@ public class RegistrierenView extends JFrame implements ActionListener {
         formatter.setAllowsInvalid(false);
 
         matrikelTxt = new JFormattedTextField(formatter);
-
         registrierePnl.add(registriereLbl, BorderLayout.NORTH);
 
         JPanel tempPanel2 = new JPanel(new GridLayout(6, 2, 12, 12));
@@ -132,7 +130,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Methode zum überprüfen, ob der gewählte Benutzername bereits existiert.
+     * Methode zum Überprüfen, ob der gewählte Benutzername bereits existiert.
      *
      * @return boolean-Wert
      */
@@ -147,7 +145,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Methode zum Hinzufügen eines Studenten der sich registriert hat. Benötigt die MEthoden isUsernameTaken() und isPasswortIdentisch().
+     * Methode zum Hinzufügen eines Studenten, der sich registriert hat. Benötigt die Methode isUsernameTaken() und isPasswortIdentisch().
      */
     public void addStudent() {
         if (anyFieldNull() || anyFieldEmpty()) {
@@ -193,12 +191,11 @@ public class RegistrierenView extends JFrame implements ActionListener {
     }
 
     /**
-     * Überprüft ob einer der Bottuns betätigt wurde und führt dementsprechen, die gesetze Methode aus
+     * Überprüft ob einer der Buttons betätigt wurde und führt dementsprechend, die gesetze Methode aus
      *
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == this.registrierenBtn) {
             addStudent();
         } else if (e.getSource() == this.zurueckBtn) {

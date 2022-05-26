@@ -93,7 +93,7 @@ public class PersistenceTest {
         Musterloesung ml1 = new MusterloesungEinfachantwort((EinfachantwortAufgabe) a1, "Lösungshinweis", "Lösung");
         Musterloesung ml2 = new MusterloesungDesignaufgabe((Designaufgabe) a2, "Lösungshinweis", null);
         Musterloesung ml3 = new MusterloesungProgrammieraufgabe((Programmieraufgabe) a3, "Lösungshinweis", "Lösung");
-        Musterloesung ml4 = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Lösungshinweis", Arrays.asList(new Boolean[]{true, false, false}));
+        Musterloesung ml4 = new MusterloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, "Lösungshinweis", 0);
         a1.setMusterloesung(ml1);
         a2.setMusterloesung(ml2);
         a3.setMusterloesung(ml3);
@@ -101,7 +101,7 @@ public class PersistenceTest {
         Userloesung ul1 = new UserloesungEinfachantwort((EinfachantwortAufgabe) a1, false, "Lösung", student1, testat1);
         Userloesung ul2 = new UserloesungDesignaufgabe((Designaufgabe) a2, false, null, student1, testat1);
         Userloesung ul3 = new UserloesungProgrammieraufgabe((Programmieraufgabe) a3, false, "Lösung", student1, testat1);
-        Userloesung ul4 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, true, Arrays.asList(new Boolean[]{true, false, false}), student1, testat1);
+        Userloesung ul4 = new UserloesungMultipleChoiceAufgabe((MultipleChoiceAufgabe) a4, true, 1, student1, testat1);
         testat1.addUserloesung(ul1);
         testat1.addUserloesung(ul2);
         testat1.addUserloesung(ul3);

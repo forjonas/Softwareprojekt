@@ -21,24 +21,24 @@ import java.io.File;
  */
 public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
     private Dozent doz;
-    //Frames
+
     private JFrame aufgabeErstellenStartViewFrame;
     private JPanel AufgabeErstellenEinfachAntwortViewPnl;
-    //Layouts
+
     private BorderLayout bl = new BorderLayout();
     private GridLayout gl = new GridLayout(10, 2);
-    //Panels
+
     private JPanel centerPnl;
     private JPanel northPnl;
     private JPanel southPnl;
-    //JComboboxen
+
     private JComboBox kategorienCB;
     private JComboBox schwierigkeitCB;
-    //Buttons
+
     private JButton zurueckBtn;
     private JButton speichernBtn;
     private JButton bspBildBtn;
-    //Labels
+
     private JLabel bspBildLbl;
     private JLabel kategorieLbl;
     private JLabel titelLbl;
@@ -48,22 +48,24 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private JLabel bearbeitungszeitLbl;
     private JLabel punkteLbl;
     private JLabel loesungLbl;
-    //TextAreas
+
     private JTextArea aufgabenTextTA;
     private JTextArea loesungshinwTA;
     private JTextArea loesungTA;
-    //TextFields
+
     private JTextField titelTF;
     private JTextField bearbeitungsZeitTF;
     private JTextField punkteTF;
-    //Files
+
     File bspBild;
+
     byte [] bspBildByteArray;
     /**
-     * @param aufgabeErstellenStartViewFrame
-     * @param doz
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEinfachAntwortViewFuellen() auf.
+     *
+     * @param aufgabeErstellenStartViewFrame
+     * @param doz
      */
     public AufgabeErstellenEinfachAntwortView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
@@ -78,20 +80,21 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
+
     /**
      * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
      */
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
         gl.setVgap(25);
         gl.setHgap(25);
-        //Panels
+
         centerPnl = new JPanel(gl);
         northPnl = new JPanel();
         southPnl = new JPanel();
         centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
         AufgabeErstellenEinfachAntwortViewPnl = new JPanel();
         AufgabeErstellenEinfachAntwortViewPnl.setLayout(bl);
-        //Buttons
+
         bspBildBtn = new JButton("Beispiel Bild Hochladen");
         bspBildBtn.addActionListener(this);
 
@@ -100,7 +103,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
 
         speichernBtn = new JButton("Speichern");
         speichernBtn.addActionListener(this);
-        //Text Areas
+
         aufgabenTextTA = new JTextArea();
         aufgabenTextTA.setLineWrap(true);
 
@@ -109,17 +112,17 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
 
         loesungTA = new JTextArea();
         loesungTA.setLineWrap(true);
-        //TextFields
+
         titelTF = new JTextField();
         bearbeitungsZeitTF = new JTextField();
         punkteTF = new JTextField();
-        //ComboBoxes
+
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
         kategorienCB = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         schwierigkeitCB = new JComboBox(schw);
-        //Label
+
         bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
         kategorieLbl = new JLabel("Kategorie: ");
         titelLbl = new JLabel("Aufgaben Titel");
@@ -129,7 +132,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         punkteLbl = new JLabel("Punkte: ");
         loesungLbl = new JLabel("Lösung");
         aufgabenTxtLbl = new JLabel("Aufgaben Text");
-        //Components Adden
+
         centerPnl.add(titelLbl);
         centerPnl.add(titelTF);
         centerPnl.add(aufgabenTxtLbl);
@@ -157,6 +160,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
         this.add(AufgabeErstellenEinfachAntwortViewPnl);
     }
+
     /**
      * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
      */
@@ -173,6 +177,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
                 bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         }
     }
+
     /**
      * disposed diesen frame und ruft den vorherigen frame auf. Bzw setzt diesen wieder Visible.
      */
@@ -180,6 +185,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         this.dispose();
         aufgabeErstellenStartViewFrame.setVisible(true);
     }
+
     /**
      * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
      * Ruft createObjectandPersist auf.
@@ -212,16 +218,18 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
             aufgabeErstellenStartViewFrame.setVisible(true);
         }
     }
+
     /**
-     * @param aufgTitel Titel der Aufgabe
-     * @param aufText Text der Aufgabe
-     * @param loesungshinweis loesungshinweis der Aufgabe
-     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
-     * @param punkte maximale punkte der Aufgabe
-     * @param kat kategorie der Aufgabe
-     * @param schw schwierigkeit der Aufgabe
-     * @param loesung loesung der Aufgabe
      * Erstellt eine Aufgabe vom Typ Einfachantwortaufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     *
+     * @param aufgTitel        Titel der Aufgabe
+     * @param aufText          Text der Aufgabe
+     * @param loesungshinweis  loesungshinweis der Aufgabe
+     * @param bearbeitungsZeit bearbeitungszeit der Aufgabe
+     * @param punkte           maximale punkte der Aufgabe
+     * @param kat              kategorie der Aufgabe
+     * @param schw             schwierigkeit der Aufgabe
+     * @param loesung          loesung der Aufgabe
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
 
@@ -234,9 +242,8 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Musterlösung setzten fehlgeschlagen", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         ds.persistObject(neueAufgabe);
         ds.persistObject(mlp);
-
-
     }
 }

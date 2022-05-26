@@ -34,7 +34,6 @@ public abstract class Benutzer implements Serializable {
     private List<TestatBearbeitung> bearbeiteteTestate;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "userloesungErsteller")
     private List<Userloesung> erstellteLoesungen;
-    //Beziehng: Benutzer und Userlösung
 
     /**
      * Leerer Konstruktor für Klasse Benutzer
@@ -43,7 +42,6 @@ public abstract class Benutzer implements Serializable {
         this.bearbeiteteTrainings = new LinkedList<Training>();
         this.bearbeiteteTestate = new LinkedList<TestatBearbeitung>();
         this.erstellteLoesungen = new LinkedList<Userloesung>();
-        //Nothing to do
     }
 
     /**

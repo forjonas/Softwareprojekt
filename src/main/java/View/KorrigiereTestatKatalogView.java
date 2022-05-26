@@ -42,64 +42,13 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
     private JFrame jframe;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("admin", "asdf", "Peter", "Zwegat");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Dozent dozent2 = new Dozent();
-                    List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
-                    for(Dozent dozent: dozenten) {
-                        if(dozent.getBenutzername().equals("KKubisch")){
-                            dozent2 = dozent;
-                            break;
-                        }
-                    }
-                    KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(null, dozent1);
-                    //KorrigiereTestatKatalogView frame = new KorrigiereTestatKatalogView(dozent2);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private List<TestatBearbeitung> getTestData() {
-        Student student1 = new Student("BBirne", "bbb", "Bert", "Birne", 2222);
-        Student student2 = new Student("CClown", "ccc", "Chris", "Clown", 3333);
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
-        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent1);
-        Testat t3 = new Testat();
-        TestatBearbeitung tb1 = new TestatBearbeitung(t1, 50, student1, dozent1);
-        TestatBearbeitung tb2 = new TestatBearbeitung(t1, 65, student2, dozent1);
-        TestatBearbeitung tb3 = new TestatBearbeitung(t2, 0, student1, null);
-        TestatBearbeitung tb4 = new TestatBearbeitung(t2, 0, student2, null);
-        TestatBearbeitung tb5 = new TestatBearbeitung(t3);
-        TestatBearbeitung tb6 = new TestatBearbeitung();
-        List<TestatBearbeitung> testatbearbeitungsliste = Arrays.asList(new TestatBearbeitung[]{tb1, tb2, tb3, tb4, tb1, tb2, tb3, tb4, tb5, tb6});
-        return testatbearbeitungsliste;
-    }
-
-    /**
      * Create the frame.
      */
     public KorrigiereTestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
+
         testatBearbeitungsListe = DatabaseService.getInstance().readTestatBearbeitungenFromDatabase();
-        //Test
-        //testatBearbeitungsListe = new LinkedList<TestatBearbeitung>();
-        //testatBearbeitungsListe = getTestData();
         testatBearbeitungsListe = new LinkedList<TestatBearbeitung>(testatBearbeitungsListe);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Korrigiere Testat");
@@ -181,27 +130,17 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                 JOptionPane.showMessageDialog(this, "Es wurde keine Testatbearbeitung zum Korrigieren ausgewählt", "Keine Testatbearbeitung ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 TestatBearbeitung testatBearbeitung = testatBearbeitungsListe.get(selectedRow);
-                //Testat wurde bereits korrigiert
                 if (testatBearbeitung.getTestatBewerter() != null) {
                     JOptionPane.showMessageDialog(this, "Die Testatbearbeitung wurde bereits korrigiert", "Testatbearbeitung bereits korrigiert", JOptionPane.WARNING_MESSAGE);
-                }
-                //Dozent darf das Testat nicht korrigieren
-                else if (!testatBearbeitung.darfDozentTestatBearbeitungBewerten(aktuellerBenutzer)) {
+                } else if (!testatBearbeitung.darfDozentTestatBearbeitungBewerten(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie verfügen nicht über die Berechtigung, die Testatbearbeitung zu korrigieren", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
-                }
-                //Testatbearbeitung enthält keine Aufgaben
-                else if (testatBearbeitung.getTestat() == null || testatBearbeitung.getTestat().getAnzahlAufgaben() == 0) {
+                } else if (testatBearbeitung.getTestat() == null || testatBearbeitung.getTestat().getAnzahlAufgaben() == 0) {
                     JOptionPane.showMessageDialog(this, "Fehler: Testatbearbeitung enthält keine Aufgaben", "Testatbearbeitung konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
-                }
-                //Dozent korrigiert das Testat
-                else {
-                    //Version des ControllerBewertungenTestate, die gerade in meinem Branch liegt
-                    //Müsste eigentlich mit TestatBearbeitung statt Testat und mit Benutzer/Dozent initialisiert werden
-                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer, jframe);
+                } else {
+                    new ControllerBewertungenTestate(testatBearbeitung, aktuellerBenutzer, jframe);
                     dispose();
                 }
             }
         }
     }
-
 }
