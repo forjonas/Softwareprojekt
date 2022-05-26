@@ -12,13 +12,12 @@ public class FileChooserAuslagerung {
 
     }
     public File fileChooser() {
-        FC = new JFileChooser((String) null);
+        FC = new JFileChooser();
         FC.setAcceptAllFileFilterUsed(false);
         FC.setFileFilter(new ImageFilter());
         int returnVal = FC.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             returnFile = FC.getSelectedFile();
-            System.out.println(returnFile.getName());
             return returnFile;
         }
         return null;

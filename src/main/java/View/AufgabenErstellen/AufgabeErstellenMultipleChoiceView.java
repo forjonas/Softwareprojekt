@@ -70,6 +70,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private JTextField antwort4TF;
     //Files
     private File bspBild;
+    byte [] bspBildByteArray;
     /**
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEInfachANtwortViewFuellen() auf.
@@ -213,6 +214,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         } else if (e.getSource() == this.bspBildBtn) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             bspBild = filcV.fileChooser();
+            if(bspBild != null)
+                bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         }
     }
     /**
@@ -290,7 +293,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && aufgTitel != null) {
+        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesung);
 
             this.dispose();
@@ -376,7 +379,6 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, ArrayList<Boolean> loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        byte [] bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
         MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
