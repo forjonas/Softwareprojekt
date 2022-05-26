@@ -5,7 +5,8 @@ import entity.aufgabe.EinfachantwortAufgabe;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.*;
+
 
 /**
  * Musterlösung des Dozenten für eine Aufgabe des Typs Multiple-Choice.

@@ -169,7 +169,7 @@ public class ControllerBewertungenTestate {
                     if (testat.getAnzahlAufgaben() == 1) {
                         bEV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bEV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -184,7 +184,7 @@ public class ControllerBewertungenTestate {
                     if (testat.getAnzahlAufgaben() == 1) {
                         bPV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bPV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -199,7 +199,7 @@ public class ControllerBewertungenTestate {
                     if (testat.getAnzahlAufgaben() == 1) {
                         bMCV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bMCV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -214,7 +214,7 @@ public class ControllerBewertungenTestate {
                     if (testat.getAnzahlAufgaben() == 1) {
                         bDV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bDV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -241,7 +241,7 @@ public class ControllerBewertungenTestate {
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bEV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bEV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -255,7 +255,7 @@ public class ControllerBewertungenTestate {
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bPV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bPV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -269,7 +269,7 @@ public class ControllerBewertungenTestate {
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bMCV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bMCV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -283,7 +283,7 @@ public class ControllerBewertungenTestate {
                     if (index == testat.getAnzahlAufgaben() - 1) {
                         bDV.versteckeNaechsteAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bDV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -308,7 +308,7 @@ public class ControllerBewertungenTestate {
                     if (index == 0) {
                         bEV.versteckeVorherigeAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bEV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -322,7 +322,7 @@ public class ControllerBewertungenTestate {
                     if (index == 0) {
                         bPV.versteckeVorherigeAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bPV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -336,7 +336,7 @@ public class ControllerBewertungenTestate {
                     if (index == 0) {
                         bMCV.versteckeVorherigeAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bMCV.bewertbar();
                     }
                 } catch (Exception ignored) {
@@ -350,7 +350,7 @@ public class ControllerBewertungenTestate {
                     if (index == 0) {
                         bDV.versteckeVorherigeAufgabe();
                     }
-                    if (userIstDozent()) {
+                    if (userIstDozent() && testatBearbeitung.getTestatBewerter() == null) {
                         bDV.bewertbar();
                     }
                 } catch (Exception ignored) {
