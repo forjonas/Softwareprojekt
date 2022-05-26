@@ -6,29 +6,23 @@ import entity.benutzer.Benutzer;
 import entity.loesung.Loesung;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 /**
  * Abstrakte Superklasse für Userlösungen
  *
  * @author Timo Joswig
- * @version 09.05.22
+ * @version 26.05.22
  */
 @Entity
 public abstract class Userloesung extends Loesung {
     private boolean hinweisVerwendet;
     private int erreichtePunkte = 0;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    //Aus irgend einem Grund findet er in dieser Klasse die ganzen Spalten für JoinColumn nicht, obwohl sie in der Datenbank existiert
-    //Es funktioniert aber auch ohne
-    //JoinColumn(name = "aufgabe_aufgabenid")
     protected Aufgabe aufgabe;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    //@JoinColumn(name = "userloesungErsteller_benutzerid")
     private Benutzer userloesungErsteller;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    //@JoinColumn(name = "aufgabensammlung_aufgabesammlungid")
     private Aufgabensammlung aufgabensammlung;
 
     /**
@@ -36,7 +30,6 @@ public abstract class Userloesung extends Loesung {
      */
     public Userloesung() {
         super();
-        //Nothing to do
     }
 
     /**

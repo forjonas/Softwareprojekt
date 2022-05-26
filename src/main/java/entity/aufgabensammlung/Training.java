@@ -14,7 +14,7 @@ import java.util.List;
  * Aufgabensammlung, die von einem Benutzer generiert und bearbeitet wird
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class Training extends Aufgabensammlung {
@@ -34,7 +34,6 @@ public class Training extends Aufgabensammlung {
     public Training() {
         super();
         this.aufgabentypen = new LinkedList<Aufgabentyp>();
-        //Nothing to do
     }
 
     /**

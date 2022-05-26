@@ -5,10 +5,8 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
 import jakarta.persistence.Entity;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * Aufgabe mit einfachem Text als Antwort
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class EinfachantwortAufgabe extends Aufgabe {
@@ -52,7 +50,7 @@ public class EinfachantwortAufgabe extends Aufgabe {
 
     /**
      * Konstruktor für Klasse EinfachantwortAufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
-     * * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
+     * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
      * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist

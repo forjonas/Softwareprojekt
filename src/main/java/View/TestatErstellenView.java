@@ -1,16 +1,9 @@
 package View;
 
-import View.tableModel.AufgabenAuswaehlenTableModel;
+import View.tableModel.AufgabenAuswaehlenAufgabensammlungTableModel;
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -18,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,14 +19,14 @@ import java.util.List;
  * Tabelle ausgewählt werden und ein Passwort gesetzt wird.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  * 20.05: Preview angepasst(Timo u. Kristin)
  */
 public class TestatErstellenView extends JFrame implements ActionListener {
 
     private JPanel contentPane;
     private JTable tableAufgaben;
-    private AufgabenAuswaehlenTableModel aufgabenAuswaehlenTableModel;
+    private AufgabenAuswaehlenAufgabensammlungTableModel aufgabenAuswaehlenAufgabensammlungTableModel;
     private JButton btnZurueck;
     private JButton btnPreview;
 
@@ -46,14 +38,13 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Launch the application.
+     * Main-Methode, welche den Frame öffnet
      */
     public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TestatErstellenView frame = new TestatErstellenView(null, dozent1);
+                    TestatErstellenView frame = new TestatErstellenView(null, new Dozent());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -62,27 +53,16 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         });
     }
 
-    private List<Aufgabe> getTestdata() {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent1);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent1, Arrays.asList(new String[]{"char", "int", "double"}));
-        Aufgabe a5 = new EinfachantwortAufgabe();
-        List<Aufgabe> aufgabenListe = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
-        return aufgabenListe;
-    }
-
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public TestatErstellenView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         aufgabenliste = DatabaseService.getInstance().readAufgabenFromDatabase();
-        //Test
-        //aufgabenliste = new LinkedList<>();
-        //aufgabenliste = getTestdata();
         aufgabenliste = new LinkedList<>(aufgabenliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testat erstellen");
@@ -140,8 +120,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         tableAufgaben = new JTable();
-        aufgabenAuswaehlenTableModel = new AufgabenAuswaehlenTableModel(aufgabenliste);
-        tableAufgaben.setModel(aufgabenAuswaehlenTableModel);
+        aufgabenAuswaehlenAufgabensammlungTableModel = new AufgabenAuswaehlenAufgabensammlungTableModel(aufgabenliste);
+        tableAufgaben.setModel(aufgabenAuswaehlenAufgabensammlungTableModel);
         tableAufgaben.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tableAufgaben);
 
@@ -196,24 +176,25 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
-
-
-        //verändert
         if (e.getSource() == this.btnPreview) {
             previewButtonLogik();
         }
-
-
         if (e.getSource() == this.btnFreigeben) {
             freigebenButtonLogik();
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         boolean schliessenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Achtung! Nicht gespeicherte Eingaben gehen verloren.\nWollen Sie die Ansicht wirklich verlassen?", "Ansicht verlassen", JOptionPane.WARNING_MESSAGE));
         if (schliessenGewuenscht) {
@@ -222,6 +203,9 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Freigeben-Buttons
+     */
     private void freigebenButtonLogik() {
         List<Aufgabe> ausgewaehlteAufgaben = aufgabenAuswaehlenLogik();
         if (ausgewaehlteAufgaben != null) {
@@ -242,6 +226,12 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Auswählens von Aufgaben für das Testat aus der Tabellen
+     * Gibt null zurück, wenn keine Aufgaben ausgewählt wurden
+     *
+     * @return Liste mit ausgewählten Aufgaben
+     */
     private List<Aufgabe> aufgabenAuswaehlenLogik() {
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es sind keine Aufgaben zum Erstellen des Testats verfügbar", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
@@ -249,7 +239,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
             List<Aufgabe> ausgewaehlteAufgaben = new LinkedList<Aufgabe>();
             int gesamtzeit = 0;
             for (int i = 0; i < aufgabenliste.size(); i++) {
-                boolean ausgewaehlt = (boolean) aufgabenAuswaehlenTableModel.getValueAt(i, 6);
+                boolean ausgewaehlt = (boolean) aufgabenAuswaehlenAufgabensammlungTableModel.getValueAt(i, 6);
                 if (ausgewaehlt) {
                     ausgewaehlteAufgaben.add(aufgabenliste.get(i));
                     gesamtzeit += aufgabenliste.get(i).getBearbeitungszeit();
@@ -270,6 +260,9 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         return null;
     }
 
+    /**
+     * Beinhaltet die Logik des Preview-Buttons
+     */
     private void previewButtonLogik() {
         int selectedRow = tableAufgaben.getSelectedRow();
         if (selectedRow < 0) {

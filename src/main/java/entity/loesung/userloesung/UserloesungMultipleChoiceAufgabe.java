@@ -12,7 +12,7 @@ import java.util.List;
  * Userlösung eines Benutzers für eine Aufgabe des Typs Multiple-Choice.
  *
  * @author Timo Joswig
- * @version 10.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -33,7 +33,7 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
      *
      * @param aufgabe              zur Lösung gehörende Aufgabe
      * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
-     * @param userloesung          Userlösung in Form einer Boolean-Liste
+     * @param userloesung          Userlösung in Form der Nummer der gewählten Antwort
      * @param userloesungErsteller Ersteller der Userlösung
      * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
@@ -43,18 +43,18 @@ public class UserloesungMultipleChoiceAufgabe extends Userloesung {
     }
 
     /**
-     * Gibt die Userlösung in Form einer Boolean-Liste zurück
+     * Gibt die Userlösung in Form der Nummer der gewählten Antwort zurück
      *
-     * @return Userlösung in Form einer Boolean-Liste
+     * @return Userlösung in Form der Nummer der gewählten Antwort
      */
     public List<Boolean> getUserloesung() {
         return userloesung;
     }
 
     /**
-     * Setzt die Userlösung in Form einer Boolean-Liste
+     * Setzt die Userlösung in Form der Nummer der gewählten Antwort
      *
-     * @param userloesung Userlösung in Form einer Boolean-Liste
+     * @param userloesung Userlösung in Form der Nummer der gewählten Antwort
      */
     public void setUserloesung(List<Boolean> userloesung) {
         this.userloesung = userloesung;

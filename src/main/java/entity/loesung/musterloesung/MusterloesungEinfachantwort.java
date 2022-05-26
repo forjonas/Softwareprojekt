@@ -1,7 +1,6 @@
 package entity.loesung.musterloesung;
 
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
 import entity.aufgabe.EinfachantwortAufgabe;
 import jakarta.persistence.*;
 
@@ -9,7 +8,7 @@ import jakarta.persistence.*;
  * Musterlösung des Dozenten für eine Aufgabe des Typs Einfachantwort.
  *
  * @author Timo Joswig
- * @version 09.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -25,7 +24,7 @@ public class MusterloesungEinfachantwort extends Musterloesung {
     }
 
     /**
-     * Konstruktor für eine Musterlösung vom Typ Design
+     * Konstruktor für eine Musterlösung vom Typ Einfachantwort
      *
      * @param aufgabe         zur Lösung gehörende Einfachantwort-Aufgabe
      * @param loesungshinweis zur Lösung gehörender Lösungshinweis

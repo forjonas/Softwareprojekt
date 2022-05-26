@@ -14,7 +14,7 @@ import java.util.List;
  * Benutzer vom Typ Dozent
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class Dozent extends Benutzer implements Serializable {
@@ -34,7 +34,6 @@ public class Dozent extends Benutzer implements Serializable {
         this.bewerteteTestate = new LinkedList<TestatBearbeitung>();
         this.erstellteTestate = new LinkedList<Testat>();
         this.erstellteAufgaben = new LinkedList<Aufgabe>();
-        //Nothing to do
     }
 
     /**
@@ -46,7 +45,7 @@ public class Dozent extends Benutzer implements Serializable {
      * @param nachname     Nachname des Dozenten
      */
     public Dozent(String benutzername, String passwort, String vorname, String nachname) {
-        super(benutzername, passwort, 2, vorname, nachname);
+        super(benutzername, passwort, vorname, nachname);
         this.bewerteteTestate = new LinkedList<TestatBearbeitung>();
         this.erstellteTestate = new LinkedList<Testat>();
         this.erstellteAufgaben = new LinkedList<Aufgabe>();
@@ -81,7 +80,6 @@ public class Dozent extends Benutzer implements Serializable {
 
     /**
      * Setzt die Liste der bewerteten Testate des Dozenten
-     * --> vielleicht rausnehmen oder auf private setzen
      *
      * @param bewerteteTestate bewertete Testate des Doznenten
      */
@@ -118,7 +116,6 @@ public class Dozent extends Benutzer implements Serializable {
 
     /**
      * Setzt die Liste der erstellten Testate des Dozenten
-     * --> vielleicht rausnehmen oder auf private setzen
      *
      * @param erstellteTestate erstellte Testate des Doznenten
      */
@@ -155,7 +152,6 @@ public class Dozent extends Benutzer implements Serializable {
 
     /**
      * Setzt die Liste der erstellten Aufgaben des Dozenten
-     * --> vielleicht rausnehmen oder auf private setzen
      *
      * @param erstellteAufgaben erstellte Aufgaben des Doznenten
      */
@@ -165,7 +161,6 @@ public class Dozent extends Benutzer implements Serializable {
 
     /**
      * Setzt die Liste der erstellten Testate des Dozenten
-     * --> vielleicht rausnehmen oder auf private setzen
      *
      * @param erstellteTestate erstellte Testate des Doznenten
      */
@@ -179,4 +174,5 @@ public class Dozent extends Benutzer implements Serializable {
     public String toString() {
         return "Dozent: {"+super.toString()+"}";
     }
+
 }

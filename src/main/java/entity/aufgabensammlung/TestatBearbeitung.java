@@ -1,6 +1,5 @@
 package entity.aufgabensammlung;
 
-import entity.aufgabensammlung.Testat;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import jakarta.persistence.*;
@@ -9,14 +8,14 @@ import jakarta.persistence.*;
  * Von einem Benutzer bearbeitetes Testat
  *
  * @author Jonas Herbst
- * @version 09.05.22
+ * @version 26.05.22
  */
 @Entity
 public class TestatBearbeitung {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long TestatBearbeitungsId;
+    private long testatBearbeitungsId;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "testat_testatid")
     private Testat testat;
@@ -32,7 +31,6 @@ public class TestatBearbeitung {
      * Leerer Konstruktor für Klasse TestatBearbeitung
      */
     public TestatBearbeitung() {
-        //Nothing to do
     }
 
     /**
@@ -51,7 +49,7 @@ public class TestatBearbeitung {
     }
 
     /**
-     * Konstruktor für Klasse TestatBearbeitung (TestatBearbeitung, die noch nicht bearbeitet oder bewertete wurde)
+     * Konstruktor für Klasse TestatBearbeitung (TestatBearbeitung, die noch nicht bearbeitet oder bewertet wurde)
      *
      * @param testat Testat, auf dessen Grundlage die TestatBearbeitung erstellt wird
      */

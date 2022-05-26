@@ -2,16 +2,13 @@ package entity.loesung.musterloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import jakarta.persistence.*;
-
-import java.io.File;
 
 /**
  * Musterlösung des Dozenten für eine Aufgabe des Typs Design.
  *
  * @author Timo Joswig
- * @version 09.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -75,4 +72,5 @@ public class MusterloesungDesignaufgabe extends Musterloesung {
             }
         }
     }
+
 }

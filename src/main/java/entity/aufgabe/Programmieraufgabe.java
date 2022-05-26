@@ -5,10 +5,8 @@ import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.Musterloesung;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
 import jakarta.persistence.Entity;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * Aufgabe mit Programmcode als Antwort
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class Programmieraufgabe extends Aufgabe {
@@ -52,7 +50,7 @@ public class Programmieraufgabe extends Aufgabe {
 
     /**
      * Konstruktor für Klasse Programmieraufgabe (ohne Musterlösung, da bei der 1:1 Beziehung zwischen Aufgabe und Musterlösung
-     * * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
+     * ein Objekt zuerst, ohne Beziehungspartner, erstellt werden muss)
      *
      * @param bearbeitungszeit      Bearbeitungszeit der Aufgabe
      * @param aufgabenstellungsbild Bild, das Teil der Aufgabenstellung ist

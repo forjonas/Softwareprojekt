@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-//Nur Test
+//Wird gelöscht
 @Entity(name = "ImageTest")
 public class ImageTest {
     @Id

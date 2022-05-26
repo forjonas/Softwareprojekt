@@ -21,10 +21,7 @@ public abstract class Aufgabensammlung {
     @Id
     private long aufgabensammlungId;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "aufgabensammlung_aufgabe",
-            joinColumns = @JoinColumn(name = "aufgabensammlung_id"),
-            inverseJoinColumns = @JoinColumn(name = "aufgabe_id"))
+    @JoinTable(name = "aufgabensammlung_aufgabe", joinColumns = @JoinColumn(name = "aufgabensammlung_id"), inverseJoinColumns = @JoinColumn(name = "aufgabe_id"))
     private List<Aufgabe> aufgaben;
     private int gesamtzeit;
     private int gesamtpunktzahl;

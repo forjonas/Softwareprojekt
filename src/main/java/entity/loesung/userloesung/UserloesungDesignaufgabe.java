@@ -2,7 +2,6 @@ package entity.loesung.userloesung;
 
 import entity.aufgabe.Aufgabe;
 import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.benutzer.Benutzer;
 import jakarta.persistence.*;
@@ -11,7 +10,7 @@ import jakarta.persistence.*;
  * Userlösung eines Benutzers für eine Aufgabe des Typs Design.
  *
  * @author Timo Joswig
- * @version 10.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -76,4 +75,5 @@ public class UserloesungDesignaufgabe extends Userloesung {
             }
         }
     }
+
 }

@@ -3,14 +3,7 @@ package View;
 import View.AufgabenErstellen.AufgabeErstellenStartView;
 import View.tableModel.AufgabeTableModel;
 import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.benutzer.Dozent;
-import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -18,14 +11,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Ansicht in der die bestehenden Aufgaben administriert und neue hinzugefügt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  * <p>
  * 20.05.22: Preview Button hinzugefügt (Timo u. Kristin)
  */
@@ -44,18 +37,13 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Launch the application.
+     * Main-Methode, welche den Frame öffnet
      */
     public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
-        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        //Dozent dozent3 = (Dozent) DatabaseService.getInstance().readDozentnachBenutzernamen("PPanzer");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    AufgabenKatalogView frame = new AufgabenKatalogView(null, dozent1);
-                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent2);
-                    //AufgabenKatalogView frame = new AufgabenKatalogView(dozent3);
+                    AufgabenKatalogView frame = new AufgabenKatalogView(null, new Dozent());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -64,30 +52,17 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         });
     }
 
-    private List<Aufgabe> getTestData() {
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", dozent1);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", dozent1);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", dozent2);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", dozent2, Arrays.asList(new String[]{"char", "int", "double"}));
-        Aufgabe a5 = new EinfachantwortAufgabe();
-        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a1, a2, a3, a4, a5});
-        List<Aufgabe> aufgabenListe2 = new LinkedList<Aufgabe>(aufgabenListe1);
-        return aufgabenListe1;
-    }
-
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public AufgabenKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         DatabaseService ds = DatabaseService.getInstance();
         aufgabenliste = ds.readAufgabenFromDatabase();
-        //Test
-        //aufgabenliste = getTestData();
-        //aufgabenliste = new LinkedList<Aufgabe>();
         aufgabenliste = new LinkedList<Aufgabe>(aufgabenliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Aufgabenkatalog");
@@ -164,6 +139,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -182,16 +160,25 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Erstellen-Buttons
+     */
     private void erstellenButtonLogik() {
         new AufgabeErstellenStartView(jframe, aktuellerBenutzer);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Löschen-Buttons
+     */
     private void loeschenButtonLogik() {
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Löschen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
@@ -219,6 +206,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Preview-Buttons
+     */
     private void previewButtonLogik() {
         int selectedRow = tableAufgaben.getSelectedRow();
         if (selectedRow < 0) {
@@ -229,4 +219,5 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
 
         }
     }
+
 }

@@ -1,15 +1,8 @@
 package View;
 
 import View.tableModel.TestatTableModel;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
 import entity.aufgabensammlung.Testat;
 import entity.benutzer.Dozent;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -17,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +17,7 @@ import java.util.List;
  * Ansicht in der die bestehenden Testate administriert und neue hinzugefügt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class TestatKatalogView extends JFrame implements ActionListener {
 
@@ -36,30 +28,18 @@ public class TestatKatalogView extends JFrame implements ActionListener {
     private JButton btnErstellen;
     private JButton btnAufgabenEinsehen;
     private JButton btnLoeschen;
-
     private Dozent aktuellerBenutzer;
     private List<Testat> testatliste;
     private JFrame jframe;
 
     /**
-     * Launch the application.
+     * Main-Methode, welche den Frame öffnet
      */
     public static void main(String[] args) {
-        Dozent dozent1 = new Dozent("admin", "asdf", "Arne", "Admin");
-        Dozent dozent2 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Dozent dozent3 = new Dozent();
-                    List<Dozent> dozenten = DatabaseService.getInstance().readDozentenFromDatabase();
-                    for (Dozent dozent : dozenten) {
-                        if (dozent.getBenutzername().equals("mmustermann")) {
-                            dozent3 = dozent;
-                        }
-                    }
-                    TestatKatalogView frame = new TestatKatalogView(null, dozent1);
-                    //TestatKatalogView frame = new TestatKatalogView(dozent2);
-                    //TestatKatalogView frame = new TestatKatalogView(dozent3);
+                    TestatKatalogView frame = new TestatKatalogView(null, new Dozent());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -68,34 +48,16 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         });
     }
 
-    private List<Testat> getTestData() {
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Aufgabe a3 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, Arrays.asList(new String[]{"char", "int", "double"}));
-        List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a2, a2, a3});
-        List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4, a4, a1, a2, a3});
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        Testat t4 = new Testat();
-        List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t4});
-        return testatliste;
-    }
-
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public TestatKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatliste = DatabaseService.getInstance().readTestateFromDatabase();
-        //Test
-        //testatliste = new LinkedList<Testat>();
-        //testatliste = getTestData();
         testatliste = new LinkedList<Testat>(testatliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Testatkatalog");
@@ -178,6 +140,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -194,16 +159,25 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Erstellen-Buttons
+     */
     private void erstellenButtonLogik() {
         new TestatErstellenView(jframe, aktuellerBenutzer);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Aufgaben-Einsehen-Buttons
+     */
     private void aufgabenEinsehenButtonLogik() {
         if (testatliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testate, in denen die Aufgaben eingesehen werden können.", "Keine Testate", JOptionPane.WARNING_MESSAGE);
@@ -222,6 +196,9 @@ public class TestatKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Löschen-Buttons
+     */
     private void loeschenButtonLogik() {
         if (testatliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testate zum Löschen", "Keine Testate", JOptionPane.WARNING_MESSAGE);

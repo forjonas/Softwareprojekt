@@ -1,6 +1,5 @@
 package entity.benutzer;
 
-import entity.benutzer.Benutzer;
 import jakarta.persistence.Entity;
 
 import java.io.Serializable;
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * Benutzer vom Typ Student
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 public class Student extends Benutzer implements Serializable {
@@ -21,7 +20,6 @@ public class Student extends Benutzer implements Serializable {
      */
     public Student() {
         super();
-        //Nothing to do
     }
 
     /**
@@ -34,7 +32,7 @@ public class Student extends Benutzer implements Serializable {
      * @param matrikelnummer Matrikelnummer des Studenten
      */
     public Student(String benutzername, String passwort, String vorname, String nachname, int matrikelnummer) {
-        super(benutzername, passwort, 1, vorname, nachname);
+        super(benutzername, passwort, vorname, nachname);
         this.matrikelnummer = matrikelnummer;
     }
 
@@ -66,4 +64,5 @@ public class Student extends Benutzer implements Serializable {
     public String toString() {
         return "Student: {"+super.toString()+"}";
     }
+
 }
