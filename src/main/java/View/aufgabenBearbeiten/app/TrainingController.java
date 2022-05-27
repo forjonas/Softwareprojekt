@@ -25,11 +25,7 @@ import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
- * @version5: 23.05.22 Anpassungen u.v.m
+ * @version: 27.05.22
  * Schnittstelle um ein Training auszuführen
  */
 

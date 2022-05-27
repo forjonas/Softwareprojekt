@@ -81,12 +81,13 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
-            this.dispose();
             if (testatController != null) {
                 testatController.setNewTestatKatalog();
             } else {
                 trainingController.setNewTrainingKatalog();
             }
+            this.dispose();
+
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//

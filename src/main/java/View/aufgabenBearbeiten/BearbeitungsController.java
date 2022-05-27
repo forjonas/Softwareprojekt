@@ -37,7 +37,6 @@ public abstract class BearbeitungsController {
     protected List<Userloesung> userloesungen;
 
     /**
-     *
      * @param sammlung
      * @param aktuellerBenutzer
      * @param hauptmenueFrame
@@ -75,9 +74,9 @@ public abstract class BearbeitungsController {
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
-            } else{
+            } else {
                 frame.setUserloesung(userloesungen.get(index));
-                System.out.println((UserloesungMultipleChoiceAufgabe)(userloesungen.get(index)));
+                System.out.println((UserloesungMultipleChoiceAufgabe) (userloesungen.get(index)));
             }
             this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
@@ -212,9 +211,9 @@ public abstract class BearbeitungsController {
        */
 
 
-       TestatController testatApp = new TestatController(t1, dozent2, null);
-       //Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
-      //TrainingController trainingController = new TrainingController(training1, dozent2, null);
+      //TestatController testatApp = new TestatController(t1, dozent2, null);
+        Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
+        TrainingController trainingController = new TrainingController(training1, dozent2, null);
 
     }
 

@@ -118,12 +118,13 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
-            this.dispose();
             if (testatController != null) {
                 testatController.setNewTestatKatalog();
             } else {
                 trainingController.setNewTrainingKatalog();
             }
+            this.dispose();
+
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
                 JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
@@ -173,23 +174,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
      * Usereingaben speichern
      */
     public void userEingabenSpeichern() {
-        /*
-        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
 
-        if (btnantwort1.isSelected()) {
-            userloesungBooleanArray.set(0, true);
-        } else if (btnantwort2.isSelected()) {
-            userloesungBooleanArray.set(1, true);
-        } else if (btnantwort3.isSelected()) {
-            userloesungBooleanArray.set(2, true);
-        } else if (btnantwort4.isSelected()) {
-            userloesungBooleanArray.set(3, true);
-        }
-         */
         if (btnantwort1.isSelected()) {
             eingabe = 1;
         } else if (btnantwort2.isSelected()) {
@@ -243,13 +228,13 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
             btnantwort1.setSelected(true);
         }
         else if (eingabe == 2) {
-            btnantwort1.setSelected(true);
+            btnantwort2.setSelected(true);
         }
         else if (eingabe == 3) {
-            btnantwort1.setSelected(true);
+            btnantwort3.setSelected(true);
         }
         else if (eingabe == 4) {
-            btnantwort1.setSelected(true);
+            btnantwort4.setSelected(true);
         }
     }
 
