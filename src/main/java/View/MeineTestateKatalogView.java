@@ -1,8 +1,8 @@
 package View;
 
 import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
+import View.aufgabenBearbeiten.app.TestatController;
 import View.tableModel.MeineTestateTableModel;
-import app.TestatController;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;

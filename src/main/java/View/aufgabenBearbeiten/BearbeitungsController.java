@@ -18,6 +18,7 @@ import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
+import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -74,7 +75,10 @@ public abstract class BearbeitungsController {
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
-            } else frame.setUserloesung(userloesungen.get(index));
+            } else{
+                frame.setUserloesung(userloesungen.get(index));
+                System.out.println((UserloesungMultipleChoiceAufgabe)(userloesungen.get(index)));
+            }
             this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
@@ -198,11 +202,15 @@ public abstract class BearbeitungsController {
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenliste, "Hallo1234", "Sommertestat", dozent1);
-        Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
+        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
+
+      /*
+       Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
+       */
+
 
        TestatController testatApp = new TestatController(t1, dozent2, null);
        //Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
