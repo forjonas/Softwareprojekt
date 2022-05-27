@@ -1,6 +1,5 @@
 package View.aufgabenBearbeiten;
 
-import View.aufgabenBearbeiten.app.TestatController;
 import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
 import View.aufgabenBearbeiten.app.TrainingController;
 import entity.aufgabe.*;
@@ -9,7 +8,6 @@ import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
-import entity.benutzer.Student;
 import entity.enums.Aufgabentyp;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
@@ -26,6 +24,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Kristin Kubisch
+ * @version: 27.05.22
+ * Schnittstelle um eine Aufgabensammlung auszuführen
+ */
 public abstract class BearbeitungsController {
 
     protected int index = 0;
@@ -37,9 +40,9 @@ public abstract class BearbeitungsController {
     protected List<Userloesung> userloesungen;
 
     /**
-     * @param sammlung
-     * @param aktuellerBenutzer
-     * @param hauptmenueFrame
+     * @param sammlung die Sammlungt einer Aufgabensammlung
+     * @param aktuellerBenutzer der aktuelle Benutzer der die Aufgabensammlung bearbeitet
+     * @param hauptmenueFrame das dazugehörige Fenster des Benutzers
      */
     public BearbeitungsController(Aufgabensammlung sammlung, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.sammlung = sammlung;
@@ -52,7 +55,7 @@ public abstract class BearbeitungsController {
     }
 
     /**
-     *
+     * zeigt die aktuelle Aufgabe der Aufgabensammlung
      */
     public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
         aufgabe = sammlung.getAufgaben().get(this.index); //Aufgabe am Index erhalten
@@ -105,7 +108,7 @@ public abstract class BearbeitungsController {
     }
 
     /**
-     *
+     * geht zurück zu der vorherigen Aufgabe
      */
     public void zurueck() {
         if (this.index > 0) {
@@ -117,7 +120,7 @@ public abstract class BearbeitungsController {
     }
 
     /**
-     * weiter
+     * geht weiter zu der nächsten Aufgabe
      */
     public void weiter() {
         if (this.index < sammlung.getAnzahlAufgaben() - 1) {
@@ -129,9 +132,9 @@ public abstract class BearbeitungsController {
     }
 
     /**
-     * Fügt die Userloesung der Userloesungenliste an dem passenden hinzu
+     * Fügt die Userloesung der Userloesungenliste an dem passenden Index hinzu
      *
-     * @param userloesung
+     * @param userloesung an dem passenden Index der Aufgabe
      */
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);

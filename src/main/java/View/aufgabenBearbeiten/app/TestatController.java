@@ -41,9 +41,9 @@ public class TestatController extends BearbeitungsController {
     /**
      * Konstruktor für Klasse TestatController
      *
-     * @param testat
-     * @param aktuellerBenutzer
-     * @param hauptmenueFrame
+     * @param testat mit den zu bearbeitenden Aufgaben
+     * @param aktuellerBenutzer der das Testat bearbeitet
+     * @param hauptmenueFrame Hauptmenü Fenster des Benutzers
      */
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         super(testat, aktuellerBenutzer, hauptmenueFrame);
