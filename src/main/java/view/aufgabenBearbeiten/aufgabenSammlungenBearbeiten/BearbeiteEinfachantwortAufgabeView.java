@@ -1,6 +1,6 @@
 package view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
-import view.aufgabenBearbeiten.BearbeitungsController;
+import controller.BearbeitungsController;
 import controller.TestatController;
 import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;

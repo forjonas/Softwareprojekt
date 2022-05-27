@@ -16,9 +16,9 @@
           <text value="Beenden"/>
         </properties>
       </component>
-      <component id="1ef73" class="javax.swing.JTextField" binding="txtfUserloesung">
+      <component id="1fca8" class="javax.swing.JTextArea" binding="txtaUserloesung">
         <constraints>
-          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="150" height="150"/>
             <preferred-size width="150" height="150"/>
           </grid>
@@ -27,9 +27,9 @@
           <editable value="false"/>
         </properties>
       </component>
-      <component id="623f9" class="javax.swing.JTextField" binding="txtfMusterloesung">
+      <component id="684ba" class="javax.swing.JTextArea" binding="txtaMusterloesung">
         <constraints>
-          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="150" height="150"/>
             <preferred-size width="150" height="150"/>
           </grid>
@@ -76,7 +76,7 @@
           <grid row="5" column="3" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="9309" class="javax.swing.JTextField" binding="txtfAufgabentext">
+      <component id="bfe22" class="javax.swing.JTextArea" binding="txtaAufgabentext">
         <constraints>
           <grid row="1" column="1" row-span="2" col-span="3" vsize-policy="6" hsize-policy="7" anchor="9" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="150" height="120"/>

@@ -17,9 +17,9 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private final EinfachantwortAufgabe aufgabe;
     private final UserloesungEinfachantwort userloesungEinfachantwort;
     private JPanel mainPanel;
-    private JTextField txtfAufgabentext;
-    private JTextField txtfUserLoesung;
-    private JTextField txtfMusterloesung;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaUserLoesung;
+    private JTextArea txtaMusterloesung;
     private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JButton btnHinweis;
@@ -51,7 +51,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
             lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
@@ -59,9 +59,11 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
-        txtfMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
+        txtaMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
+        txtaMusterloesung.setLineWrap(true);
         this.userloesungEinfachantwort = (UserloesungEinfachantwort) controllerBewertungenTestate.getUserloesung(aufgabe);
-        txtfUserLoesung.setText(this.userloesungEinfachantwort.getUserloesung());
+        txtaUserLoesung.setText(this.userloesungEinfachantwort.getUserloesung());
+        txtaUserLoesung.setLineWrap(true);
         txtfUserPunktzahl.setText(this.userloesungEinfachantwort.getErreichtePunkte() + "");
 
         this.pack();
@@ -163,12 +165,12 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         mainPanel.add(spacer2, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         mainPanel.add(spacer3, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        txtfUserLoesung = new JTextField();
-        txtfUserLoesung.setEditable(false);
-        mainPanel.add(txtfUserLoesung, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
-        txtfMusterloesung = new JTextField();
-        txtfMusterloesung.setEditable(false);
-        mainPanel.add(txtfMusterloesung, new GridConstraints(5, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        txtaUserLoesung = new JTextArea();
+        txtaUserLoesung.setEditable(false);
+        mainPanel.add(txtaUserLoesung, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        txtaMusterloesung = new JTextArea();
+        txtaMusterloesung.setEditable(false);
+        mainPanel.add(txtaMusterloesung, new GridConstraints(5, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
         btnVorherigeAufgabe = new JButton();
         btnVorherigeAufgabe.setText("Vorherige Aufgabe");
         mainPanel.add(btnVorherigeAufgabe, new GridConstraints(7, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(160, -1), new Dimension(160, -1), 0, false));
@@ -188,11 +190,11 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         mainPanel.add(lblAufgabenstellungsbild, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         mainPanel.add(spacer5, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        txtfAufgabentext = new JTextField();
-        txtfAufgabentext.setEditable(false);
-        txtfAufgabentext.setToolTipText("Aufgabentext");
-        txtfAufgabentext.setVisible(true);
-        mainPanel.add(txtfAufgabentext, new GridConstraints(1, 1, 3, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        txtaAufgabentext.setToolTipText("Aufgabentext");
+        txtaAufgabentext.setVisible(true);
+        mainPanel.add(txtaAufgabentext, new GridConstraints(1, 1, 3, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
         final Spacer spacer6 = new Spacer();
         mainPanel.add(spacer6, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         panelBearbeitungszeit = new JPanel();

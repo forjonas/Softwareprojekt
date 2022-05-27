@@ -1,4 +1,4 @@
-package view.aufgabenBearbeiten;
+package controller;
 
 import view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
 import controller.TrainingController;

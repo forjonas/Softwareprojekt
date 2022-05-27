@@ -199,8 +199,6 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
             new TestatErstellenAufgabenPreview(aufgabe);
-
         }
     }
-
 }
