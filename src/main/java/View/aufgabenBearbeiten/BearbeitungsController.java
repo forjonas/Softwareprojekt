@@ -70,7 +70,7 @@ public abstract class BearbeitungsController {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            MCAufgabe frame = new MCAufgabe(this, (MultipleChoiceAufgabe) aufgabe);
+            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
@@ -139,9 +139,9 @@ public abstract class BearbeitungsController {
     }
 
     public static void main(String[] args) throws Exception {
-        //DatabaseService ds = DatabaseService.getInstance();
-        //List<Aufgabe> aufgabenliste;
-        //aufgabenliste = ds.readAufgabenFromDatabase();
+        DatabaseService ds = DatabaseService.getInstance();
+        List<Aufgabe> aufgabenliste;
+        aufgabenliste = ds.readAufgabenFromDatabase();
 
         List<String> antwortmoeglichkeiten = new ArrayList<>();
         antwortmoeglichkeiten.add("Test1");
@@ -198,7 +198,7 @@ public abstract class BearbeitungsController {
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenliste, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});

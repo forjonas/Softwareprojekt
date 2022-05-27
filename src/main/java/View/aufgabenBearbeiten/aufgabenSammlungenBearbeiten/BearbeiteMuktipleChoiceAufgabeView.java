@@ -242,13 +242,13 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         if (eingabe == 1) {
             btnantwort1.setSelected(true);
         }
-        if (eingabe == 2) {
+        else if (eingabe == 2) {
             btnantwort1.setSelected(true);
         }
-        if (eingabe == 3) {
+        else if (eingabe == 3) {
             btnantwort1.setSelected(true);
         }
-        if (eingabe == 4) {
+        else if (eingabe == 4) {
             btnantwort1.setSelected(true);
         }
     }
