@@ -1,6 +1,6 @@
 package View;
 
-import View.AufgabenBearbeiten.Einzelne.BearbeiteEinzelneAufgabeKatalogView;
+import View.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneAufgabeKatalogView;
 import entity.benutzer.Student;
 
 import javax.swing.*;

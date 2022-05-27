@@ -1,19 +1,21 @@
-package View.AufgabenBearbeiten.Einzelne;
+package View.aufgabenBearbeiten.einzelAufgaben;
 
-import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneMultipleChoiceAufgabeView;
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneDesignaufgabeView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.Designaufgabe;
 import entity.benutzer.Benutzer;
-import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
+import entity.loesung.userloesung.UserloesungDesignaufgabe;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
+
+import static persistence.DatabaseService.convertFileToByteArray;
+import static persistence.DatabaseService.dateiOeffnen;
 
 /**
  * @author Kristin Kubisch
@@ -21,7 +23,7 @@ import java.util.List;
  * @version2: 13.05.22
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
-public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
+public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -32,40 +34,32 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JLabel lblAufgabentypWert;
     private JButton btnAbbrechenEinzel;
     private JButton btnLoesungshinweisEinzel;
-    private JRadioButton btnantwort1;
-    private JRadioButton btnantwort4;
-    private JRadioButton btnantwort3;
-    private JRadioButton btnantwort2;
+    private JButton btnUpload;
     private JLabel lblAufgabenText;
     private JButton btnZeigeLoesungEinzel;
-    private int eingabe;
 
-    private String antwort1;
-    private String antwort2;
-    private String antwort3;
-    private String antwort4;
-
+    private File fileBild;
+    byte[] eingabe;
     private boolean hinweisVerwendet;
     private Benutzer benutzer;
     private JFrame frame;
-    private MultipleChoiceAufgabe aufgabe;
-    private UserloesungMultipleChoiceAufgabe userloesung;
+
+    private Designaufgabe aufgabe;
+    private UserloesungDesignaufgabe userloesung;
 
     /**
-     * Konstruktor für Klasse BearbeiteEinzelneMultipleChoiceAufgabeView
+     * Konstruktor für Klasse BearbeiteEinzelneDesignaufgabeView
      *
      * @param aufgabe
      * @param benutzer
      * @param frame
      */
-    public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
+    public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
-        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
         this.frame = frame;
-
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(aufgabe.getName());
@@ -77,36 +71,11 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
-        int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
 
-        for (int i = 0; i < mIndex; i++) {
-
-            if (i == 0) {
-                antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
-                btnantwort1.setText(antwort1);
-            } else if (i == 1) {
-                antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
-                btnantwort2.setText(antwort2);
-
-            } else if (i == 2) {
-                antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
-                btnantwort3.setText(antwort3);
-
-            } else if (i == 3) {
-                antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
-                btnantwort4.setText(antwort4);
-
-            }
-            ButtonGroup bg = new ButtonGroup();
-            bg.add(btnantwort1);
-            bg.add(btnantwort2);
-            bg.add(btnantwort3);
-            bg.add(btnantwort4);
-
-        }
         btnAbbrechenEinzel.addActionListener(this);
         btnLoesungshinweisEinzel.addActionListener(this);
         btnZeigeLoesungEinzel.addActionListener(this);
+        btnUpload.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -120,6 +89,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
      *
      * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechenEinzel) {
             JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
@@ -133,27 +103,28 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
-
-            int userloesungWert = -1;
-
-
-            if (btnantwort1.isSelected()) {
-                userloesungWert = 1;
-            } else if (btnantwort2.isSelected()) {
-                userloesungWert = 2;
-            } else if (btnantwort3.isSelected()) {
-                userloesungWert = 3;
-            } else if (btnantwort4.isSelected()) {
-                userloesungWert = 4;
-            }
-
-            eingabe = userloesungWert;
-            userloesung = new UserloesungMultipleChoiceAufgabe();
+            userloesung = new UserloesungDesignaufgabe();
             userloesung.setUserloesung(eingabe);
             this.dispose();
-            new LoesungEinzelneMultipleChoiceAufgabeView(aufgabe, userloesung, benutzer, frame);
+            new LoesungEinzelneDesignaufgabeView(aufgabe, userloesung, benutzer, frame);
+        } else if (e.getSource() == this.btnUpload) {
+            fileBild = dateiOeffnen(this);
+
+            if (fileBild == null) {
+                btnUpload.setText("kein Bild");
+            } else {
+                String text = fileBild.getName();
+                btnUpload.setText(text);
+                this.update(this.getGraphics());
+                convert(fileBild);
+            }
         }
     }
+
+    public void convert(File file) {
+        eingabe = convertFileToByteArray(file, this);
+    }
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -194,13 +165,13 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         panel4.add(lblBearbeitungszeitWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, -1), null, 0, false));
         lblBearbeitungszeit = new JLabel();
         lblBearbeitungszeit.setText("Bearbeitungszeit:");
-        panel4.add(lblBearbeitungszeit, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, 120), null, null, 0, false));
+        panel4.add(lblBearbeitungszeit, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel3.add(panel5, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblPunktzahl = new JLabel();
         lblPunktzahl.setText("Punktzahl:");
-        panel5.add(lblPunktzahl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, 120), null, null, 0, false));
+        panel5.add(lblPunktzahl, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
         lblPunktzahlWert = new JLabel();
         lblPunktzahlWert.setText("10");
         panel5.add(lblPunktzahlWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, 16), null, 0, false));
@@ -209,7 +180,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         panel3.add(panel6, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblAufgabentyp = new JLabel();
         lblAufgabentyp.setText("Aufgabentyp:");
-        panel6.add(lblAufgabentyp, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, 120), null, null, 0, false));
+        panel6.add(lblAufgabentyp, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
         lblAufgabentypWert = new JLabel();
         lblAufgabentypWert.setText("Einfachantwort");
         panel6.add(lblAufgabentypWert, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(50, -1), new Dimension(100, -1), null, 0, false));
@@ -228,31 +199,23 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         btnZeigeLoesungEinzel.setText("Lösung");
         panel7.add(btnZeigeLoesungEinzel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(14, 206), null, 0, false));
+        panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        panel1.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(14, 206), null, 0, false));
+        panel1.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         panel1.add(spacer5, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
-        panel8.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel8, new GridConstraints(1, 2, 2, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btnantwort1 = new JRadioButton();
-        btnantwort1.setText("");
-        panel8.add(btnantwort1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnantwort4 = new JRadioButton();
-        btnantwort4.setSelected(false);
-        btnantwort4.setText("");
-        panel8.add(btnantwort4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnantwort3 = new JRadioButton();
-        btnantwort3.setText("");
-        panel8.add(btnantwort3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnantwort2 = new JRadioButton();
-        btnantwort2.setText("");
-        panel8.add(btnantwort2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel8, new GridConstraints(1, 2, 2, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnUpload = new JButton();
+        btnUpload.setText("Bild hochladen");
+        panel8.add(btnUpload, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
+        scrollPane1.setHorizontalScrollBarPolicy(30);
+        scrollPane1.setVerticalScrollBarPolicy(20);
         panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         lblAufgabenText = new JLabel();
-        lblAufgabenText.setText("Aufgabentext");
+        lblAufgabenText.setText("Label");
         scrollPane1.setViewportView(lblAufgabenText);
     }
 
@@ -262,4 +225,5 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

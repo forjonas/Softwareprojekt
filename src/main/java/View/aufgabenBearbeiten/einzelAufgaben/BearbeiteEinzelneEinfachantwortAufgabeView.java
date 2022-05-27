@@ -1,12 +1,16 @@
-package View.AufgabenBearbeiten.Training;
+package View.aufgabenBearbeiten.einzelAufgaben;
 
-import app.TrainingController;
+import View.Lösungen.LoesungenEinzelaufgaben.LoesungEinzelneEinfachantwortaufgabeView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.Programmieraufgabe;
-import entity.loesung.userloesung.Userloesung;
-import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
+import entity.aufgabe.Aufgabe;
+import entity.aufgabe.EinfachantwortAufgabe;
+import entity.benutzer.Benutzer;
+import entity.benutzer.Student;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.userloesung.UserloesungEinfachantwort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +21,9 @@ import java.awt.event.ActionListener;
  * @author Kristin Kubisch
  * @version: 10.05.22
  * @version2: 13.05.22
- * @version3: 16.05.22
- * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
-public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
-
-    private JLabel lblAufgabenText;
+public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
     private JLabel lblBearbeitungszeit;
@@ -31,53 +31,56 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
     private JLabel lblPunktzahlWert;
     private JLabel lblAufgabentyp;
     private JLabel lblAufgabentypWert;
-    private JButton btnAbbrechenTraining;
-    private JButton btnLoesungshinweisTraining;
-    private JButton btnVoherigeAufgabeTraining;
-    private JButton btnNaechsteAufgabeTraining;
+    private JButton btnAbbrechenEinzel;
+    private JButton btnLoesungshinweisEinzel;
+    private JButton btnZeigeLoesungEinzel;
     private JTextArea txtUsereingabe;
+    private JLabel lblAufgabenText;
     private JPanel mainPanel;
+
     private String eingabe;
-
     private boolean hinweisVerwendet;
-
-    private TrainingController trainingController;
-    private Programmieraufgabe aufgabe;
-    private UserloesungProgrammieraufgabe userloesung;
+    private EinfachantwortAufgabe aufgabe;
+    private UserloesungEinfachantwort userloesung;
+    private Benutzer benutzer;
+    private JFrame frame;
 
     /**
-     * Konstruktor für Klasse BearbeiteTrainingProgrammieraufgabeView
+     * Konstruktor für Klasse BearbeiteEinzelneEinfachantwortAufgabeView
      *
      * @param aufgabe
-     * @param trainingController
+     * @param benutzer
+     * @param frame
      */
-    public BearbeiteTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, TrainingController trainingController) {
+    public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
 
         this.setContentPane($$$getRootComponent$$$());
-        this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
-        this.trainingController = trainingController;
-
+        this.benutzer = benutzer;
+        this.frame = frame;
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
-        btnAbbrechenTraining.addActionListener(this);
-        btnLoesungshinweisTraining.addActionListener(this);
-        btnVoherigeAufgabeTraining.addActionListener(this);
-        btnNaechsteAufgabeTraining.addActionListener(this);
+        btnAbbrechenEinzel.addActionListener(this);
+        btnLoesungshinweisEinzel.addActionListener(this);
+        btnZeigeLoesungEinzel.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
+
     }
 
     /**
@@ -87,64 +90,34 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnAbbrechenTraining) {
-            JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
+
+        if (e.getSource() == this.btnAbbrechenEinzel) {
+            JOptionPane.showMessageDialog(this, "Vorgang abgebrochen");
+            new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
             this.dispose();
-        } else if (e.getSource() == this.btnLoesungshinweisTraining) {
+        } else if (e.getSource() == this.btnLoesungshinweisEinzel) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == this.btnVoherigeAufgabeTraining) {
-            userEingabenSpeichern();
-            trainingController.zurueckTraining();
-        } else if (e.getSource() == this.btnNaechsteAufgabeTraining) {
-            String buttonWechsel = btnNaechsteAufgabeTraining.getText();
-            userEingabenSpeichern();
+        } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
 
-            if (buttonWechsel.equals("Training beenden")) {
-                trainingController.persistTraining();
-                this.dispose();
-
-            } else {
-                trainingController.weiter();
-            }
+            eingabe = txtUsereingabe.getText();
+            userloesung = new UserloesungEinfachantwort();
+            userloesung.setUserloesung(eingabe);
+            this.dispose();
+            new LoesungEinzelneEinfachantwortaufgabeView(aufgabe, userloesung, benutzer, frame);
         }
     }
 
-    /**
-     * verändert "Nächste" Button zu "Training Beenden" Button
-     */
-    public void setNaechsteZuSpeichern() {
-        btnNaechsteAufgabeTraining.setText("Training beenden");
-    }
+    public static void main(String[] args) {
+        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
+        Benutzer benutzer = new Student();
+        BearbeiteEinzelneEinfachantwortAufgabeView frame = new BearbeiteEinzelneEinfachantwortAufgabeView((EinfachantwortAufgabe) a1, benutzer, null);
+        frame.setVisible(true);
 
-    /**
-     * Speichert Usereingaben in Userlösungsliste
-     */
-    public void userEingabenSpeichern() {
-        eingabe = txtUsereingabe.getText();
-        userloesung = new UserloesungProgrammieraufgabe(aufgabe, hinweisVerwendet, eingabe, trainingController.getAktuellerBenutzer(), trainingController.getTraining());
-        trainingController.addUserloesung(userloesung);
-    }
-
-    /**
-     * Setzt leere Usereingabe
-     */
-    public void setUserloesungNull() {
-        eingabe = "";
-    }
-
-    /**
-     * Setzt eingegebene Userlösung
-     *
-     * @param userloesung
-     */
-    public void setUserloesung(Userloesung userloesung) {
-        eingabe = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();
-        this.txtUsereingabe.setText(eingabe);
     }
 
     {
@@ -169,7 +142,7 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblBild = new JLabel();
         lblBild.setText("");
-        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -208,20 +181,17 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         final Spacer spacer2 = new Spacer();
         panel1.add(spacer2, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel7.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel7, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btnAbbrechenTraining = new JButton();
-        btnAbbrechenTraining.setText("Abbrechen");
-        panel7.add(btnAbbrechenTraining, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnLoesungshinweisTraining = new JButton();
-        btnLoesungshinweisTraining.setText("Loesungshinweis");
-        panel7.add(btnLoesungshinweisTraining, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabeTraining = new JButton();
-        btnVoherigeAufgabeTraining.setText("Voherige Aufgabe");
-        panel7.add(btnVoherigeAufgabeTraining, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnNaechsteAufgabeTraining = new JButton();
-        btnNaechsteAufgabeTraining.setText("Nächste Aufgabe");
-        panel7.add(btnNaechsteAufgabeTraining, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnAbbrechenEinzel = new JButton();
+        btnAbbrechenEinzel.setText("Abbrechen");
+        panel7.add(btnAbbrechenEinzel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnLoesungshinweisEinzel = new JButton();
+        btnLoesungshinweisEinzel.setText("Loesungshinweis");
+        panel7.add(btnLoesungshinweisEinzel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnZeigeLoesungEinzel = new JButton();
+        btnZeigeLoesungEinzel.setText("Lösung");
+        panel7.add(btnZeigeLoesungEinzel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel1.add(spacer3, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
@@ -233,7 +203,6 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
         txtUsereingabe.setText("");
         panel1.add(txtUsereingabe, new GridConstraints(1, 2, 2, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setHorizontalScrollBarPolicy(30);
         panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         lblAufgabenText = new JLabel();
         lblAufgabenText.setText("Aufgabentext");
@@ -246,5 +215,4 @@ public class BearbeiteTrainingProgrammieraufgabeView extends JFrame implements A
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }
