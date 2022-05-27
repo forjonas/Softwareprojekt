@@ -36,7 +36,7 @@
       </hspacer>
       <component id="15c90" class="javax.swing.JLabel" binding="lblPlaceholderUserloesung">
         <constraints>
-          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Placeholder Userlösung"/>
@@ -49,7 +49,7 @@
       </hspacer>
       <component id="23adf" class="javax.swing.JLabel" binding="lblPlaceholderMusterloesung">
         <constraints>
-          <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Placeholder Musterloesung"/>
@@ -70,7 +70,7 @@
           <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="446b4" class="javax.swing.JTextField" binding="txtfAufgabentext">
+      <component id="bfe6c" class="javax.swing.JTextArea" binding="txtaAufgabentext">
         <constraints>
           <grid row="1" column="1" row-span="2" col-span="4" vsize-policy="6" hsize-policy="7" anchor="9" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="150" height="120"/>

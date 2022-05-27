@@ -17,9 +17,9 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private final Programmieraufgabe aufgabe;
     private final UserloesungProgrammieraufgabe userloesungProgrammieraufgabe;
     private JPanel mainPanel;
-    private JTextField txtfAufgabentext;
-    private JTextField txtfUserLoesung;
-    private JTextField txtfMusterloesung;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaUserLoesung;
+    private JTextArea txtaMusterloesung;
     private JButton btnBeenden;
     private JButton btnVorherigeAufgabe;
     private JButton btnHinweis;
@@ -51,7 +51,8 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
 
-        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
             lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
@@ -59,11 +60,13 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
-        txtfMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
+        txtaMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
         UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
         this.userloesungProgrammieraufgabe = userloesungProgrammieraufgabe;
-        txtfUserLoesung.setText(userloesungProgrammieraufgabe.getUserloesung());
+        txtaUserLoesung.setText(userloesungProgrammieraufgabe.getUserloesung());
+        txtaUserLoesung.setLineWrap(true);
         txtfUserPunktzahl.setText(userloesungProgrammieraufgabe.getErreichtePunkte() + "");
+        txtaUserLoesung.setLineWrap(true);
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -162,12 +165,12 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         mainPanel.add(spacer1, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         mainPanel.add(spacer2, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        txtfUserLoesung = new JTextField();
-        txtfUserLoesung.setEditable(false);
-        mainPanel.add(txtfUserLoesung, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
-        txtfMusterloesung = new JTextField();
-        txtfMusterloesung.setEditable(false);
-        mainPanel.add(txtfMusterloesung, new GridConstraints(5, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        txtaUserLoesung = new JTextArea();
+        txtaUserLoesung.setEditable(false);
+        mainPanel.add(txtaUserLoesung, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
+        txtaMusterloesung = new JTextArea();
+        txtaMusterloesung.setEditable(false);
+        mainPanel.add(txtaMusterloesung, new GridConstraints(5, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         mainPanel.add(spacer3, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
@@ -188,10 +191,10 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
         mainPanel.add(btnNaechsteAufgabe, new GridConstraints(8, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(160, -1), 0, false));
-        txtfAufgabentext = new JTextField();
-        txtfAufgabentext.setEditable(false);
-        txtfAufgabentext.setToolTipText("Aufgabentext");
-        mainPanel.add(txtfAufgabentext, new GridConstraints(1, 1, 3, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        txtaAufgabentext.setToolTipText("Aufgabentext");
+        mainPanel.add(txtaAufgabentext, new GridConstraints(1, 1, 3, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
         lblAufgabenstellungsbild = new JLabel();
         lblAufgabenstellungsbild.setText("");
         mainPanel.add(lblAufgabenstellungsbild, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));

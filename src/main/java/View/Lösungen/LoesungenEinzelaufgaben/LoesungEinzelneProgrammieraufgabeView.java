@@ -19,11 +19,11 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
     private final Programmieraufgabe aufgabe;
     private Benutzer benutzer;
     private JFrame frame;
-    private JTextField txtfAufgabentext;
+    private JTextArea txtaAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
-    private JTextField txtfUserloesung;
-    private JTextField txtfMusterloesung;
+    private JTextArea txtaUserloesung;
+    private JTextArea txtaMusterloesung;
     private JPanel mainPanel;
     private JLabel lblAufgabenstellungsbild;
     private JPanel panelBearbeitungszeit;
@@ -45,7 +45,8 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
 
-        txtfAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblAufgabeBildString.setVisible(true);
             lblAufgabenstellungsbild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
@@ -53,8 +54,10 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
-        txtfMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
-        txtfUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
+        txtaMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
+        txtaMusterloesung.setLineWrap(true);
+        txtaUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
+        txtaUserloesung.setLineWrap(true);
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -99,12 +102,12 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         btnBeenden = new JButton();
         btnBeenden.setText("Beenden");
         mainPanel.add(btnBeenden, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        txtfUserloesung = new JTextField();
-        txtfUserloesung.setEditable(false);
-        mainPanel.add(txtfUserloesung, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
-        txtfMusterloesung = new JTextField();
-        txtfMusterloesung.setEditable(false);
-        mainPanel.add(txtfMusterloesung, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
+        txtaUserloesung = new JTextArea();
+        txtaUserloesung.setEditable(false);
+        mainPanel.add(txtaUserloesung, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
+        txtaMusterloesung = new JTextArea();
+        txtaMusterloesung.setEditable(false);
+        mainPanel.add(txtaMusterloesung, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
         final Spacer spacer1 = new Spacer();
         mainPanel.add(spacer1, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
@@ -120,10 +123,10 @@ public class LoesungEinzelneProgrammieraufgabeView extends JFrame implements Act
         mainPanel.add(btnHinweis, new GridConstraints(6, 2, 1, 2, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
         mainPanel.add(spacer6, new GridConstraints(5, 3, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        txtfAufgabentext = new JTextField();
-        txtfAufgabentext.setEditable(false);
-        txtfAufgabentext.setToolTipText("Aufgabentext:");
-        mainPanel.add(txtfAufgabentext, new GridConstraints(1, 1, 2, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        txtaAufgabentext.setToolTipText("Aufgabentext:");
+        mainPanel.add(txtaAufgabentext, new GridConstraints(1, 1, 2, 3, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(150, 120), new Dimension(150, 120), null, 0, false));
         lblAufgabenstellungsbild = new JLabel();
         lblAufgabenstellungsbild.setText("");
         mainPanel.add(lblAufgabenstellungsbild, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
