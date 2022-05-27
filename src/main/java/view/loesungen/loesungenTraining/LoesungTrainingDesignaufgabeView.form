@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.loesungen.loesungenTraining.LoesungTrainingDesignaufgabeView">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="8" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="15" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="706" height="531"/>
+    </constraints>
+    <properties>
+      <minimumSize width="634" height="389"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <hspacer id="1e8d6">
+        <constraints>
+          <grid row="1" column="6" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="3cb0e">
+        <constraints>
+          <grid row="1" column="4" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="ab2d5" class="javax.swing.JButton" binding="btnBeenden">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Beenden"/>
+        </properties>
+      </component>
+      <component id="f9d15" class="javax.swing.JButton" binding="btnHinweis">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Lösungshinweis anzeigen"/>
+        </properties>
+      </component>
+      <vspacer id="97656">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="e57d7">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="701e5" class="javax.swing.JButton" binding="btnNaechsteAufgabe">
+        <constraints>
+          <grid row="7" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <maximum-size width="160" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Nächste Aufgabe"/>
+        </properties>
+      </component>
+      <component id="a720c" class="javax.swing.JButton" binding="btnVorherigeAufgabe">
+        <constraints>
+          <grid row="6" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="120" height="-1"/>
+            <maximum-size width="160" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Vorherige Aufgabe"/>
+        </properties>
+      </component>
+      <component id="3c2d9" class="javax.swing.JLabel" binding="lblAufgabenstellungsbild">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="d7d5" class="javax.swing.JTextArea" binding="txtaAufgabentext">
+        <constraints>
+          <grid row="1" column="1" row-span="2" col-span="3" vsize-policy="6" hsize-policy="7" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="150" height="120"/>
+            <preferred-size width="150" height="120"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+          <toolTipText value="Aufgabentext:"/>
+        </properties>
+      </component>
+      <component id="dc328" class="javax.swing.JLabel" binding="lblUserloesung">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="d89a8" class="javax.swing.JLabel" binding="lblMusterloesung">
+        <constraints>
+          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <hspacer id="fd8a7">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <grid id="20177" binding="panelPunktzahl" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+            <maximum-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f685f" class="javax.swing.JLabel" binding="lblPunktzahlString">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="erreichbare Punktzahl:"/>
+            </properties>
+          </component>
+          <component id="215e1" class="javax.swing.JLabel" binding="lblMaximalPunktzahl">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="10"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="fe582" binding="panelBearbeitungszeit" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4e130" class="javax.swing.JLabel" binding="lblBearbeitungszeitString">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Bearbeitungszeit:"/>
+            </properties>
+          </component>
+          <component id="c797e" class="javax.swing.JLabel" binding="lblBearbeitungszeit">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="10 min"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <hspacer id="a8c73">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="7b94" class="javax.swing.JLabel" binding="lblAufgabeBildString">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Aufgabenstellungsbild:"/>
+        </properties>
+      </component>
+      <component id="7e084" class="javax.swing.JLabel" binding="lblUserloesungString">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Userlösung:"/>
+        </properties>
+      </component>
+      <component id="fdb0e" class="javax.swing.JLabel" binding="lblMusterloesungString">
+        <constraints>
+          <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Musterlösung:"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

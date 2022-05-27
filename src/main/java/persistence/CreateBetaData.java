@@ -1,13 +1,12 @@
 package persistence;
 
 
-import View.LoginView;
+import view.LoginView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
-import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;
@@ -15,7 +14,6 @@ import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.*;
 import entity.loesung.userloesung.*;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -366,7 +364,7 @@ public class CreateBetaData {
     private byte[] getRandomTestImage() {
         //int randomNumber = (int)(Math.random()*(max-min+1)+min);
         int randomNumber = (int) ((Math.random() * 4) + 1);
-        File file = new File("C:\\Users\\Jonas\\Dropbox\\Projektdokumente\\ImageTest\\newImages\\img" + randomNumber + ".png");
+        File file = new File("C:\\newImages\\img" + randomNumber + ".png");
         byte[] byteArray = DatabaseService.convertFileToByteArray(file, null);
         return byteArray;
     }
