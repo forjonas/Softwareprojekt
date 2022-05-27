@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
-    private final ControllerBewertungenTestate controllerBewertungenTestate;
+    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
     private final Designaufgabe aufgabe;
     private final UserloesungDesignaufgabe userloesungDesignaufgabe;
     private JPanel mainPanel;
@@ -39,7 +39,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JButton btnBewertungSpeichern;
 
 
-    public BewertungDesignaufgabeView(Designaufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+    public BewertungDesignaufgabeView(Designaufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
         this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);

@@ -1,6 +1,6 @@
 package View;
 
-import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
+import controller.controllerBewertungenTestate;
 import View.tableModel.KorrigiereTestatTableModel;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Dozent;
@@ -141,7 +141,7 @@ public class KorrigiereTestatKatalogView extends JFrame implements ActionListene
                     JOptionPane.showMessageDialog(this, "Fehler: Testatbearbeitung enthält keine Aufgaben", "Testatbearbeitung konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    new ControllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer, jframe);
+                    new controllerBewertungenTestate(testatBearbeitung,aktuellerBenutzer, jframe);
                     dispose();
                 }
             }

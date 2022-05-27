@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungEinfachantwortView extends JFrame implements ActionListener {
-    private final ControllerBewertungenTestate controllerBewertungenTestate;
+    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
     private final EinfachantwortAufgabe aufgabe;
     private final UserloesungEinfachantwort userloesungEinfachantwort;
     private JPanel mainPanel;
@@ -39,7 +39,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblMusterBild;
 
 
-    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
         this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);

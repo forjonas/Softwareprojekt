@@ -1,7 +1,7 @@
 package View.aufgabenBearbeiten;
 
 import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
-import View.aufgabenBearbeiten.app.TrainingController;
+import controller.TrainingController;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;

@@ -11,10 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class BewertungMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private final ControllerBewertungenTestate controllerBewertungenTestate;
+    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
     private final MultipleChoiceAufgabe aufgabe;
     private final UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe;
     private JPanel mainPanel;
@@ -48,7 +47,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JLabel lblMusterBild;
 
 
-    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
         this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);

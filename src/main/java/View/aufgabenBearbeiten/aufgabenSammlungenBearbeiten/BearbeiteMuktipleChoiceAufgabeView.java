@@ -1,8 +1,8 @@
 package View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
 import View.aufgabenBearbeiten.BearbeitungsController;
-import View.aufgabenBearbeiten.app.TestatController;
-import View.aufgabenBearbeiten.app.TrainingController;
+import controller.TestatController;
+import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -14,9 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;

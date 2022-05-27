@@ -1,6 +1,10 @@
-package View.Lösungen.BewertungenTestat;
+package controller;
 
 import View.KorrigiereTestatKatalogView;
+import View.Lösungen.BewertungenTestat.BewertungDesignaufgabeView;
+import View.Lösungen.BewertungenTestat.BewertungEinfachantwortView;
+import View.Lösungen.BewertungenTestat.BewertungMultipleChoiceAufgabeView;
+import View.Lösungen.BewertungenTestat.BewertungProgrammieraufgabeView;
 import View.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
@@ -23,7 +27,7 @@ import java.util.List;
  * @version 19.05.22
  */
 
-public class ControllerBewertungenTestate {
+public class controllerBewertungenTestate {
     private final TestatBearbeitung testatBearbeitung;
     private final Testat testat;
     private final JFrame jframe;
@@ -40,7 +44,7 @@ public class ControllerBewertungenTestate {
      * @param benutzer          Der zurzeit angemeldete Benutzer
      * @param frame             Das Hauptmenü der Klasse des angemeldeten Benutzers
      */
-    public ControllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame frame) {
+    public controllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame frame) {
         this.jframe = frame;
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);

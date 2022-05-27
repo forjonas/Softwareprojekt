@@ -1,8 +1,8 @@
 package View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
 import View.aufgabenBearbeiten.BearbeitungsController;
-import View.aufgabenBearbeiten.app.TestatController;
-import View.aufgabenBearbeiten.app.TrainingController;
+import controller.TestatController;
+import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;

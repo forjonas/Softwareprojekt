@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
-    private final ControllerLoesungenTraining controllerLoesungenTraining;
+    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JTextField txtfUserLoesung;
@@ -34,7 +34,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JLabel lblMusterloesungString;
     private final Programmieraufgabe aufgabe;
 
-    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerLoesungenTraining controllerLoesungenTraining) {
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
         this.controllerLoesungenTraining = controllerLoesungenTraining;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());

@@ -1,6 +1,6 @@
 package View;
 
-import View.Lösungen.LoesungenTraining.ControllerLoesungenTraining;
+import controller.controllerLoesungenTraining;
 import View.tableModel.TrainingTableModel;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Dozent;
@@ -135,7 +135,7 @@ public class EinsehenTrainingKatalogView extends JFrame implements ActionListene
                 Training training = trainingsliste.get(selectedRow);
                 if(training.getAnzahlAufgaben() > 0) {
                     //In meinem Branch noch ohne Option, um den aktuellen Benutzter zu übergeben
-                    new ControllerLoesungenTraining(training, aktuellerBenutzer, jframe);
+                    new controllerLoesungenTraining(training, aktuellerBenutzer, jframe);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Das gewählte Training enthält keine Aufgaben", "Keine Aufgaben", JOptionPane.ERROR_MESSAGE);

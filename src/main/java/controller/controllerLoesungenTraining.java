@@ -1,6 +1,10 @@
-package View.Lösungen.LoesungenTraining;
+package controller;
 
 import View.EinsehenTrainingKatalogView;
+import View.Lösungen.LoesungenTraining.LoesungTrainingDesignaufgabeView;
+import View.Lösungen.LoesungenTraining.LoesungTrainingEinfachantwortaufgabeView;
+import View.Lösungen.LoesungenTraining.LoesungTrainingMultipleChoiceAufgabeView;
+import View.Lösungen.LoesungenTraining.LoesungTrainingProgrammieraufgabeView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
@@ -11,7 +15,7 @@ import persistence.DatabaseService;
 import javax.swing.*;
 import java.util.List;
 
-public class ControllerLoesungenTraining {
+public class controllerLoesungenTraining {
 
     private final Training training;
     private final JFrame frame;
@@ -20,7 +24,7 @@ public class ControllerLoesungenTraining {
     private DatabaseService ds = DatabaseService.getInstance();
     private List<Userloesung> userloesungList;
 
-    public ControllerLoesungenTraining(Training training, Benutzer benutzer, JFrame frame) {
+    public controllerLoesungenTraining(Training training, Benutzer benutzer, JFrame frame) {
         this.frame = frame;
         this.training = training;
         this.index = 0;

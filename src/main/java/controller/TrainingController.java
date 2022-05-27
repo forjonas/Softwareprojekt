@@ -1,10 +1,10 @@
-package View.aufgabenBearbeiten.app;
+package controller;
 
 import View.aufgabenBearbeiten.BearbeitungsController;
-import View.MeineTestateKatalogView;
+import View.EinsehenTrainingKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
-import entity.aufgabensammlung.TestatBearbeitung;
+import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
@@ -24,47 +24,34 @@ import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
- * @version5: 19.05.22 Vorher Button mit Inhalt
- * @version6: 20.05.22 "Beenden" Button auf setVisible(false)
- * @version7: 23.05.22 Button von "nächste" zu "beenden" u.v.m
- * Schnittstelle um ein Testat auszuführen
+ * @version: 27.05.22
+ * Schnittstelle um ein Training auszuführen
  */
-public class TestatController extends BearbeitungsController {
 
-    protected Testat testat;
-    protected TestatBearbeitung testatBearbeitung;
+public class TrainingController extends BearbeitungsController {
+
+    protected Training training;
 
     /**
-     * Konstruktor für Klasse TestatController
-     *
-     * @param testat mit den zu bearbeitenden Aufgaben
-     * @param aktuellerBenutzer der das Testat bearbeitet
-     * @param hauptmenueFrame Hauptmenü Fenster des Benutzers
+     * @param training
+     * @param aktuellerBenutzer
+     * @param hauptmenueFrame
      */
-    public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
-        super(testat, aktuellerBenutzer, hauptmenueFrame);
-        this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
-        this.testat = testat;
-        this.testat.addBearbeitung(testatBearbeitung);
-        super.zeigeAktuelleAufgabe(); //für manche relevant ??
+    public TrainingController(Training training, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
+        super(training, aktuellerBenutzer, hauptmenueFrame);
+        this.training = training;
+        super.zeigeAktuelleAufgabe();
     }
 
-    /**
-     * Setzt TestatKatalog
-     */
-    public void setNewTestatKatalog() {
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
+
+    public void setNewTrainingKatalog() {
+        new EinsehenTrainingKatalogView(this.hauptmenueFrame, (Dozent) aktuellerBenutzer);
     }
 
     /**
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
-     * Fügt den aktuellerBenutzer die testatBearbeitung hinzu
      */
-    public void persistTestat() {//usereingaben Liste persistieren
+    public void persistTraining() {//usereingaben Liste persistieren
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
@@ -74,22 +61,25 @@ public class TestatController extends BearbeitungsController {
             userloesung.getAufgabensammlung().addUserloesung(userloesung);
         }
 
-
-        aktuellerBenutzer.addBearbeitetesTestat(testatBearbeitung);
+        aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        ds.persistObject(testat);//nötig????
-        ds.persistObject(testatBearbeitung);
-
+        //ds.persistObject(training); //nötig????
         System.out.println(userloesungen);
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
+
+        new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
     }
 
     /**
-     * @return das aktuelle Testat
+     * @return das aktuelle Training
      */
-    public Testat getTestat() {
-        return testat;
+    public Training getTraining() {
+        return training;
+    }
+
+
+    public void setUserFrameVisible() {
+        hauptmenueFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws Exception {
@@ -101,26 +91,12 @@ public class TestatController extends BearbeitungsController {
         antwortmoeglichkeiten.add("Test1");
         antwortmoeglichkeiten.add("Test2");
         antwortmoeglichkeiten.add("Test3");
-
-        List<String> antwortmoeglichkeiten1 = new ArrayList<>();
-        antwortmoeglichkeiten1.add("Test1");
-        antwortmoeglichkeiten1.add("Test2");
-        antwortmoeglichkeiten1.add("Test3");
-        antwortmoeglichkeiten1.add("Test4");
-
-        List<String> antwortmoeglichkeiten2 = new ArrayList<>();
-        antwortmoeglichkeiten2.add("Test1");
-        antwortmoeglichkeiten2.add("Test2");
-
+        //  antwortmoeglichkeiten.add("Test4");
 
         Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
         Aufgabe a2 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
         Aufgabe a3 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
         Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten);
-
-        Aufgabe a5 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten1);
-        Aufgabe a6 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten2);
-
 
         MusterloesungEinfachantwort m1 = new MusterloesungEinfachantwort();
         a1.setMusterloesung(m1);
@@ -144,21 +120,21 @@ public class TestatController extends BearbeitungsController {
         java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a3, a4});
         java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2, a3, a3, a4, a4});
 
-        java.util.List<Aufgabe> aufgabenListe6 = new ArrayList<>(); //= Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
-        aufgabenListe6.add(0, a4);
-        aufgabenListe6.add(0, a5);
-        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a4, a4, a5, a6});
+        java.util.List<Aufgabe> aufgabenListe6 = Arrays.asList(new Aufgabe[]{a3, a3, a3, a4,});
+        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a1, a3, a2, a4});
 
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
+
+        Training training1 = new Training(aufgabenliste, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
+        // java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
-        TestatController testatApp = new TestatController(t1, dozent2, null);
+        TrainingController trainingController = new TrainingController(training1, dozent2, null);
+        // trainingController.zeigeAktuelleAufgabe();
 
     }
 

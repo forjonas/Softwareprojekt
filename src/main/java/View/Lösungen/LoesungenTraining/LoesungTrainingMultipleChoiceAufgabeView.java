@@ -11,10 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private final ControllerLoesungenTraining controllerLoesungenTraining;
+    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
     private JTextField txtfAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
@@ -44,7 +43,7 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private final MultipleChoiceAufgabe aufgabe;
 
 
-    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, ControllerLoesungenTraining controllerLoesungenTraining) {
+    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
         this.controllerLoesungenTraining = controllerLoesungenTraining;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());

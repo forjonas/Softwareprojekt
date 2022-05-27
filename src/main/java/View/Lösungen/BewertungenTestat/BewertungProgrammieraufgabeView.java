@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungProgrammieraufgabeView extends JFrame implements ActionListener {
-    private final ControllerBewertungenTestate controllerBewertungenTestate;
+    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
     private final Programmieraufgabe aufgabe;
     private final UserloesungProgrammieraufgabe userloesungProgrammieraufgabe;
     private JPanel mainPanel;
@@ -39,7 +39,7 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JLabel lblMusterBild;
 
 
-    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, ControllerBewertungenTestate controllerBewertungenTestate) {
+    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
         this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
