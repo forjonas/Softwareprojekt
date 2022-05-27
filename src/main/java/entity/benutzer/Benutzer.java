@@ -13,7 +13,7 @@ import java.util.List;
  * Abstrakte Superklasse für Benutzer
  *
  * @author Jonas Herbst
- * @version 22.04.22
+ * @version 26.05.22
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -25,7 +25,6 @@ public abstract class Benutzer implements Serializable {
     private long benutzerId;
     private String benutzername;
     private String passwort;
-    private int berechtigungsstufe;
     private String vorname;
     private String nachname;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "trainingsErsteller")
@@ -47,16 +46,14 @@ public abstract class Benutzer implements Serializable {
     /**
      * Konstruktor für Klasse Benutzer
      *
-     * @param benutzername       Benutzername des Benutzers
-     * @param passwort           Passwort des Benutzers
-     * @param berechtigungsstufe Berechtigungsstufe des Benutzers
-     * @param vorname            Vorname des Benutzers
-     * @param nachname           Nachname des Benutzers
+     * @param benutzername Benutzername des Benutzers
+     * @param passwort     Passwort des Benutzers
+     * @param vorname      Vorname des Benutzers
+     * @param nachname     Nachname des Benutzers
      */
-    public Benutzer(String benutzername, String passwort, int berechtigungsstufe, String vorname, String nachname) {
+    public Benutzer(String benutzername, String passwort, String vorname, String nachname) {
         this.benutzername = benutzername;
         this.passwort = passwort;
-        this.berechtigungsstufe = berechtigungsstufe;
         this.vorname = vorname;
         this.nachname = nachname;
         this.bearbeiteteTrainings = new LinkedList<Training>();
@@ -98,24 +95,6 @@ public abstract class Benutzer implements Serializable {
      */
     public void setPasswort(String passwort) {
         this.passwort = passwort;
-    }
-
-    /**
-     * Gibt die Berechtigungsstufe des Benutzers zurück
-     *
-     * @return Berechtigungsstufe des Benutzers
-     */
-    public int getBerechtigungsstufe() {
-        return berechtigungsstufe;
-    }
-
-    /**
-     * Setzt die Berechtigungsstufe des Benutzers
-     *
-     * @param berechtigungsstufe Berechtigungsstufe des Benutzers
-     */
-    public void setBerechtigungsstufe(int berechtigungsstufe) {
-        this.berechtigungsstufe = berechtigungsstufe;
     }
 
     /**
@@ -220,7 +199,6 @@ public abstract class Benutzer implements Serializable {
 
     /**
      * Setzt die Liste der bearbeiteten Testate des Benutzers
-     * --> vielleicht rausnehmen oder auf private setzen
      *
      * @param bearbeiteteTestate bearbeitete Testate des Benutzers
      */
@@ -256,8 +234,7 @@ public abstract class Benutzer implements Serializable {
     }
 
     /**
-     * Setzt die Liste dererstellten Lösungen des Benutzers
-     * --> vielleicht rausnehmen oder auf private setzen
+     * Setzt die Liste der erstellten Lösungen des Benutzers
      *
      * @param erstellteLoesungen erstellte Lösungen des Benutzers
      */

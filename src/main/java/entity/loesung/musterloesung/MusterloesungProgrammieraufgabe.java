@@ -8,7 +8,7 @@ import jakarta.persistence.*;
  * Musterlösung des Dozenten für eine Aufgabe des Typs Programmieren.
  *
  * @author Timo Joswig
- * @version 09.05.22
+ * @version 26.05.22
  */
 
 @Entity
@@ -26,7 +26,7 @@ public class MusterloesungProgrammieraufgabe extends Musterloesung {
     /**
      * Konstruktor für eine Musterlösung vom Typ Programmieren
      *
-     * @param aufgabe         zur Lösung gehörende Einfachantwort-Aufgabe
+     * @param aufgabe         zur Lösung gehörende Programmieraufgabe
      * @param loesungshinweis zur Lösung gehörender Lösungshinweis
      * @param musterloesung   Musterlösung in Form von Text, genauer Programmcode
      */

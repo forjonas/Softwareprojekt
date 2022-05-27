@@ -45,7 +45,7 @@ public class Dozent extends Benutzer implements Serializable {
      * @param nachname     Nachname des Dozenten
      */
     public Dozent(String benutzername, String passwort, String vorname, String nachname) {
-        super(benutzername, passwort, 2, vorname, nachname);
+        super(benutzername, passwort, vorname, nachname);
         this.bewerteteTestate = new LinkedList<TestatBearbeitung>();
         this.erstellteTestate = new LinkedList<Testat>();
         this.erstellteAufgaben = new LinkedList<Aufgabe>();

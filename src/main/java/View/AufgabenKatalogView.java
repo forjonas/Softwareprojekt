@@ -11,14 +11,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Ansicht in der die bestehenden Aufgaben administriert und neue hinzugefügt werden können.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  * <p>
  * 20.05.22: Preview Button hinzugefügt (Timo u. Kristin)
  */
@@ -30,22 +30,23 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnPreview;
-    private JButton btnBearbeiten;
     private JButton btnErstellen;
     private Dozent aktuellerBenutzer;
     private List<Aufgabe> aufgabenliste;
     private JFrame jframe;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public AufgabenKatalogView(JFrame jframe, Dozent aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
         DatabaseService ds = DatabaseService.getInstance();
         aufgabenliste = ds.readAufgabenFromDatabase();
-
-        aufgabenliste = new LinkedList<>(aufgabenliste);
+        aufgabenliste = new LinkedList<Aufgabe>(aufgabenliste);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Aufgabenkatalog");
         contentPane = new JPanel();
@@ -96,8 +97,10 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen = new JButton("Löschen");
         panelRightNorth.add(btnLoeschen);
 
+
         btnPreview = new JButton("Preview");
         panelRightNorth.add(btnPreview);
+
 
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -119,6 +122,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -130,21 +136,32 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnLoeschen) {
             loeschenButtonLogik();
         }
+
         if (e.getSource() == this.btnPreview) {
             previewButtonLogik();
         }
+
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Erstellen-Buttons
+     */
     private void erstellenButtonLogik() {
         new AufgabeErstellenStartView(jframe, aktuellerBenutzer);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Löschen-Buttons
+     */
     private void loeschenButtonLogik() {
         if (aufgabenliste.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben zum Löschen", "Keine Aufgaben", JOptionPane.WARNING_MESSAGE);
@@ -158,9 +175,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
                 if (!aufgabe.darfDozentAufgabeLoeschen(aktuellerBenutzer)) {
                     JOptionPane.showMessageDialog(this, "Sie sind nicht berechtigt, diese Aufgabe zu löschen", "Fehlende Berechtigung", JOptionPane.WARNING_MESSAGE);
                 } else if (aufgabe.getVerwendungen().size() > 0) {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?\nAchtung! Sie ist in Trainings und/oder Testaten enthalten aus welchen sie beim Löschen entfernt wird.", "Aufgabe löschen", JOptionPane.YES_NO_OPTION));
                 } else {
-                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.WARNING_MESSAGE));
+                    loeschenGewuenscht = (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, "Wollen Sie die Aufgabe wirklich löschen?", "Aufgabe löschen", JOptionPane.YES_NO_OPTION));
                 }
                 if (loeschenGewuenscht) {
                     aufgabenliste.remove(aufgabe);
@@ -172,6 +189,9 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Preview-Buttons
+     */
     private void previewButtonLogik() {
         int selectedRow = tableAufgaben.getSelectedRow();
         if (selectedRow < 0) {
@@ -179,6 +199,8 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
             new TestatErstellenAufgabenPreview(aufgabe);
+
         }
     }
+
 }

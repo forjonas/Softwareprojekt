@@ -1,20 +1,11 @@
 package View;
 
-import View.tableModel.MeineTestateTableModel;
 import View.Lösungen.BewertungenTestat.ControllerBewertungenTestate;
-import View.aufgabenBearbeiten.app.TestatController;
-import entity.aufgabe.Aufgabe;
-import entity.aufgabe.Designaufgabe;
-import entity.aufgabe.EinfachantwortAufgabe;
-import entity.aufgabe.Programmieraufgabe;
+import View.tableModel.MeineTestateTableModel;
+import app.TestatController;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.aufgabe.MultipleChoiceAufgabe;
 import persistence.DatabaseService;
 
 import javax.swing.*;
@@ -22,14 +13,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Ansicht in der aus einer Tabelle eine einzelne Aufgabe zur Bearbeitung ausgewählt werden kann.
  *
  * @author Jonas Herbst
- * @version 04.05.22
+ * @version 26.05.22
  */
 public class MeineTestateKatalogView extends JFrame implements ActionListener {
 
@@ -44,12 +34,14 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
     private JFrame jframe;
 
     /**
-     * Create the frame.
+     * Konstruktor, der den Frame erstellt
+     *
+     * @param jframe            Hauptmenü-Frame, auf den beim Drücken des Zurück-Buttons zurückgekehrt werden soll
+     * @param aktuellerBenutzer aktuell angemeldeter Benutzer
      */
     public MeineTestateKatalogView(JFrame jframe, Benutzer aktuellerBenutzer) {
         this.jframe = jframe;
         this.aktuellerBenutzer = aktuellerBenutzer;
-
         testatListe = DatabaseService.getInstance().readTestateFromDatabase();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Meine Testat");
@@ -119,6 +111,9 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
         super.setVisible(true);
     }
 
+    /**
+     * Wird ausgeführt, wenn ein ActionEvent auftritt
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnZurueck) {
@@ -132,11 +127,17 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Zurück-Buttons
+     */
     private void zurueckButtonLogik() {
         jframe.setVisible(true);
         dispose();
     }
 
+    /**
+     * Beinhaltet die Logik des Einsehen-Buttons
+     */
     private void bewertungEinsehenButtonLogik() {
         if (testatListe.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine bewerteten Testate zum Einsehen", "Keine Testate", JOptionPane.WARNING_MESSAGE);
@@ -163,6 +164,9 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Beinhaltet die Logik des Bearbeiten-Buttons
+     */
     private void bearbeitenButtonLogik() {
         if (testatListe.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Es gibt keine Testate zum Bearbeiten", "Keine Testate", JOptionPane.WARNING_MESSAGE);
@@ -180,7 +184,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
                     String passwort = JOptionPane.showInputDialog(this, "Bitte Passwort für das Testat eingeben:", "Passwort eingeben", JOptionPane.INFORMATION_MESSAGE);
                     if (passwort != null && passwort.equals(testat.getPasswort())) {
                         TestatController testatController = new TestatController(testat, aktuellerBenutzer, jframe);
-                        //testatController.zeigeAktuelleAufgabe(); //Methoden aufruf hinzugefuegt
+                        testatController.zeigeAktuelleAufgabe(); //Methoden aufruf hinzugefuegt
                         dispose();
                     } else if (passwort != null) {
                         JOptionPane.showMessageDialog(this, "Fehler: Falsches Passwort eingegeben", "Falsches Passwort", JOptionPane.ERROR_MESSAGE);
@@ -189,4 +193,5 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
             }
         }
     }
+
 }

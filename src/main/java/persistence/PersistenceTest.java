@@ -26,6 +26,7 @@ import java.util.List;
  * @author Jonas Herbst
  * @version 13.05.22
  */
+//Wird gelöscht (kurz vor der Abgabe)
 public class PersistenceTest {
     public static void main(String[] args) throws Exception {
         System.out.println("Methode zum Testen der Persistenz");

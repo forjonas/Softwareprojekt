@@ -10,7 +10,7 @@ import jakarta.persistence.*;
  * Userlösung eines Benutzers für eine Aufgabe des Typs Programmieren.
  *
  * @author Timo Joswig
- * @version 10.05.22
+ * @version 26.05.22
  */
 
 @Entity
