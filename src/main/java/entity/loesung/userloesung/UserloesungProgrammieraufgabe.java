@@ -32,7 +32,7 @@ public class UserloesungProgrammieraufgabe extends Userloesung {
      * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
      * @param userloesung          Userlösung in Form von Text, genauer Programmcode
      * @param userloesungErsteller Ersteller der Userlösung
-     * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
+     * @param aufgabensammlung     Aufgabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
     public UserloesungProgrammieraufgabe(Programmieraufgabe aufgabe, boolean hinweisVerwendet, String userloesung, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
         super(aufgabe, hinweisVerwendet, userloesungErsteller, aufgabensammlung);

@@ -18,14 +18,14 @@ import java.util.List;
 public class controllerLoesungenTraining {
 
     private final Training training;
-    private final JFrame frame;
+    private final JFrame homeFrame;
     private int index;
     public Benutzer benutzer;
     private DatabaseService ds = DatabaseService.getInstance();
     private List<Userloesung> userloesungList;
 
-    public controllerLoesungenTraining(Training training, Benutzer benutzer, JFrame frame) {
-        this.frame = frame;
+    public controllerLoesungenTraining(Training training, Benutzer benutzer, JFrame homeFrame) {
+        this.homeFrame = homeFrame;
         this.training = training;
         this.index = 0;
         this.benutzer = benutzer;
@@ -91,9 +91,9 @@ public class controllerLoesungenTraining {
 
     public void beendeLoesungTraining() {
         if (benutzer.getClass().equals(Dozent.class)) {
-            new EinsehenTrainingKatalogView(frame, (Dozent) benutzer);
+            new EinsehenTrainingKatalogView(homeFrame, (Dozent) benutzer);
         } else {
-            frame.setVisible(true);
+            homeFrame.setVisible(true);
         }
     }
 

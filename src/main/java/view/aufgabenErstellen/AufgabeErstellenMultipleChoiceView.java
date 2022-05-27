@@ -22,55 +22,47 @@ import java.util.ArrayList;
  */
 public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
     private Dozent doz;
-
     private JFrame aufgabeErstellenStartViewFrame;
+    private JPanel pnlAufgabeErstellenMultipleChoice;
+    private BorderLayout borderLayout = new BorderLayout();
+    private GridLayout gridLayout = new GridLayout(15, 1);
+    private JPanel pnlCenter;
+    private JPanel pnlNorth;
+    private JPanel pnlSouth;
 
-    private JPanel AufgabeErstellenMultipleChoicePnl;
-    private JPanel centerPnl;
-    private JPanel northPnl;
-    private JPanel southPnl;
+    private JButton btnZurueck;
+    private JButton btnSpeichern;
+    private JButton btnBeispielBild;
+    private JComboBox cbAnzahl;
+    private JComboBox cbKategorien;
+    private JComboBox cbSchwierigkeit;
+    private JLabel lblBeispielBild;
+    private JLabel lblKategorie;
+    private JLabel lblTitel;
+    private JLabel lblSchwierigkeit;
+    private JLabel lblAufgabentext;
+    private JLabel lblLoesungshinweis;
+    private JLabel lblBearbeitungszeit;
+    private JLabel lblPunkte;
+    private JLabel lblLoesung;
+    private JLabel lblAntwort1;
+    private JLabel lblAntwort2;
+    private JLabel lblAntwort3;
+    private JLabel lblAntwort4;
+    private JLabel lblAnzahlAntworten;
 
-    private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(15, 1);
-
-    private JComboBox schwierigkeitCB;
-    private JComboBox kategorienCB;
-    private JComboBox anzCB;
-
-    private JButton zurueckBtn;
-    private JButton speichernBtn;
-    private JButton bspBildBtn;
-
-    private JLabel bspBildLbl;
-    private JLabel kategorieLbl;
-    private JLabel schwierigkeitLbl;
-    private JLabel titelLbl;
-    private JLabel aufgabenTxtLbl;
-    private JLabel loesungsHinweisLbl;
-    private JLabel schwierigketiLbl;
-    private JLabel bearbeitungszeitLbl;
-    private JLabel punkteLbl;
-    private JLabel loesungLbl;
-    private JLabel antwort1Lbl;
-    private JLabel antwort2Lbl;
-    private JLabel antwort3Lbl;
-    private JLabel antwort4Lbl;
-    private JLabel anzAntLbl;
-
-    private JTextArea aufgabenTextTA;
-    private JTextArea loesungshinwTA;
-
-    private JTextField titelTF;
-    private JTextField bearbeitungsZeitTF;
-    private JTextField punkteTF;
-    private JTextField loesungTF;
-    private JTextField antwort1TF;
-    private JTextField antwort2TF;
-    private JTextField antwort3TF;
-    private JTextField antwort4TF;
-
-    private File bspBild;
-    byte [] bspBildByteArray;
+    private JTextField txtfTitel;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaLoesungshinweis;
+    private JTextField txtfBearbeitungszeit;
+    private JTextField txtfPunkte;
+    private JTextField txtfLoesung;
+    private JTextField txtfAntwort1;
+    private JTextField txtfAntwort2;
+    private JTextField txtfAntwort3;
+    private JTextField txtfAntwort4;
+    private File fileBspBild;
+    byte [] byteArrayBeispielBild;
     /**
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEInfachANtwortViewFuellen() auf.
@@ -94,111 +86,111 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      */
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
 
-        gl.setVgap(10);
-        gl.setHgap(25);
-        centerPnl = new JPanel(gl);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
-        northPnl = new JPanel();
-        southPnl = new JPanel();
-        AufgabeErstellenMultipleChoicePnl = new JPanel();
-        AufgabeErstellenMultipleChoicePnl.setLayout(bl);
+        gridLayout.setVgap(10);
+        gridLayout.setHgap(25);
+        pnlCenter = new JPanel(gridLayout);
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+        pnlNorth = new JPanel();
+        pnlSouth = new JPanel();
+        pnlAufgabeErstellenMultipleChoice = new JPanel();
+        pnlAufgabeErstellenMultipleChoice.setLayout(borderLayout);
 
         Integer[] anz = {2, 3, 4};
-        anzCB = new JComboBox(anz);
-        anzCB.addActionListener(this);
+        cbAnzahl = new JComboBox(anz);
+        cbAnzahl.addActionListener(this);
 
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
-        kategorienCB = new JComboBox(kat);
+        cbKategorien = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
-        schwierigkeitCB = new JComboBox(schw);
+        cbSchwierigkeit = new JComboBox(schw);
 
-        bspBildBtn = new JButton("Beispiel Bild Hochladen");
-        bspBildBtn.addActionListener(this);
+        btnBeispielBild = new JButton("Beispiel Bild Hochladen");
+        btnBeispielBild.addActionListener(this);
 
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
 
-        speichernBtn = new JButton("Speichern");
-        speichernBtn.addActionListener(this);
+        btnSpeichern = new JButton("Speichern");
+        btnSpeichern.addActionListener(this);
 
-        titelTF = new JTextField();
+        txtfTitel = new JTextField();
 
-        aufgabenTextTA = new JTextArea();
-        aufgabenTextTA.setLineWrap(true);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setLineWrap(true);
 
-        loesungshinwTA = new JTextArea();
-        loesungshinwTA.setLineWrap(true);
+        txtaLoesungshinweis = new JTextArea();
+        txtaLoesungshinweis.setLineWrap(true);
 
-        bearbeitungsZeitTF = new JTextField();
-        punkteTF = new JTextField();
-        loesungTF = new JTextField();
-        antwort1TF = new JTextField();
-        antwort2TF = new JTextField();
-        antwort3TF = new JTextField();
-        antwort4TF = new JTextField();
+        txtfBearbeitungszeit = new JTextField();
+        txtfPunkte = new JTextField();
+        txtfLoesung = new JTextField();
+        txtfAntwort1 = new JTextField();
+        txtfAntwort2 = new JTextField();
+        txtfAntwort3 = new JTextField();
+        txtfAntwort4 = new JTextField();
 
-        bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
-        anzAntLbl = new JLabel("Anzahl der Antwortmöglichkeiten");
-        schwierigkeitLbl = new JLabel("Schwierigkeit");
-        kategorieLbl = new JLabel("Kategorien:");
-        titelLbl = new JLabel("Aufgaben Titel:");
-        loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
-        schwierigketiLbl = new JLabel("Schwierigkeit: ");
-        bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
-        punkteLbl = new JLabel("Punkte: ");
-        loesungLbl = new JLabel("Lösung (Hier Nummer der richtigen Antwort eingeben");
-        aufgabenTxtLbl = new JLabel("Aufgaben Text: ");
-        antwort1Lbl = new JLabel("Antwort 1:");
-        antwort2Lbl = new JLabel("Antwort 2:");
-        antwort3Lbl = new JLabel("Antwort 3:");
-        antwort4Lbl = new JLabel("Antwort 4:");
+        lblBeispielBild = new JLabel("Beispiel Bild Hochladen: ");
+        lblAnzahlAntworten = new JLabel("Anzahl der Antwortmöglichkeiten");
+        lblSchwierigkeit = new JLabel("Schwierigkeit");
+        lblKategorie = new JLabel("Kategorien:");
+        lblTitel = new JLabel("Aufgaben Titel:");
+        lblLoesungshinweis = new JLabel("Lösungshinweis: ");
+        lblSchwierigkeit = new JLabel("Schwierigkeit: ");
+        lblBearbeitungszeit = new JLabel("BearbeitungsZeit: ");
+        lblPunkte = new JLabel("Punkte: ");
+        lblLoesung = new JLabel("Lösung (Hier Nummer der richtigen Antwort eingeben");
+        lblAufgabentext = new JLabel("Aufgaben Text: ");
+        lblAntwort1 = new JLabel("Antwort 1:");
+        lblAntwort2 = new JLabel("Antwort 2:");
+        lblAntwort3 = new JLabel("Antwort 3:");
+        lblAntwort4 = new JLabel("Antwort 4:");
 
-        centerPnl.add(titelLbl);
-        centerPnl.add(titelTF);
-        centerPnl.add(aufgabenTxtLbl);
-        centerPnl.add(aufgabenTextTA);
-        centerPnl.add(loesungLbl);
-        centerPnl.add(loesungTF);
-        centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitCB);
-        centerPnl.add(kategorieLbl);
-        centerPnl.add(kategorienCB);
-        centerPnl.add(bspBildLbl);
-        centerPnl.add(bspBildBtn);
-        centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTF);
-        centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTF);
-        centerPnl.add(loesungsHinweisLbl);
-        centerPnl.add(loesungshinwTA);
-        centerPnl.add(anzAntLbl);
-        centerPnl.add(anzCB);
+        pnlCenter.add(lblTitel);
+        pnlCenter.add(txtfTitel);
+        pnlCenter.add(lblAufgabentext);
+        pnlCenter.add(txtaAufgabentext);
+        pnlCenter.add(lblLoesung);
+        pnlCenter.add(txtfLoesung);
+        pnlCenter.add(lblSchwierigkeit);
+        pnlCenter.add(cbSchwierigkeit);
+        pnlCenter.add(lblKategorie);
+        pnlCenter.add(cbKategorien);
+        pnlCenter.add(lblBeispielBild);
+        pnlCenter.add(btnBeispielBild);
+        pnlCenter.add(lblBearbeitungszeit);
+        pnlCenter.add(txtfBearbeitungszeit);
+        pnlCenter.add(lblPunkte);
+        pnlCenter.add(txtfPunkte);
+        pnlCenter.add(lblLoesungshinweis);
+        pnlCenter.add(txtaLoesungshinweis);
+        pnlCenter.add(lblAnzahlAntworten);
+        pnlCenter.add(cbAnzahl);
 
-        centerPnl.add(antwort1Lbl);
-        antwort1Lbl.setVisible(false);
-        centerPnl.add(antwort1TF);
-        antwort1TF.setVisible(false);
-        centerPnl.add(antwort2Lbl);
-        antwort2Lbl.setVisible(false);
-        centerPnl.add(antwort2TF);
-        antwort2TF.setVisible(false);
-        centerPnl.add(antwort3Lbl);
-        antwort3Lbl.setVisible(false);
-        centerPnl.add(antwort3TF);
-        antwort3TF.setVisible(false);
-        centerPnl.add(antwort4Lbl);
-        antwort4Lbl.setVisible(false);
-        centerPnl.add(antwort4TF);
-        antwort4TF.setVisible(false);
+        pnlCenter.add(lblAntwort1);
+        lblAntwort1.setVisible(false);
+        pnlCenter.add(txtfAntwort1);
+        txtfAntwort1.setVisible(false);
+        pnlCenter.add(lblAntwort2);
+        lblAntwort2.setVisible(false);
+        pnlCenter.add(txtfAntwort2);
+        txtfAntwort2.setVisible(false);
+        pnlCenter.add(lblAntwort3);
+        lblAntwort3.setVisible(false);
+        pnlCenter.add(txtfAntwort3);
+        txtfAntwort3.setVisible(false);
+        pnlCenter.add(lblAntwort4);
+        lblAntwort4.setVisible(false);
+        pnlCenter.add(txtfAntwort4);
+        txtfAntwort4.setVisible(false);
 
-        northPnl.add(zurueckBtn);
-        southPnl.add(speichernBtn);
+        pnlNorth.add(btnZurueck);
+        pnlSouth.add(btnSpeichern);
 
-        AufgabeErstellenMultipleChoicePnl.add(centerPnl, BorderLayout.CENTER);
-        AufgabeErstellenMultipleChoicePnl.add(northPnl, BorderLayout.NORTH);
-        AufgabeErstellenMultipleChoicePnl.add(southPnl, BorderLayout.SOUTH);
-        this.add(AufgabeErstellenMultipleChoicePnl);
+        pnlAufgabeErstellenMultipleChoice.add(pnlCenter, BorderLayout.CENTER);
+        pnlAufgabeErstellenMultipleChoice.add(pnlNorth, BorderLayout.NORTH);
+        pnlAufgabeErstellenMultipleChoice.add(pnlSouth, BorderLayout.SOUTH);
+        this.add(pnlAufgabeErstellenMultipleChoice);
     }
 
     /**
@@ -206,17 +198,17 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.zurueckBtn) {
+        if (e.getSource() == this.btnZurueck) {
             zurueck();
-        } else if (e.getSource() == this.speichernBtn) {
+        } else if (e.getSource() == this.btnSpeichern) {
             speichern();
-        } else if (e.getSource() == this.anzCB) {
+        } else if (e.getSource() == this.cbAnzahl) {
             switchVisibility();
-        } else if (e.getSource() == this.bspBildBtn) {
+        } else if (e.getSource() == this.btnBeispielBild) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-            bspBild = filcV.fileChooser();
-            if(bspBild != null)
-                bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
+            fileBspBild = filcV.fileChooser();
+            if(fileBspBild != null)
+                byteArrayBeispielBild = DatabaseService.convertFileToByteArray(fileBspBild, this);
         }
     }
 
@@ -224,37 +216,37 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      * Ändert die Visibility der JTextlabels und JTextfields abhängig von der zuvor ausgewählten aufgaben anzahl.
      */
     private void switchVisibility() {
-        int switcher = (Integer) anzCB.getSelectedItem();
+        int switcher = (Integer) cbAnzahl.getSelectedItem();
         switch (switcher) {
             case 2:
-                antwort1TF.setVisible(true);
-                antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true);
-                antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(false);
-                antwort3Lbl.setVisible(false);
-                antwort4TF.setVisible(false);
-                antwort4Lbl.setVisible(false);
+                txtfAntwort1.setVisible(true);
+                lblAntwort1.setVisible(true);
+                txtfAntwort2.setVisible(true);
+                lblAntwort2.setVisible(true);
+                txtfAntwort3.setVisible(false);
+                lblAntwort3.setVisible(false);
+                txtfAntwort4.setVisible(false);
+                lblAntwort4.setVisible(false);
                 break;
             case 3:
-                antwort1TF.setVisible(true);
-                antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true);
-                antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(true);
-                antwort3Lbl.setVisible(true);
-                antwort4TF.setVisible(false);
-                antwort4Lbl.setVisible(false);
+                txtfAntwort1.setVisible(true);
+                lblAntwort1.setVisible(true);
+                txtfAntwort2.setVisible(true);
+                lblAntwort2.setVisible(true);
+                txtfAntwort3.setVisible(true);
+                lblAntwort3.setVisible(true);
+                txtfAntwort4.setVisible(false);
+                lblAntwort4.setVisible(false);
                 break;
             case 4:
-                antwort1TF.setVisible(true);
-                antwort1Lbl.setVisible(true);
-                antwort2TF.setVisible(true);
-                antwort2Lbl.setVisible(true);
-                antwort3TF.setVisible(true);
-                antwort3Lbl.setVisible(true);
-                antwort4TF.setVisible(true);
-                antwort4Lbl.setVisible(true);
+                txtfAntwort1.setVisible(true);
+                lblAntwort1.setVisible(true);
+                txtfAntwort2.setVisible(true);
+                lblAntwort2.setVisible(true);
+                txtfAntwort3.setVisible(true);
+                lblAntwort3.setVisible(true);
+                txtfAntwort4.setVisible(true);
+                lblAntwort4.setVisible(true);
                 break;
             default:
         }
@@ -284,14 +276,14 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         int loesungsWert = -1;
 
         try {
-            aufgTitel = titelTF.getText();
-            aufText = aufgabenTextTA.getText();
-            loesungshinweis = loesungshinwTA.getText();
-            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
-            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-            kat = (Kategorie) kategorienCB.getSelectedItem();
-            punkte = Integer.parseInt(punkteTF.getText());
-            loesungsWert = Integer.parseInt(loesungTF.getText());
+            aufgTitel = txtfTitel.getText();
+            aufText = txtaAufgabentext.getText();
+            loesungshinweis = txtaLoesungshinweis.getText();
+            bearbeitungsZeit = Integer.parseInt(txtfBearbeitungszeit.getText());
+            schw = (Schwierigkeitsgrad) cbSchwierigkeit.getSelectedItem();
+            kat = (Kategorie) cbKategorien.getSelectedItem();
+            punkte = Integer.parseInt(txtfPunkte.getText());
+            loesungsWert = Integer.parseInt(txtfLoesung.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -309,22 +301,22 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      */
     private ArrayList<String> mcSpeichern() {
         ArrayList<String> liste = new ArrayList<String>();
-        int switcher = (Integer) anzCB.getSelectedItem();
+        int switcher = (Integer) cbAnzahl.getSelectedItem();
         switch (switcher) {
             case 2:
-                liste.add(antwort1TF.getText());
-                liste.add(antwort2TF.getText());
+                liste.add(txtfAntwort1.getText());
+                liste.add(txtfAntwort2.getText());
                 return liste;
             case 3:
-                liste.add(antwort1TF.getText());
-                liste.add(antwort2TF.getText());
-                liste.add(antwort3TF.getText());
+                liste.add(txtfAntwort1.getText());
+                liste.add(txtfAntwort2.getText());
+                liste.add(txtfAntwort3.getText());
                 return liste;
             case 4:
-                liste.add(antwort1TF.getText());
-                liste.add(antwort2TF.getText());
-                liste.add(antwort3TF.getText());
-                liste.add(antwort4TF.getText());
+                liste.add(txtfAntwort1.getText());
+                liste.add(txtfAntwort2.getText());
+                liste.add(txtfAntwort3.getText());
+                liste.add(txtfAntwort4.getText());
                 return liste;
             default:
         }
@@ -347,7 +339,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, ArrayList<String> antworten, int loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);
+        MultipleChoiceAufgabe neueAufgabe = new MultipleChoiceAufgabe(bearbeitungsZeit, byteArrayBeispielBild, kat, punkte, schw, aufText, aufgTitel, doz, antworten, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungMultipleChoiceAufgabe mlp = new MusterloesungMultipleChoiceAufgabe(neueAufgabe, loesungshinweis, loesung);
         try {

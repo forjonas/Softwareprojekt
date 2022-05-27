@@ -1,7 +1,6 @@
 package controller;
 
 import view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
-import controller.TrainingController;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
@@ -40,9 +39,9 @@ public abstract class BearbeitungsController {
     protected List<Userloesung> userloesungen;
 
     /**
-     * @param sammlung die Sammlungt einer Aufgabensammlung
+     * @param sammlung          die Sammlungt einer Aufgabensammlung
      * @param aktuellerBenutzer der aktuelle Benutzer der die Aufgabensammlung bearbeitet
-     * @param hauptmenueFrame das dazugehörige Fenster des Benutzers
+     * @param hauptmenueFrame   das dazugehörige Fenster des Benutzers
      */
     public BearbeitungsController(Aufgabensammlung sammlung, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         this.sammlung = sammlung;
@@ -73,7 +72,7 @@ public abstract class BearbeitungsController {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+            BearbeiteMultipleChoiceAufgabeView frame = new BearbeiteMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
@@ -214,7 +213,7 @@ public abstract class BearbeitungsController {
        */
 
 
-      //TestatController testatApp = new TestatController(t1, dozent2, null);
+        //TestatController testatApp = new TestatController(t1, dozent2, null);
         Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
         TrainingController trainingController = new TrainingController(training1, dozent2, null);
 

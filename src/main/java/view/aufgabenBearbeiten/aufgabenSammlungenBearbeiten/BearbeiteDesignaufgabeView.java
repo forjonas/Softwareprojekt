@@ -38,12 +38,12 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     private JLabel lblAufgabentypWert;
     private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
-    private JButton btnVoherigeAufgabe;
+    private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JButton btnUpload;
     private JLabel lblAufgabenText;
 
-    private File fileBild = null;// = new File("Test");
+    private File fileBild = null;
     byte[] eingabe;
     private boolean hinweisVerwendet;
     private TestatController testatController;
@@ -58,7 +58,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
      * @param aufgabe
      */
     public BearbeiteDesignaufgabeView(BearbeitungsController controller, Designaufgabe aufgabe) {
-
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
@@ -69,12 +68,12 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
             this.trainingController = (TrainingController) controller;
         }
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
 
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
@@ -83,7 +82,7 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
 
         btnAbbrechen.addActionListener(this);
         btnLoesungshinweis.addActionListener(this);
-        btnVoherigeAufgabe.addActionListener(this);
+        btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         btnUpload.addActionListener(this);
 
@@ -91,7 +90,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
-
     }
 
     /**
@@ -111,13 +109,13 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
             this.dispose();
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == this.btnVoherigeAufgabe) {
+        } else if (e.getSource() == this.btnVorherigeAufgabe) {
 
             userEingabenSpeichern();
             if (testatController != null) {
@@ -203,7 +201,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
      */
     public void setUserloesungNull() {
         eingabe = new byte[0];
-        //fileBild = new File("Keine Lösung");
     }
 
     /**
@@ -214,7 +211,7 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();
         if (eingabe.length <= 0) {
-            String name = "Bild fehlt";   //String.valueOf(eingabe.getClass());
+            String name = "Bild fehlt";
             btnUpload.setText(name);
             this.update(this.getGraphics());
         } else {
@@ -293,9 +290,9 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
         btnLoesungshinweis = new JButton();
         btnLoesungshinweis.setText("Loesungshinweis");
         panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabe = new JButton();
-        btnVoherigeAufgabe.setText("Voherige Aufgabe");
-        panel7.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVorherigeAufgabe = new JButton();
+        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        panel7.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
         panel7.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

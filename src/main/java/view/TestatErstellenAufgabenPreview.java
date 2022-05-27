@@ -16,27 +16,26 @@ import java.util.List;
  * 20.05 T.Joswig u. K.Kubisch Preview
  */
 public class TestatErstellenAufgabenPreview extends JDialog implements ActionListener {
+    private Aufgabe aufgabe;
+    private JPanel mainPanel;
+    private JPanel pnlMultipleChoice;
+    private JButton btnZurueck;
     private JTextField txtfAufgabenstellung;
-    private JButton btnZurueckButton;
     private JLabel lblBild;
     private JLabel lblBearbeitungzeit;
-    private JLabel lblPunktzahl;
     private JLabel lblBearbeitungszeitWert;
+    private JLabel lblPunktzahl;
     private JLabel lblPunktzahlWert;
-    private JPanel mainPanel;
+    private JLabel lblAufgabentypWert;
     private JRadioButton antwort1;
     private JRadioButton antwort2;
     private JRadioButton antwort3;
     private JRadioButton antwort4;
-    private JPanel mcPanel;
-    private JLabel lblAufgabentypWert;
-
-    private Aufgabe aufgabe;
 
     public TestatErstellenAufgabenPreview(Aufgabe aufgabe) {
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
-        btnZurueckButton.addActionListener(this);
+        btnZurueck.addActionListener(this);
 
         if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
             showMcPanel();
@@ -65,14 +64,13 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnZurueckButton) {
-
+        if (e.getSource() == this.btnZurueck) {
             this.dispose();
         }
     }
 
     public void showMcPanel() {
-        this.mcPanel.setVisible(true);
+        this.pnlMultipleChoice.setVisible(true);
 
         MultipleChoiceAufgabe mCAufgabe = (MultipleChoiceAufgabe) this.aufgabe;
         List moeglichkeiten = mCAufgabe.getAntwortmoeglichkeiten();
@@ -102,7 +100,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
     }
 
     public void hideMcPanel() {
-        this.mcPanel.setVisible(false);
+        this.pnlMultipleChoice.setVisible(false);
         this.update(this.getGraphics());
     }
 
@@ -129,9 +127,9 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
         lblBild = new JLabel();
         lblBild.setText("");
         mainPanel.add(lblBild, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), new Dimension(200, 200), null, 0, false));
-        btnZurueckButton = new JButton();
-        btnZurueckButton.setText("Zurück");
-        mainPanel.add(btnZurueckButton, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnZurueck = new JButton();
+        btnZurueck.setText("Zurück");
+        mainPanel.add(btnZurueck, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.add(panel1, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -168,21 +166,21 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
         mainPanel.add(spacer5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer6 = new Spacer();
         mainPanel.add(spacer6, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        mcPanel = new JPanel();
-        mcPanel.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(mcPanel, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        pnlMultipleChoice = new JPanel();
+        pnlMultipleChoice.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.add(pnlMultipleChoice, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         antwort1 = new JRadioButton();
         antwort1.setText("RadioButton");
-        mcPanel.add(antwort1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlMultipleChoice.add(antwort1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         antwort2 = new JRadioButton();
         antwort2.setText("RadioButton");
-        mcPanel.add(antwort2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlMultipleChoice.add(antwort2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         antwort3 = new JRadioButton();
         antwort3.setText("RadioButton");
-        mcPanel.add(antwort3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlMultipleChoice.add(antwort3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         antwort4 = new JRadioButton();
         antwort4.setText("RadioButton");
-        mcPanel.add(antwort4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlMultipleChoice.add(antwort4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

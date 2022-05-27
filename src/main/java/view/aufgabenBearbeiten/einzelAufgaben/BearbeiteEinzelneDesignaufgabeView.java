@@ -55,7 +55,6 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
      * @param frame
      */
     public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
-
         this.setContentPane($$$getRootComponent$$$());
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
@@ -109,7 +108,6 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
             new LoesungEinzelneDesignaufgabeView(aufgabe, userloesung, benutzer, frame);
         } else if (e.getSource() == this.btnUpload) {
             fileBild = dateiOeffnen(this);
-
             if (fileBild == null) {
                 btnUpload.setText("kein Bild");
             } else {

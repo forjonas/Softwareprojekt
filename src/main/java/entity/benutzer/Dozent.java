@@ -82,7 +82,7 @@ public class Dozent extends Benutzer implements Serializable {
      * Setzt die Liste der bewerteten Testate des Dozenten
      * --> vielleicht rausnehmen oder auf private setzen
      *
-     * @param bewerteteTestate bewertete Testate des Doznenten
+     * @param bewerteteTestate bewertete Testate des Dozenten
      */
     public void setBewerteteTestate(List<TestatBearbeitung> bewerteteTestate) {
         this.bewerteteTestate = bewerteteTestate;

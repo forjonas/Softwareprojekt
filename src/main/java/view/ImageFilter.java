@@ -20,10 +20,9 @@ public class ImageFilter extends FileFilter {
         if (f.isDirectory()) {
             return true;
         }
-        if(extension(f).equalsIgnoreCase(JPG)||extension(f).equalsIgnoreCase(PNG)||extension(f).equalsIgnoreCase(JPEG)) {
+        if (extension(f).equalsIgnoreCase(JPG) || extension(f).equalsIgnoreCase(PNG) || extension(f).equalsIgnoreCase(JPEG)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }

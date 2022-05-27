@@ -23,15 +23,15 @@ import java.util.List;
  */
 public class MeineTestateKatalogView extends JFrame implements ActionListener {
 
+    private Benutzer aktuellerBenutzer;
+    private List<Testat> testatListe;
+    private JFrame jframe;
     private JPanel contentPane;
     private JTable tableTestate;
     private MeineTestateTableModel meineTestateTableModel;
     private JButton btnZurueck;
     private JButton btnBewertungEinsehen;
     private JButton btnBearbeiten;
-    private List<Testat> testatListe;
-    private Benutzer aktuellerBenutzer;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame erstellt

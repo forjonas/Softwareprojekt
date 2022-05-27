@@ -57,7 +57,6 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
      * @param frame
      */
     public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
-
         this.setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
@@ -85,22 +84,18 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
             } else if (i == 1) {
                 antwort2 = aufgabe.getAntwortmoeglichkeiten().get((1));
                 btnantwort2.setText(antwort2);
-
             } else if (i == 2) {
                 antwort3 = aufgabe.getAntwortmoeglichkeiten().get((2));
                 btnantwort3.setText(antwort3);
-
             } else if (i == 3) {
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
-
             }
             ButtonGroup bg = new ButtonGroup();
             bg.add(btnantwort1);
             bg.add(btnantwort2);
             bg.add(btnantwort3);
             bg.add(btnantwort4);
-
         }
         btnAbbrechenEinzel.addActionListener(this);
         btnLoesungshinweisEinzel.addActionListener(this);
@@ -131,9 +126,7 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         } else if (e.getSource() == this.btnZeigeLoesungEinzel) {
-
             int userloesungWert = -1;
-
 
             if (btnantwort1.isSelected()) {
                 userloesungWert = 1;

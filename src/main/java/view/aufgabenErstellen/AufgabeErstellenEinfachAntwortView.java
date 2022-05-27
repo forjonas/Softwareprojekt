@@ -21,47 +21,39 @@ import java.io.File;
  */
 public class AufgabeErstellenEinfachAntwortView extends JFrame implements ActionListener {
     private Dozent doz;
-
     private JFrame aufgabeErstellenStartViewFrame;
-    private JPanel AufgabeErstellenEinfachAntwortViewPnl;
+    private JPanel pnlAufgabeErstellenEinfachAntwortView;
+    private BorderLayout borderLayout = new BorderLayout();
+    private GridLayout gridLayout = new GridLayout(10, 2);
+    private JPanel pnlCenter;
+    private JPanel pnlNorth;
+    private JPanel pnlSouth;
 
-    private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10, 2);
+    private JButton btnZurueck;
+    private JButton btnSpeichern;
+    private JButton btnBeispielBild;
+    private JComboBox cbKategorien;
+    private JComboBox cbSchwierigkeit;
+    private JLabel lblTitel;
+    private JLabel lblAufgabentext;
+    private JLabel lblLoesungshinweis;
+    private JLabel lblSchwierigkeit;
+    private JLabel lblBearbeitungszeit;
+    private JLabel lblPunkte;
+    private JLabel lblBeispielBild;
+    private JLabel lblKategorie;
+    private JLabel lblLoesung;
+    private JTextField txtfTitel;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaLoesungshinweis;
+    private JTextField txtfBearbeitungszeit;
+    private JTextField txtfPunkte;
+    private JTextArea txtaLoesung;
+    private File fileCodeBsp;
+    byte [] byteArrayBeispielBild;
 
-    private JPanel centerPnl;
-    private JPanel northPnl;
-    private JPanel southPnl;
-
-    private JComboBox kategorienCB;
-    private JComboBox schwierigkeitCB;
-
-    private JButton zurueckBtn;
-    private JButton speichernBtn;
-    private JButton bspBildBtn;
-
-    private JLabel bspBildLbl;
-    private JLabel kategorieLbl;
-    private JLabel titelLbl;
-    private JLabel aufgabenTxtLbl;
-    private JLabel loesungsHinweisLbl;
-    private JLabel schwierigketiLbl;
-    private JLabel bearbeitungszeitLbl;
-    private JLabel punkteLbl;
-    private JLabel loesungLbl;
-
-    private JTextArea aufgabenTextTA;
-    private JTextArea loesungshinwTA;
-    private JTextArea loesungTA;
-
-    private JTextField titelTF;
-    private JTextField bearbeitungsZeitTF;
-    private JTextField punkteTF;
-
-    File bspBild;
-
-    byte [] bspBildByteArray;
     /**
-     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame.
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEinfachAntwortViewFuellen() auf.
      *
      * @param aufgabeErstellenStartViewFrame
@@ -82,99 +74,99 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     /**
-     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Komponenten in den Frame ein.
      */
     private void AufgabeErstellenEinfachAntwortViewFuellen() {
-        gl.setVgap(25);
-        gl.setHgap(25);
+        gridLayout.setVgap(25);
+        gridLayout.setHgap(25);
 
-        centerPnl = new JPanel(gl);
-        northPnl = new JPanel();
-        southPnl = new JPanel();
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
-        AufgabeErstellenEinfachAntwortViewPnl = new JPanel();
-        AufgabeErstellenEinfachAntwortViewPnl.setLayout(bl);
+        pnlCenter = new JPanel(gridLayout);
+        pnlNorth = new JPanel();
+        pnlSouth = new JPanel();
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+        pnlAufgabeErstellenEinfachAntwortView = new JPanel();
+        pnlAufgabeErstellenEinfachAntwortView.setLayout(borderLayout);
 
-        bspBildBtn = new JButton("Beispiel Bild Hochladen");
-        bspBildBtn.addActionListener(this);
+        btnBeispielBild = new JButton("Beispiel Bild Hochladen");
+        btnBeispielBild.addActionListener(this);
 
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
 
-        speichernBtn = new JButton("Speichern");
-        speichernBtn.addActionListener(this);
+        btnSpeichern = new JButton("Speichern");
+        btnSpeichern.addActionListener(this);
 
-        aufgabenTextTA = new JTextArea();
-        aufgabenTextTA.setLineWrap(true);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setLineWrap(true);
 
-        loesungshinwTA = new JTextArea();
-        loesungshinwTA.setLineWrap(true);
+        txtaLoesungshinweis = new JTextArea();
+        txtaLoesungshinweis.setLineWrap(true);
 
-        loesungTA = new JTextArea();
-        loesungTA.setLineWrap(true);
+        txtaLoesung = new JTextArea();
+        txtaLoesung.setLineWrap(true);
 
-        titelTF = new JTextField();
-        bearbeitungsZeitTF = new JTextField();
-        punkteTF = new JTextField();
+        txtfTitel = new JTextField();
+        txtfBearbeitungszeit = new JTextField();
+        txtfPunkte = new JTextField();
 
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
-        kategorienCB = new JComboBox(kat);
+        cbKategorien = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
-        schwierigkeitCB = new JComboBox(schw);
+        cbSchwierigkeit = new JComboBox(schw);
 
-        bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
-        kategorieLbl = new JLabel("Kategorie: ");
-        titelLbl = new JLabel("Aufgaben Titel");
-        loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
-        schwierigketiLbl = new JLabel("Schwierigkeit: ");
-        bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
-        punkteLbl = new JLabel("Punkte: ");
-        loesungLbl = new JLabel("Lösung");
-        aufgabenTxtLbl = new JLabel("Aufgaben Text");
+        lblBeispielBild = new JLabel("Beispiel Bild Hochladen: ");
+        lblKategorie = new JLabel("Kategorie: ");
+        lblTitel = new JLabel("Aufgaben Titel");
+        lblLoesungshinweis = new JLabel("Lösungshinweis: ");
+        lblSchwierigkeit = new JLabel("Schwierigkeit: ");
+        lblBearbeitungszeit = new JLabel("BearbeitungsZeit: ");
+        lblPunkte = new JLabel("Punkte: ");
+        lblLoesung = new JLabel("Lösung");
+        lblAufgabentext = new JLabel("Aufgaben Text");
 
-        centerPnl.add(titelLbl);
-        centerPnl.add(titelTF);
-        centerPnl.add(aufgabenTxtLbl);
-        centerPnl.add(aufgabenTextTA);
-        centerPnl.add(loesungLbl);
-        centerPnl.add(loesungTA);
-        centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitCB);
-        centerPnl.add(kategorieLbl);
-        centerPnl.add(kategorienCB);
-        centerPnl.add(bspBildLbl);
-        centerPnl.add(bspBildBtn);
-        centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTF);
-        centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTF);
-        centerPnl.add(loesungsHinweisLbl);
-        centerPnl.add(loesungshinwTA);
+        pnlCenter.add(lblTitel);
+        pnlCenter.add(txtfTitel);
+        pnlCenter.add(lblAufgabentext);
+        pnlCenter.add(txtaAufgabentext);
+        pnlCenter.add(lblLoesung);
+        pnlCenter.add(txtaLoesung);
+        pnlCenter.add(lblSchwierigkeit);
+        pnlCenter.add(cbSchwierigkeit);
+        pnlCenter.add(lblKategorie);
+        pnlCenter.add(cbKategorien);
+        pnlCenter.add(lblBeispielBild);
+        pnlCenter.add(btnBeispielBild);
+        pnlCenter.add(lblBearbeitungszeit);
+        pnlCenter.add(txtfBearbeitungszeit);
+        pnlCenter.add(lblPunkte);
+        pnlCenter.add(txtfPunkte);
+        pnlCenter.add(lblLoesungshinweis);
+        pnlCenter.add(txtaLoesungshinweis);
 
-        northPnl.add(zurueckBtn);
-        southPnl.add(speichernBtn);
+        pnlNorth.add(btnZurueck);
+        pnlSouth.add(btnSpeichern);
 
-        AufgabeErstellenEinfachAntwortViewPnl.add(centerPnl, BorderLayout.CENTER);
-        AufgabeErstellenEinfachAntwortViewPnl.add(northPnl, BorderLayout.NORTH);
-        AufgabeErstellenEinfachAntwortViewPnl.add(southPnl, BorderLayout.SOUTH);
-        this.add(AufgabeErstellenEinfachAntwortViewPnl);
+        pnlAufgabeErstellenEinfachAntwortView.add(pnlCenter, BorderLayout.CENTER);
+        pnlAufgabeErstellenEinfachAntwortView.add(pnlNorth, BorderLayout.NORTH);
+        pnlAufgabeErstellenEinfachAntwortView.add(pnlSouth, BorderLayout.SOUTH);
+        this.add(pnlAufgabeErstellenEinfachAntwortView);
     }
 
     /**
-     * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
+     * Führt Aktionen der JButtons sowie der JComboBoxen aus und ruft ggf. weitere Methoden auf.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.zurueckBtn) {
+        if (e.getSource() == this.btnZurueck) {
             zurueck();
-        } else if (e.getSource() == this.speichernBtn) {
+        } else if (e.getSource() == this.btnSpeichern) {
             speichern();
-        } else if (e.getSource() == this.bspBildBtn) {
+        } else if (e.getSource() == this.btnBeispielBild) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-            bspBild = filcV.fileChooser();
-            if(bspBild != null)
-                bspBildByteArray = DatabaseService.convertFileToByteArray(bspBild, this);
+            fileCodeBsp = filcV.fileChooser();
+            if(fileCodeBsp != null)
+                byteArrayBeispielBild = DatabaseService.convertFileToByteArray(fileCodeBsp, this);
         }
     }
 
@@ -187,7 +179,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     /**
-     * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
+     * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanzvariablen ein.
      * Ruft createObjectandPersist auf.
      */
     private void speichern() {
@@ -201,14 +193,14 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
         String loesung = null;
 
         try {
-            aufgTitel = titelTF.getText();
-            aufText = aufgabenTextTA.getText();
-            loesungshinweis = loesungshinwTA.getText();
-            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
-            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-            kat = (Kategorie) kategorienCB.getSelectedItem();
-            punkte = Integer.parseInt(punkteTF.getText());
-            loesung = loesungTA.getText();
+            aufgTitel = txtfTitel.getText();
+            aufText = txtaAufgabentext.getText();
+            loesungshinweis = txtaLoesungshinweis.getText();
+            bearbeitungsZeit = Integer.parseInt(txtfBearbeitungszeit.getText());
+            schw = (Schwierigkeitsgrad) cbSchwierigkeit.getSelectedItem();
+            kat = (Kategorie) cbKategorien.getSelectedItem();
+            punkte = Integer.parseInt(txtfPunkte.getText());
+            loesung = txtaLoesung.getText();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -220,7 +212,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     }
 
     /**
-     * Erstellt eine Aufgabe vom Typ Einfachantwortaufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     * Erstellt eine Aufgabe vom Typ Einfachantwortaufgabe. Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
      *
      * @param aufgTitel        Titel der Aufgabe
      * @param aufText          Text der Aufgabe
@@ -234,7 +226,7 @@ public class AufgabeErstellenEinfachAntwortView extends JFrame implements Action
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
 
         DatabaseService ds = DatabaseService.getInstance();
-        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit,bspBildByteArray , kat, punkte, schw, aufText, aufgTitel, doz, null);
+        EinfachantwortAufgabe neueAufgabe = new EinfachantwortAufgabe(bearbeitungsZeit, byteArrayBeispielBild, kat, punkte, schw, aufText, aufgTitel, doz, null);
         doz.addErstellteAufgabe(neueAufgabe);
         MusterloesungEinfachantwort mlp = new MusterloesungEinfachantwort(neueAufgabe, loesungshinweis, loesung);
         try {

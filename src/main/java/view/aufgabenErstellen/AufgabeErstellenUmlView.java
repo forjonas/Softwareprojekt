@@ -21,45 +21,39 @@ import java.io.File;
  */
 public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
 
-    private JFrame aufgabeErstellenStartViewFrame;
     private Dozent doz;
+    private JFrame aufgabeErstellenStartViewFrame;
+    private JPanel pnlAufgabeErstellenUML;
+    private JPanel pnlCenter;
+    private JPanel pnlNorth;
+    private JPanel pnlSouth;
+    private BorderLayout borderLayout = new BorderLayout();
+    private GridLayout gridLayout = new GridLayout(10, 2);
 
-    private JPanel AufgabeErstellenUMLPnl;
-    private JPanel centerPnl;
-    private JPanel northPnl;
-    private JPanel southPnl;
-
-    private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10, 2);
-
-    private JButton zurueckBtn;
-    private JButton speichernBtn;
-    private JButton UMLHochladenBtn;
-    private JButton musterloesungBtn;
-
-    private JComboBox kategorienCB;
-    private JComboBox schwierigkeitCB;
-
-    private JLabel titelLbl;
-    private JLabel aufgabenTxtLbl;
-    private JLabel loesungsHinweisLbl;
-    private JLabel schwierigketiLbl;
-    private JLabel kategorienLbl;
-    private JLabel bearbeitungszeitLbl;
-    private JLabel punkteLbl;
-
-    private JTextField titelTF;
-    private JTextArea aufgabenTextTA;
-    private JTextArea loesungshinwTA;
-    private JTextField bearbeitungsZeitTF;
-    private JTextField punkteTF;
-
-    private File designFile;
-    private File musterloesungFile;
+    private JButton btnZurueck;
+    private JButton btnSpeichern;
+    private JButton btnUMLHochladen;
+    private JButton btnMusterloesung;
+    private JComboBox cbKategorien;
+    private JComboBox cbSchwierigkeit;
+    private JLabel lblTitel;
+    private JLabel lblAufgabentext;
+    private JLabel lblLoesungshinweis;
+    private JLabel lblSchwierigkeit;
+    private JLabel lblKategorien;
+    private JLabel lblBearbeitungszeit;
+    private JLabel lblPunkte;
+    private JTextField txtfTitel;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaLoesungshinweis;
+    private JTextField txtfBearbeitungszeit;
+    private JTextField txtfPunkte;
+    private File fileDesign;
+    private File fileMusterloesung;
 
     /**
-     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
-     * Setzt Parameter des JFrames und ruft AufgabeErstellenUMLViewFuellen auf.
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame.
+     * Setzt Parameter des JFrames und ruft AufgabeErstellenUMLViewFuellen() auf.
      */
     public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
@@ -80,75 +74,75 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
      */
     private void AufgabeErstellenUMLViewFuellen() {
 
-        gl.setVgap(25);
-        gl.setHgap(25);
-        centerPnl = new JPanel(gl);
-        northPnl = new JPanel();
-        southPnl = new JPanel();
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
-        AufgabeErstellenUMLPnl = new JPanel();
-        AufgabeErstellenUMLPnl.setLayout(bl);
+        gridLayout.setVgap(25);
+        gridLayout.setHgap(25);
+        pnlCenter = new JPanel(gridLayout);
+        pnlNorth = new JPanel();
+        pnlSouth = new JPanel();
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+        pnlAufgabeErstellenUML = new JPanel();
+        pnlAufgabeErstellenUML.setLayout(borderLayout);
 
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
 
-        speichernBtn = new JButton("Speichern");
-        speichernBtn.addActionListener(this);
+        btnSpeichern = new JButton("Speichern");
+        btnSpeichern.addActionListener(this);
 
-        UMLHochladenBtn = new JButton("Design Hochladen");
-        UMLHochladenBtn.addActionListener(this);
+        btnUMLHochladen = new JButton("Design Hochladen");
+        btnUMLHochladen.addActionListener(this);
 
-        musterloesungBtn = new JButton("Musterlösung Hochladen");
-        musterloesungBtn.addActionListener(this);
+        btnMusterloesung = new JButton("Musterlösung Hochladen");
+        btnMusterloesung.addActionListener(this);
 
-        aufgabenTextTA = new JTextArea();
-        aufgabenTextTA.setLineWrap(true);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setLineWrap(true);
 
-        loesungshinwTA = new JTextArea();
-        loesungshinwTA.setLineWrap(true);
+        txtaLoesungshinweis = new JTextArea();
+        txtaLoesungshinweis.setLineWrap(true);
 
-        punkteTF = new JTextField();
-        bearbeitungsZeitTF = new JTextField();
-        titelTF = new JTextField();
+        txtfPunkte = new JTextField();
+        txtfBearbeitungszeit = new JTextField();
+        txtfTitel = new JTextField();
 
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
-        kategorienCB = new JComboBox(kat);
+        cbKategorien = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
-        schwierigkeitCB = new JComboBox(schw);
+        cbSchwierigkeit = new JComboBox(schw);
 
-        kategorienLbl = new JLabel("Kategorie: ");
-        titelLbl = new JLabel("Aufgaben Titel");
-        loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
-        schwierigketiLbl = new JLabel("Schwierigkeit: ");
-        bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
-        punkteLbl = new JLabel("Punkte: ");
-        aufgabenTxtLbl = new JLabel("Aufgaben Text");
+        lblKategorien = new JLabel("Kategorie: ");
+        lblTitel = new JLabel("Aufgaben Titel");
+        lblLoesungshinweis = new JLabel("Lösungshinweis: ");
+        lblSchwierigkeit = new JLabel("Schwierigkeit: ");
+        lblBearbeitungszeit = new JLabel("BearbeitungsZeit: ");
+        lblPunkte = new JLabel("Punkte: ");
+        lblAufgabentext = new JLabel("Aufgaben Text");
 
-        centerPnl.add(titelLbl);
-        centerPnl.add(titelTF);
-        centerPnl.add(aufgabenTxtLbl);
-        centerPnl.add(aufgabenTextTA);
-        centerPnl.add(kategorienLbl);
-        centerPnl.add(kategorienCB);
-        centerPnl.add(UMLHochladenBtn);
-        centerPnl.add(musterloesungBtn);
-        centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitCB);
-        centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTF);
-        centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTF);
-        centerPnl.add(loesungsHinweisLbl);
-        centerPnl.add(loesungshinwTA);
+        pnlCenter.add(lblTitel);
+        pnlCenter.add(txtfTitel);
+        pnlCenter.add(lblAufgabentext);
+        pnlCenter.add(txtaAufgabentext);
+        pnlCenter.add(lblKategorien);
+        pnlCenter.add(cbKategorien);
+        pnlCenter.add(btnUMLHochladen);
+        pnlCenter.add(btnMusterloesung);
+        pnlCenter.add(lblSchwierigkeit);
+        pnlCenter.add(cbSchwierigkeit);
+        pnlCenter.add(lblBearbeitungszeit);
+        pnlCenter.add(txtfBearbeitungszeit);
+        pnlCenter.add(lblPunkte);
+        pnlCenter.add(txtfPunkte);
+        pnlCenter.add(lblLoesungshinweis);
+        pnlCenter.add(txtaLoesungshinweis);
 
-        northPnl.add(zurueckBtn);
-        southPnl.add(speichernBtn);
+        pnlNorth.add(btnZurueck);
+        pnlSouth.add(btnSpeichern);
 
-        AufgabeErstellenUMLPnl.add(centerPnl, BorderLayout.CENTER);
-        AufgabeErstellenUMLPnl.add(northPnl, BorderLayout.NORTH);
-        AufgabeErstellenUMLPnl.add(southPnl, BorderLayout.SOUTH);
-        this.add(AufgabeErstellenUMLPnl);
+        pnlAufgabeErstellenUML.add(pnlCenter, BorderLayout.CENTER);
+        pnlAufgabeErstellenUML.add(pnlNorth, BorderLayout.NORTH);
+        pnlAufgabeErstellenUML.add(pnlSouth, BorderLayout.SOUTH);
+        this.add(pnlAufgabeErstellenUML);
     }
 
     /**
@@ -156,16 +150,16 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.zurueckBtn) {
+        if (e.getSource() == this.btnZurueck) {
             zurueck();
-        } else if (e.getSource() == this.speichernBtn) {
+        } else if (e.getSource() == this.btnSpeichern) {
             speichern();
-        } else if (e.getSource() == this.UMLHochladenBtn) {
+        } else if (e.getSource() == this.btnUMLHochladen) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-            designFile = filcV.fileChooser();
-        } else if (e.getSource() == this.musterloesungBtn) {
+            fileDesign = filcV.fileChooser();
+        } else if (e.getSource() == this.btnMusterloesung) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-            musterloesungFile = filcV.fileChooser();
+            fileMusterloesung = filcV.fileChooser();
         }
     }
 
@@ -191,13 +185,13 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         Schwierigkeitsgrad schw = null;
 
         try {
-            aufgTitel = titelTF.getText();
-            aufText = aufgabenTextTA.getText();
-            loesungshinweis = loesungshinwTA.getText();
-            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
-            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-            kat = (Kategorie) kategorienCB.getSelectedItem();
-            punkte = Integer.parseInt(punkteTF.getText());
+            aufgTitel = txtfTitel.getText();
+            aufText = txtaAufgabentext.getText();
+            loesungshinweis = txtaLoesungshinweis.getText();
+            bearbeitungsZeit = Integer.parseInt(txtfBearbeitungszeit.getText());
+            schw = (Schwierigkeitsgrad) cbSchwierigkeit.getSelectedItem();
+            kat = (Kategorie) cbKategorien.getSelectedItem();
+            punkte = Integer.parseInt(txtfPunkte.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -218,10 +212,10 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
      * @param schw             Schwierigkeitsgrd der Aufgabe
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw) {
-        if(designFile != null && musterloesungFile != null) {
+        if(fileDesign != null && fileMusterloesung != null) {
             DatabaseService ds = DatabaseService.getInstance();
-            byte[] designByteArray = DatabaseService.convertFileToByteArray(designFile, this);
-            byte[] musterloesungByteArray = DatabaseService.convertFileToByteArray(musterloesungFile, this);
+            byte[] designByteArray = DatabaseService.convertFileToByteArray(fileDesign, this);
+            byte[] musterloesungByteArray = DatabaseService.convertFileToByteArray(fileMusterloesung, this);
             Designaufgabe neueAufgabe = new Designaufgabe(bearbeitungsZeit, designByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
             doz.addErstellteAufgabe(neueAufgabe);
             MusterloesungDesignaufgabe mlp = new MusterloesungDesignaufgabe(neueAufgabe, loesungshinweis, musterloesungByteArray);

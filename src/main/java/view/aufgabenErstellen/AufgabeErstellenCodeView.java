@@ -14,46 +14,47 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * Die View zur Erstellung einer Code Aufgabe
+ * Die View zur Erstellung einer Codeaufgabe
  *
  * @author Jannik Oehme
  * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
-    private JFrame aufgabeErstellenStartViewFrame;
     private Dozent doz;
-    private JPanel AufgabeErstellenCodePnl;
-    private JPanel centerPnl;
-    private JPanel northPnl;
-    private JPanel southPnl;
-    private BorderLayout bl = new BorderLayout();
-    private GridLayout gl = new GridLayout(10, 2);
-    private JButton codeHochBtn;
-    private JButton zurueckBtn;
-    private JButton speichernBtn;
-    private JComboBox kategorienCB;
-    private JComboBox schwierigkeitCB;
-    private JLabel codeBspHochLbl;
-    private JLabel codeBeispiel;
-    private JLabel kategorieLbl;
-    private JLabel titelLbl;
-    private JLabel aufgabenTxtLbl;
-    private JLabel loesungsHinweisLbl;
-    private JLabel schwierigketiLbl;
-    private JLabel bearbeitungszeitLbl;
-    private JLabel punkteLbl;
-    private JLabel loesungLbl;
-    private JTextField titelTF;
-    private JTextArea aufgabenTextTA;
-    private JTextArea loesungshinwTA;
-    private JTextField bearbeitungsZeitTF;
-    private JTextField punkteTF;
-    private JTextArea loesungTA;
-    private File codeBspFile;
-    byte [] bspBildByteArray;
+    private JFrame aufgabeErstellenStartViewFrame;
+    private JPanel pnlAufgabeErstellenCode;
+    private BorderLayout borderLayout = new BorderLayout();
+    private GridLayout gridLayout = new GridLayout(10, 2);
+    private JPanel pnlCenter;
+    private JPanel pnlNorth;
+    private JPanel pnlSouth;
+
+    private JButton btnCodeHoch;
+    private JButton btnZurueck;
+    private JButton btnSpeichern;
+    private JComboBox cbKategorien;
+    private JComboBox cbSchwierigkeit;
+    private JLabel lblCodebeispielHoch;
+    private JLabel lblCodeBeispiel;
+    private JLabel lblKategorie;
+    private JLabel lblTitel;
+    private JLabel lblAufgabentext;
+    private JLabel lblLoesungshinweis;
+    private JLabel lblSchwierigkeit;
+    private JLabel lblBearbeitungszeit;
+    private JLabel lblPunkte;
+    private JLabel lblLoesung;
+    private JTextField txtfTitel;
+    private JTextArea txtaAufgabentext;
+    private JTextArea txtaLoesungshinweis;
+    private JTextField txtfBearbeitungszeit;
+    private JTextField txtfPunkte;
+    private JTextArea txtaLoesung;
+    private File fileCodeBsp;
+    byte [] byteArrayBeispielBild;
 
     /**
-     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
+     * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame. Setzt Parameter des JFrames und ruft AufgabeErstellenCodeViewFuellen() auf.
      *
      * @param doz                            Ein Dozent
      * @param aufgabeErstellenStartViewFrame dervorherige Frame
@@ -75,100 +76,99 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     }
 
     /**
-     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Komponenten in den Frame ein.
      */
     private void AufgabeErstellenCodeViewFuellen() {
-        gl.setVgap(25);
-        gl.setHgap(25);
-        centerPnl = new JPanel(gl);
-        northPnl = new JPanel();
-        southPnl = new JPanel();
+        gridLayout.setVgap(25);
+        gridLayout.setHgap(25);
+        pnlCenter = new JPanel(gridLayout);
+        pnlNorth = new JPanel();
+        pnlSouth = new JPanel();
 
-        AufgabeErstellenCodePnl = new JPanel();
-        AufgabeErstellenCodePnl.setLayout(bl);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+        pnlAufgabeErstellenCode = new JPanel();
+        pnlAufgabeErstellenCode.setLayout(borderLayout);
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 
-        codeHochBtn = new JButton("Optionales Java Design Hochladen");
-        codeHochBtn.addActionListener(this);
+        btnCodeHoch = new JButton("Optionales Java Design Hochladen");
+        btnCodeHoch.addActionListener(this);
 
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
 
-        speichernBtn = new JButton("Speichern");
-        speichernBtn.addActionListener(this);
-
+        btnSpeichern = new JButton("Speichern");
+        btnSpeichern.addActionListener(this);
 
         Kategorie[] kat = {Kategorie.Java_Programmierung, Kategorie.Datenbanken, Kategorie.Software_Engineering, Kategorie.Java_Grundlagen,};
-        kategorienCB = new JComboBox(kat);
+        cbKategorien = new JComboBox(kat);
 
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
-        schwierigkeitCB = new JComboBox(schw);
+        cbSchwierigkeit = new JComboBox(schw);
 
-        loesungTA = new JTextArea();
-        loesungTA.setLineWrap(true);
+        txtaLoesung = new JTextArea();
+        txtaLoesung.setLineWrap(true);
 
-        aufgabenTextTA = new JTextArea(50, 50);
-        aufgabenTextTA.setLineWrap(true);
+        txtaAufgabentext = new JTextArea(50, 50);
+        txtaAufgabentext.setLineWrap(true);
 
-        loesungshinwTA = new JTextArea();
-        loesungshinwTA.setLineWrap(true);
+        txtaLoesungshinweis = new JTextArea();
+        txtaLoesungshinweis.setLineWrap(true);
 
-        titelTF = new JTextField();
-        bearbeitungsZeitTF = new JTextField();
-        punkteTF = new JTextField();
+        txtfTitel = new JTextField();
+        txtfBearbeitungszeit = new JTextField();
+        txtfPunkte = new JTextField();
 
-        codeBspHochLbl = new JLabel("Optionales Java Design ");
-        kategorieLbl = new JLabel("Kategorien");
-        titelLbl = new JLabel("Aufgaben Titel");
-        loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
-        schwierigketiLbl = new JLabel("Schwierigkeit: ");
-        bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
-        punkteLbl = new JLabel("Punkte: ");
-        loesungLbl = new JLabel("Lösung");
-        aufgabenTxtLbl = new JLabel("Aufgaben Text");
+        lblCodebeispielHoch = new JLabel("Optionales Java Design ");
+        lblKategorie = new JLabel("Kategorien");
+        lblTitel = new JLabel("Aufgaben Titel");
+        lblLoesungshinweis = new JLabel("Lösungshinweis: ");
+        lblSchwierigkeit = new JLabel("Schwierigkeit: ");
+        lblBearbeitungszeit = new JLabel("BearbeitungsZeit: ");
+        lblPunkte = new JLabel("Punkte: ");
+        lblLoesung = new JLabel("Lösung");
+        lblAufgabentext = new JLabel("Aufgaben Text");
 
-        centerPnl.add(titelLbl);
-        centerPnl.add(titelTF);
-        centerPnl.add(aufgabenTxtLbl);
-        centerPnl.add(aufgabenTextTA);
-        centerPnl.add(loesungLbl);
-        centerPnl.add(loesungTA);
-        centerPnl.add(kategorieLbl);
-        centerPnl.add(kategorienCB);
-        centerPnl.add(schwierigketiLbl);
-        centerPnl.add(schwierigkeitCB);
-        centerPnl.add(codeBspHochLbl);
-        centerPnl.add(codeHochBtn);
-        centerPnl.add(bearbeitungszeitLbl);
-        centerPnl.add(bearbeitungsZeitTF);
-        centerPnl.add(punkteLbl);
-        centerPnl.add(punkteTF);
-        centerPnl.add(loesungsHinweisLbl);
-        centerPnl.add(loesungshinwTA);
+        pnlCenter.add(lblTitel);
+        pnlCenter.add(txtfTitel);
+        pnlCenter.add(lblAufgabentext);
+        pnlCenter.add(txtaAufgabentext);
+        pnlCenter.add(lblLoesung);
+        pnlCenter.add(txtaLoesung);
+        pnlCenter.add(lblKategorie);
+        pnlCenter.add(cbKategorien);
+        pnlCenter.add(lblSchwierigkeit);
+        pnlCenter.add(cbSchwierigkeit);
+        pnlCenter.add(lblCodebeispielHoch);
+        pnlCenter.add(btnCodeHoch);
+        pnlCenter.add(lblBearbeitungszeit);
+        pnlCenter.add(txtfBearbeitungszeit);
+        pnlCenter.add(lblPunkte);
+        pnlCenter.add(txtfPunkte);
+        pnlCenter.add(lblLoesungshinweis);
+        pnlCenter.add(txtaLoesungshinweis);
 
-        northPnl.add(zurueckBtn);
-        southPnl.add(speichernBtn);
+        pnlNorth.add(btnZurueck);
+        pnlSouth.add(btnSpeichern);
 
-        AufgabeErstellenCodePnl.add(centerPnl, BorderLayout.CENTER);
-        AufgabeErstellenCodePnl.add(northPnl, BorderLayout.NORTH);
-        AufgabeErstellenCodePnl.add(southPnl, BorderLayout.SOUTH);
-        this.add(AufgabeErstellenCodePnl);
+        pnlAufgabeErstellenCode.add(pnlCenter, BorderLayout.CENTER);
+        pnlAufgabeErstellenCode.add(pnlNorth, BorderLayout.NORTH);
+        pnlAufgabeErstellenCode.add(pnlSouth, BorderLayout.SOUTH);
+        this.add(pnlAufgabeErstellenCode);
     }
 
     /**
-     * Führt Aktionen der JButtons sowie der JComboboxen aus und ruft ggf. weitere Methoden auf.
+     * Führt Aktionen der JButtons sowie der JComboBoxen aus und ruft ggf. weitere Methoden auf.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.zurueckBtn) {
+        if (e.getSource() == this.btnZurueck) {
             zurueck();
-        } else if (e.getSource() == this.speichernBtn) {
+        } else if (e.getSource() == this.btnSpeichern) {
             speichern();
-        } else if (e.getSource() == this.codeHochBtn) {
+        } else if (e.getSource() == this.btnCodeHoch) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
-            codeBspFile = filcV.fileChooser();
-            if(codeBspFile != null)
-                bspBildByteArray = DatabaseService.convertFileToByteArray(codeBspFile, this);
+            fileCodeBsp = filcV.fileChooser();
+            if(fileCodeBsp != null)
+                byteArrayBeispielBild = DatabaseService.convertFileToByteArray(fileCodeBsp, this);
         }
     }
 
@@ -181,7 +181,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     }
 
     /**
-     * Ruft die daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanz variablen ein.
+     * Ruft die Daten aus den JTextAreas sowie aus den JTextFields auf. Setzt diese in die Instanzvariablen ein.
      * Ruft createObjectandPersist auf.
      */
     private void speichern() {
@@ -195,14 +195,14 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         String loesung = null;
 
         try {
-            aufgTitel = titelTF.getText();
-            aufText = aufgabenTextTA.getText();
-            loesungshinweis = loesungshinwTA.getText();
-            bearbeitungsZeit = Integer.parseInt(bearbeitungsZeitTF.getText());
-            schw = (Schwierigkeitsgrad) schwierigkeitCB.getSelectedItem();
-            kat = (Kategorie) kategorienCB.getSelectedItem();
-            punkte = Integer.parseInt(punkteTF.getText());
-            loesung = loesungTA.getText();
+            aufgTitel = txtfTitel.getText();
+            aufText = txtaAufgabentext.getText();
+            loesungshinweis = txtaLoesungshinweis.getText();
+            bearbeitungsZeit = Integer.parseInt(txtfBearbeitungszeit.getText());
+            schw = (Schwierigkeitsgrad) cbSchwierigkeit.getSelectedItem();
+            kat = (Kategorie) cbKategorien.getSelectedItem();
+            punkte = Integer.parseInt(txtfPunkte.getText());
+            loesung = txtaLoesung.getText();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -217,7 +217,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
     }
 
     /**
-     * Erstellt eine Aufgabe vom Typ Programmieraufgabe, Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
+     * Erstellt eine Aufgabe vom Typ Programmieraufgabe. Erstellt eine Musterlösung für den Typen, verknüpft die Aufgabe und die Musterlösung. Speichert beide über den DatabaseService in die Datenbank.
      *
      * @param aufgTitel        Titel der Aufgabe
      * @param aufText          Text der Aufgabe
@@ -230,7 +230,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
      */
     private void createObjectandPersist(String aufgTitel, String aufText, String loesungshinweis, int bearbeitungsZeit, int punkte, Kategorie kat, Schwierigkeitsgrad schw, String loesung) {
         DatabaseService ds = DatabaseService.getInstance();
-        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, bspBildByteArray, kat, punkte, schw, aufText, aufgTitel, doz, null);
+        Programmieraufgabe neueAufgabe = new Programmieraufgabe(bearbeitungsZeit, byteArrayBeispielBild, kat, punkte, schw, aufText, aufgTitel, doz, null);
         MusterloesungProgrammieraufgabe mlp = new MusterloesungProgrammieraufgabe(neueAufgabe, loesungshinweis, loesung);
         doz.addErstellteAufgabe(neueAufgabe);
         try {
