@@ -1,10 +1,10 @@
 package controller;
 
-import View.EinsehenTrainingKatalogView;
-import View.Lösungen.LoesungenTraining.LoesungTrainingDesignaufgabeView;
-import View.Lösungen.LoesungenTraining.LoesungTrainingEinfachantwortaufgabeView;
-import View.Lösungen.LoesungenTraining.LoesungTrainingMultipleChoiceAufgabeView;
-import View.Lösungen.LoesungenTraining.LoesungTrainingProgrammieraufgabeView;
+import view.EinsehenTrainingKatalogView;
+import view.loesungen.loesungenTraining.LoesungTrainingDesignaufgabeView;
+import view.loesungen.loesungenTraining.LoesungTrainingEinfachantwortaufgabeView;
+import view.loesungen.loesungenTraining.LoesungTrainingMultipleChoiceAufgabeView;
+import view.loesungen.loesungenTraining.LoesungTrainingProgrammieraufgabeView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;

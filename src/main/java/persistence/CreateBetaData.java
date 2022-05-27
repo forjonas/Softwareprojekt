@@ -1,13 +1,12 @@
 package persistence;
 
 
-import View.LoginView;
+import view.LoginView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.aufgabensammlung.Training;
-import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
 import entity.enums.Kategorie;
@@ -15,7 +14,6 @@ import entity.enums.Schwierigkeitsgrad;
 import entity.loesung.musterloesung.*;
 import entity.loesung.userloesung.*;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;

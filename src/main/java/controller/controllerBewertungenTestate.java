@@ -1,11 +1,11 @@
 package controller;
 
-import View.KorrigiereTestatKatalogView;
-import View.Lösungen.BewertungenTestat.BewertungDesignaufgabeView;
-import View.Lösungen.BewertungenTestat.BewertungEinfachantwortView;
-import View.Lösungen.BewertungenTestat.BewertungMultipleChoiceAufgabeView;
-import View.Lösungen.BewertungenTestat.BewertungProgrammieraufgabeView;
-import View.MeineTestateKatalogView;
+import view.KorrigiereTestatKatalogView;
+import view.loesungen.bewertungenTestat.BewertungDesignaufgabeView;
+import view.loesungen.bewertungenTestat.BewertungEinfachantwortView;
+import view.loesungen.bewertungenTestat.BewertungMultipleChoiceAufgabeView;
+import view.loesungen.bewertungenTestat.BewertungProgrammieraufgabeView;
+import view.MeineTestateKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;

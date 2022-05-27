@@ -1,7 +1,7 @@
 package controller;
 
-import View.aufgabenBearbeiten.BearbeitungsController;
-import View.EinsehenTrainingKatalogView;
+import view.aufgabenBearbeiten.BearbeitungsController;
+import view.EinsehenTrainingKatalogView;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
