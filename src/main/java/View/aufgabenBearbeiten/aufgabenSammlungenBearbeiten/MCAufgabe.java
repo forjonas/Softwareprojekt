@@ -14,11 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
-public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
+public class MCAufgabe extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -36,7 +33,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
     private JLabel lblAufgabenText;
-    private int eingabe;
+    protected int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -50,32 +47,31 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     protected MultipleChoiceAufgabe aufgabe;
     protected UserloesungMultipleChoiceAufgabe userloesung;
 
-    public BearbeiteMuktipleChoiceAufgabeView(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
+    public MCAufgabe(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
 
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
+
         if (controller.getClass() == TestatController.class) {
             this.testatController = (TestatController) controller;
         } else if (controller.getClass() == TrainingController.class) {
             this.trainingController = (TrainingController) controller;
         }
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         lblAufgabenText.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
-        //int lokalerIndex = 0;
-        //if (lokalerIndex < mIndex) {
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+
+        for (int i = 0; i < mIndex; i++) {
 
             if (i == 0) {
                 antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
@@ -92,9 +88,6 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
             }
-
-            //}
-            //lokalerIndex++;
         }
 
         ButtonGroup bg = new ButtonGroup();
@@ -114,8 +107,10 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         super.setVisible(true);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == this.btnAbbrechen) {
             JOptionPane.showMessageDialog(this, "Aufgaben werden nicht gespeichert");
             this.dispose();
@@ -142,6 +137,8 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
             }
 
         }
+
+
         if (e.getSource() == this.btnNaechsteAufgabe) {
             String buttonWechsel = btnNaechsteAufgabe.getText();
             userEingabenSpeichern();
@@ -167,29 +164,10 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
                 }
             }
         }
+
     }
 
-    /**
-     * Usereingaben speichern
-     */
     public void userEingabenSpeichern() {
-        /*
-        List<Boolean> userloesungBooleanArray = new LinkedList<Boolean>();
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-        userloesungBooleanArray.add(false);
-
-        if (btnantwort1.isSelected()) {
-            userloesungBooleanArray.set(0, true);
-        } else if (btnantwort2.isSelected()) {
-            userloesungBooleanArray.set(1, true);
-        } else if (btnantwort3.isSelected()) {
-            userloesungBooleanArray.set(2, true);
-        } else if (btnantwort4.isSelected()) {
-            userloesungBooleanArray.set(3, true);
-        }
-         */
         if (btnantwort1.isSelected()) {
             eingabe = 1;
         } else if (btnantwort2.isSelected()) {
@@ -208,11 +186,9 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
             trainingController.addUserloesung(userloesung);
         }
 
+
     }
 
-    /**
-     * verändert "Nächste" Button zu "Testat Beenden" Button
-     */
     public void setNaechsteZuSpeichern() {
         if (trainingController != null) {
             btnNaechsteAufgabe.setText("Training beenden");
@@ -223,19 +199,12 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         }
     }
 
-    /**
-     * Setzt leere Usereingabe
-     */
     public void setUserloesungNull() {
         int zahl = -1;
         eingabe = zahl;
     }
 
-    /**
-     * Setzt eingegebene Userlösung
-     *
-     * @param userloesung
-     */
+
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();
 
@@ -252,6 +221,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
             btnantwort1.setSelected(true);
         }
     }
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -363,5 +333,4 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }

@@ -1,10 +1,7 @@
 package View.aufgabenBearbeiten;
 
 import View.aufgabenBearbeiten.app.TestatController;
-import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteDesignaufgabeView;
-import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteEinfachantwortAufgabeView;
-import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteMuktipleChoiceAufgabeView;
-import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.BearbeiteProgrammieraufgabeView;
+import View.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
 import View.aufgabenBearbeiten.app.TrainingController;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
@@ -21,6 +18,7 @@ import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public abstract class BearbeitungsController {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
+            MCAufgabe frame = new MCAufgabe(this, (MultipleChoiceAufgabe) aufgabe);
             // frame.setUserloesung(userloesungen.get(index));
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
@@ -189,7 +187,7 @@ public abstract class BearbeitungsController {
         java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
         java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2,});
         java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a3, a3, a3, a4, a4, a4});
-        java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a3, a4});
+        java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a2, a1});
         java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2, a3, a3, a4, a4});
 
         java.util.List<Aufgabe> aufgabenListe6 = new ArrayList<>(); //= Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
@@ -200,14 +198,14 @@ public abstract class BearbeitungsController {
 
         Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
         Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe1, "Hallo1234", "Sommertestat", dozent1);
+        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
         Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
         Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
         java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
         Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
 
        TestatController testatApp = new TestatController(t1, dozent2, null);
-        Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
+       //Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
       //TrainingController trainingController = new TrainingController(training1, dozent2, null);
 
     }
