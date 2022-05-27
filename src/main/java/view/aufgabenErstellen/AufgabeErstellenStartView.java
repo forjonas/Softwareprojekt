@@ -124,7 +124,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
      *                         überprüft den input und gibt einen boolean zurück
      */
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte, Frame testFrame) {
-        if (bearbeitungsZeit >= 60 || bearbeitungsZeit <= 1 || punkte >= 100 || punkte <= 0) {
+        if (bearbeitungsZeit >= 60 || bearbeitungsZeit <= 1 || punkte >= 100 || punkte <= 1) {
             JOptionPane.showMessageDialog(testFrame,
                     "Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0",
                     "Error",

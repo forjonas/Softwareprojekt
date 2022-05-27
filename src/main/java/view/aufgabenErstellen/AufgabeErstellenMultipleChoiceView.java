@@ -141,8 +141,8 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
         bspBildLbl = new JLabel("Beispiel Bild Hochladen: ");
         anzAntLbl = new JLabel("Anzahl der Antwortmöglichkeiten");
         schwierigkeitLbl = new JLabel("Schwierigkeit");
-        kategorieLbl = new JLabel("Kategorien");
-        titelLbl = new JLabel("Aufgaben Titel");
+        kategorieLbl = new JLabel("Kategorien:");
+        titelLbl = new JLabel("Aufgaben Titel:");
         loesungsHinweisLbl = new JLabel("Lösungshinweis: ");
         schwierigketiLbl = new JLabel("Schwierigkeit: ");
         bearbeitungszeitLbl = new JLabel("BearbeitungsZeit: ");
