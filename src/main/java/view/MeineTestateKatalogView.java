@@ -44,7 +44,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = DatabaseService.getInstance().readTestateFromDatabase();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Meine Testat");
+        setTitle("Meine Testate");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
