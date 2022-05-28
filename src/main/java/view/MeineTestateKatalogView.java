@@ -2,11 +2,11 @@ package view;
 
 import controller.controllerBewertungenTestate;
 import controller.TestatController;
-import view.tableModel.MeineTestateTableModel;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
 import persistence.DatabaseService;
+import view.tableModel.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
