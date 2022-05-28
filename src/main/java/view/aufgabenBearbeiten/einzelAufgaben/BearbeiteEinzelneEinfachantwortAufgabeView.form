@@ -18,9 +18,8 @@
         <children>
           <component id="1fe6" class="javax.swing.JLabel" binding="lblBild">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="250" height="150"/>
-                <preferred-size width="250" height="150"/>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="200" height="200"/>
               </grid>
             </constraints>
             <properties>
@@ -221,10 +220,10 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="50911" class="javax.swing.JLabel" binding="lblAufgabenText">
+              <component id="76e71" class="javax.swing.JTextArea" binding="txtaAufgabentext">
                 <constraints/>
                 <properties>
-                  <text value="Aufgabentext"/>
+                  <editable value="false"/>
                 </properties>
               </component>
             </children>
