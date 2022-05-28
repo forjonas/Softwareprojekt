@@ -1,35 +1,17 @@
 package controller;
 
 import view.MeineTestateKatalogView;
-import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
- * @version5: 19.05.22 Vorher Button mit Inhalt
- * @version6: 20.05.22 "Beenden" Button auf setVisible(false)
- * @version7: 23.05.22 Button von "nächste" zu "beenden" u.v.m
+ * @version: 28.05.2022
  * Schnittstelle um ein Testat auszuführen
  */
 public class TestatController extends BearbeitungsController {

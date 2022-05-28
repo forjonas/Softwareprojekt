@@ -1,6 +1,6 @@
 package controller;
 
-import view.EinsehenTrainingKatalogView;
+import view.*;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
@@ -44,7 +44,12 @@ public class TrainingController extends BearbeitungsController {
 
 
     public void setNewTrainingKatalog() {
-        new EinsehenTrainingKatalogView(this.hauptmenueFrame, (Dozent) aktuellerBenutzer);
+
+        if (aktuellerBenutzer.getClass() == Dozent.class) {
+            new DozentAnsicht((Dozent) aktuellerBenutzer);
+        } else if (aktuellerBenutzer.getClass() == Student.class) {
+            new StudentMainView((Student) aktuellerBenutzer);
+        }
     }
 
     /**
@@ -73,6 +78,11 @@ public class TrainingController extends BearbeitungsController {
      */
     public Training getTraining() {
         return training;
+    }
+
+
+    public void setUserFrameVisible() {
+        hauptmenueFrame.setVisible(true);
     }
 
 }

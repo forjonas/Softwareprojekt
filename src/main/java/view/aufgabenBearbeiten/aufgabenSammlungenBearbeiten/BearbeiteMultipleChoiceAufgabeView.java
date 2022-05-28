@@ -6,14 +6,27 @@ import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.Testat;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import entity.loesung.musterloesung.MusterloesungEinfachantwort;
+import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
+import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -32,7 +45,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private JLabel lblAufgabenText;
+    private JTextArea txtaAufgabentext;
     private int eingabe;
 
     private String antwort1;
@@ -59,7 +72,8 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        lblAufgabenText.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
             lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
@@ -87,6 +101,12 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
             }
         }
 
+        if (aufgabe.getAntwortmoeglichkeiten().size() == 2) {
+            btnantwort3.setVisible(false);
+            btnantwort4.setVisible(false);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 3) {
+            btnantwort4.setVisible(false);
+        }
         ButtonGroup bg = new ButtonGroup();
         bg.add(btnantwort1);
         bg.add(btnantwort2);
@@ -216,14 +236,11 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
 
         if (eingabe == 1) {
             btnantwort1.setSelected(true);
-        }
-        else if (eingabe == 2) {
+        } else if (eingabe == 2) {
             btnantwort2.setSelected(true);
-        }
-        else if (eingabe == 3) {
+        } else if (eingabe == 3) {
             btnantwort3.setSelected(true);
-        }
-        else if (eingabe == 4) {
+        } else if (eingabe == 4) {
             btnantwort4.setSelected(true);
         }
     }
@@ -250,7 +267,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblBild = new JLabel();
         lblBild.setText("");
-        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -327,9 +344,9 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         panel8.add(btnantwort2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
-        lblAufgabenText = new JLabel();
-        lblAufgabenText.setText("Aufgabentext");
-        scrollPane1.setViewportView(lblAufgabenText);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        scrollPane1.setViewportView(txtaAufgabentext);
     }
 
     /**
