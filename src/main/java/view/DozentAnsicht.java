@@ -17,19 +17,19 @@ import java.awt.event.ActionListener;
  */
 public class DozentAnsicht extends JFrame implements ActionListener {
 
-    private JButton abmeldenBtn;
-    private JButton testateBerwertenBtn;
-    private JButton trainingsEinsehenBtn;
-    private JButton testateErstellenBtn;
-    private JButton testatuebersichtBtn;
-    private JButton aufgabeErstellenBtn;
-    private JButton aufgabenuebersichtBtn;
-    private JButton aufgabeBearbeitenBtn;
-    private JButton trainingsDurchfuehrenBtn;
-    private JButton meineTestateBtn;
-    private JPanel centerPnl;
-    private JPanel dozentMainPanel;
-    GridLayout gl = new GridLayout(3, 3);
+    private JPanel pnlDozentMain;
+    private JPanel pnlCenter;
+    private JButton btnTestateBewerten;
+    private JButton btnTrainingsEinsehen;
+    private JButton btnTestateErstellen;
+    private JButton btnTestatuebersicht;
+    private JButton btnAufgabeErstellen;
+    private JButton btnAufgabenuebersicht;
+    private JButton btnAufgabeBearbeiten;
+    private JButton btnTrainingsDurchfuehren;
+    private JButton btnMeineTestate;
+    private JButton btnAbmelden;
+    GridLayout gridLayout = new GridLayout(3, 3);
     Dozent dozent;
 
     public DozentAnsicht(Dozent doz) {
@@ -47,79 +47,79 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     public void fuelleDozentFrame() {
         JLabel welcomeMsgLbl = new JLabel("Willkommen " + dozent.getVorname() + " " + dozent.getNachname());
 
-        abmeldenBtn = new JButton("Abmelden");
-        abmeldenBtn.addActionListener(this);
+        btnAbmelden = new JButton("Abmelden");
+        btnAbmelden.addActionListener(this);
 
-        testateBerwertenBtn = new JButton("Testate bewerten");
-        testateBerwertenBtn.addActionListener(this);
+        btnTestateBewerten = new JButton("Testate bewerten");
+        btnTestateBewerten.addActionListener(this);
 
-        trainingsEinsehenBtn = new JButton("Trainings einsehen");
-        trainingsEinsehenBtn.addActionListener(this);
+        btnTrainingsEinsehen = new JButton("Trainings einsehen");
+        btnTrainingsEinsehen.addActionListener(this);
 
-        testateErstellenBtn = new JButton("Testate erstellen");
-        testateErstellenBtn.addActionListener(this);
+        btnTestateErstellen = new JButton("Testate erstellen");
+        btnTestateErstellen.addActionListener(this);
 
-        testatuebersichtBtn = new JButton("Testatübersicht");
-        testatuebersichtBtn.addActionListener(this);
+        btnTestatuebersicht = new JButton("Testatübersicht");
+        btnTestatuebersicht.addActionListener(this);
 
-        aufgabeErstellenBtn = new JButton("Aufgabe erstellen");
-        aufgabeErstellenBtn.addActionListener(this);
+        btnAufgabeErstellen = new JButton("Aufgabe erstellen");
+        btnAufgabeErstellen.addActionListener(this);
 
-        aufgabenuebersichtBtn = new JButton("Aufgabenübersicht");
-        aufgabenuebersichtBtn.addActionListener(this);
+        btnAufgabenuebersicht = new JButton("Aufgabenübersicht");
+        btnAufgabenuebersicht.addActionListener(this);
 
-        aufgabeBearbeitenBtn = new JButton("Einzelne Aufgabe bearbeiten");
-        aufgabeBearbeitenBtn.addActionListener(this);
+        btnAufgabeBearbeiten = new JButton("Einzelne Aufgabe bearbeiten");
+        btnAufgabeBearbeiten.addActionListener(this);
 
-        trainingsDurchfuehrenBtn = new JButton("Trainings durchführen");
-        trainingsDurchfuehrenBtn.addActionListener(this);
+        btnTrainingsDurchfuehren = new JButton("Trainings durchführen");
+        btnTrainingsDurchfuehren.addActionListener(this);
 
-        meineTestateBtn = new JButton("Meine Testate");
-        meineTestateBtn.addActionListener(this);
+        btnMeineTestate = new JButton("Meine Testate");
+        btnMeineTestate.addActionListener(this);
         JPanel tempSouthPanel = new JPanel(new FlowLayout());
 
-        centerPnl = new JPanel(gl);
-        dozentMainPanel = new JPanel(new BorderLayout());
+        pnlCenter = new JPanel(gridLayout);
+        pnlDozentMain = new JPanel(new BorderLayout());
 
-        centerPnl.add(testateBerwertenBtn);
-        centerPnl.add(meineTestateBtn);
-        centerPnl.add(testatuebersichtBtn);
-        centerPnl.add(testateErstellenBtn);
-        centerPnl.add(trainingsDurchfuehrenBtn);
-        centerPnl.add(trainingsEinsehenBtn);
-        centerPnl.add(aufgabenuebersichtBtn);
-        centerPnl.add(aufgabeErstellenBtn);
-        centerPnl.add(aufgabeBearbeitenBtn);
-        tempSouthPanel.add(abmeldenBtn);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
-        dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
-        dozentMainPanel.add(tempSouthPanel, BorderLayout.SOUTH);
-        dozentMainPanel.add(welcomeMsgLbl, BorderLayout.NORTH);
+        pnlCenter.add(btnTestateBewerten);
+        pnlCenter.add(btnMeineTestate);
+        pnlCenter.add(btnTestatuebersicht);
+        pnlCenter.add(btnTestateErstellen);
+        pnlCenter.add(btnTrainingsDurchfuehren);
+        pnlCenter.add(btnTrainingsEinsehen);
+        pnlCenter.add(btnAufgabenuebersicht);
+        pnlCenter.add(btnAufgabeErstellen);
+        pnlCenter.add(btnAufgabeBearbeiten);
+        tempSouthPanel.add(btnAbmelden);
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
+        pnlDozentMain.add(pnlCenter, BorderLayout.CENTER);
+        pnlDozentMain.add(tempSouthPanel, BorderLayout.SOUTH);
+        pnlDozentMain.add(welcomeMsgLbl, BorderLayout.NORTH);
 
-        this.add(dozentMainPanel);
+        this.add(pnlDozentMain);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.testateBerwertenBtn) {
+        if (e.getSource() == this.btnTestateBewerten) {
             testatEinsehen();
-        } else if (e.getSource() == this.meineTestateBtn) {
+        } else if (e.getSource() == this.btnMeineTestate) {
             testateDurchfuehren();
-        } else if (e.getSource() == this.trainingsDurchfuehrenBtn) {
+        } else if (e.getSource() == this.btnTrainingsDurchfuehren) {
             trainingsDurchfuehren();
-        } else if (e.getSource() == this.aufgabenuebersichtBtn) {
+        } else if (e.getSource() == this.btnAufgabenuebersicht) {
             aufgabenuebersicht();
-        } else if (e.getSource() == this.aufgabeErstellenBtn) {
+        } else if (e.getSource() == this.btnAufgabeErstellen) {
             aufgabeErstellen();
-        } else if (e.getSource() == this.aufgabeBearbeitenBtn) {
+        } else if (e.getSource() == this.btnAufgabeBearbeiten) {
             aufgabeBearbeiten();
-        } else if (e.getSource() == this.testatuebersichtBtn) {
+        } else if (e.getSource() == this.btnTestatuebersicht) {
             testatuebersicht();
-        } else if (e.getSource() == this.testateErstellenBtn) {
+        } else if (e.getSource() == this.btnTestateErstellen) {
             testateErstellen();
-        } else if (e.getSource() == this.trainingsEinsehenBtn) {
+        } else if (e.getSource() == this.btnTrainingsEinsehen) {
             trainingsEinsehen();
-        } else if (e.getSource() == this.abmeldenBtn) {
+        } else if (e.getSource() == this.btnAbmelden) {
             abmelden();
         }
     }

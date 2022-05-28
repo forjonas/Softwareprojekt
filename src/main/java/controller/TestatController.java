@@ -22,16 +22,16 @@ public class TestatController extends BearbeitungsController {
     /**
      * Konstruktor für Klasse TestatController
      *
-     * @param testat mit den zu bearbeitenden Aufgaben
+     * @param testat            mit den zu bearbeitenden Aufgaben
      * @param aktuellerBenutzer der das Testat bearbeitet
-     * @param hauptmenueFrame Hauptmenü Fenster des Benutzers
+     * @param hauptmenueFrame   Hauptmenü Fenster des Benutzers
      */
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
         super(testat, aktuellerBenutzer, hauptmenueFrame);
         this.testatBearbeitung = new TestatBearbeitung(testat, 0, aktuellerBenutzer, null);
         this.testat = testat;
         this.testat.addBearbeitung(testatBearbeitung);
-        super.zeigeAktuelleAufgabe(); //für manche relevant ??
+        super.zeigeAktuelleAufgabe();
     }
 
     /**
@@ -45,7 +45,7 @@ public class TestatController extends BearbeitungsController {
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
      * Fügt den aktuellerBenutzer die testatBearbeitung hinzu
      */
-    public void persistTestat() {//usereingaben Liste persistieren
+    public void persistTestat() {
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
@@ -59,7 +59,7 @@ public class TestatController extends BearbeitungsController {
         aktuellerBenutzer.addBearbeitetesTestat(testatBearbeitung);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        ds.persistObject(testat);//nötig????
+        ds.persistObject(testat);
         ds.persistObject(testatBearbeitung);
 
         System.out.println(userloesungen);
@@ -72,6 +72,5 @@ public class TestatController extends BearbeitungsController {
     public Testat getTestat() {
         return testat;
     }
-
 
 }

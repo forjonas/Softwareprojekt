@@ -20,21 +20,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Ansicht in der ein Training erstellt werden kann, indem Aufgaben aus einer Tabelle ausgewählt werden.
+ * Ansicht, in der ein Training erstellt werden kann, indem Aufgaben aus einer Tabelle ausgewählt werden.
  *
  * @author Martin Bergen
  * @version 23.05.22
  */
 public class TrainingGenerierenView extends JFrame implements ActionListener {
 
-    private JPanel contentPane;
-    private JTable tableAufgaben;
     private AufgabenAuswaehlenAufgabensammlungTableModel aufgabenAuswahlTableModel;
-    private JButton btnZurueck;
-    private JButton erstellenBtn;
     private List<Aufgabe> aufgabenliste;
     private Benutzer aktuellerBenutzer;
     private JFrame jframe;
+    private JPanel contentPane;
+    private JButton btnZurueck;
+    private JButton btnErstellen;
+    private JTable tableAufgaben;
     private Kategorie kategorie;
     private Schwierigkeitsgrad schwierigkeitsgrad;
     private int gesamtzeit;
@@ -136,11 +136,11 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         gbc_panelRightSouth.gridy = 0;
         panelSouth.add(panelRightSouth, gbc_panelRightSouth);
 
-        erstellenBtn = new JButton("Erstellen");
-        panelRightSouth.add(erstellenBtn);
+        btnErstellen = new JButton("Erstellen");
+        panelRightSouth.add(btnErstellen);
 
         btnZurueck.addActionListener(this);
-        erstellenBtn.addActionListener(this);
+        btnErstellen.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -158,7 +158,7 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
-        if (e.getSource() == this.erstellenBtn) {
+        if (e.getSource() == this.btnErstellen) {
             erstellenButtonLogik();
         }
     }

@@ -18,14 +18,14 @@ import java.awt.event.ActionListener;
  */
 public class CreateFrageView extends JFrame implements ActionListener {
 
-    private String[] schwierigkeitArray = {"Leicht", "Mittel", "Schwer"};
-    private String[] kategorieArray = {"Software Engineering", "Java Programmierung", "Java Grundlagen", "Klassendiagramme", "Datenbanken"};
     private JFrame jframe;
     private Benutzer benutzer;
-    private JComboBox<String> kategorieCBox = new JComboBox<>(kategorieArray);
-    private JComboBox<String> schwierigkeitCBox = new JComboBox<>(schwierigkeitArray);
-    private JButton waehlenBtn;
-    private JButton abbrechenBtn;
+    private JButton btnWaehlen;
+    private JButton btnAbbrechen;
+    private String[] schwierigkeitArray = {"Leicht", "Mittel", "Schwer"};
+    private String[] kategorieArray = {"Software Engineering", "Java Programmierung", "Java Grundlagen", "Klassendiagramme", "Datenbanken"};
+    private JComboBox<String> cbKategorie = new JComboBox<>(kategorieArray);
+    private JComboBox<String> cbSchwierigkeit = new JComboBox<>(schwierigkeitArray);
 
     /**
      * Konstruktor der Klasse CreateFrageView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
@@ -40,14 +40,14 @@ public class CreateFrageView extends JFrame implements ActionListener {
         JPanel tempPanel = new JPanel();
         JPanel waehlenPnl = new JPanel(new BorderLayout());
         JPanel tempSouthPanel = new JPanel(new FlowLayout());
-        tempPanel.add(kategorieCBox);
-        tempPanel.add(schwierigkeitCBox);
-        waehlenBtn = new JButton("OK");
-        waehlenBtn.addActionListener(this);
-        abbrechenBtn = new JButton("Abbrechen");
-        abbrechenBtn.addActionListener(this);
-        tempPanel.add(waehlenBtn);
-        tempSouthPanel.add(abbrechenBtn);
+        tempPanel.add(cbKategorie);
+        tempPanel.add(cbSchwierigkeit);
+        btnWaehlen = new JButton("OK");
+        btnWaehlen.addActionListener(this);
+        btnAbbrechen = new JButton("Abbrechen");
+        btnAbbrechen.addActionListener(this);
+        tempPanel.add(btnWaehlen);
+        tempSouthPanel.add(btnAbbrechen);
         waehlenPnl.add(tempPanel, BorderLayout.CENTER);
         waehlenPnl.add(tempSouthPanel, BorderLayout.SOUTH);
         this.add(waehlenPnl);
@@ -64,7 +64,7 @@ public class CreateFrageView extends JFrame implements ActionListener {
      * @return Kategorie
      */
     public Kategorie readKategorie() {
-        switch (getValueCBox(kategorieCBox)) {
+        switch (getValueCBox(cbKategorie)) {
             case "Software Engineering":
                 return Kategorie.Software_Engineering;
             case "Java Programmierung":
@@ -85,7 +85,7 @@ public class CreateFrageView extends JFrame implements ActionListener {
      * @return Schwierigkeitsgrad
      */
     public Schwierigkeitsgrad schwierigkeitsgradSetzen() {
-        switch (getValueCBox(schwierigkeitCBox)) {
+        switch (getValueCBox(cbSchwierigkeit)) {
             case "leicht":
                 return Schwierigkeitsgrad.Leicht;
             case "mittel":
@@ -113,7 +113,7 @@ public class CreateFrageView extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.waehlenBtn) {
+        if (e.getSource() == this.btnWaehlen) {
             if (DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()).size() != 0) {
                 new TrainingGenerierenView(jframe, benutzer, DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()), readKategorie(), schwierigkeitsgradSetzen());
                 this.dispose();
@@ -121,7 +121,7 @@ public class CreateFrageView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben mit diesen Parametern", "ERROR", JOptionPane.WARNING_MESSAGE);
             }
         }
-        if (e.getSource() == this.abbrechenBtn) {
+        if (e.getSource() == this.btnAbbrechen) {
             jframe.setVisible(true);
             this.dispose();
         }

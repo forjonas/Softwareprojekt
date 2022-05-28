@@ -26,7 +26,7 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     private JLabel lblAufgabentypWert;
     private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
-    private JButton btnVoherigeAufgabe;
+    private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JTextArea txtUsereingabe;
     private JTextArea txtaAufgabentext;
@@ -53,14 +53,13 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
             this.trainingController = (TrainingController) controller;
         }
 
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -69,7 +68,7 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
 
         btnAbbrechen.addActionListener(this);
         btnLoesungshinweis.addActionListener(this);
-        btnVoherigeAufgabe.addActionListener(this);
+        btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
@@ -92,13 +91,13 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
 
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == this.btnVoherigeAufgabe) {
+        } else if (e.getSource() == this.btnVorherigeAufgabe) {
 
             userEingabenSpeichern();
             if (testatController != null) {
@@ -140,10 +139,8 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     public void setNaechsteZuSpeichern() {
         if (trainingController != null) {
             btnNaechsteAufgabe.setText("Training beenden");
-
         } else {
             btnNaechsteAufgabe.setText("Testat beenden");
-
         }
     }
 
@@ -252,9 +249,9 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
         btnLoesungshinweis = new JButton();
         btnLoesungshinweis.setText("Loesungshinweis");
         panel8.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabe = new JButton();
-        btnVoherigeAufgabe.setText("Voherige Aufgabe");
-        panel8.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVorherigeAufgabe = new JButton();
+        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        panel8.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
         panel8.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -281,5 +278,4 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }

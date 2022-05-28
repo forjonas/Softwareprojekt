@@ -22,14 +22,14 @@ import java.util.List;
  */
 public class KorrigiereTestatKatalogView extends JFrame implements ActionListener {
 
+    private Dozent aktuellerBenutzer;
+    private List<TestatBearbeitung> testatBearbeitungsListe;
+    private JFrame jframe;
     private JPanel contentPane;
     private JTable tableTestate;
     private KorrigiereTestatTableModel korrigiereTestatTableModel;
     private JButton btnZurueck;
     private JButton btnKorrigieren;
-    private Dozent aktuellerBenutzer;
-    private List<TestatBearbeitung> testatBearbeitungsListe;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame erstellt

@@ -24,18 +24,17 @@ import java.util.List;
  */
 public class TestatErstellenView extends JFrame implements ActionListener {
 
+    private Dozent aktuellerBenutzer;
+    private List<Aufgabe> aufgabenliste;
+    private JFrame jframe;
     private JPanel contentPane;
     private JTable tableAufgaben;
     private AufgabenAuswaehlenAufgabensammlungTableModel aufgabenAuswaehlenAufgabensammlungTableModel;
     private JButton btnZurueck;
     private JButton btnPreview;
-
     private JButton btnFreigeben;
     private JTextField txtPasswort;
     private JTextField txtName;
-    private List<Aufgabe> aufgabenliste;
-    private Dozent aktuellerBenutzer;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame erstellt

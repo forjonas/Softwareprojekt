@@ -20,13 +20,13 @@ import java.util.List;
  */
 public class AufgabenEinesTestatsView extends JDialog implements ActionListener {
 
+    private Testat testat;
+    private List<Aufgabe> aufgabenliste;
     private JPanel contentPane;
     private JTable tableAufgaben;
     private AufgabeTableModel aufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnEinsehen;
-    private List<Aufgabe> aufgabenliste;
-    private Testat testat;
 
     /**
      * Konstruktor, der den Frame erstellt

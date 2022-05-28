@@ -15,17 +15,18 @@ import java.util.List;
 
 public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final MultipleChoiceAufgabe aufgabe;
+    private JPanel mainPanel;
     private JTextArea txtaAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
+    private JButton btnVorherigeAufgabe;
+    private JButton btnNaechsteAufgabe;
     private JPanel panelUserChoices;
     private JRadioButton btnUserloesung1;
     private JRadioButton btnUserloesung2;
     private JRadioButton btnUserloesung3;
     private JRadioButton btnUserloesung4;
-    private JPanel mainPanel;
-    private JButton btnVorherigeAufgabe;
-    private JButton btnNaechsteAufgabe;
     private JPanel panelMusterChoices;
     private JRadioButton btnMusterloesung1;
     private JRadioButton btnMusterloesung2;
@@ -41,7 +42,6 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblAufgabeBildString;
     private JLabel lblUserloesungString;
     private JLabel lblMusterloesungString;
-    private final MultipleChoiceAufgabe aufgabe;
 
 
     public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {

@@ -16,20 +16,20 @@ import java.awt.event.ActionListener;
 
 public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements ActionListener {
 
-    private final EinfachantwortAufgabe aufgabe;
     private Benutzer benutzer;
-    private JFrame frame;
+    private final EinfachantwortAufgabe aufgabe;
+    private JPanel mainPanel;
+    private JFrame homeFrame;
     private JTextArea txtaAufgabentext;
     private JButton btnBeenden;
     private JButton btnHinweis;
-    private JTextArea txtaUserLoesung;
+    private JTextArea txtaUserloesung;
     private JTextArea txtaMusterloesung;
-    private JPanel mainPanel;
     private JLabel lblAufgabenstellungsbild;
-    private JPanel panelBearbeitungszeit;
+    private JPanel pnlBearbeitungszeit;
     private JLabel lblBearbeitungszeitString;
     private JLabel lblBearbeitungszeit;
-    private JPanel panelPunktzahl;
+    private JPanel pnlPunktzahl;
     private JLabel lblPunktzahlString;
     private JLabel lblMaximalPunktzahl;
     private JLabel lblMusterBild;
@@ -37,8 +37,8 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     private JLabel lblAufgabeBildString;
 
 
-    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer, JFrame frame) {
-        this.frame = frame;
+    public LoesungEinzelneEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, UserloesungEinfachantwort userloesungEinfachantwort, Benutzer benutzer, JFrame homeFrame) {
+        this.homeFrame = homeFrame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
@@ -57,8 +57,8 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        txtaUserLoesung.setText(userloesungEinfachantwort.getUserloesung());
-        txtaUserLoesung.setLineWrap(true);
+        txtaUserloesung.setText(userloesungEinfachantwort.getUserloesung());
+        txtaUserloesung.setLineWrap(true);
 
         this.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
@@ -80,7 +80,7 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
     }
 
     private void beenden() {
-        new BearbeiteEinzelneAufgabeKatalogView(frame, benutzer);
+        new BearbeiteEinzelneAufgabeKatalogView(homeFrame, benutzer);
     }
 
     {
@@ -125,24 +125,24 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         lblAufgabenstellungsbild = new JLabel();
         lblAufgabenstellungsbild.setText("");
         mainPanel.add(lblAufgabenstellungsbild, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
-        panelBearbeitungszeit = new JPanel();
-        panelBearbeitungszeit.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panelBearbeitungszeit, new GridConstraints(1, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        pnlBearbeitungszeit = new JPanel();
+        pnlBearbeitungszeit.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.add(pnlBearbeitungszeit, new GridConstraints(1, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblBearbeitungszeitString = new JLabel();
         lblBearbeitungszeitString.setText("Bearbeitungszeit:");
-        panelBearbeitungszeit.add(lblBearbeitungszeitString, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlBearbeitungszeit.add(lblBearbeitungszeitString, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblBearbeitungszeit = new JLabel();
         lblBearbeitungszeit.setText("10 min");
-        panelBearbeitungszeit.add(lblBearbeitungszeit, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panelPunktzahl = new JPanel();
-        panelPunktzahl.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panelPunktzahl, new GridConstraints(2, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, 1, null, new Dimension(-1, 20), new Dimension(-1, 20), 0, false));
+        pnlBearbeitungszeit.add(lblBearbeitungszeit, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlPunktzahl = new JPanel();
+        pnlPunktzahl.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.add(pnlPunktzahl, new GridConstraints(2, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, 1, null, new Dimension(-1, 20), new Dimension(-1, 20), 0, false));
         lblPunktzahlString = new JLabel();
         lblPunktzahlString.setText("erreichbare Punktzahl:");
-        panelPunktzahl.add(lblPunktzahlString, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlPunktzahl.add(lblPunktzahlString, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblMaximalPunktzahl = new JLabel();
         lblMaximalPunktzahl.setText("10");
-        panelPunktzahl.add(lblMaximalPunktzahl, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pnlPunktzahl.add(lblMaximalPunktzahl, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblMusterBild = new JLabel();
         lblMusterBild.setText("Musterlösung:");
         mainPanel.add(lblMusterBild, new GridConstraints(3, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -155,9 +155,9 @@ public class LoesungEinzelneEinfachantwortaufgabeView extends JFrame implements 
         txtaMusterloesung = new JTextArea();
         txtaMusterloesung.setEditable(false);
         mainPanel.add(txtaMusterloesung, new GridConstraints(4, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
-        txtaUserLoesung = new JTextArea();
-        txtaUserLoesung.setEditable(false);
-        mainPanel.add(txtaUserLoesung, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
+        txtaUserloesung = new JTextArea();
+        txtaUserloesung.setEditable(false);
+        mainPanel.add(txtaUserloesung, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 150), new Dimension(150, 150), null, 0, false));
     }
 
     /**

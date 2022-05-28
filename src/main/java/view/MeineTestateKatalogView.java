@@ -2,11 +2,11 @@ package view;
 
 import controller.controllerBewertungenTestate;
 import controller.TestatController;
-import view.tableModel.MeineTestateTableModel;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
 import entity.benutzer.Benutzer;
 import persistence.DatabaseService;
+import view.tableModel.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,15 +23,15 @@ import java.util.List;
  */
 public class MeineTestateKatalogView extends JFrame implements ActionListener {
 
+    private Benutzer aktuellerBenutzer;
+    private List<Testat> testatListe;
+    private JFrame jframe;
     private JPanel contentPane;
     private JTable tableTestate;
     private MeineTestateTableModel meineTestateTableModel;
     private JButton btnZurueck;
     private JButton btnBewertungEinsehen;
     private JButton btnBearbeiten;
-    private List<Testat> testatListe;
-    private Benutzer aktuellerBenutzer;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame erstellt
@@ -44,7 +44,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
         this.aktuellerBenutzer = aktuellerBenutzer;
         testatListe = DatabaseService.getInstance().readTestateFromDatabase();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Meine Testat");
+        setTitle("Meine Testate");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));

@@ -23,14 +23,14 @@ import java.util.List;
  */
 public class EinsehenTrainingKatalogView extends JFrame implements ActionListener {
 
+    private Dozent aktuellerBenutzer;
+    private List<Training> trainingsliste;
+    private JFrame jframe;
     private JPanel contentPane;
     private JTable tableTrainings;
     private TrainingTableModel trainingsTableModel;
     private JButton btnZurueck;
     private JButton btnEinsehen;
-    private Dozent aktuellerBenutzer;
-    private List<Training> trainingsliste;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame öffnet

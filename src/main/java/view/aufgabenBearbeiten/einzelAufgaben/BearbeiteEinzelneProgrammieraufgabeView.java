@@ -49,7 +49,6 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
      * @param frame
      */
     public BearbeiteEinzelneProgrammieraufgabeView(Programmieraufgabe aufgabe, Benutzer benutzer, JFrame frame) {
-
         this.setContentPane($$$getRootComponent$$$());
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
@@ -75,8 +74,6 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
-
-
     }
 
     /**

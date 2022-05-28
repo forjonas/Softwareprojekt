@@ -55,7 +55,7 @@ public class TrainingController extends BearbeitungsController {
     /**
      * Fügt der Userloesung den UserloesungErsteller hinzu und persistiert die Userlösungen in der Datenbank
      */
-    public void persistTraining() {//usereingaben Liste persistieren
+    public void persistTraining() {
         for (Userloesung userloesung : userloesungen) {
             userloesung.getUserloesungErsteller().addErstellteLoesung(userloesung);
             try {
@@ -68,7 +68,6 @@ public class TrainingController extends BearbeitungsController {
         aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        //ds.persistObject(training); //nötig????
         System.out.println(userloesungen);
 
         new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);

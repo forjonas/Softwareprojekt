@@ -40,7 +40,7 @@ public abstract class BearbeitungsController {
     protected List<Userloesung> userloesungen;
 
     /**
-     * @param sammlung die Sammlungt einer Aufgabensammlung
+     * @param sammlung die Sammlung einer Aufgabensammlung
      * @param aktuellerBenutzer der aktuelle Benutzer der die Aufgabensammlung bearbeitet
      * @param hauptmenueFrame das dazugehörige Fenster des Benutzers
      */
@@ -73,15 +73,14 @@ public abstract class BearbeitungsController {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
+            BearbeiteMultipleChoiceAufgabeView frame = new BearbeiteMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else {
                 frame.setUserloesung(userloesungen.get(index));
                 System.out.println((UserloesungMultipleChoiceAufgabe) (userloesungen.get(index)));
             }
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -90,7 +89,7 @@ public abstract class BearbeitungsController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -99,7 +98,7 @@ public abstract class BearbeitungsController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -124,7 +123,7 @@ public abstract class BearbeitungsController {
      */
     public void weiter() {
         if (this.index < sammlung.getAnzahlAufgaben() - 1) {
-            this.index++;  //Index fuer Controller erhoet
+            this.index++;
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
