@@ -91,7 +91,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
         centerPnl.add(aufgabeErstellenBtn);
         centerPnl.add(aufgabeBearbeitenBtn);
         tempSouthPanel.add(abmeldenBtn);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));
+        centerPnl.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         dozentMainPanel.add(centerPnl, BorderLayout.CENTER);
         dozentMainPanel.add(tempSouthPanel, BorderLayout.SOUTH);
         dozentMainPanel.add(welcomeMsgLbl, BorderLayout.NORTH);
