@@ -10,7 +10,9 @@ import java.io.File;
  * @version 05.05.2022
  */
 public class ImageFilter extends FileFilter {
-    private String ImageFormat = "JPG";
+    private String JPG = "JPG";
+    private String PNG = "PNG";
+    private String JPEG = "JPEG";
     private char DotIndex = '.';
 
     @Override
@@ -18,7 +20,11 @@ public class ImageFilter extends FileFilter {
         if (f.isDirectory()) {
             return true;
         }
-        return extension(f).equalsIgnoreCase(ImageFormat);
+        if (extension(f).equalsIgnoreCase(JPG) || extension(f).equalsIgnoreCase(PNG) || extension(f).equalsIgnoreCase(JPEG)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private String extension(File f) {
@@ -34,6 +40,6 @@ public class ImageFilter extends FileFilter {
 
     @Override
     public String getDescription() {
-        return "Jpeg";
+        return "Jpeg oder PNG oder JPG";
     }
 }

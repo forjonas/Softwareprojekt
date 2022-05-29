@@ -1,4 +1,4 @@
-package view.aufgabenBearbeiten;
+package controller;
 
 import view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
 import controller.TrainingController;
@@ -40,7 +40,7 @@ public abstract class BearbeitungsController {
     protected List<Userloesung> userloesungen;
 
     /**
-     * @param sammlung die Sammlungt einer Aufgabensammlung
+     * @param sammlung die Sammlung einer Aufgabensammlung
      * @param aktuellerBenutzer der aktuelle Benutzer der die Aufgabensammlung bearbeitet
      * @param hauptmenueFrame das dazugehörige Fenster des Benutzers
      */
@@ -73,15 +73,14 @@ public abstract class BearbeitungsController {
                 frame.setNaechsteZuSpeichern();
             }
         } else if (aufgabe.getAufgabentyp().equals(Aufgabentyp.MultipleChoice)) {
-            BearbeiteMuktipleChoiceAufgabeView frame = new BearbeiteMuktipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
-            // frame.setUserloesung(userloesungen.get(index));
+            BearbeiteMultipleChoiceAufgabeView frame = new BearbeiteMultipleChoiceAufgabeView(this, (MultipleChoiceAufgabe) aufgabe);
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else {
                 frame.setUserloesung(userloesungen.get(index));
                 System.out.println((UserloesungMultipleChoiceAufgabe) (userloesungen.get(index)));
             }
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -90,7 +89,7 @@ public abstract class BearbeitungsController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -99,7 +98,7 @@ public abstract class BearbeitungsController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }
@@ -124,7 +123,7 @@ public abstract class BearbeitungsController {
      */
     public void weiter() {
         if (this.index < sammlung.getAnzahlAufgaben() - 1) {
-            this.index++;  //Index fuer Controller erhoet
+            this.index++;
             zeigeAktuelleAufgabe();
         } else {
             JOptionPane.showMessageDialog(null, "Keine weiteren Aufgaben. Klicken Sie auf Beenden");
@@ -142,82 +141,6 @@ public abstract class BearbeitungsController {
 
     public Benutzer getAktuellerBenutzer() {
         return aktuellerBenutzer;
-    }
-
-    public static void main(String[] args) throws Exception {
-        DatabaseService ds = DatabaseService.getInstance();
-        List<Aufgabe> aufgabenliste;
-        aufgabenliste = ds.readAufgabenFromDatabase();
-
-        List<String> antwortmoeglichkeiten = new ArrayList<>();
-        antwortmoeglichkeiten.add("Test1");
-        antwortmoeglichkeiten.add("Test2");
-        antwortmoeglichkeiten.add("Test3");
-
-        List<String> antwortmoeglichkeiten1 = new ArrayList<>();
-        antwortmoeglichkeiten1.add("Test1");
-        antwortmoeglichkeiten1.add("Test2");
-        antwortmoeglichkeiten1.add("Test3");
-        antwortmoeglichkeiten1.add("Test4");
-
-        List<String> antwortmoeglichkeiten2 = new ArrayList<>();
-        antwortmoeglichkeiten2.add("Test1");
-        antwortmoeglichkeiten2.add("Test2");
-
-
-        Aufgabe a1 = new EinfachantwortAufgabe(10, null, Kategorie.Software_Engineering, 12, Schwierigkeitsgrad.Leicht, "Wie heißt der Datentyp für Text?", "Datentyp Text", null);
-        Aufgabe a2 = new Programmieraufgabe(5, null, Kategorie.Java_Programmierung, 10, Schwierigkeitsgrad.Schwer, "Programmieren Sie eine for-Schleife", "for-Schleife", null);
-        Aufgabe a3 = new Designaufgabe(15, null, Kategorie.Datenbanken, 23, Schwierigkeitsgrad.Mittel, "Erstellen sie ein ER-Diagramm.", "ER-Diagramm", null);
-        Aufgabe a4 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten);
-
-        Aufgabe a5 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten1);
-        Aufgabe a6 = new MultipleChoiceAufgabe(2, null, Kategorie.Java_Programmierung, 5, Schwierigkeitsgrad.Leicht, "Welcher Datentyp ist für Ganzzahlen?", "Datentyp Ganzzahlen", null, antwortmoeglichkeiten2);
-
-
-        MusterloesungEinfachantwort m1 = new MusterloesungEinfachantwort();
-        a1.setMusterloesung(m1);
-        m1.setLoesungshinweis("Lösungshinweis MusterloesungEinfachantwort");
-
-        MusterloesungProgrammieraufgabe m2 = new MusterloesungProgrammieraufgabe();
-        a2.setMusterloesung(m2);
-        m2.setLoesungshinweis("Lösungshinweis MusterloesungProgrammieraufgabe");
-
-        MusterloesungMultipleChoiceAufgabe m3 = new MusterloesungMultipleChoiceAufgabe();
-        a4.setMusterloesung(m3);
-        m3.setLoesungshinweis("Lösungshinweis MusterloesungMultipleChoiceAufgabe");
-
-        MusterloesungDesignaufgabe m4 = new MusterloesungDesignaufgabe();
-        a3.setMusterloesung(m4);
-        m4.setLoesungshinweis("Lösungshinweis MusterloesungDesignaufgabe");
-
-        java.util.List<Aufgabe> aufgabenListe1 = Arrays.asList(new Aufgabe[]{a1, a2, a3, a4});
-        java.util.List<Aufgabe> aufgabenListe2 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2,});
-        java.util.List<Aufgabe> aufgabenListe3 = Arrays.asList(new Aufgabe[]{a3, a3, a3, a4, a4, a4});
-        java.util.List<Aufgabe> aufgabenListe4 = Arrays.asList(new Aufgabe[]{a4, a3, a2, a1});
-        java.util.List<Aufgabe> aufgabenListe5 = Arrays.asList(new Aufgabe[]{a1, a1, a2, a2, a3, a3, a4, a4});
-
-        java.util.List<Aufgabe> aufgabenListe6 = new ArrayList<>(); //= Arrays.asList(new Aufgabe[]{a4, a5, a6, a5,});
-        aufgabenListe6.add(0, a4);
-        aufgabenListe6.add(0, a5);
-        java.util.List<Aufgabe> aufgabenListe7 = Arrays.asList(new Aufgabe[]{a4, a4, a5, a6});
-
-
-        Dozent dozent1 = new Dozent("PZwegat", "asdf", "Peter", "Zwegat");
-        Dozent dozent2 = new Dozent("PPanzer", "jklö", "Paul", "Panzer");
-        Testat t1 = new Testat(aufgabenListe7, "Hallo1234", "Sommertestat", dozent1);
-
-      /*
-       Testat t2 = new Testat(aufgabenListe2, "asdf", "Wintertestat", dozent2);
-        Testat t3 = new Testat(aufgabenListe3, "qwertz", "Herbsttestat", dozent1);
-        java.util.List<Testat> testatliste = Arrays.asList(new Testat[]{t1, t2, t3, t1, t2, t3, t1, t2, t3, t1, t2, t3});
-        Student student1 = new Student("AApfel", "aaa", "Adam", "Apfel", 1111);
-       */
-
-
-      //TestatController testatApp = new TestatController(t1, dozent2, null);
-        Training training1 = new Training(aufgabenListe1, 10, Kategorie.Java_Programmierung, Schwierigkeitsgrad.Schwer, dozent1);
-        TrainingController trainingController = new TrainingController(training1, dozent2, null);
-
     }
 
 }

@@ -26,9 +26,8 @@
             <children>
               <component id="f3463" class="javax.swing.JLabel" binding="lblBild">
                 <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <minimum-size width="250" height="150"/>
-                    <preferred-size width="250" height="150"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -182,7 +181,7 @@
                       <text value="Loesungshinweis"/>
                     </properties>
                   </component>
-                  <component id="30344" class="javax.swing.JButton" binding="btnVoherigeAufgabe">
+                  <component id="30344" class="javax.swing.JButton" binding="btnVorherigeAufgabe">
                     <constraints>
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -237,10 +236,10 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="5d90d" class="javax.swing.JLabel" binding="lblAufgabenText">
+                  <component id="4b9af" class="javax.swing.JTextArea" binding="txtaAufgabentext">
                     <constraints/>
                     <properties>
-                      <text value="Aufgabentext"/>
+                      <editable value="false"/>
                     </properties>
                   </component>
                 </children>

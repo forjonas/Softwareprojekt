@@ -23,23 +23,22 @@ public class RegistrierenView extends JFrame implements ActionListener {
 
     DatabaseService ds = DatabaseService.getInstance();
     private JFrame einloggenView;
-    private JPanel registrierePnl;
-    private JButton registrierenBtn;
-    private JButton zurueckBtn;
-    private JLabel registriereLbl = new JLabel("Registrieren", SwingConstants.CENTER);
-    private JLabel vornameLbl = new JLabel("Vorname:");
-    private JLabel nachnameLbl = new JLabel("Nachname:");
-    private JLabel matrikelnummerLbl = new JLabel("Matrikelnummer:");
-    private JLabel usernameLbl = new JLabel("Benutzername:");
-    private JLabel passwortLbl = new JLabel("Kennwort:");
-    private JLabel passwortWiederholenLbl = new JLabel("Wiederhole das Kennwort:");
-
-    private JTextField usernameTxt = new JTextField(40);
-    private JTextField vornameTxt = new JTextField(40);
-    private JTextField nachnameTxt = new JTextField(40);
-    private JFormattedTextField matrikelTxt;
-    private JPasswordField passwortTxt = new JPasswordField(40);
-    private JPasswordField passwortWiederholenTxt = new JPasswordField(40);
+    private JPanel pnlRegistrieren;
+    private JButton btnRegistrieren;
+    private JButton btnZurueck;
+    private JLabel lblRegistriere = new JLabel("Registrieren", SwingConstants.CENTER);
+    private JLabel lblVorname = new JLabel("Vorname:");
+    private JLabel lblNachname = new JLabel("Nachname:");
+    private JLabel lblMatrikelnummer = new JLabel("Matrikelnummer:");
+    private JLabel lblUsername = new JLabel("Benutzername:");
+    private JLabel lblPasswort = new JLabel("Kennwort:");
+    private JLabel lblPasswortWiederholen = new JLabel("Wiederhole das Kennwort:");
+    private JTextField txtfUsername = new JTextField(40);
+    private JTextField txtfVorname = new JTextField(40);
+    private JTextField txtfNachname = new JTextField(40);
+    private JFormattedTextField formtxtfMatrikelnummer;
+    private JPasswordField pwfPasswort = new JPasswordField(40);
+    private JPasswordField pwfPasswortWiederholen = new JPasswordField(40);
 
     /**
      * Konstruktor der Klasse RegistrierenView, die ein Fenster und die ausgewählten Bausteine verbindet und erstellt.
@@ -49,16 +48,16 @@ public class RegistrierenView extends JFrame implements ActionListener {
     public RegistrierenView(JFrame hauptmenueView) {
         this.setTitle("Registrieren");
         this.setName("Home");
-        this.getContentPane().add(registrierePnl = new JPanel(new BorderLayout()));
+        this.getContentPane().add(pnlRegistrieren = new JPanel(new BorderLayout()));
 
         einloggenView = hauptmenueView;
 
-        registrierenBtn = new JButton("Registrieren");
-        registrierenBtn.addActionListener(this);
-        registrierenBtn.setPreferredSize(new Dimension(130, 30));
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
-        zurueckBtn.setPreferredSize(new Dimension(130, 30));
+        btnRegistrieren = new JButton("Registrieren");
+        btnRegistrieren.addActionListener(this);
+        btnRegistrieren.setPreferredSize(new Dimension(130, 30));
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
+        btnZurueck.setPreferredSize(new Dimension(130, 30));
 
         fuelleRegistrierenFrame();
 
@@ -80,39 +79,39 @@ public class RegistrierenView extends JFrame implements ActionListener {
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setAllowsInvalid(false);
 
-        matrikelTxt = new JFormattedTextField(formatter);
-        registrierePnl.add(registriereLbl, BorderLayout.NORTH);
+        formtxtfMatrikelnummer = new JFormattedTextField(formatter);
+        pnlRegistrieren.add(lblRegistriere, BorderLayout.NORTH);
 
         JPanel tempPanel2 = new JPanel(new GridLayout(6, 2, 12, 12));
         tempPanel2.setBorder(BorderFactory.createEmptyBorder(30, 5, 25, 5));
 
-        tempPanel2.add(vornameLbl);
-        tempPanel2.add(vornameTxt);
-        tempPanel2.add(nachnameLbl);
-        tempPanel2.add(nachnameTxt);
-        tempPanel2.add(usernameLbl);
-        tempPanel2.add(usernameTxt);
-        tempPanel2.add(matrikelnummerLbl);
-        tempPanel2.add(matrikelTxt);
-        tempPanel2.add(passwortLbl);
-        tempPanel2.add(passwortTxt);
-        tempPanel2.add(passwortWiederholenLbl);
-        tempPanel2.add(passwortWiederholenTxt);
+        tempPanel2.add(lblVorname);
+        tempPanel2.add(txtfVorname);
+        tempPanel2.add(lblNachname);
+        tempPanel2.add(txtfNachname);
+        tempPanel2.add(lblUsername);
+        tempPanel2.add(txtfUsername);
+        tempPanel2.add(lblMatrikelnummer);
+        tempPanel2.add(formtxtfMatrikelnummer);
+        tempPanel2.add(lblPasswort);
+        tempPanel2.add(pwfPasswort);
+        tempPanel2.add(lblPasswortWiederholen);
+        tempPanel2.add(pwfPasswortWiederholen);
 
-        registrierePnl.add(tempPanel2, BorderLayout.CENTER);
-        registrierePnl.add(new JLabel(""), BorderLayout.EAST);
-        registrierePnl.add(new JLabel(""), BorderLayout.WEST);
+        pnlRegistrieren.add(tempPanel2, BorderLayout.CENTER);
+        pnlRegistrieren.add(new JLabel(""), BorderLayout.EAST);
+        pnlRegistrieren.add(new JLabel(""), BorderLayout.WEST);
 
         JPanel tempButtonPnl = new JPanel(new FlowLayout());
         tempButtonPnl.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-        tempButtonPnl.add(registrierenBtn);
-        tempButtonPnl.add(zurueckBtn);
+        tempButtonPnl.add(btnRegistrieren);
+        tempButtonPnl.add(btnZurueck);
 
-        registrierePnl.add(tempButtonPnl, BorderLayout.SOUTH);
-        registrierePnl.setBorder(BorderFactory.createEmptyBorder(20, 80, 30, 80));
+        pnlRegistrieren.add(tempButtonPnl, BorderLayout.SOUTH);
+        pnlRegistrieren.setBorder(BorderFactory.createEmptyBorder(20, 80, 30, 80));
 
-        this.add(registrierePnl);
+        this.add(pnlRegistrieren);
     }
 
     /**
@@ -121,7 +120,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
      * @return boolean-Wert
      */
     public boolean isPasswortIdentisch() {
-        if (Arrays.equals(passwortTxt.getPassword(), passwortWiederholenTxt.getPassword())) {
+        if (Arrays.equals(pwfPasswort.getPassword(), pwfPasswortWiederholen.getPassword())) {
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Passwort ist nicht identisch.");
@@ -137,7 +136,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
     public boolean isUsernameTaken() {
         List<Benutzer> list = ds.readBenutzerFromDatabase();
         for (Benutzer b : list) {
-            if (usernameTxt.getText().equals(b.getBenutzername())) {
+            if (txtfUsername.getText().equals(b.getBenutzername())) {
                 return true;
             }
         }
@@ -156,7 +155,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Passwort ist nicht identisch.", "Passwort identisch", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                Student student = new Student(usernameTxt.getText(), new String(passwortTxt.getPassword()), vornameTxt.getText(), nachnameTxt.getText(), Integer.parseInt(matrikelTxt.getText()));
+                Student student = new Student(txtfUsername.getText(), new String(pwfPasswort.getPassword()), txtfVorname.getText(), txtfNachname.getText(), Integer.parseInt(formtxtfMatrikelnummer.getText()));
                 ds.persistObject(student);
                 new StudentMainView(student);
                 dispose();
@@ -172,7 +171,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
      * @return boolean-Wert
      */
     public boolean anyFieldNull() {
-        if (usernameTxt.getText() == null || vornameTxt.getText() == null || nachnameTxt.getText() == null || matrikelTxt.getText() == null || passwortTxt.getPassword() == null || passwortWiederholenTxt.getPassword() == null) {
+        if (txtfUsername.getText() == null || txtfVorname.getText() == null || txtfNachname.getText() == null || formtxtfMatrikelnummer.getText() == null || pwfPasswort.getPassword() == null || pwfPasswortWiederholen.getPassword() == null) {
             return true;
         }
         return false;
@@ -184,7 +183,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
      * @return boolean-Wert
      */
     public boolean anyFieldEmpty() {
-        if (usernameTxt.getText().equals("") || vornameTxt.getText().equals("") || nachnameTxt.getText().equals("") || matrikelTxt.getText().equals("") || passwortTxt.getPassword().equals("") || passwortWiederholenTxt.getPassword().equals("")) {
+        if (txtfUsername.getText().equals("") || txtfVorname.getText().equals("") || txtfNachname.getText().equals("") || formtxtfMatrikelnummer.getText().equals("") || pwfPasswort.getPassword().equals("") || pwfPasswortWiederholen.getPassword().equals("")) {
             return true;
         }
         return false;
@@ -196,9 +195,9 @@ public class RegistrierenView extends JFrame implements ActionListener {
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.registrierenBtn) {
+        if (e.getSource() == this.btnRegistrieren) {
             addStudent();
-        } else if (e.getSource() == this.zurueckBtn) {
+        } else if (e.getSource() == this.btnZurueck) {
             einloggenView.setVisible(true);
             this.dispose();
         }

@@ -6,16 +6,16 @@ import javax.swing.*;
 import java.io.File;
 
 public class FileChooserAuslagerung {
-    JFileChooser FC;
+    JFileChooser fileChooser;
     File returnFile;
 
     public File fileChooser() {
-        FC = new JFileChooser();
-        FC.setAcceptAllFileFilterUsed(false);
-        FC.setFileFilter(new ImageFilter());
-        int returnVal = FC.showOpenDialog(null);
+        fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(new ImageFilter());
+        int returnVal = fileChooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            returnFile = FC.getSelectedFile();
+            returnFile = fileChooser.getSelectedFile();
             return returnFile;
         }
         return null;

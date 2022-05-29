@@ -1,6 +1,6 @@
 package view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
-import view.aufgabenBearbeiten.BearbeitungsController;
+import controller.BearbeitungsController;
 import controller.TestatController;
 import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -26,10 +26,10 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
     private JLabel lblAufgabentypWert;
     private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
-    private JButton btnVoherigeAufgabe;
+    private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JTextArea txtUsereingabe;
-    private JLabel lblAufgabenText;
+    private JTextArea txtaAufgabentext;
 
     protected boolean hinweisVerwendet;
     protected String eingabe;
@@ -39,7 +39,6 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
     protected UserloesungEinfachantwort userloesung;
 
     public BearbeiteEinfachantwortAufgabeView(BearbeitungsController controller, EinfachantwortAufgabe aufgabe) {
-
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
@@ -53,9 +52,10 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        lblAufgabenText.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
@@ -63,14 +63,13 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
 
         btnAbbrechen.addActionListener(this);
         btnLoesungshinweis.addActionListener(this);
-        btnVoherigeAufgabe.addActionListener(this);
+        btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
-
     }
 
     @Override
@@ -87,13 +86,13 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
 
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == this.btnVoherigeAufgabe) {
+        } else if (e.getSource() == this.btnVorherigeAufgabe) {
 
             userEingabenSpeichern();
             if (testatController != null) {
@@ -193,7 +192,7 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblBild = new JLabel();
         lblBild.setText("");
-        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), new Dimension(250, 150), null, 0, false));
+        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -240,9 +239,9 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         btnLoesungshinweis = new JButton();
         btnLoesungshinweis.setText("Loesungshinweis");
         panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabe = new JButton();
-        btnVoherigeAufgabe.setText("Voherige Aufgabe");
-        panel7.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVorherigeAufgabe = new JButton();
+        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        panel7.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
         panel7.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -258,9 +257,9 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         panel1.add(txtUsereingabe, new GridConstraints(1, 2, 2, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
-        lblAufgabenText = new JLabel();
-        lblAufgabenText.setText("Aufgabentext");
-        scrollPane1.setViewportView(lblAufgabenText);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        scrollPane1.setViewportView(txtaAufgabentext);
     }
 
     /**

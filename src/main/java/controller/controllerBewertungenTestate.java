@@ -30,7 +30,7 @@ import java.util.List;
 public class controllerBewertungenTestate {
     private final TestatBearbeitung testatBearbeitung;
     private final Testat testat;
-    private final JFrame jframe;
+    private final JFrame homeFrame;
     private int index;
     public Benutzer benutzer;
     private DatabaseService ds = DatabaseService.getInstance();
@@ -45,7 +45,7 @@ public class controllerBewertungenTestate {
      * @param frame             Das Hauptmenü der Klasse des angemeldeten Benutzers
      */
     public controllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame frame) {
-        this.jframe = frame;
+        this.homeFrame = frame;
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);
         this.index = 0;
@@ -122,9 +122,9 @@ public class controllerBewertungenTestate {
             testatBearbeitung.setTestatBewerter((Dozent) benutzer);
             ds.persistObject(testatBearbeitung);
             ds.persistObjects(userloesungList);
-            new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
+            new KorrigiereTestatKatalogView(homeFrame, (Dozent) benutzer);
         } else {
-            new MeineTestateKatalogView(jframe, benutzer);
+            new MeineTestateKatalogView(homeFrame, benutzer);
         }
     }
 
@@ -134,9 +134,9 @@ public class controllerBewertungenTestate {
      */
     public void abbrechenBewertungTestat() {
         if (benutzer.getClass().equals(Dozent.class)) {
-            new KorrigiereTestatKatalogView(jframe, (Dozent) benutzer);
+            new KorrigiereTestatKatalogView(homeFrame, (Dozent) benutzer);
         } else {
-            new MeineTestateKatalogView(jframe, benutzer);
+            new MeineTestateKatalogView(homeFrame, benutzer);
         }
     }
 

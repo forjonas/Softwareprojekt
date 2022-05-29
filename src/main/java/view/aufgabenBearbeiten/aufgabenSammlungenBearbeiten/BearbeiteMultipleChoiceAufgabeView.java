@@ -1,21 +1,34 @@
 package view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten;
 
-import view.aufgabenBearbeiten.BearbeitungsController;
+import controller.BearbeitungsController;
 import controller.TestatController;
 import controller.TrainingController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import entity.aufgabe.MultipleChoiceAufgabe;
+import entity.aufgabe.*;
+import entity.aufgabensammlung.Testat;
+import entity.benutzer.Dozent;
+import entity.benutzer.Student;
+import entity.enums.Kategorie;
+import entity.enums.Schwierigkeitsgrad;
+import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
+import entity.loesung.musterloesung.MusterloesungEinfachantwort;
+import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
+import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
+import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements ActionListener {
+public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -26,13 +39,13 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     private JLabel lblAufgabentypWert;
     private JButton btnAbbrechen;
     private JButton btnLoesungshinweis;
-    private JButton btnVoherigeAufgabe;
+    private JButton btnVorherigeAufgabe;
     private JButton btnNaechsteAufgabe;
     private JRadioButton btnantwort1;
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private JLabel lblAufgabenText;
+    private JTextArea txtaAufgabentext;
     private int eingabe;
 
     private String antwort1;
@@ -47,8 +60,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
     protected MultipleChoiceAufgabe aufgabe;
     protected UserloesungMultipleChoiceAufgabe userloesung;
 
-    public BearbeiteMuktipleChoiceAufgabeView(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
-
+    public BearbeiteMultipleChoiceAufgabeView(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
         this.aufgabe = aufgabe;
@@ -57,22 +69,20 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         } else if (controller.getClass() == TrainingController.class) {
             this.trainingController = (TrainingController) controller;
         }
-        setTitle(aufgabe.getName()); //Name der Aufgabe
+        setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Setzen der Daten
-        lblAufgabenText.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabentext.setLineWrap(true);
         if (aufgabe.getAufgabenstellungsbild() != null) {
-            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));//verwendet Objekt vom Typ ImageIcon, welches selbst wiederum eine File verwendet
+            lblBild.setIcon(new ImageIcon(aufgabe.getAufgabenstellungsbild()));
         }
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + ".P");
         lblAufgabentypWert.setText(aufgabe.getAufgabentyp().getCode());
 
         int mIndex = aufgabe.getAntwortmoeglichkeiten().size();
-        //int lokalerIndex = 0;
-        //if (lokalerIndex < mIndex) {
-        for (int i = 0; i < mIndex; i++) { // läuft Listen Größe ab
+        for (int i = 0; i < mIndex; i++) {
 
             if (i == 0) {
                 antwort1 = aufgabe.getAntwortmoeglichkeiten().get((0));
@@ -89,11 +99,14 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
                 antwort4 = aufgabe.getAntwortmoeglichkeiten().get((3));
                 btnantwort4.setText(antwort4);
             }
-
-            //}
-            //lokalerIndex++;
         }
 
+        if (aufgabe.getAntwortmoeglichkeiten().size() == 2) {
+            btnantwort3.setVisible(false);
+            btnantwort4.setVisible(false);
+        } else if (aufgabe.getAntwortmoeglichkeiten().size() == 3) {
+            btnantwort4.setVisible(false);
+        }
         ButtonGroup bg = new ButtonGroup();
         bg.add(btnantwort1);
         bg.add(btnantwort2);
@@ -102,7 +115,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
 
         btnAbbrechen.addActionListener(this);
         btnLoesungshinweis.addActionListener(this);
-        btnVoherigeAufgabe.addActionListener(this);
+        btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
@@ -124,14 +137,14 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
 
         } else if (e.getSource() == this.btnLoesungshinweis) {
             if (aufgabe.getMusterloesung().getLoesungshinweis() != null) {
-                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis()); //Lösungshinweis bekommen//
+                JOptionPane.showMessageDialog(this, aufgabe.getMusterloesung().getLoesungshinweis());
                 hinweisVerwendet = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Kein Lösungshinweis vorhanden.", "Lösungshinweis", JOptionPane.WARNING_MESSAGE);
             }
         }
 
-        if (e.getSource() == this.btnVoherigeAufgabe) {
+        if (e.getSource() == this.btnVorherigeAufgabe) {
             userEingabenSpeichern();
             if (testatController != null) {
                 testatController.zurueck();
@@ -223,14 +236,11 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
 
         if (eingabe == 1) {
             btnantwort1.setSelected(true);
-        }
-        else if (eingabe == 2) {
+        } else if (eingabe == 2) {
             btnantwort2.setSelected(true);
-        }
-        else if (eingabe == 3) {
+        } else if (eingabe == 3) {
             btnantwort3.setSelected(true);
-        }
-        else if (eingabe == 4) {
+        } else if (eingabe == 4) {
             btnantwort4.setSelected(true);
         }
     }
@@ -257,7 +267,7 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblBild = new JLabel();
         lblBild.setText("");
-        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
+        panel1.add(lblBild, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 6, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -304,9 +314,9 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         btnLoesungshinweis = new JButton();
         btnLoesungshinweis.setText("Loesungshinweis");
         panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnVoherigeAufgabe = new JButton();
-        btnVoherigeAufgabe.setText("Voherige Aufgabe");
-        panel7.add(btnVoherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnVorherigeAufgabe = new JButton();
+        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        panel7.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
         panel7.add(btnNaechsteAufgabe, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -334,9 +344,9 @@ public class BearbeiteMuktipleChoiceAufgabeView extends JFrame implements Action
         panel8.add(btnantwort2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 150), new Dimension(250, 150), null, 0, false));
-        lblAufgabenText = new JLabel();
-        lblAufgabenText.setText("Aufgabentext");
-        scrollPane1.setViewportView(lblAufgabenText);
+        txtaAufgabentext = new JTextArea();
+        txtaAufgabentext.setEditable(false);
+        scrollPane1.setViewportView(txtaAufgabentext);
     }
 
     /**

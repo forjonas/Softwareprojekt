@@ -14,20 +14,21 @@ import java.awt.event.ActionListener;
  * @version 15.05.2022 Dozentübergabe eingerichtet, Frame parameter eingefügt, inputcleaner eingefügt, change zu extends JFrame gemacht
  */
 public class AufgabeErstellenStartView extends JFrame implements ActionListener {
-    private JPanel centerPnl;
-    private JPanel northPnl;
-    private JPanel southPnl;
-    private JButton zurueckBtn;
-    private JButton weiterBtn;
-    private GridLayout gl = new GridLayout(3, 1);
-    private JComboBox<String> DDM;
-    private JFrame dozentAnsichtFrame;
     private Dozent doz;
+    private GridLayout gridLayout = new GridLayout(3, 1);
+    private JPanel pnlCenter;
+    private JPanel pnlNorth;
+    private JPanel pnlSouth;
+    private JButton btnZurueck;
+    private JButton btnWeiter;
+    private JComboBox<String> cbAufgabentypen;
+    private JFrame dozentAnsichtFrame;
 
     /**
+     * Setzt Parameter des JFrames und ruft AufgabeErstellenEinfachAntwortViewFuellen() auf.
+     *
      * @param doz
      * @param dozentAnsichtFrame Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
-     *                           Setzt Parameter des JFrames und ruft AufgabeErstellenEInfachANtwortViewFuellen() auf.
      */
     public AufgabeErstellenStartView(JFrame dozentAnsichtFrame, Dozent doz) {
         this.doz = doz;
@@ -44,32 +45,32 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     }
 
     /**
-     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Komponenten in den Frame ein.
      */
     private void AufgabeErstellenFrameFuellen() {
 
-        centerPnl = new JPanel();
-        centerPnl.setLayout(gl);
-        centerPnl.setBorder(BorderFactory.createEmptyBorder(300, 400, 300, 400));
+        pnlCenter = new JPanel();
+        pnlCenter.setLayout(gridLayout);
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(300, 400, 300, 400));
 
-        zurueckBtn = new JButton("Zurück");
-        zurueckBtn.addActionListener(this);
-        weiterBtn = new JButton("Weiter");
-        weiterBtn.addActionListener(this);
+        btnZurueck = new JButton("Zurück");
+        btnZurueck.addActionListener(this);
+        btnWeiter = new JButton("Weiter");
+        btnWeiter.addActionListener(this);
 
         String[] AufgabenTypen = {"Designaufgabe", "Programmieraufgabe", "Einfachantwort", "MultipleChoiceaufgabe"};
-        DDM = new JComboBox<>(AufgabenTypen);
+        cbAufgabentypen = new JComboBox<>(AufgabenTypen);
 
-        northPnl = new JPanel();
-        northPnl.add(zurueckBtn);
+        pnlNorth = new JPanel();
+        pnlNorth.add(btnZurueck);
 
-        southPnl = new JPanel();
-        southPnl.add(weiterBtn);
+        pnlSouth = new JPanel();
+        pnlSouth.add(btnWeiter);
 
-        centerPnl.add(DDM);
-        this.add(centerPnl, BorderLayout.CENTER);
-        this.add(northPnl, BorderLayout.NORTH);
-        this.add(southPnl, BorderLayout.SOUTH);
+        pnlCenter.add(cbAufgabentypen);
+        this.add(pnlCenter, BorderLayout.CENTER);
+        this.add(pnlNorth, BorderLayout.NORTH);
+        this.add(pnlSouth, BorderLayout.SOUTH);
     }
 
     /**
@@ -77,15 +78,15 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.zurueckBtn) {
+        if (e.getSource() == this.btnZurueck) {
             zurueck();
-        } else if (e.getSource() == this.weiterBtn) {
+        } else if (e.getSource() == this.btnWeiter) {
             weiter();
         }
     }
 
     private void weiter() {
-        String switcher = (String) DDM.getSelectedItem();
+        String switcher = (String) cbAufgabentypen.getSelectedItem();
         switch (switcher) {
             case "Designaufgabe":
                 this.setVisible(false);
@@ -124,7 +125,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
      *                         überprüft den input und gibt einen boolean zurück
      */
     public static boolean inputcleaner(int bearbeitungsZeit, int punkte, Frame testFrame) {
-        if (bearbeitungsZeit >= 60 || bearbeitungsZeit <= 1 || punkte >= 100 || punkte <= 0) {
+        if (bearbeitungsZeit >= 60 || bearbeitungsZeit <= 1 || punkte >= 100 || punkte <= 1) {
             JOptionPane.showMessageDialog(testFrame,
                     "Bearbeitungszeit liegt nicht zwischen 60 und 1 Minuten. Oder die Punktezahl liegt nicht zwischen 100 oder 0",
                     "Error",

@@ -19,12 +19,12 @@ public class StudentMainView extends JFrame implements ActionListener {
     /**
      * ------Attribute------
      */
-    private JPanel studentPnl;
-    private JButton meineTestateBtn;
-    private JButton generiereTrainingBtn;
-    private JButton einzelneAufgabeBtn;
-    private JButton abmeldenBtn;
     private Student student;
+    private JPanel pnlStudent;
+    private JButton btnMeinteTestate;
+    private JButton btnGeneriereTraining;
+    private JButton btnEinzelneAufgabe;
+    private JButton btnAbmelden;
 
     /**
      * Konstruktor der Klasse StudentMainView, die ein Fenster und die ausgewählten Bausteine erstellt und verbindet.
@@ -33,38 +33,38 @@ public class StudentMainView extends JFrame implements ActionListener {
      */
     public StudentMainView(Student student) {
         this.student = student;
-        studentPnl = new JPanel();
-        studentPnl.setLayout(new BorderLayout());
+        pnlStudent = new JPanel();
+        pnlStudent.setLayout(new BorderLayout());
 
         JLabel textLbl = new JLabel("Willkommen " + student.getVorname() + " " + student.getNachname() + " Matrikelnummer:" + student.getMatrikelnummer());
         JPanel tempNorthPnl = new JPanel(new FlowLayout());
         JPanel tempCenterPnl = new JPanel(new FlowLayout());
         JPanel tempSouthPnl = new JPanel(new FlowLayout());
 
-        generiereTrainingBtn = new JButton("Training generieren");
-        generiereTrainingBtn.addActionListener(this);
-        generiereTrainingBtn.setPreferredSize(new Dimension(160, 80));
-        meineTestateBtn = new JButton("Meine Testate");
-        meineTestateBtn.addActionListener(this);
-        meineTestateBtn.setPreferredSize(new Dimension(160, 80));
-        einzelneAufgabeBtn = new JButton("Einzelne Aufgabe bearbeiten");
-        einzelneAufgabeBtn.addActionListener(this);
-        einzelneAufgabeBtn.setPreferredSize(new Dimension(160, 80));
+        btnGeneriereTraining = new JButton("Training generieren");
+        btnGeneriereTraining.addActionListener(this);
+        btnGeneriereTraining.setPreferredSize(new Dimension(160, 80));
+        btnMeinteTestate = new JButton("Meine Testate");
+        btnMeinteTestate.addActionListener(this);
+        btnMeinteTestate.setPreferredSize(new Dimension(160, 80));
+        btnEinzelneAufgabe = new JButton("Einzelne Aufgabe bearbeiten");
+        btnEinzelneAufgabe.addActionListener(this);
+        btnEinzelneAufgabe.setPreferredSize(new Dimension(160, 80));
 
-        abmeldenBtn = new JButton("Abmelden");
-        abmeldenBtn.addActionListener(this);
-        abmeldenBtn.setPreferredSize(new Dimension(70, 30));
-        abmeldenBtn.setFont(new Zeichenstruktur().schriftKleinerButton());
+        btnAbmelden = new JButton("Abmelden");
+        btnAbmelden.addActionListener(this);
+        btnAbmelden.setPreferredSize(new Dimension(70, 30));
+        btnAbmelden.setFont(new Zeichenstruktur().schriftKleinerButton());
 
-        tempCenterPnl.add(generiereTrainingBtn);
-        tempCenterPnl.add(meineTestateBtn);
-        tempCenterPnl.add(einzelneAufgabeBtn);
+        tempCenterPnl.add(btnGeneriereTraining);
+        tempCenterPnl.add(btnMeinteTestate);
+        tempCenterPnl.add(btnEinzelneAufgabe);
         tempNorthPnl.add(textLbl);
-        tempSouthPnl.add(abmeldenBtn);
-        studentPnl.add(tempNorthPnl, BorderLayout.NORTH);
-        studentPnl.add(tempCenterPnl, BorderLayout.CENTER);
-        studentPnl.add(tempSouthPnl, BorderLayout.SOUTH);
-        this.add(studentPnl);
+        tempSouthPnl.add(btnAbmelden);
+        pnlStudent.add(tempNorthPnl, BorderLayout.NORTH);
+        pnlStudent.add(tempCenterPnl, BorderLayout.CENTER);
+        pnlStudent.add(tempSouthPnl, BorderLayout.SOUTH);
+        this.add(pnlStudent);
 
         this.setSize(600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,16 +79,16 @@ public class StudentMainView extends JFrame implements ActionListener {
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.meineTestateBtn) {
+        if (e.getSource() == this.btnMeinteTestate) {
             new MeineTestateKatalogView(this, student);
             this.setVisible(false);
-        } else if (e.getSource() == this.abmeldenBtn) {
+        } else if (e.getSource() == this.btnAbmelden) {
             this.dispose();
             new LoginView();
-        } else if (e.getSource() == this.generiereTrainingBtn) {
+        } else if (e.getSource() == this.btnGeneriereTraining) {
             new CreateFrageView(this, student);
             this.setVisible(false);
-        } else if (e.getSource() == this.einzelneAufgabeBtn) {
+        } else if (e.getSource() == this.btnEinzelneAufgabe) {
             new BearbeiteEinzelneAufgabeKatalogView(this, student);
             this.setVisible(false);
         }

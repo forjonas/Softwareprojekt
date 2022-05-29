@@ -38,7 +38,7 @@ public abstract class Userloesung extends Loesung {
      * @param aufgabe              zur Lösung gehörende Aufgabe
      * @param hinweisVerwendet     gibt an, ob der Lösungshinweis verwendet wurde
      * @param userloesungErsteller Ersteller der Userlösung
-     * @param aufgabensammlung     Aufabensammlung, in deren Kontext die Userlösung erstellt wurde
+     * @param aufgabensammlung     Aufgabensammlung, in deren Kontext die Userlösung erstellt wurde
      */
     public Userloesung(Aufgabe aufgabe, boolean hinweisVerwendet, Benutzer userloesungErsteller, Aufgabensammlung aufgabensammlung) {
         super();
@@ -83,7 +83,7 @@ public abstract class Userloesung extends Loesung {
     public abstract void setAufgabe(Aufgabe aufgabe) throws Exception;
 
     /**
-     * Gibt den Benutzer, der die Userlösung erstellt hat zurück
+     * Gibt den Benutzer, der die Userlösung erstellt hat, zurück
      *
      * @return Benutzer, der die Userlösung erstellt hat
      */

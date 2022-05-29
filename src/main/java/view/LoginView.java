@@ -18,13 +18,13 @@ import java.util.List;
 public class LoginView extends JFrame implements ActionListener, KeyListener {
 
     persistence.DatabaseService ds = DatabaseService.getInstance();
-    private JButton registrierenBtn;
-    private JButton einloggenBtn;
-    private JLabel einloggenLbl = new JLabel("Einloggen", SwingConstants.CENTER);
-    private JLabel usernameLbl = new JLabel("Benutzername:", SwingConstants.LEADING);
-    private JLabel passwortLbl = new JLabel("Kennwort:", SwingConstants.LEADING);
-    private JTextField usernameTxt = new JTextField(30);
-    private JPasswordField passwortTxt = new JPasswordField(30);
+    private JButton btnRegistrieren;
+    private JButton btnEinloggen;
+    private JLabel lblEinloggen = new JLabel("Einloggen", SwingConstants.CENTER);
+    private JLabel lblUsername = new JLabel("Benutzername:", SwingConstants.LEADING);
+    private JLabel lblPasswort = new JLabel("Kennwort:", SwingConstants.LEADING);
+    private JTextField txtfUsername = new JTextField(30);
+    private JPasswordField pwfPasswort = new JPasswordField(30);
 
     public static void main(String[] args) {
         new LoginView();
@@ -37,12 +37,12 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         this.setName("Home");
         this.setTitle("Log-In");
 
-        registrierenBtn = new JButton("Registrieren");
-        registrierenBtn.addActionListener(this);
-        registrierenBtn.setPreferredSize(new Dimension(70, 30));
-        einloggenBtn = new JButton("Einloggen");
-        einloggenBtn.addActionListener(this);
-        einloggenBtn.setPreferredSize(new Dimension(70, 30));
+        btnRegistrieren = new JButton("Registrieren");
+        btnRegistrieren.addActionListener(this);
+        btnRegistrieren.setPreferredSize(new Dimension(70, 30));
+        btnEinloggen = new JButton("Einloggen");
+        btnEinloggen.addActionListener(this);
+        btnEinloggen.setPreferredSize(new Dimension(70, 30));
 
         fuelleHomeFrame();
 
@@ -72,42 +72,42 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         c.gridwidth = 2;
         c.gridy = 0;
         c.insets = new Insets(0, 0, 0, 0);
-        tempPanel3.add(einloggenLbl, c);
+        tempPanel3.add(lblEinloggen, c);
 
         //2. Reihe 1.Spalte
         c.gridx = 0;
         c.gridwidth = 1;
         c.gridy = 1;
         c.insets = new Insets(25, 7, 0, 10);
-        tempPanel3.add(usernameLbl, c);
+        tempPanel3.add(lblUsername, c);
 
         //2. Reihe 2. Spalte
         c.gridx = 1;
         c.gridwidth = 1;
         c.gridy = 1;
         c.insets = new Insets(25, 10, 0, 7);
-        tempPanel3.add(usernameTxt, c);
+        tempPanel3.add(txtfUsername, c);
 
         //3. Reihe 1. Spalte
         c.gridx = 0;
         c.gridwidth = 1;
         c.gridy = 2;
         c.insets = new Insets(25, 7, 0, 10);
-        tempPanel3.add(passwortLbl, c);
+        tempPanel3.add(lblPasswort, c);
 
         //3. Reihe 2. Spalte
         c.gridx = 1;
         c.gridwidth = 1;
         c.gridy = 2;
         c.insets = new Insets(25, 10, 0, 7);
-        tempPanel3.add(passwortTxt, c);
+        tempPanel3.add(pwfPasswort, c);
 
         //4. Reihe 1. u. 2. Spalte
         c.gridx = 0;
         c.gridwidth = 2;
         c.gridy = 3;
         c.insets = new Insets(30, 7, 0, 7);
-        tempPanel3.add(einloggenBtn, c);
+        tempPanel3.add(btnEinloggen, c);
 
         //5. Reihe 1. u. 2. Spalte
         c.gridx = 0;
@@ -121,7 +121,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
         c.gridwidth = 2;
         c.gridy = 5;
         c.insets = new Insets(20, 7, 0, 7);
-        tempPanel3.add(registrierenBtn, c);
+        tempPanel3.add(btnRegistrieren, c);
 
         tempPanel.add(tempPanel3, BorderLayout.CENTER);
         this.add(tempPanel3);
@@ -131,20 +131,20 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
      * Methode, die die Funktionalität des Einloggen bildet.
      */
     public void einloggenSequenz() {
-        if (usernameTxt.getText().isEmpty()) {
+        if (txtfUsername.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Bitte Benutzernamen eingeben.");
-        } else if (passwortTxt.getPassword().length == 0) {
+        } else if (pwfPasswort.getPassword().length == 0) {
             JOptionPane.showMessageDialog(this, "Bitte Passwort eingeben.");
         } else {
-            if (userIstStudent(usernameTxt.getText())) {
-                Student student = (Student) ds.readStudentnachBenutzernamen(usernameTxt.getText());
+            if (userIstStudent(txtfUsername.getText())) {
+                Student student = (Student) ds.readStudentnachBenutzernamen(txtfUsername.getText());
                 if (checkPasswort(student)) {
                     new StudentMainView(student);
                     this.dispose();
                     return;
                 }
-            } else if (userIstDozent(usernameTxt.getText())) {
-                Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(usernameTxt.getText());
+            } else if (userIstDozent(txtfUsername.getText())) {
+                Dozent dozent = (Dozent) ds.readDozentnachBenutzernamen(txtfUsername.getText());
                 if (checkPasswort(dozent)) {
                     new DozentAnsicht(dozent);
                     this.dispose();
@@ -193,7 +193,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
      * @return boolean-Wert
      */
     public boolean checkPasswort(Benutzer user) {
-        if (Arrays.equals(passwortTxt.getPassword(), user.getPasswort().toCharArray())) {
+        if (Arrays.equals(pwfPasswort.getPassword(), user.getPasswort().toCharArray())) {
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Bitte richtiges Passwort eingeben");
@@ -209,9 +209,9 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == this.registrierenBtn) {
+        if (e.getSource() == this.btnRegistrieren) {
             new RegistrierenView(this);
-        } else if (e.getSource() == this.einloggenBtn) {
+        } else if (e.getSource() == this.btnEinloggen) {
             einloggenSequenz();
         }
 

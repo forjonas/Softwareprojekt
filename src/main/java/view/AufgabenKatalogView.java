@@ -24,16 +24,16 @@ import java.util.List;
  */
 public class AufgabenKatalogView extends JFrame implements ActionListener {
 
+    private Dozent aktuellerBenutzer;
+    private List<Aufgabe> aufgabenliste;
+    private JFrame jframe;
     private JPanel contentPane;
-    private JTable tableAufgaben;
     private AufgabeTableModel aufgabeTableModel;
+    private JTable tableAufgaben;
     private JButton btnZurueck;
     private JButton btnLoeschen;
     private JButton btnPreview;
     private JButton btnErstellen;
-    private Dozent aktuellerBenutzer;
-    private List<Aufgabe> aufgabenliste;
-    private JFrame jframe;
 
     /**
      * Konstruktor, der den Frame erstellt
@@ -199,8 +199,6 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         } else {
             Aufgabe aufgabe = aufgabenliste.get(selectedRow);
             new TestatErstellenAufgabenPreview(aufgabe);
-
         }
     }
-
 }
