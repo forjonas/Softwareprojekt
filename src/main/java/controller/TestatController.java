@@ -61,8 +61,6 @@ public class TestatController extends BearbeitungsController {
         ds.persistObjects(userloesungen);
         ds.persistObject(testat);
         ds.persistObject(testatBearbeitung);
-
-        System.out.println(userloesungen);
         new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
