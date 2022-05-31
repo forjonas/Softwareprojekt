@@ -168,6 +168,9 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
         }
     }
 
+    /**
+     * Setzt den Text des btnNaechsteAufgabe auf das Beenden der Aufgabensammlung
+     */
     public void setNaechsteZuSpeichern() {
         if (trainingController != null) {
             btnNaechsteAufgabe.setText("Training beenden");

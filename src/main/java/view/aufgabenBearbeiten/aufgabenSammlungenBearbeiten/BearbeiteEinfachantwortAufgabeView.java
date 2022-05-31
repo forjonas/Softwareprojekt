@@ -119,6 +119,7 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
+                    this.dispose();
                 } else {
                     trainingController.weiter();
 

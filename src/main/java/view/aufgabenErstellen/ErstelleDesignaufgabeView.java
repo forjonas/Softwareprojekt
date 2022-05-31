@@ -19,7 +19,7 @@ import java.io.File;
  * @author Jannik Oehme
  * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
-public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
+public class ErstelleDesignaufgabeView extends JFrame implements ActionListener {
 
     private Dozent doz;
     private JFrame aufgabeErstellenStartViewFrame;
@@ -55,7 +55,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame.
      * Setzt Parameter des JFrames und ruft AufgabeErstellenUMLViewFuellen() auf.
      */
-    public AufgabeErstellenUmlView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
+    public ErstelleDesignaufgabeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("Design Aufgabe Erstellen");
@@ -195,7 +195,7 @@ public class AufgabeErstellenUmlView extends JFrame implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty()) {
+        if (ErstelleAufgabeStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw);
         }
     }

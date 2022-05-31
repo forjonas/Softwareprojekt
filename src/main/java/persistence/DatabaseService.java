@@ -65,6 +65,15 @@ public class DatabaseService<T> {
     }
 
     /**
+     * Setzt die Datenbank auf den Testdatenbestand zurück.
+     */
+    public static void main(String[] args) {
+        DatabaseService.getInstance().clearDatabase();
+        new CreateBetaData();
+    }
+
+
+    /**
      * Persistiert alle in der übergebenen Liste enthaltenen Objekte
      *
      * @param list Liste mit Objekte, die persistiert werden sollen
@@ -670,7 +679,7 @@ public class DatabaseService<T> {
     /**
      * Liest alle Userlösungen aus der Datenbank, die vom übergebenen Benutzer zum übergebenen Testat erstellt wurden
      *
-     * @param testat Testat, für das Userlösungen vom übergebenen Benutzer geladen werden sollen
+     * @param testat   Testat, für das Userlösungen vom übergebenen Benutzer geladen werden sollen
      * @param benutzer Benutzer, dessen Userlösungen zum übergebenen Testat geladen werden sollen
      * @return Liste mit Userlösungen, die vom übergebenen Benutzer zum übergebenen Testat erstellt wurden
      */
@@ -695,6 +704,7 @@ public class DatabaseService<T> {
 
     /**
      * Liest das Testat zur übergebenen Testatbearbeitung aus der Datenbank
+     *
      * @param bearbeitung Testatbearbeitung, zu der das Testat geladen werden soll
      * @return Testat zur übergebenen Testatbearbeitung
      */

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 20.05 T.Joswig u. K.Kubisch Preview
  */
-public class TestatErstellenAufgabenPreview extends JDialog implements ActionListener {
+public class AufgabenPreview extends JDialog implements ActionListener {
     private Aufgabe aufgabe;
     private JPanel mainPanel;
     private JPanel pnlMultipleChoice;
@@ -32,7 +32,7 @@ public class TestatErstellenAufgabenPreview extends JDialog implements ActionLis
     private JRadioButton antwort3;
     private JRadioButton antwort4;
 
-    public TestatErstellenAufgabenPreview(Aufgabe aufgabe) {
+    public AufgabenPreview(Aufgabe aufgabe) {
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         btnZurueck.addActionListener(this);

@@ -1,5 +1,6 @@
 package view;
 
+import entity.aufgabe.Aufgabe;
 import entity.benutzer.Benutzer;
 import entity.enums.Kategorie;
 import entity.enums.Schwierigkeitsgrad;
@@ -9,31 +10,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
- * Ansicht in der ein Schwierigkeitsgrad und eine Kategorie gewählt werden kann, um dann eine TrainingGenerierenView mit diesen Werten zu erstellen
+ * Ansicht in der ein Schwierigkeitsgrad und eine Kategorie gewählt werden kann, um dann eine AufgabenAuswaehlenTrainingView mit diesen Werten zu erstellen
  *
  * @author Martin Bergen
  * @version 23.05.22
  */
-public class CreateFrageView extends JFrame implements ActionListener {
+public class GenerierenTrainingView extends JFrame implements ActionListener {
 
     private JFrame jframe;
     private Benutzer benutzer;
     private JButton btnWaehlen;
     private JButton btnAbbrechen;
-    private String[] schwierigkeitArray = {"Leicht", "Mittel", "Schwer"};
-    private String[] kategorieArray = {"Software Engineering", "Java Programmierung", "Java Grundlagen", "Klassendiagramme", "Datenbanken"};
-    private JComboBox<String> cbKategorie = new JComboBox<>(kategorieArray);
-    private JComboBox<String> cbSchwierigkeit = new JComboBox<>(schwierigkeitArray);
+    private JComboBox<String> cbSchwierigkeit = new JComboBox<>(Schwierigkeitsgrad.getCodeArray());
+    private JComboBox<String> cbKategorie = new JComboBox<>(Kategorie.getCodeArray());
 
     /**
-     * Konstruktor der Klasse CreateFrageView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
+     * Konstruktor der Klasse GenerierenTrainingView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
      *
-     * @param jframe   JFrame, aus dem dieser Konstruktor aufgerufen wurde, wird an die TrainingGenerierenView weitergegeben
-     * @param benutzer Benutzer, der diesen Konstruktor/diese Funktion aufruft, wird an die TrainingGenerierenView weitergegeben
+     * @param jframe   JFrame, aus dem dieser Konstruktor aufgerufen wurde, wird an die AufgabenAuswaehlenTrainingView weitergegeben
+     * @param benutzer Benutzer, der diesen Konstruktor/diese Funktion aufruft, wird an die AufgabenAuswaehlenTrainingView weitergegeben
      */
-    public CreateFrageView(JFrame jframe, Benutzer benutzer) {
+    public GenerierenTrainingView(JFrame jframe, Benutzer benutzer) {
         setTitle("Kategorie und Schwierigkeit wählen.");
         this.jframe = jframe;
         this.benutzer = benutzer;
@@ -64,17 +64,12 @@ public class CreateFrageView extends JFrame implements ActionListener {
      * @return Kategorie
      */
     public Kategorie readKategorie() {
-        switch (getValueCBox(cbKategorie)) {
-            case "Software Engineering":
-                return Kategorie.Software_Engineering;
-            case "Java Programmierung":
-                return Kategorie.Java_Programmierung;
-            case "Java Grundlagen":
-                return Kategorie.Java_Grundlagen;
-            case "Klassendiagramme":
-                return Kategorie.Klassendiagramme;
-            case "Datenbanken":
-                return Kategorie.Datenbanken;
+        String[] kategorieCodes = Kategorie.getCodeArray();
+        String cbKategorieWert = getValueCBox(cbKategorie);
+        for(int i = 0; i<kategorieCodes.length; i++) {
+            if(cbKategorieWert.equals(kategorieCodes[i])) {
+                return Kategorie.values()[i];
+            }
         }
         return null;
     }
@@ -85,15 +80,14 @@ public class CreateFrageView extends JFrame implements ActionListener {
      * @return Schwierigkeitsgrad
      */
     public Schwierigkeitsgrad schwierigkeitsgradSetzen() {
-        switch (getValueCBox(cbSchwierigkeit)) {
-            case "leicht":
-                return Schwierigkeitsgrad.Leicht;
-            case "mittel":
-                return Schwierigkeitsgrad.Mittel;
-            case "schwer":
-                return Schwierigkeitsgrad.Schwer;
+        String[] schwierigkeitsgradCodes = Schwierigkeitsgrad.getCodeArray();
+        String cbSchwierigkeitsgradWert = getValueCBox(cbSchwierigkeit);
+        for(int i = 0; i<schwierigkeitsgradCodes.length; i++) {
+            if(cbSchwierigkeitsgradWert.equals(schwierigkeitsgradCodes[i])) {
+                return Schwierigkeitsgrad.values()[i];
+            }
         }
-        return Schwierigkeitsgrad.Leicht;
+        return null;
     }
 
     /**
@@ -114,8 +108,11 @@ public class CreateFrageView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnWaehlen) {
-            if (DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()).size() != 0) {
-                new TrainingGenerierenView(jframe, benutzer, DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(readKategorie(), schwierigkeitsgradSetzen()), readKategorie(), schwierigkeitsgradSetzen());
+            Kategorie kategorie = readKategorie();
+            Schwierigkeitsgrad schwierigkeitsgrad = schwierigkeitsgradSetzen();
+            List<Aufgabe> aufgabenliste = DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(kategorie, schwierigkeitsgradSetzen());
+            if (aufgabenliste.size() > 0) {
+                new AufgabenAuswaehlenTrainingView(jframe, benutzer, aufgabenliste, kategorie, schwierigkeitsgrad);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Es gibt keine Aufgaben mit diesen Parametern", "ERROR", JOptionPane.WARNING_MESSAGE);

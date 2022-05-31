@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * @author Jannik Oehme
  * @version 15.05.2022 Dozentübergabe eingerichtet, Frame parameter eingefügt, inputcleaner eingefügt, change zu extends JFrame gemacht
  */
-public class AufgabeErstellenStartView extends JFrame implements ActionListener {
+public class ErstelleAufgabeStartView extends JFrame implements ActionListener {
     private Dozent doz;
     private JFrame dozentAnsichtFrame;
     private GridLayout gridLayout = new GridLayout(3, 1);
@@ -30,7 +30,7 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
      * @param doz
      * @param dozentAnsichtFrame Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
      */
-    public AufgabeErstellenStartView(JFrame dozentAnsichtFrame, Dozent doz) {
+    public ErstelleAufgabeStartView(JFrame dozentAnsichtFrame, Dozent doz) {
         this.doz = doz;
         this.dozentAnsichtFrame = dozentAnsichtFrame;
         this.setName("Aufgabe Erstellen");
@@ -90,20 +90,20 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
         switch (switcher) {
             case "Designaufgabe":
                 this.setVisible(false);
-                new AufgabeErstellenUmlView(this, doz);
+                new ErstelleDesignaufgabeView(this, doz);
                 break;
             case "Programmieraufgabe":
                 this.setVisible(false);
-                new AufgabeErstellenCodeView(this, doz);
+                new ErstelleProgrammieraufgabeView(this, doz);
                 break;
             case "MultipleChoiceaufgabe":
                 this.setVisible(false);
-                new AufgabeErstellenMultipleChoiceView(this, doz);
+                new ErstelleMultipleChoiceAufgabeView(this, doz);
                 break;
             case "Einfachantwort":
                 this.setVisible(false);
                 ;
-                new AufgabeErstellenEinfachAntwortView(this, doz);
+                new ErstelleEinfachantwortAufgabeView(this, doz);
                 break;
             default:
                 this.setVisible(false);

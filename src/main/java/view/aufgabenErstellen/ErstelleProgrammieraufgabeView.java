@@ -19,7 +19,7 @@ import java.io.File;
  * @author Jannik Oehme
  * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
-public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
+public class ErstelleProgrammieraufgabeView extends JFrame implements ActionListener {
     private Dozent doz;
     private JFrame aufgabeErstellenStartViewFrame;
     private JPanel pnlAufgabeErstellenCode;
@@ -59,7 +59,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
      * @param doz                            Ein Dozent
      * @param aufgabeErstellenStartViewFrame dervorherige Frame
      */
-    public AufgabeErstellenCodeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
+    public ErstelleProgrammieraufgabeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("ProgrammierAufgabe");
@@ -206,7 +206,7 @@ public class AufgabeErstellenCodeView extends JFrame implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen Datentyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
+        if (ErstelleAufgabeStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !loesung.isEmpty()) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, loesung);
             this.dispose();
             aufgabeErstellenStartViewFrame.setVisible(true);

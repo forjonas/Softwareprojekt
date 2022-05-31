@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Jannik Oehme
  * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
-public class AufgabeErstellenMultipleChoiceView extends JFrame implements ActionListener {
+public class ErstelleMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private Dozent doz;
     private JFrame aufgabeErstellenStartViewFrame;
     private BorderLayout borderLayout = new BorderLayout();
@@ -67,7 +67,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
      * Konstruktor der Klasse, benötigt einen Dozenten und den vorherigen JFrame
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEInfachANtwortViewFuellen() auf.
      */
-    public AufgabeErstellenMultipleChoiceView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
+    public ErstelleMultipleChoiceAufgabeView(JFrame aufgabeErstellenStartViewFrame, Dozent doz) {
         this.doz = doz;
         this.aufgabeErstellenStartViewFrame = aufgabeErstellenStartViewFrame;
         this.setName("MultipleChoice");
@@ -288,7 +288,7 @@ public class AufgabeErstellenMultipleChoiceView extends JFrame implements Action
             JOptionPane.showMessageDialog(this, "Eine Eingabe entsprach nicht dem nötigen DatenTyp", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (AufgabeErstellenStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !(loesungsWert < 1 || loesungsWert > 4)) {
+        if (ErstelleAufgabeStartView.inputcleaner(bearbeitungsZeit, punkte, this) && !aufgTitel.isEmpty() && !(loesungsWert < 1 || loesungsWert > 4)) {
             createObjectandPersist(aufgTitel, aufText, loesungshinweis, bearbeitungsZeit, punkte, kat, schw, listefinal, loesungsWert);
 
             this.dispose();

@@ -25,7 +25,7 @@ import java.util.List;
  * @author Martin Bergen
  * @version 23.05.22
  */
-public class TrainingGenerierenView extends JFrame implements ActionListener {
+public class AufgabenAuswaehlenTrainingView extends JFrame implements ActionListener {
 
     private AufgabenAuswaehlenAufgabensammlungTableModel aufgabenAuswahlTableModel;
     private List<Aufgabe> aufgabenliste;
@@ -41,15 +41,15 @@ public class TrainingGenerierenView extends JFrame implements ActionListener {
 
 
     /**
-     * Konstruktor für die Klasse TrainingGenerierenView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
+     * Konstruktor für die Klasse AufgabenAuswaehlenTrainingView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
      *
      * @param aktuellerBenutzer  Benutzer, der diese Fenster gerade Aufruft
-     * @param jframe             JFrame, aus dem die TrainingGenerierenView gestartet wurde,bzw. das Benutzerfenster
+     * @param jframe             JFrame, aus dem die AufgabenAuswaehlenTrainingView gestartet wurde, bzw. das Benutzerfenster
      * @param kategorie          Kategorie der Aufgaben, die im Training ebenfalls gespeichert werden müssen
      * @param schwierigkeitsgrad Schwierigkeit der Aufgaben, die ebenfalls im Training gespeichert werden müssen
      * @param aufgabenliste      Eine Lister aller Aufgaben aus der Datenbank, die die angegebene Kategorie und Schwierigkeit haben
      */
-    public TrainingGenerierenView(JFrame jframe, Benutzer aktuellerBenutzer, List<Aufgabe> aufgabenliste, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad) {
+    public AufgabenAuswaehlenTrainingView(JFrame jframe, Benutzer aktuellerBenutzer, List<Aufgabe> aufgabenliste, Kategorie kategorie, Schwierigkeitsgrad schwierigkeitsgrad) {
         this.jframe = jframe;
         this.kategorie = kategorie;
         this.schwierigkeitsgrad = schwierigkeitsgrad;

@@ -1,6 +1,6 @@
 package view;
 
-import view.aufgabenErstellen.AufgabeErstellenStartView;
+import view.aufgabenErstellen.ErstelleAufgabeStartView;
 import view.aufgabenBearbeiten.einzelAufgaben.BearbeiteEinzelneAufgabeKatalogView;
 import entity.benutzer.Dozent;
 
@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  * @author Jannik Oehme
  * @version 04.05.2022
  */
-public class DozentAnsicht extends JFrame implements ActionListener {
+public class DozentMainView extends JFrame implements ActionListener {
 
     private JPanel pnlDozentMain;
     private JPanel pnlCenter;
@@ -32,7 +32,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
     GridLayout gridLayout = new GridLayout(3, 3);
     Dozent dozent;
 
-    public DozentAnsicht(Dozent doz) {
+    public DozentMainView(Dozent doz) {
         this.dozent = doz;
         this.setName("Home");
         fuelleDozentFrame();
@@ -146,7 +146,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void aufgabeErstellen() {
         this.setVisible(false);
-        new AufgabeErstellenStartView(this, dozent);
+        new ErstelleAufgabeStartView(this, dozent);
     }
 
     private void aufgabeBearbeiten() {
@@ -161,7 +161,7 @@ public class DozentAnsicht extends JFrame implements ActionListener {
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new CreateFrageView(this, dozent);
+        new GenerierenTrainingView(this, dozent);
     }
 
     private void testateDurchfuehren() {
