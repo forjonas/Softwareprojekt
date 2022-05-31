@@ -20,7 +20,7 @@ public class AufgabenPreview extends JDialog implements ActionListener {
     private JPanel mainPanel;
     private JPanel pnlMultipleChoice;
     private JButton btnZurueck;
-    private JTextField txtfAufgabenstellung;
+    private JTextArea txtaAufgabenstellung;
     private JLabel lblBild;
     private JLabel lblBearbeitungzeit;
     private JLabel lblBearbeitungszeitWert;
@@ -45,7 +45,8 @@ public class AufgabenPreview extends JDialog implements ActionListener {
 
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        txtfAufgabenstellung.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabenstellung.setText(aufgabe.getTextbeschreibung());
+        txtaAufgabenstellung.setLineWrap(true);
         lblBearbeitungszeitWert.setText(aufgabe.getBearbeitungszeit() + " min");
         lblPunktzahlWert.setText(aufgabe.getPunktewert() + " P.");
         lblAufgabentypWert.setText((aufgabe.getAufgabentyp().getCode()));
@@ -57,6 +58,8 @@ public class AufgabenPreview extends JDialog implements ActionListener {
         this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         this.pack();
+        this.setMinimumSize(new Dimension(600 + this.lblBild.getWidth(), 500 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
@@ -121,12 +124,12 @@ public class AufgabenPreview extends JDialog implements ActionListener {
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(8, 5, new Insets(0, 0, 0, 0), -1, -1));
-        txtfAufgabenstellung = new JTextField();
-        txtfAufgabenstellung.setEditable(false);
-        mainPanel.add(txtfAufgabenstellung, new GridConstraints(1, 1, 2, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 200), new Dimension(150, 200), null, 0, false));
+        txtaAufgabenstellung = new JTextArea();
+        txtaAufgabenstellung.setEditable(false);
+        mainPanel.add(txtaAufgabenstellung, new GridConstraints(1, 1, 2, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, 200), new Dimension(150, 200), null, 0, false));
         lblBild = new JLabel();
         lblBild.setText("");
-        mainPanel.add(lblBild, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), new Dimension(200, 200), null, 0, false));
+        mainPanel.add(lblBild, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 200), null, null, 0, false));
         btnZurueck = new JButton();
         btnZurueck.setText("Zurück");
         mainPanel.add(btnZurueck, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -189,4 +192,5 @@ public class AufgabenPreview extends JDialog implements ActionListener {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

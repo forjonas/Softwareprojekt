@@ -248,7 +248,7 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
         btnLoesungshinweis.setText("Loesungshinweis");
         panel8.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnVorherigeAufgabe = new JButton();
-        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        btnVorherigeAufgabe.setText("Vorherige Aufgabe");
         panel8.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
@@ -276,4 +276,5 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

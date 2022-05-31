@@ -22,7 +22,7 @@ import java.util.List;
  * @author Timo Joswig
  * @version 29.05.22
  */
-public class controllerLoesungenTraining {
+public class LoesungenTrainingController {
 
     private final Training training;
     private final JFrame homeFrame;
@@ -37,7 +37,7 @@ public class controllerLoesungenTraining {
      * @param benutzer  Der zurzeit angemeldete Benutzer
      * @param homeFrame Das Hauptmenü der Klasse des angemeldeten Benutzers
      */
-    public controllerLoesungenTraining(Training training, Benutzer benutzer, JFrame homeFrame) {
+    public LoesungenTrainingController(Training training, Benutzer benutzer, JFrame homeFrame) {
         this.homeFrame = homeFrame;
         this.training = training;
         this.index = 0;

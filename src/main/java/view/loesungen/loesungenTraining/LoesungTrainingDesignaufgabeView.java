@@ -3,6 +3,7 @@ package view.loesungen.loesungenTraining;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.LoesungenTrainingController;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
  * @version 29.05.2022
  */
 public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final LoesungenTrainingController LoesungenTrainingController;
     private final Designaufgabe aufgabe;
     private JPanel mainPanel;
     private JButton btnBeenden;
@@ -44,10 +45,10 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
      * Konstruktor für die benötigte View.
      *
      * @param aufgabe Die darzustellende Aufgabe
-     * @param controllerLoesungenTraining der Trainingscontroller, der diesen Konstruktor aufgerufen hat
+     * @param LoesungenTrainingController der Trainingscontroller, der diesen Konstruktor aufgerufen hat
      */
-    public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
-        this.controllerLoesungenTraining = controllerLoesungenTraining;
+    public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
+        this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -68,7 +69,7 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe musterloesungDesignaufgabe = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         lblMusterloesung.setIcon(new ImageIcon(musterloesungDesignaufgabe.getMusterloesung()));
-        UserloesungDesignaufgabe userloesungDesignaufgabe = (UserloesungDesignaufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        UserloesungDesignaufgabe userloesungDesignaufgabe = (UserloesungDesignaufgabe) LoesungenTrainingController.getUserloesung(aufgabe);
         lblUserloesung.setIcon(new ImageIcon(userloesungDesignaufgabe.getUserloesung()));
 
         this.pack();
@@ -108,21 +109,21 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht beenden möchte.
      */
     private void beenden() {
-        controllerLoesungenTraining.beendeLoesungTraining();
+        LoesungenTrainingController.beendeLoesungTraining();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
      */
     private void naechsteAufgabe() {
-        controllerLoesungenTraining.naechsteAufgabe();
+        LoesungenTrainingController.naechsteAufgabe();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
      */
     private void vorherigeAufgabe() {
-        controllerLoesungenTraining.vorherigeAufgabe();
+        LoesungenTrainingController.vorherigeAufgabe();
     }
 
     /**

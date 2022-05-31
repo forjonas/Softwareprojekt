@@ -3,6 +3,7 @@ package view.loesungen.loesungenTraining;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.LoesungenTrainingController;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
  * @version 29.05.2022
  */
 public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final LoesungenTrainingController LoesungenTrainingController;
     private final EinfachantwortAufgabe aufgabe;
     private JPanel panelMain;
     private JButton btnBeenden;
@@ -44,10 +45,10 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
      * Konstruktor für die benötigte View.
      *
      * @param aufgabe Die darzustellende Aufgabe
-     * @param controllerLoesungenTraining der Trainingscontroller, der diesen Konstruktor aufgerufen hat
+     * @param LoesungenTrainingController der Trainingscontroller, der diesen Konstruktor aufgerufen hat
      */
-    public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
-        this.controllerLoesungenTraining = controllerLoesungenTraining;
+    public LoesungTrainingEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
+        this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -69,7 +70,7 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
         MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        UserloesungEinfachantwort userloesungEinfachantwort = (UserloesungEinfachantwort) controllerLoesungenTraining.getUserloesung(aufgabe);
+        UserloesungEinfachantwort userloesungEinfachantwort = (UserloesungEinfachantwort) LoesungenTrainingController.getUserloesung(aufgabe);
         txtaUserLoesung.setText(userloesungEinfachantwort.getUserloesung());
         txtaUserLoesung.setLineWrap(true);
 
@@ -109,21 +110,21 @@ public class LoesungTrainingEinfachantwortaufgabeView extends JFrame implements 
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht beenden möchte.
      */
     private void beenden() {
-        controllerLoesungenTraining.beendeLoesungTraining();
+        LoesungenTrainingController.beendeLoesungTraining();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
      */
     private void naechsteAufgabe() {
-        controllerLoesungenTraining.naechsteAufgabe();
+        LoesungenTrainingController.naechsteAufgabe();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
      */
     private void vorherigeAufgabe() {
-        controllerLoesungenTraining.vorherigeAufgabe();
+        LoesungenTrainingController.vorherigeAufgabe();
     }
 
     /**

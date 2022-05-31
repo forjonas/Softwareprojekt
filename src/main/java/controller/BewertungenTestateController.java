@@ -27,7 +27,7 @@ import java.util.List;
  * @version 29.05.22
  */
 
-public class controllerBewertungenTestate {
+public class BewertungenTestateController {
     private final TestatBearbeitung testatBearbeitung;
     private final Testat testat;
     private final JFrame homeFrame;
@@ -44,7 +44,7 @@ public class controllerBewertungenTestate {
      * @param benutzer          Der zurzeit angemeldete Benutzer
      * @param homeFrame             Das Hauptmenü der Klasse des angemeldeten Benutzers
      */
-    public controllerBewertungenTestate(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame homeFrame) {
+    public BewertungenTestateController(TestatBearbeitung testatBearbeitung, Benutzer benutzer, JFrame homeFrame) {
         this.homeFrame = homeFrame;
         this.testatBearbeitung = testatBearbeitung;
         this.testat = ds.readTestatMitTestatbearbeitung(testatBearbeitung);

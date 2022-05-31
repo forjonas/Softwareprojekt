@@ -3,6 +3,7 @@ package view.loesungen.bewertungenTestat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.BewertungenTestateController;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
  * @version 29.05.2022
  */
 public class BewertungEinfachantwortaufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
+    private final BewertungenTestateController BewertungenTestateController;
     private final EinfachantwortAufgabe aufgabe;
     private final UserloesungEinfachantwort userloesungEinfachantwort;
     private JPanel mainPanel;
@@ -48,10 +49,10 @@ public class BewertungEinfachantwortaufgabeView extends JFrame implements Action
      * Konstruktor für die benötigte View.
      *
      * @param aufgabe die darzustellende Aufgabe vom Typ Einfachantwort
-     * @param controllerBewertungenTestate der Testatcontroller der diesen Konstruktor aufgerufen hat
+     * @param BewertungenTestateController der Testatcontroller der diesen Konstruktor aufgerufen hat
      */
-    public BewertungEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
-        this.controllerBewertungenTestate = controllerBewertungenTestate;
+    public BewertungEinfachantwortaufgabeView(EinfachantwortAufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
+        this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -73,7 +74,7 @@ public class BewertungEinfachantwortaufgabeView extends JFrame implements Action
         MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        this.userloesungEinfachantwort = (UserloesungEinfachantwort) controllerBewertungenTestate.getUserloesung(aufgabe);
+        this.userloesungEinfachantwort = (UserloesungEinfachantwort) BewertungenTestateController.getUserloesung(aufgabe);
         txtaUserloesung.setText(this.userloesungEinfachantwort.getUserloesung());
         txtaUserloesung.setLineWrap(true);
         txtfUserPunktzahl.setText(this.userloesungEinfachantwort.getErreichtePunkte() + "");
@@ -119,7 +120,7 @@ public class BewertungEinfachantwortaufgabeView extends JFrame implements Action
                 return;
             }
             userloesungEinfachantwort.setErreichtePunkte(bewertung);
-            controllerBewertungenTestate.setBewertet();
+            BewertungenTestateController.setBewertet();
         }
     }
 
@@ -127,15 +128,15 @@ public class BewertungEinfachantwortaufgabeView extends JFrame implements Action
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht oder die Bewertung beenden möchte.
      */
     private void beenden() {
-        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
+        if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
-            controllerBewertungenTestate.beendeBewertungTestat();
+            BewertungenTestateController.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                controllerBewertungenTestate.abbrechenBewertungTestat();
+                BewertungenTestateController.abbrechenBewertungTestat();
             }
         }
     }
@@ -144,14 +145,14 @@ public class BewertungEinfachantwortaufgabeView extends JFrame implements Action
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
      */
     private void naechsteAufgabe() {
-        controllerBewertungenTestate.naechsteAufgabe();
+        BewertungenTestateController.naechsteAufgabe();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
      */
     private void vorherigeAufgabe() {
-        controllerBewertungenTestate.vorherigeAufgabe();
+        BewertungenTestateController.vorherigeAufgabe();
     }
 
     /**

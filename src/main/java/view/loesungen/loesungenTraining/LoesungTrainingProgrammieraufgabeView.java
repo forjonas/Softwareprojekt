@@ -3,6 +3,7 @@ package view.loesungen.loesungenTraining;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.LoesungenTrainingController;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
  * @version 29.05.2022
  */
 public class LoesungTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final LoesungenTrainingController LoesungenTrainingController;
     private final Programmieraufgabe aufgabe;
     private JPanel mainPanel;
     private JButton btnBeenden;
@@ -44,10 +45,10 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
      * Konstruktor für die benötigte View.
      *
      * @param aufgabe Die darzustellende Aufgabe
-     * @param controllerLoesungenTraining der Trainingscontroller, der diesen Konstruktor aufgerufen hat
+     * @param LoesungenTrainingController der Trainingscontroller, der diesen Konstruktor aufgerufen hat
      */
-    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
-        this.controllerLoesungenTraining = controllerLoesungenTraining;
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
+        this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -70,7 +71,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) LoesungenTrainingController.getUserloesung(aufgabe);
         txtaUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
         txtaUserloesung.setLineWrap(true);
 
@@ -110,21 +111,21 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht beenden möchte.
      */
     private void beenden() {
-        controllerLoesungenTraining.beendeLoesungTraining();
+        LoesungenTrainingController.beendeLoesungTraining();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
      */
     private void naechsteAufgabe() {
-        controllerLoesungenTraining.naechsteAufgabe();
+        LoesungenTrainingController.naechsteAufgabe();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
      */
     private void vorherigeAufgabe() {
-        controllerLoesungenTraining.vorherigeAufgabe();
+        LoesungenTrainingController.vorherigeAufgabe();
     }
 
     /**

@@ -3,6 +3,7 @@ package view.loesungen.bewertungenTestat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.BewertungenTestateController;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
  * @version 29.05.2022
  */
 public class BewertungMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
+    private final BewertungenTestateController BewertungenTestateController;
     private final MultipleChoiceAufgabe aufgabe;
     private final UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe;
     private JPanel mainPanel;
@@ -56,10 +57,10 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
      * Konstruktor für die benötigte View.
      *
      * @param aufgabe die darzustellende Aufgabe vom Typ MultipleChoice
-     * @param controllerBewertungenTestate der Testatcontroller der diesen Konstruktor aufgerufen hat
+     * @param BewertungenTestateController der Testatcontroller der diesen Konstruktor aufgerufen hat
      */
-    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
-        this.controllerBewertungenTestate = controllerBewertungenTestate;
+    public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
+        this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -79,7 +80,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         lblMaximalPunktzahl.setText(aufgabe.getPunktewert() + "");
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
-        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) BewertungenTestateController.getUserloesung(aufgabe);
         this.userloesungMultipleChoiceAufgabe = userloesungMultipleChoiceAufgabe;
         int musterloesung = musterloesungMultipleChoiceAufgabe.getMusterloesung();
         int userloesung = userloesungMultipleChoiceAufgabe.getUserloesung();
@@ -154,7 +155,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
                 return;
             }
             userloesungMultipleChoiceAufgabe.setErreichtePunkte(bewertung);
-            controllerBewertungenTestate.setBewertet();
+            BewertungenTestateController.setBewertet();
         }
     }
 
@@ -162,15 +163,15 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht oder die Bewertung beenden möchte.
      */
     private void beenden() {
-        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
+        if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
-            controllerBewertungenTestate.beendeBewertungTestat();
+            BewertungenTestateController.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                controllerBewertungenTestate.abbrechenBewertungTestat();
+                BewertungenTestateController.abbrechenBewertungTestat();
             }
         }
     }
@@ -179,14 +180,14 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
      */
     private void naechsteAufgabe() {
-        controllerBewertungenTestate.naechsteAufgabe();
+        BewertungenTestateController.naechsteAufgabe();
     }
 
     /**
      * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
      */
     private void vorherigeAufgabe() {
-        controllerBewertungenTestate.vorherigeAufgabe();
+        BewertungenTestateController.vorherigeAufgabe();
     }
 
     /**

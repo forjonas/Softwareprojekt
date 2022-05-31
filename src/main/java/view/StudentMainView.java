@@ -65,6 +65,7 @@ public class StudentMainView extends JFrame implements ActionListener {
         this.add(pnlStudent);
 
         this.setSize(600, 600);
+        this.setMinimumSize(this.getSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
