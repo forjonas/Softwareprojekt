@@ -1,5 +1,8 @@
 package entity.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Enum für die drei Schwierigkeitsgrade
  *
@@ -13,6 +16,7 @@ public enum Schwierigkeitsgrad {
     Schwer("Schwer");
 
     private final String code;
+    private static final int SIZE = Schwierigkeitsgrad.values().length;
 
     /**
      * Konstruktor des Enums Schwierigkeitsgrad
@@ -30,6 +34,28 @@ public enum Schwierigkeitsgrad {
      */
     public String getCode() {
         return code;
+    }
+
+    /**
+     * Gibt die Anzahl der Werte des Enums zurück;
+     *
+     * @return Anzahl der Werte des Enums
+     */
+    public static int getSize() {
+        return SIZE;
+    }
+
+    /**
+     * Gibt ein Array aller Codes des Enums zurück
+     *
+     * @return Array aller Codes des Enums
+     */
+    public static String[] getCodeArray() {
+        List<String> codes = new ArrayList<String>();
+        for(Schwierigkeitsgrad s : Schwierigkeitsgrad.values()) {
+            codes.add(s.getCode());
+        }
+        return codes.toArray(new String[codes.size()]);
     }
 
 }

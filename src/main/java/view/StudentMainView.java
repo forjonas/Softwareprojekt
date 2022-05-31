@@ -53,8 +53,6 @@ public class StudentMainView extends JFrame implements ActionListener {
 
         btnAbmelden = new JButton("Abmelden");
         btnAbmelden.addActionListener(this);
-        btnAbmelden.setPreferredSize(new Dimension(70, 30));
-        btnAbmelden.setFont(new Zeichenstruktur().schriftKleinerButton());
 
         tempCenterPnl.add(btnGeneriereTraining);
         tempCenterPnl.add(btnMeinteTestate);
@@ -86,7 +84,7 @@ public class StudentMainView extends JFrame implements ActionListener {
             this.dispose();
             new LoginView();
         } else if (e.getSource() == this.btnGeneriereTraining) {
-            new CreateFrageView(this, student);
+            new GeneriereTrainingView(this, student);
             this.setVisible(false);
         } else if (e.getSource() == this.btnEinzelneAufgabe) {
             new BearbeiteEinzelneAufgabeKatalogView(this, student);

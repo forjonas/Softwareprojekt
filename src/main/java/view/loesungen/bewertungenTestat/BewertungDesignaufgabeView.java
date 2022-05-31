@@ -3,6 +3,7 @@ package view.loesungen.bewertungenTestat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.BewertungenTestateController;
 import entity.aufgabe.Designaufgabe;
 import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
 import entity.loesung.userloesung.UserloesungDesignaufgabe;
@@ -13,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
+    private final BewertungenTestateController BewertungenTestateController;
     private final Designaufgabe aufgabe;
     private final UserloesungDesignaufgabe userloesungDesignaufgabe;
     private JPanel mainPanel;
@@ -39,8 +40,8 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JLabel lblMusterBild;
 
 
-    public BewertungDesignaufgabeView(Designaufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
-        this.controllerBewertungenTestate = controllerBewertungenTestate;
+    public BewertungDesignaufgabeView(Designaufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
+        this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -61,7 +62,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungDesignaufgabe musterloesungDesignaufgabe = (MusterloesungDesignaufgabe) aufgabe.getMusterloesung();
         lblMusterloesung.setIcon(new ImageIcon(musterloesungDesignaufgabe.getMusterloesung()));
-        UserloesungDesignaufgabe userloesungDesignaufgabe = (UserloesungDesignaufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        UserloesungDesignaufgabe userloesungDesignaufgabe = (UserloesungDesignaufgabe) BewertungenTestateController.getUserloesung(aufgabe);
         this.userloesungDesignaufgabe = userloesungDesignaufgabe;
         lblUserloesung.setIcon(new ImageIcon(userloesungDesignaufgabe.getUserloesung()));
         txtfUserPunktzahl.setText(userloesungDesignaufgabe.getErreichtePunkte() + "");
@@ -101,31 +102,31 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
                 return;
             }
             userloesungDesignaufgabe.setErreichtePunkte(bewertung);
-            controllerBewertungenTestate.setBewertet();
+            BewertungenTestateController.setBewertet();
         }
     }
 
 
     private void beenden() {
-        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
+        if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
-            controllerBewertungenTestate.beendeBewertungTestat();
+            BewertungenTestateController.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == JOptionPane.YES_OPTION) {
                 this.dispose();
-                controllerBewertungenTestate.abbrechenBewertungTestat();
+                BewertungenTestateController.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        controllerBewertungenTestate.naechsteAufgabe();
+        BewertungenTestateController.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        controllerBewertungenTestate.vorherigeAufgabe();
+        BewertungenTestateController.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

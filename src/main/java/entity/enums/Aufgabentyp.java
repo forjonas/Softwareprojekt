@@ -1,5 +1,8 @@
 package entity.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Enum für die vier Aufgabentypen
  *
@@ -14,6 +17,7 @@ public enum Aufgabentyp {
     Programmieren("Programmieren");
 
     private final String code;
+    private static final int SIZE = Aufgabentyp.values().length;
 
     /**
      * Konstruktor des Enums Aufgabentyp
@@ -31,6 +35,28 @@ public enum Aufgabentyp {
      */
     public String getCode() {
         return code;
+    }
+
+    /**
+     * Gibt die Anzahl der Werte des Enums zurück;
+     *
+     * @return Anzahl der Werte des Enums
+     */
+    public static int getSize() {
+        return SIZE;
+    }
+
+    /**
+     * Gibt ein Array aller Codes des Enums zurück
+     *
+     * @return Array aller Codes des Enums
+     */
+    public static String[] getCodeArray() {
+        List<String> codes = new ArrayList<String>();
+        for(Aufgabentyp a : Aufgabentyp.values()) {
+            codes.add(a.getCode());
+        }
+        return codes.toArray(new String[codes.size()]);
     }
 
 }

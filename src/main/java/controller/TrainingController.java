@@ -1,25 +1,14 @@
 package controller;
 
 import view.*;
-import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Kristin Kubisch
@@ -46,7 +35,7 @@ public class TrainingController extends BearbeitungsController {
     public void setNewTrainingKatalog() {
 
         if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht((Dozent) aktuellerBenutzer);
+            new DozentMainView((Dozent) aktuellerBenutzer);
         } else if (aktuellerBenutzer.getClass() == Student.class) {
             new StudentMainView((Student) aktuellerBenutzer);
         }
@@ -70,7 +59,7 @@ public class TrainingController extends BearbeitungsController {
         ds.persistObjects(userloesungen);
         System.out.println(userloesungen);
 
-        new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
+        new LoesungenTrainingController(training, aktuellerBenutzer, hauptmenueFrame);
     }
 
     /**
