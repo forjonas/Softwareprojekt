@@ -12,6 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung einer Designaufgabe und dazugehöriger Lösungen im Kontext eines Trainings.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionListener {
     private final controller.controllerLoesungenTraining controllerLoesungenTraining;
     private final Designaufgabe aufgabe;
@@ -34,7 +40,12 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblUserloesungString;
     private JLabel lblMusterloesungString;
 
-
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe Die darzustellende Aufgabe
+     * @param controllerLoesungenTraining der Trainingscontroller, der diesen Konstruktor aufgerufen hat
+     */
     public LoesungTrainingDesignaufgabeView(Designaufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
         this.controllerLoesungenTraining = controllerLoesungenTraining;
         this.aufgabe = aufgabe;
@@ -45,6 +56,7 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
@@ -60,11 +72,18 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         lblUserloesung.setIcon(new ImageIcon(userloesungDesignaufgabe.getUserloesung()));
 
         this.pack();
+        this.setMinimumSize(new Dimension(400 + this.lblAufgabenstellungsbild.getWidth() + this.lblUserloesung.getWidth() + this.lblMusterloesung.getWidth(), 450 + this.lblMusterloesung.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
+    /**
+     * Die Funktion welche die Funktionalitäten des Actionlistener-Interfaces der Klasse implementiert.
+     *
+     * @param e eines der möglichen Button-Events
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
@@ -85,23 +104,38 @@ public class LoesungTrainingDesignaufgabeView extends JFrame implements ActionLi
         }
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht beenden möchte.
+     */
     private void beenden() {
         controllerLoesungenTraining.beendeLoesungTraining();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
+     */
     private void naechsteAufgabe() {
         controllerLoesungenTraining.naechsteAufgabe();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
+     */
     private void vorherigeAufgabe() {
         controllerLoesungenTraining.vorherigeAufgabe();
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur vorherigen Aufgabe nicht anzeigen soll.
+     */
     public void versteckeNaechsteAufgabe() {
         this.btnNaechsteAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Methode, mit welcher der Controller dem View mitteilt, dass er im Kontext einer Bewertung angezeigt wird.
+     */
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
         this.update(this.getGraphics());

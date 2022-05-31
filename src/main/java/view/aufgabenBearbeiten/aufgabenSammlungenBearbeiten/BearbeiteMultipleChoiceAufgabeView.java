@@ -7,28 +7,19 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
-import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements ActionListener {
+    protected TestatController testatController;
+    protected TrainingController trainingController;
+    protected MultipleChoiceAufgabe aufgabe;
+    protected UserloesungMultipleChoiceAufgabe userloesung;
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -52,13 +43,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     private String antwort2;
     private String antwort3;
     private String antwort4;
-
     private boolean hinweisVerwendet;
-
-    protected TestatController testatController;
-    protected TrainingController trainingController;
-    protected MultipleChoiceAufgabe aufgabe;
-    protected UserloesungMultipleChoiceAufgabe userloesung;
 
     public BearbeiteMultipleChoiceAufgabeView(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
         setContentPane($$$getRootComponent$$$());
@@ -119,6 +104,8 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblBild.getWidth(), 600 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

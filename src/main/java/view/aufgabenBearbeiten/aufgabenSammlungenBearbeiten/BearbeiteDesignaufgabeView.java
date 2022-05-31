@@ -29,6 +29,10 @@ import static persistence.DatabaseService.dateiOeffnen;
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener {
+    private TestatController testatController;
+    private TrainingController trainingController;
+    private Designaufgabe aufgabe;
+    private UserloesungDesignaufgabe userloesung;
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -48,10 +52,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     private File fileBild = null;
     byte[] eingabe;
     private boolean hinweisVerwendet;
-    private TestatController testatController;
-    private TrainingController trainingController;
-    private Designaufgabe aufgabe;
-    private UserloesungDesignaufgabe userloesung;
 
 
     /**
@@ -91,6 +91,8 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
         btnUpload.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblBild.getWidth(), 600 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

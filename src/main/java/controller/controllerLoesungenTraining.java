@@ -15,6 +15,13 @@ import persistence.DatabaseService;
 import javax.swing.*;
 import java.util.List;
 
+/**
+ * Controller-Klasse welche die Interaktion zwischen den Lösungsviews von Bearbeitungen eines Trainings darstellen und Klassen,
+ * die diese aufrufen wollen, steuert.
+ *
+ * @author Timo Joswig
+ * @version 29.05.22
+ */
 public class controllerLoesungenTraining {
 
     private final Training training;
@@ -24,6 +31,12 @@ public class controllerLoesungenTraining {
     private DatabaseService ds = DatabaseService.getInstance();
     private List<Userloesung> userloesungList;
 
+    /**
+     * Konstruktor für einen Controller der die Logik hinter der Einsicht von bearbeiteten Trainings bereitstellt
+     *
+     * @param benutzer  Der zurzeit angemeldete Benutzer
+     * @param homeFrame Das Hauptmenü der Klasse des angemeldeten Benutzers
+     */
     public controllerLoesungenTraining(Training training, Benutzer benutzer, JFrame homeFrame) {
         this.homeFrame = homeFrame;
         this.training = training;
@@ -35,6 +48,12 @@ public class controllerLoesungenTraining {
         startLoesungTraining();
     }
 
+    /**
+     * Funktion die aus der bereits geladenen Liste aller Userlösungen, die eine zurückgibt, welche zur angegebenen Aufgabe passt
+     *
+     * @param aufgabe Die Aufgabe zu welcher die passende Userlösung zurückgegeben werden soll
+     * @return die passende Userlösung
+     */
     public Userloesung getUserloesung(Aufgabe aufgabe) {
         Userloesung userloesung = null;
         for (Userloesung userloesungDB : userloesungList) {
@@ -45,6 +64,9 @@ public class controllerLoesungenTraining {
         return userloesung;
     }
 
+    /**
+     * Initialisierung des ersten Views des Trainings, abhängig vom Aufgabentyps der ersten Aufgabe.
+     */
     public void startLoesungTraining() {
         Aufgabe aufgabe = training.getAufgaben().get(0);
         switch (aufgabe.getAufgabentyp()) {
@@ -89,6 +111,10 @@ public class controllerLoesungenTraining {
         }
     }
 
+    /**
+     * Initialisierung des Views der nächsten Aufgabe im Training, abhängig vom internen Index und des entsprechenden
+     * Aufgabentyps.
+     */
     public void beendeLoesungTraining() {
         if (benutzer.getClass().equals(Dozent.class)) {
             new EinsehenTrainingKatalogView(homeFrame, (Dozent) benutzer);
@@ -136,6 +162,10 @@ public class controllerLoesungenTraining {
         }
     }
 
+    /**
+     * Initialisierung des Views der vorherigen Aufgabe im Training, abhängig vom internen Index und des entsprechenden
+     * Aufgabentyps.
+     */
     public void vorherigeAufgabe() {
         index--;
         Aufgabe aufgabe = training.getAufgaben().get(index);

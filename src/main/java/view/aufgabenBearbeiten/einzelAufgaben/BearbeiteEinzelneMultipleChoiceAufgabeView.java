@@ -20,6 +20,10 @@ import java.awt.event.ActionListener;
  * @version6: 23.05.22 Kommentare + weitere Anpassungen
  */
 public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
+    private Benutzer benutzer;
+    private MultipleChoiceAufgabe aufgabe;
+    private UserloesungMultipleChoiceAufgabe userloesung;
+    private JFrame frame;
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -45,10 +49,6 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private String antwort4;
 
     private boolean hinweisVerwendet;
-    private Benutzer benutzer;
-    private JFrame frame;
-    private MultipleChoiceAufgabe aufgabe;
-    private UserloesungMultipleChoiceAufgabe userloesung;
 
     /**
      * Konstruktor für Klasse BearbeiteEinzelneMultipleChoiceAufgabeView
@@ -110,6 +110,8 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
         btnZeigeLoesungEinzel.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblBild.getWidth(), 550 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements ActionListener {
 
+    private Benutzer aktuellerBenutzer;
+    private List<Aufgabe> aufgabenliste;
+    private JFrame jFrame;
     private JPanel contentPane;
     private JTable tableAufgaben;
     private BearbeiteAufgabeTableModel bearbeiteAufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnBearbeiten;
-    private List<Aufgabe> aufgabenliste;
-    private Benutzer aktuellerBenutzer;
-    private JFrame jFrame;
 
     /**
      * Konstruktor, der den Frame erstellt

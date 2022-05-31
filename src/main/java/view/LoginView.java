@@ -48,7 +48,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
 
         this.setSize(600, 600);
         this.setMinimumSize(new Dimension(500, 400));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//WindowConstants bezieht sich explizit nur auf das Window, nicht auf JFrame.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
@@ -128,7 +128,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener {
     }
 
     /**
-     * Methode, die die Funktionalität des Einloggen bildet.
+     * Methode, die die Funktionalität des Einloggens bildet.
      */
     public void einloggenSequenz() {
         if (txtfUsername.getText().isEmpty()) {

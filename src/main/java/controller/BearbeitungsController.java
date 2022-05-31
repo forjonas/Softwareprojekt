@@ -1,27 +1,15 @@
 package controller;
 
 import view.aufgabenBearbeiten.aufgabenSammlungenBearbeiten.*;
-import controller.TrainingController;
 import entity.aufgabe.*;
 import entity.aufgabensammlung.Aufgabensammlung;
-import entity.aufgabensammlung.Testat;
-import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
-import entity.benutzer.Dozent;
 import entity.enums.Aufgabentyp;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
-import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,8 +45,8 @@ public abstract class BearbeitungsController {
     /**
      * zeigt die aktuelle Aufgabe der Aufgabensammlung
      */
-    public void zeigeAktuelleAufgabe() { //Aufgabe anzeigen
-        aufgabe = sammlung.getAufgaben().get(this.index); //Aufgabe am Index erhalten
+    public void zeigeAktuelleAufgabe() {
+        aufgabe = sammlung.getAufgaben().get(this.index);
 
         if (this.aktuellerFrame != null) {
             this.aktuellerFrame.dispose();
@@ -68,7 +56,7 @@ public abstract class BearbeitungsController {
             if (userloesungen.get(index) == null) {
                 frame.setUserloesungNull();
             } else frame.setUserloesung(userloesungen.get(index));
-            this.aktuellerFrame = frame;// Für funktionalität: TestatApp mit übergeben
+            this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
                 frame.setNaechsteZuSpeichern();
             }

@@ -200,9 +200,9 @@ public class CreateBetaData {
         ma3.setMusterloesung(mma3);
         ma4.setMusterloesung(mma4);
 
-        mea1 = new MusterloesungEinfachantwort(ea1, "Hier steht der Unterschied zwischen Aggregation und Komposition.", "Hier sthet die Begründung");
+        mea1 = new MusterloesungEinfachantwort(ea1, "Hier steht der Unterschied zwischen Aggregation und Komposition.", "Hier steht die Begründung");
         mea2 = new MusterloesungEinfachantwort(ea2, "Erklärung eines Return-Wertes", "Begründung für 'null'.");
-        mea3 = new MusterloesungEinfachantwort(ea3, "Um Objekte erstellen zu können muss man Sie kennen", "Die Methode/Klasse sthet in keiner Weise mit der Klasse Auto in verbindung");
+        mea3 = new MusterloesungEinfachantwort(ea3, "Um Objekte erstellen zu können muss man Sie kennen", "Die Methode/Klasse steht in keiner Weise mit der Klasse Auto in verbindung");
         mea4 = new MusterloesungEinfachantwort(ea4, "Um ein Objekt zu erstellen muss die Klasse/Methode diese Objekt kennen.", "Erläuterung");
         ea1.setMusterloesung(mea1);
         ea2.setMusterloesung(mea2);

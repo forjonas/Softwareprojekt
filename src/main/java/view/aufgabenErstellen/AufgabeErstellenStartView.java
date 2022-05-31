@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class AufgabeErstellenStartView extends JFrame implements ActionListener {
     private Dozent doz;
+    private JFrame dozentAnsichtFrame;
     private GridLayout gridLayout = new GridLayout(3, 1);
     private JPanel pnlCenter;
     private JPanel pnlNorth;
@@ -22,7 +23,6 @@ public class AufgabeErstellenStartView extends JFrame implements ActionListener 
     private JButton btnZurueck;
     private JButton btnWeiter;
     private JComboBox<String> cbAufgabentypen;
-    private JFrame dozentAnsichtFrame;
 
     /**
      * Setzt Parameter des JFrames und ruft AufgabeErstellenEinfachAntwortViewFuellen() auf.

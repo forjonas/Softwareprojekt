@@ -14,6 +14,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung der Lösung einer einzelnen MultipleChoice-Aufgabe.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
 
     private Benutzer benutzer;
@@ -44,13 +50,21 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblUserBild;
     private JLabel lblMusterBild;
 
-
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe Die darzustellende Aufgabe
+     * @param userloesungMultipleChoiceAufgabe Die Userlösung die sowohl zum Benutzer als auch zur Aufgabe gehört
+     * @param benutzer Der zurzeit angemeldete Benutzer
+     * @param homeFrame Der Hauptmenü-Frame, zu welchem der Benutzer nach Beendigung der Einsicht der Lösung zurückkehrt
+     */
     public LoesungEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe, Benutzer benutzer, JFrame homeFrame) {
         this.homeFrame = homeFrame;
         this.benutzer = benutzer;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
@@ -95,12 +109,18 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
         this.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblAufgabenstellungsbild.getWidth(), 450 + this.lblAufgabenstellungsbild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
-
+    /**
+     * Methode, welche die Funktionalität des Actionlistener-Interfaces implementiert.
+     *
+     * @param e Die verschiedenen Button-Events die auftreten können
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             this.dispose();
@@ -114,6 +134,9 @@ public class LoesungEinzelneMultipleChoiceAufgabeView extends JFrame implements 
         }
     }
 
+    /**
+     * Methode, welche den Benutzer zurück zum Aufgabenkatalog mit den einzelnen Aufgaben bringt.
+     */
     private void beenden() {
         new BearbeiteEinzelneAufgabeKatalogView(homeFrame, benutzer);
     }

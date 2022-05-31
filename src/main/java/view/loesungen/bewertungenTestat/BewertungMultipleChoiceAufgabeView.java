@@ -12,6 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung und Bewertung einer MultipleChoice-Aufgabe und dazugehöriger Lösungen im Kontext eines Testates.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class BewertungMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private final controller.controllerBewertungenTestate controllerBewertungenTestate;
     private final MultipleChoiceAufgabe aufgabe;
@@ -46,7 +52,12 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
     private JLabel lblUserloesung;
     private JLabel lblMusterloesung;
 
-
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe die darzustellende Aufgabe vom Typ MultipleChoice
+     * @param controllerBewertungenTestate der Testatcontroller der diesen Konstruktor aufgerufen hat
+     */
     public BewertungMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
         this.controllerBewertungenTestate = controllerBewertungenTestate;
         this.aufgabe = aufgabe;
@@ -58,6 +69,7 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         if (aufgabe.getAufgabenstellungsbild() != null) {
@@ -102,11 +114,18 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         txtfUserPunktzahl.setText(userloesungMultipleChoiceAufgabe.getErreichtePunkte() + "");
 
         this.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblAufgabenstellungsbild.getWidth(), 450 + this.lblAufgabenstellungsbild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
+    /**
+     * Die Funktion welche die Funktionalitäten des Actionlistener-Interfaces der Klasse implementiert.
+     *
+     * @param e eines der möglichen Button-Events
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             beenden();
@@ -139,6 +158,9 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         }
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht oder die Bewertung beenden möchte.
+     */
     private void beenden() {
         if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
             this.dispose();
@@ -153,24 +175,39 @@ public class BewertungMultipleChoiceAufgabeView extends JFrame implements Action
         }
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
+     */
     private void naechsteAufgabe() {
         controllerBewertungenTestate.naechsteAufgabe();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
+     */
     private void vorherigeAufgabe() {
         controllerBewertungenTestate.vorherigeAufgabe();
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur nächsten Aufgabe nicht anzeigen soll.
+     */
     public void versteckeNaechsteAufgabe() {
         this.btnNaechsteAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur vorherigen Aufgabe nicht anzeigen soll.
+     */
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Methode, mit welcher der Controller dem View mitteilt, dass er im Kontext einer Bewertung angezeigt wird.
+     */
     public void bewertbar() {
         this.txtfUserPunktzahl.setEditable(true);
         this.btnBewertungSpeichern.setVisible(true);
