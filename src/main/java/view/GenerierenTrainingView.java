@@ -18,7 +18,7 @@ import java.util.List;
  * @author Martin Bergen
  * @version 23.05.22
  */
-public class GeneriereTrainingView extends JFrame implements ActionListener {
+public class GenerierenTrainingView extends JFrame implements ActionListener {
 
     private JFrame jframe;
     private Benutzer benutzer;
@@ -28,12 +28,12 @@ public class GeneriereTrainingView extends JFrame implements ActionListener {
     private JComboBox<String> cbKategorie = new JComboBox<>(Kategorie.getCodeArray());
 
     /**
-     * Konstruktor der Klasse GeneriereTrainingView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
+     * Konstruktor der Klasse GenerierenTrainingView, der das Fenster und die ausgewählten Bausteine miteinander verbindet und erstellt.
      *
      * @param jframe   JFrame, aus dem dieser Konstruktor aufgerufen wurde, wird an die AufgabenAuswaehlenTrainingView weitergegeben
      * @param benutzer Benutzer, der diesen Konstruktor/diese Funktion aufruft, wird an die AufgabenAuswaehlenTrainingView weitergegeben
      */
-    public GeneriereTrainingView(JFrame jframe, Benutzer benutzer) {
+    public GenerierenTrainingView(JFrame jframe, Benutzer benutzer) {
         setTitle("Kategorie und Schwierigkeit wählen.");
         this.jframe = jframe;
         this.benutzer = benutzer;
@@ -64,20 +64,6 @@ public class GeneriereTrainingView extends JFrame implements ActionListener {
      * @return Kategorie
      */
     public Kategorie readKategorie() {
-//        switch (getValueCBox(cbKategorie)) {
-//            case "Software Engineering":
-//                return Kategorie.Software_Engineering;
-//            case "Java Programmierung":
-//                return Kategorie.Java_Programmierung;
-//            case "Java Grundlagen":
-//                return Kategorie.Java_Grundlagen;
-//            case "Klassendiagramme":
-//                return Kategorie.Klassendiagramme;
-//            case "Datenbanken":
-//                return Kategorie.Datenbanken;
-//            default:
-//                return null;
-//        }
         String[] kategorieCodes = Kategorie.getCodeArray();
         String cbKategorieWert = getValueCBox(cbKategorie);
         for(int i = 0; i<kategorieCodes.length; i++) {
@@ -94,16 +80,6 @@ public class GeneriereTrainingView extends JFrame implements ActionListener {
      * @return Schwierigkeitsgrad
      */
     public Schwierigkeitsgrad schwierigkeitsgradSetzen() {
-//        switch (getValueCBox(cbSchwierigkeit)) {
-//            case "leicht":
-//                return Schwierigkeitsgrad.Leicht;
-//            case "mittel":
-//                return Schwierigkeitsgrad.Mittel;
-//            case "schwer":
-//                return Schwierigkeitsgrad.Schwer;
-//            default:
-//                return null;
-//        }
         String[] schwierigkeitsgradCodes = Schwierigkeitsgrad.getCodeArray();
         String cbSchwierigkeitsgradWert = getValueCBox(cbSchwierigkeit);
         for(int i = 0; i<schwierigkeitsgradCodes.length; i++) {
@@ -134,7 +110,6 @@ public class GeneriereTrainingView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnWaehlen) {
             Kategorie kategorie = readKategorie();
             Schwierigkeitsgrad schwierigkeitsgrad = schwierigkeitsgradSetzen();
-            System.out.println("actionPerformed Kategorie:"+kategorie+" Schwierigkeitsgrad: "+schwierigkeitsgrad);
             List<Aufgabe> aufgabenliste = DatabaseService.getInstance().readAufgabenmitKatSchwierigkeit(kategorie, schwierigkeitsgradSetzen());
             if (aufgabenliste.size() > 0) {
                 new AufgabenAuswaehlenTrainingView(jframe, benutzer, aufgabenliste, kategorie, schwierigkeitsgrad);

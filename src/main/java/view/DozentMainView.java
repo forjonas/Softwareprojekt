@@ -161,7 +161,7 @@ public class DozentMainView extends JFrame implements ActionListener {
 
     private void trainingsDurchfuehren() {
         this.setVisible(false);
-        new GeneriereTrainingView(this, dozent);
+        new GenerierenTrainingView(this, dozent);
     }
 
     private void testateDurchfuehren() {

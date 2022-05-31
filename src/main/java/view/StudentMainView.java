@@ -84,7 +84,7 @@ public class StudentMainView extends JFrame implements ActionListener {
             this.dispose();
             new LoginView();
         } else if (e.getSource() == this.btnGeneriereTraining) {
-            new GeneriereTrainingView(this, student);
+            new GenerierenTrainingView(this, student);
             this.setVisible(false);
         } else if (e.getSource() == this.btnEinzelneAufgabe) {
             new BearbeiteEinzelneAufgabeKatalogView(this, student);
