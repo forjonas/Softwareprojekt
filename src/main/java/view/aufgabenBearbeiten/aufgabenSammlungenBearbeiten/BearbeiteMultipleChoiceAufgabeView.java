@@ -171,7 +171,6 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
                     this.dispose();
-
                 } else {
                     trainingController.weiter();
 
