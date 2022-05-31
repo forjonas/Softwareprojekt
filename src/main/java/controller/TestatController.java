@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  * @author Kristin Kubisch
- * @version: 28.05.2022
+ * @version: 31.05.2022
  * Schnittstelle um ein Testat auszuführen
  */
 public class TestatController extends BearbeitungsController {
@@ -22,8 +22,8 @@ public class TestatController extends BearbeitungsController {
     /**
      * Konstruktor für Klasse TestatController
      *
-     * @param testat            mit den zu bearbeitenden Aufgaben
-     * @param aktuellerBenutzer der das Testat bearbeitet
+     * @param testat            Testat mit den zu bearbeitenden Aufgaben
+     * @param aktuellerBenutzer Benutzer der das Testat bearbeitet
      * @param hauptmenueFrame   Hauptmenü Fenster des Benutzers
      */
     public TestatController(Testat testat, Benutzer aktuellerBenutzer, JFrame hauptmenueFrame) {
@@ -32,13 +32,6 @@ public class TestatController extends BearbeitungsController {
         this.testat = testat;
         this.testat.addBearbeitung(testatBearbeitung);
         super.zeigeAktuelleAufgabe();
-    }
-
-    /**
-     * Setzt TestatKatalog
-     */
-    public void setNewTestatKatalog() {
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
     /**
@@ -61,7 +54,6 @@ public class TestatController extends BearbeitungsController {
         ds.persistObjects(userloesungen);
         ds.persistObject(testat);
         ds.persistObject(testatBearbeitung);
-        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
     }
 
     /**
@@ -70,5 +62,13 @@ public class TestatController extends BearbeitungsController {
     public Testat getTestat() {
         return testat;
     }
+
+    /**
+     * Setzt TestatKatalog
+     */
+    public void setNewTestatKatalog() {
+        new MeineTestateKatalogView(hauptmenueFrame, aktuellerBenutzer);
+    }
+
 
 }

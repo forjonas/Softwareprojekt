@@ -19,9 +19,8 @@ import static persistence.DatabaseService.dateiOeffnen;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ * @version: 31.05.2022
+ * Fenster um eine einzelne Designaufgabe zu beantworten
  */
 public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -35,7 +34,6 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     private JButton btnAbbrechenEinzel;
     private JButton btnLoesungshinweisEinzel;
     private JButton btnUpload;
-    private JLabel lblAufgabenText;
     private JButton btnZeigeLoesungEinzel;
     private JTextArea txtaAufgabentext;
 
@@ -51,9 +49,9 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     /**
      * Konstruktor für Klasse BearbeiteEinzelneDesignaufgabeView
      *
-     * @param aufgabe
-     * @param benutzer
-     * @param frame
+     * @param aufgabe Aufgabe die bearbeitet werden soll
+     * @param benutzer der aktuelle Benutzer der die Aufgabe bearbeitet
+     * @param frame der Hauptframe des Benutzers
      */
     public BearbeiteEinzelneDesignaufgabeView(Designaufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.setContentPane($$$getRootComponent$$$());
@@ -121,6 +119,10 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
         }
     }
 
+    /**
+     *
+     * @param file konvertiert ein file zu einem byte Array
+     */
     public void convert(File file) {
         eingabe = convertFileToByteArray(file, this);
     }

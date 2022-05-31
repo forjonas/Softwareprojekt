@@ -15,9 +15,8 @@ import java.awt.event.ActionListener;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ * @version: 31.05.2022
+ * Fenster um eine einzelne Multiple-Choice-Aufgabe zu beantworten
  */
 public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -34,7 +33,6 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     private JRadioButton btnantwort4;
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
-    private JLabel lblAufgabenText;
     private JButton btnZeigeLoesungEinzel;
     private JTextArea txtaAufgabentext;
     private int eingabe;
@@ -53,9 +51,9 @@ public class BearbeiteEinzelneMultipleChoiceAufgabeView extends JFrame implement
     /**
      * Konstruktor für Klasse BearbeiteEinzelneMultipleChoiceAufgabeView
      *
-     * @param aufgabe
-     * @param benutzer
-     * @param frame
+     * @param aufgabe Aufgabe die bearbeitet werden soll
+     * @param benutzer der aktuelle Benutzer der die Aufgabe bearbeitet
+     * @param frame der Hauptframe des Benutzers
      */
     public BearbeiteEinzelneMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.setContentPane($$$getRootComponent$$$());

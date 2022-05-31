@@ -21,12 +21,8 @@ import static persistence.DatabaseService.dateiOeffnen;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version3: 16.05.22
- * @version4: 18.05.22
- * @version5: 20.05.22 Beenden Button versteckt, Views angepasst
- * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ * @version: 31.05.2022
+ * Fenster um eine Designaufgabe zu beantworten
  */
 public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
@@ -43,7 +39,6 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     private JButton btnNaechsteAufgabe;
     private JButton btnUpload;
     private JTextArea txtaAufgabentext;
-    private JLabel lblAufgabenText;
 
     private File fileBild = null;
     byte[] eingabe;
@@ -57,8 +52,8 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     /**
      * Konstruktor für Klasse BearbeiteDesignaufgabeView
      *
-     * @param controller
-     * @param aufgabe
+     * @param controller Controller der von der Aufgabensammlung mitgegeben wird
+     * @param aufgabe Aufgabe die bearbeitet wird
      */
     public BearbeiteDesignaufgabeView(BearbeitungsController controller, Designaufgabe aufgabe) {
         setContentPane($$$getRootComponent$$$());
@@ -138,6 +133,7 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
                 if (buttonWechsel.equals("Testat beenden")) {
                     JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                     testatController.persistTestat();
+                    testatController.setNewTestatKatalog();
                     this.dispose();
                 } else {
                     testatController.weiter();
@@ -147,6 +143,7 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
+                    trainingController.zeigeTrainingLoesungView();
                     this.dispose();
                 } else {
                     trainingController.weiter();
@@ -166,6 +163,9 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
         }
     }
 
+    /**
+     * Wechselt die Beschriftung des "Nächste" Button zu "Beenden"
+     */
     public void setNaechsteZuSpeichern() {
         if (trainingController != null) {
             btnNaechsteAufgabe.setText("Training beenden");
@@ -209,9 +209,9 @@ public class BearbeiteDesignaufgabeView extends JFrame implements ActionListener
     }
 
     /**
-     * Setzt eingegebene Userlösung
+     * Setzt eingegebene Userlösung ins Fenster
      *
-     * @param userloesung
+     * @param userloesung eingetragende Antworten
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungDesignaufgabe) userloesung).getUserloesung();

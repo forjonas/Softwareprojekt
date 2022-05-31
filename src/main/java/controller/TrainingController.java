@@ -1,29 +1,18 @@
 package controller;
 
 import view.*;
-import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.Training;
 import entity.benutzer.Benutzer;
 import entity.benutzer.Dozent;
 import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import persistence.DatabaseService;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 27.05.22
+ * @version: 31.05.22
  * Schnittstelle um ein Training auszuführen
  */
 
@@ -42,7 +31,9 @@ public class TrainingController extends BearbeitungsController {
         super.zeigeAktuelleAufgabe();
     }
 
-
+    /**
+     * Setzte die passende Ansicht für den Benutzer
+     */
     public void setNewTrainingKatalog() {
 
         if (aktuellerBenutzer.getClass() == Dozent.class) {
@@ -68,9 +59,6 @@ public class TrainingController extends BearbeitungsController {
         aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        System.out.println(userloesungen);
-
-        new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
     }
 
     /**
@@ -80,9 +68,11 @@ public class TrainingController extends BearbeitungsController {
         return training;
     }
 
+    /**
+     * erzeugt einen neuen Controller für die Lösung des Trainings
+     */
+    public void zeigeTrainingLoesungView() {
+        new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
 
-    public void setUserFrameVisible() {
-        hauptmenueFrame.setVisible(true);
     }
-
 }
