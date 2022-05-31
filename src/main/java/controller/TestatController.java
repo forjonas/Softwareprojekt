@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  * @author Kristin Kubisch
- * @version: 28.05.2022
+ * @version: 31.05.22
  * Schnittstelle um ein Testat auszuführen
  */
 public class TestatController extends BearbeitungsController {

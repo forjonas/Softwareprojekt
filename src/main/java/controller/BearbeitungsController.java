@@ -26,7 +26,8 @@ import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 27.05.22
+ * @version: 31.05.22
+ * Abstrakte Oberklasse für TestatController und TrainingsConstroller
  * Schnittstelle um eine Aufgabensammlung auszuführen
  */
 public abstract class BearbeitungsController {
@@ -133,7 +134,7 @@ public abstract class BearbeitungsController {
     /**
      * Fügt die Userloesung der Userloesungenliste an dem passenden Index hinzu
      *
-     * @param userloesung an dem passenden Index der Aufgabe
+     * @param userloesung eingaben der jeweiligen Aufgabe
      */
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);
