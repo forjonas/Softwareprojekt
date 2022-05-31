@@ -3,6 +3,7 @@ package view.loesungen.loesungenTraining;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.LoesungenTrainingController;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
@@ -13,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoesungTrainingProgrammieraufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final LoesungenTrainingController LoesungenTrainingController;
     private final Programmieraufgabe aufgabe;
     private JPanel mainPanel;
     private JButton btnBeenden;
@@ -34,8 +35,8 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     private JLabel lblUserloesungString;
     private JLabel lblMusterloesungString;
 
-    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
-        this.controllerLoesungenTraining = controllerLoesungenTraining;
+    public LoesungTrainingProgrammieraufgabeView(Programmieraufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
+        this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -57,7 +58,7 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
         MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) LoesungenTrainingController.getUserloesung(aufgabe);
         txtaUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
         txtaUserloesung.setLineWrap(true);
 
@@ -87,15 +88,15 @@ public class LoesungTrainingProgrammieraufgabeView extends JFrame implements Act
     }
 
     private void beenden() {
-        controllerLoesungenTraining.beendeLoesungTraining();
+        LoesungenTrainingController.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
-        controllerLoesungenTraining.naechsteAufgabe();
+        LoesungenTrainingController.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        controllerLoesungenTraining.vorherigeAufgabe();
+        LoesungenTrainingController.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

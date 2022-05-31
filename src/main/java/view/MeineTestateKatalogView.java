@@ -1,6 +1,6 @@
 package view;
 
-import controller.controllerBewertungenTestate;
+import controller.BewertungenTestateController;
 import controller.TestatController;
 import entity.aufgabensammlung.Testat;
 import entity.aufgabensammlung.TestatBearbeitung;
@@ -156,7 +156,7 @@ public class MeineTestateKatalogView extends JFrame implements ActionListener {
                     } else if (testat.getAufgaben().size() <= 0) {
                         JOptionPane.showMessageDialog(this, "Fehler: Testat enthält keine Aufgaben", "Testat konnte nicht geöffnet werden", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        new controllerBewertungenTestate(testatBearbeitung, aktuellerBenutzer, jframe);
+                        new BewertungenTestateController(testatBearbeitung, aktuellerBenutzer, jframe);
                         dispose();
                     }
                 }

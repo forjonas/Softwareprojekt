@@ -120,8 +120,8 @@ public class BearbeiteEinzelneDesignaufgabeView extends JFrame implements Action
     }
 
     /**
-     *
-     * @param file konvertiert ein file zu einem byte Array
+     * Konvertiert die übergebene Datei in ein ByteArray, das in "eingabe" gespeichert wird
+     * @param file Datei, die in eine ByteArray konvertiert werden soll
      */
     public void convert(File file) {
         eingabe = convertFileToByteArray(file, this);

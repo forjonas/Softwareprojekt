@@ -3,6 +3,7 @@ package view.loesungen.bewertungenTestat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.BewertungenTestateController;
 import entity.aufgabe.Programmieraufgabe;
 import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.UserloesungProgrammieraufgabe;
@@ -13,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungProgrammieraufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
+    private final BewertungenTestateController BewertungenTestateController;
     private final Programmieraufgabe aufgabe;
     private final UserloesungProgrammieraufgabe userloesungProgrammieraufgabe;
     private JPanel mainPanel;
@@ -39,8 +40,8 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
     private JLabel lblMusterloesung;
 
 
-    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
-        this.controllerBewertungenTestate = controllerBewertungenTestate;
+    public BewertungProgrammieraufgabeView(Programmieraufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
+        this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -61,7 +62,7 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungProgrammieraufgabe musterloesungProgrammieraufgabe = (MusterloesungProgrammieraufgabe) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungProgrammieraufgabe.getMusterloesung());
-        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) controllerBewertungenTestate.getUserloesung(aufgabe);
+        UserloesungProgrammieraufgabe userloesungProgrammieraufgabe = (UserloesungProgrammieraufgabe) BewertungenTestateController.getUserloesung(aufgabe);
         this.userloesungProgrammieraufgabe = userloesungProgrammieraufgabe;
         txtaUserloesung.setText(userloesungProgrammieraufgabe.getUserloesung());
         txtaUserloesung.setLineWrap(true);
@@ -102,30 +103,30 @@ public class BewertungProgrammieraufgabeView extends JFrame implements ActionLis
                 return;
             }
             userloesungProgrammieraufgabe.setErreichtePunkte(bewertung);
-            controllerBewertungenTestate.setBewertet();
+            BewertungenTestateController.setBewertet();
         }
     }
 
     private void beenden() {
-        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
+        if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
-            controllerBewertungenTestate.beendeBewertungTestat();
+            BewertungenTestateController.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                controllerBewertungenTestate.abbrechenBewertungTestat();
+                BewertungenTestateController.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        controllerBewertungenTestate.naechsteAufgabe();
+        BewertungenTestateController.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        controllerBewertungenTestate.vorherigeAufgabe();
+        BewertungenTestateController.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

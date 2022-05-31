@@ -173,7 +173,6 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
                     trainingController.persistTraining();
                     trainingController.zeigeTrainingLoesungView();
                     this.dispose();
-
                 } else {
                     trainingController.weiter();
 

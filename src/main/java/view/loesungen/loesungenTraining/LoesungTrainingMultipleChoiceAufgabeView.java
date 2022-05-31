@@ -3,6 +3,7 @@ package view.loesungen.loesungenTraining;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.LoesungenTrainingController;
 import entity.aufgabe.MultipleChoiceAufgabe;
 import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
@@ -11,10 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
-    private final controller.controllerLoesungenTraining controllerLoesungenTraining;
+    private final LoesungenTrainingController LoesungenTrainingController;
     private final MultipleChoiceAufgabe aufgabe;
     private JPanel mainPanel;
     private JTextArea txtaAufgabentext;
@@ -44,8 +44,8 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblMusterloesungString;
 
 
-    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, controller.controllerLoesungenTraining controllerLoesungenTraining) {
-        this.controllerLoesungenTraining = controllerLoesungenTraining;
+    public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
+        this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
         this.setContentPane($$$getRootComponent$$$());
         this.setTitle(aufgabe.getName());
@@ -65,7 +65,7 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         lblBearbeitungszeit.setText(aufgabe.getBearbeitungszeit() + " min");
         MusterloesungMultipleChoiceAufgabe musterloesungMultipleChoiceAufgabe = (MusterloesungMultipleChoiceAufgabe) aufgabe.getMusterloesung();
         int musterloesung = musterloesungMultipleChoiceAufgabe.getMusterloesung();
-        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) controllerLoesungenTraining.getUserloesung(aufgabe);
+        UserloesungMultipleChoiceAufgabe userloesungMultipleChoiceAufgabe = (UserloesungMultipleChoiceAufgabe) LoesungenTrainingController.getUserloesung(aufgabe);
         int userloesung = userloesungMultipleChoiceAufgabe.getUserloesung();
         if (aufgabe.getAntwortmoeglichkeiten().size() == 4) {
             btnMusterloesung1.setSelected(musterloesung == 1);
@@ -122,15 +122,15 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     }
 
     private void beenden() {
-        controllerLoesungenTraining.beendeLoesungTraining();
+        LoesungenTrainingController.beendeLoesungTraining();
     }
 
     private void naechsteAufgabe() {
-        controllerLoesungenTraining.naechsteAufgabe();
+        LoesungenTrainingController.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        controllerLoesungenTraining.vorherigeAufgabe();
+        LoesungenTrainingController.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {

@@ -135,7 +135,7 @@ public class AufgabenEinesTestatsView extends JDialog implements ActionListener 
                 JOptionPane.showMessageDialog(this, "Es wurde keine Aufgabe zum Einsehen ausgewählt", "Keine Aufgabe ausgewählt", JOptionPane.WARNING_MESSAGE);
             } else {
                 Aufgabe aufgabe = aufgabenliste.get(selectedRow);
-                new TestatErstellenAufgabenPreview(aufgabe);
+                new AufgabenPreview(aufgabe);
             }
         }
     }

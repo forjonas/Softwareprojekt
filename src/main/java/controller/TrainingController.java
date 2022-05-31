@@ -37,7 +37,7 @@ public class TrainingController extends BearbeitungsController {
     public void setNewTrainingKatalog() {
 
         if (aktuellerBenutzer.getClass() == Dozent.class) {
-            new DozentAnsicht((Dozent) aktuellerBenutzer);
+            new DozentMainView((Dozent) aktuellerBenutzer);
         } else if (aktuellerBenutzer.getClass() == Student.class) {
             new StudentMainView((Student) aktuellerBenutzer);
         }
@@ -72,7 +72,7 @@ public class TrainingController extends BearbeitungsController {
      * erzeugt einen neuen Controller für die Lösung des Trainings
      */
     public void zeigeTrainingLoesungView() {
-        new controllerLoesungenTraining(training, aktuellerBenutzer, hauptmenueFrame);
+        new LoesungenTrainingController(training, aktuellerBenutzer, hauptmenueFrame);
 
     }
 }

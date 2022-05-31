@@ -3,6 +3,7 @@ package view.loesungen.bewertungenTestat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import controller.BewertungenTestateController;
 import entity.aufgabe.EinfachantwortAufgabe;
 import entity.loesung.musterloesung.MusterloesungEinfachantwort;
 import entity.loesung.userloesung.UserloesungEinfachantwort;
@@ -13,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BewertungEinfachantwortView extends JFrame implements ActionListener {
-    private final controller.controllerBewertungenTestate controllerBewertungenTestate;
+    private final BewertungenTestateController BewertungenTestateController;
     private final EinfachantwortAufgabe aufgabe;
     private final UserloesungEinfachantwort userloesungEinfachantwort;
     private JPanel mainPanel;
@@ -39,8 +40,8 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
     private JLabel lblMusterloesung;
 
 
-    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, controller.controllerBewertungenTestate controllerBewertungenTestate) {
-        this.controllerBewertungenTestate = controllerBewertungenTestate;
+    public BewertungEinfachantwortView(EinfachantwortAufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
+        this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
         this.setTitle(aufgabe.getName());
@@ -61,7 +62,7 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
         MusterloesungEinfachantwort musterloesungEinfachantwort = (MusterloesungEinfachantwort) aufgabe.getMusterloesung();
         txtaMusterloesung.setText(musterloesungEinfachantwort.getMusterloesung());
         txtaMusterloesung.setLineWrap(true);
-        this.userloesungEinfachantwort = (UserloesungEinfachantwort) controllerBewertungenTestate.getUserloesung(aufgabe);
+        this.userloesungEinfachantwort = (UserloesungEinfachantwort) BewertungenTestateController.getUserloesung(aufgabe);
         txtaUserloesung.setText(this.userloesungEinfachantwort.getUserloesung());
         txtaUserloesung.setLineWrap(true);
         txtfUserPunktzahl.setText(this.userloesungEinfachantwort.getErreichtePunkte() + "");
@@ -100,30 +101,30 @@ public class BewertungEinfachantwortView extends JFrame implements ActionListene
                 return;
             }
             userloesungEinfachantwort.setErreichtePunkte(bewertung);
-            controllerBewertungenTestate.setBewertet();
+            BewertungenTestateController.setBewertet();
         }
     }
 
     private void beenden() {
-        if (controllerBewertungenTestate.bewertungVollstaendig() || !controllerBewertungenTestate.userIstDozent()) {
+        if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
-            controllerBewertungenTestate.beendeBewertungTestat();
+            BewertungenTestateController.beendeBewertungTestat();
         } else {
             int input = JOptionPane.showConfirmDialog(this, "Wenn sie jetzt abbrechen, werden Ihre Eingaben nicht gespeichert.\n" +
                     "Möchten Sie die Bewertung trotzdem beenden?", "Die Bewertung ist noch nicht vollständig!", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 this.dispose();
-                controllerBewertungenTestate.abbrechenBewertungTestat();
+                BewertungenTestateController.abbrechenBewertungTestat();
             }
         }
     }
 
     private void naechsteAufgabe() {
-        controllerBewertungenTestate.naechsteAufgabe();
+        BewertungenTestateController.naechsteAufgabe();
     }
 
     private void vorherigeAufgabe() {
-        controllerBewertungenTestate.vorherigeAufgabe();
+        BewertungenTestateController.vorherigeAufgabe();
     }
 
     public void versteckeNaechsteAufgabe() {
