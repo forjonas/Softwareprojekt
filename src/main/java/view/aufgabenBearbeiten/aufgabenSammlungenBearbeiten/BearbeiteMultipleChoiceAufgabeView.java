@@ -7,27 +7,18 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import entity.aufgabe.*;
-import entity.aufgabensammlung.Testat;
-import entity.benutzer.Dozent;
-import entity.benutzer.Student;
-import entity.enums.Kategorie;
-import entity.enums.Schwierigkeitsgrad;
-import entity.loesung.musterloesung.MusterloesungDesignaufgabe;
-import entity.loesung.musterloesung.MusterloesungEinfachantwort;
-import entity.loesung.musterloesung.MusterloesungMultipleChoiceAufgabe;
-import entity.loesung.musterloesung.MusterloesungProgrammieraufgabe;
 import entity.loesung.userloesung.Userloesung;
 import entity.loesung.userloesung.UserloesungMultipleChoiceAufgabe;
-import persistence.DatabaseService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * @author Kristin Kubisch
+ * @version: 31.05.2022
+ * Fenster um eine Multiple-Choice Aufgabe zu beantworten
+ */
 public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
@@ -46,7 +37,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     private JRadioButton btnantwort3;
     private JRadioButton btnantwort2;
     private JTextArea txtaAufgabentext;
-    private int eingabe;
+    protected int eingabe;
 
     private String antwort1;
     private String antwort2;
@@ -60,6 +51,11 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     protected MultipleChoiceAufgabe aufgabe;
     protected UserloesungMultipleChoiceAufgabe userloesung;
 
+    /**
+     *
+     * @param controller Controller der von der Aufgabensammlung mitgegeben wird
+     * @param aufgabe Aufgabe die bearbeitet wird
+     */
     public BearbeiteMultipleChoiceAufgabeView(BearbeitungsController controller, MultipleChoiceAufgabe aufgabe) {
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
@@ -124,6 +120,10 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         super.setVisible(true);
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
@@ -161,6 +161,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
                 if (buttonWechsel.equals("Testat beenden")) {
                     JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                     testatController.persistTestat();
+                    testatController.setNewTestatKatalog();
                     this.dispose();
                 } else {
                     testatController.weiter();
@@ -170,6 +171,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
+                    trainingController.zeigeTrainingLoesungView();
                     this.dispose();
                 } else {
                     trainingController.weiter();
@@ -180,7 +182,20 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     }
 
     /**
-     * Usereingaben speichern
+     * verändert "Nächste" Button zu "Testat Beenden" Button
+     */
+    public void setNaechsteZuSpeichern() {
+        if (trainingController != null) {
+            btnNaechsteAufgabe.setText("Training beenden");
+
+        } else {
+            btnNaechsteAufgabe.setText("Testat beenden");
+
+        }
+    }
+
+    /**
+     * Speichert Usereingaben in Userlösungsliste
      */
     public void userEingabenSpeichern() {
 
@@ -205,19 +220,6 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     }
 
     /**
-     * verändert "Nächste" Button zu "Testat Beenden" Button
-     */
-    public void setNaechsteZuSpeichern() {
-        if (trainingController != null) {
-            btnNaechsteAufgabe.setText("Training beenden");
-
-        } else {
-            btnNaechsteAufgabe.setText("Testat beenden");
-
-        }
-    }
-
-    /**
      * Setzt leere Usereingabe
      */
     public void setUserloesungNull() {
@@ -226,9 +228,9 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     }
 
     /**
-     * Setzt eingegebene Userlösung
+     * Setzt eingegebene Userlösung ins Fenster
      *
-     * @param userloesung
+     * @param userloesung eingetragende Antworten
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungMultipleChoiceAufgabe) userloesung).getUserloesung();

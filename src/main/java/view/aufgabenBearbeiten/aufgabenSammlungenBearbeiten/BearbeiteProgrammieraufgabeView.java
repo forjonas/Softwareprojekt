@@ -14,7 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * @author Kristin Kubisch
+ * @version: 31.05.2022
+ * Fenster um eine Programmieraufgabe zu beantworten
+ */
 public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel lblBild;
@@ -30,7 +34,6 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     private JButton btnNaechsteAufgabe;
     private JTextArea txtUsereingabe;
     private JTextArea txtaAufgabentext;
-    private JLabel lblAufgabenText;
 
     private boolean hinweisVerwendet;
     private String eingabe;
@@ -41,6 +44,11 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     private Programmieraufgabe aufgabe;
     private UserloesungProgrammieraufgabe userloesung;
 
+    /**
+     *
+     * @param aufgabe Controller der von der Aufgabensammlung mitgegeben wird
+     * @param aufgabe Aufgabe die bearbeitet wird
+     */
     public BearbeiteProgrammieraufgabeView(Programmieraufgabe aufgabe, BearbeitungsController controller) {
 
         setContentPane($$$getRootComponent$$$());
@@ -78,6 +86,10 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
 
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAbbrechen) {
@@ -115,6 +127,7 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
                 if (buttonWechsel.equals("Testat beenden")) {
                     JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                     testatController.persistTestat();
+                    testatController.setNewTestatKatalog();
                     this.dispose();
                 } else {
                     testatController.weiter();
@@ -124,6 +137,7 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
+                    trainingController.zeigeTrainingLoesungView();
                     this.dispose();
                 } else {
                     trainingController.weiter();
@@ -167,9 +181,9 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
     }
 
     /**
-     * Setzt eingegebene Userlösung
+     * Setzt eingegebene Userlösung ins Fenster
      *
-     * @param userloesung
+     * @param userloesung eingetragende Antworten
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungProgrammieraufgabe) userloesung).getUserloesung();

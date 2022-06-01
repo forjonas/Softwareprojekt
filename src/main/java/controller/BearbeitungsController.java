@@ -26,7 +26,8 @@ import java.util.List;
 
 /**
  * @author Kristin Kubisch
- * @version: 27.05.22
+ * @version: 31.05.22
+ * Abstrakte Oberklasse von TestatController und TrainingsController
  * Schnittstelle um eine Aufgabensammlung auszuführen
  */
 public abstract class BearbeitungsController {
@@ -78,7 +79,6 @@ public abstract class BearbeitungsController {
                 frame.setUserloesungNull();
             } else {
                 frame.setUserloesung(userloesungen.get(index));
-                System.out.println((UserloesungMultipleChoiceAufgabe) (userloesungen.get(index)));
             }
             this.aktuellerFrame = frame;
             if (index + 1 >= sammlung.getAnzahlAufgaben()) {
@@ -133,7 +133,7 @@ public abstract class BearbeitungsController {
     /**
      * Fügt die Userloesung der Userloesungenliste an dem passenden Index hinzu
      *
-     * @param userloesung an dem passenden Index der Aufgabe
+     * @param userloesung Die Eingaben der jeweiligen Aufgabe von dem Benutzer
      */
     public void addUserloesung(Userloesung userloesung) {
         userloesungen.set(this.index, userloesung);
