@@ -83,7 +83,6 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
-
     }
 
     /**
@@ -118,7 +117,6 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
                 trainingController.zurueck();
             }
 
-
         } else if (e.getSource() == this.btnNaechsteAufgabe) {
             String buttonWechsel = btnNaechsteAufgabe.getText();
             userEingabenSpeichern();
@@ -141,7 +139,6 @@ public class BearbeiteProgrammieraufgabeView extends JFrame implements ActionLis
                     this.dispose();
                 } else {
                     trainingController.weiter();
-
                 }
             }
         }
