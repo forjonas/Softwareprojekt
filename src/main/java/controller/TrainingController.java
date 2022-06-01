@@ -12,7 +12,7 @@ import javax.swing.*;
 
 /**
  * @author Kristin Kubisch
- * @version: 27.05.22
+ * @version: 31.05.22
  * Schnittstelle um ein Training auszuführen
  */
 
@@ -31,7 +31,9 @@ public class TrainingController extends BearbeitungsController {
         super.zeigeAktuelleAufgabe();
     }
 
-
+    /**
+     * Setzte die passende Ansicht für den Benutzer
+     */
     public void setNewTrainingKatalog() {
 
         if (aktuellerBenutzer.getClass() == Dozent.class) {
@@ -57,9 +59,6 @@ public class TrainingController extends BearbeitungsController {
         aktuellerBenutzer.addBearbeitetesTraining(training);
         DatabaseService ds = DatabaseService.getInstance();
         ds.persistObjects(userloesungen);
-        System.out.println(userloesungen);
-
-        new LoesungenTrainingController(training, aktuellerBenutzer, hauptmenueFrame);
     }
 
     /**
@@ -69,9 +68,11 @@ public class TrainingController extends BearbeitungsController {
         return training;
     }
 
+    /**
+     * erzeugt einen neuen Controller für die Lösung des Trainings
+     */
+    public void zeigeTrainingLoesungView() {
+        new LoesungenTrainingController(training, aktuellerBenutzer, hauptmenueFrame);
 
-    public void setUserFrameVisible() {
-        hauptmenueFrame.setVisible(true);
     }
-
 }

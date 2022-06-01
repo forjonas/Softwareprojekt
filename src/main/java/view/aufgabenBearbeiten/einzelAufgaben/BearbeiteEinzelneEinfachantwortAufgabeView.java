@@ -15,9 +15,8 @@ import java.awt.event.ActionListener;
 
 /**
  * @author Kristin Kubisch
- * @version: 10.05.22
- * @version2: 13.05.22
- * @version6: 23.05.22 Kommentare + weitere Anpassungen
+ * @version: 31.05.2022
+ * Fenster um eine einzelne Einfachantwort Aufgabe zu beantworten
  */
 public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private Benutzer benutzer;
@@ -35,7 +34,6 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     private JButton btnLoesungshinweisEinzel;
     private JButton btnZeigeLoesungEinzel;
     private JTextArea txtUsereingabe;
-    private JLabel lblAufgabenText;
     private JPanel mainPanel;
     private JTextArea txtaAufgabentext;
 
@@ -45,9 +43,9 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
     /**
      * Konstruktor für Klasse BearbeiteEinzelneEinfachantwortAufgabeView
      *
-     * @param aufgabe
-     * @param benutzer
-     * @param frame
+     * @param aufgabe Aufgabe die bearbeitet werden soll
+     * @param benutzer der aktuelle Benutzer der die Aufgabe bearbeitet
+     * @param frame der Hauptframe des Benutzers
      */
     public BearbeiteEinzelneEinfachantwortAufgabeView(EinfachantwortAufgabe aufgabe, Benutzer benutzer, JFrame frame) {
         this.setContentPane($$$getRootComponent$$$());

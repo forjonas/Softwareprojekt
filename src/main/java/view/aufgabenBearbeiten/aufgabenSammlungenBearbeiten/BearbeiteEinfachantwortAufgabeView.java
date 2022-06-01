@@ -14,7 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * @author Kristin Kubisch
+ * @version: 31.05.2022
+ * Fenster um eine Einfachantwort Aufgabe zu beantworten
+ */
 public class BearbeiteEinfachantwortAufgabeView extends JFrame implements ActionListener {
     protected TestatController testatController;
     protected TrainingController trainingController;
@@ -38,6 +42,11 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
     protected boolean hinweisVerwendet;
     protected String eingabe;
 
+    /**
+     *
+     * @param controller Controller der von der Aufgabensammlung mitgegeben wird
+     * @param aufgabe Aufgabe die bearbeitet wird
+     */
     public BearbeiteEinfachantwortAufgabeView(BearbeitungsController controller, EinfachantwortAufgabe aufgabe) {
         setContentPane($$$getRootComponent$$$());
         this.hinweisVerwendet = false;
@@ -74,6 +83,10 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         super.setVisible(true);
     }
 
+    /**
+     * Funktionslogik hinter den Buttons
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -110,6 +123,7 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
                 if (buttonWechsel.equals("Testat beenden")) {
                     JOptionPane.showMessageDialog(this, "Testat ist abgeschickt");
                     testatController.persistTestat();
+                    testatController.setNewTestatKatalog();
                     this.dispose();
                 } else {
                     testatController.weiter();
@@ -119,6 +133,7 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
                 if (buttonWechsel.equals("Training beenden")) {
                     JOptionPane.showMessageDialog(this, "Training ist abgeschickt");
                     trainingController.persistTraining();
+                    trainingController.zeigeTrainingLoesungView();
                     this.dispose();
                 } else {
                     trainingController.weiter();
@@ -164,9 +179,9 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
     }
 
     /**
-     * Setzt eingegebene Userlösung
+     * Setzt eingegebene Userlösung ins Fenster
      *
-     * @param userloesung
+     * @param userloesung eingetragende Antworten
      */
     public void setUserloesung(Userloesung userloesung) {
         eingabe = ((UserloesungEinfachantwort) userloesung).getUserloesung();
