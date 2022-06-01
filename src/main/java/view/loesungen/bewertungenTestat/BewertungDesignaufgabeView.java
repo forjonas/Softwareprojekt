@@ -13,6 +13,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung und Bewertung einer Designaufgabe und dazugehöriger Lösungen im Kontext eines Testates.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class BewertungDesignaufgabeView extends JFrame implements ActionListener {
     private final BewertungenTestateController BewertungenTestateController;
     private final Designaufgabe aufgabe;
@@ -39,7 +45,12 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
     private JLabel lblUserBild;
     private JLabel lblMusterBild;
 
-
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe die darzustellende Aufgabe vom Typ Design
+     * @param BewertungenTestateController der Testatcontroller der diesen Konstruktor aufgerufen hat
+     */
     public BewertungDesignaufgabeView(Designaufgabe aufgabe, BewertungenTestateController BewertungenTestateController) {
         this.BewertungenTestateController = BewertungenTestateController;
         this.aufgabe = aufgabe;
@@ -51,6 +62,7 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         btnNaechsteAufgabe.addActionListener(this);
         btnBewertungSpeichern.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
@@ -68,11 +80,18 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         txtfUserPunktzahl.setText(userloesungDesignaufgabe.getErreichtePunkte() + "");
 
         this.pack();
+        this.setMinimumSize(new Dimension(400 + this.lblAufgabenstellungsbild.getWidth() + this.lblUserloesung.getWidth() + this.lblMusterloesung.getWidth(), 450 + this.lblMusterloesung.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
+    /**
+     * Die Funktion welche die Funktionalitäten des Actionlistener-Interfaces der Klasse implementiert.
+     *
+     * @param e eines der möglichen Button-Events
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
@@ -106,7 +125,9 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         }
     }
 
-
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht oder die Bewertung beenden möchte.
+     */
     private void beenden() {
         if (BewertungenTestateController.bewertungVollstaendig() || !BewertungenTestateController.userIstDozent()) {
             this.dispose();
@@ -121,24 +142,39 @@ public class BewertungDesignaufgabeView extends JFrame implements ActionListener
         }
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
+     */
     private void naechsteAufgabe() {
         BewertungenTestateController.naechsteAufgabe();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
+     */
     private void vorherigeAufgabe() {
         BewertungenTestateController.vorherigeAufgabe();
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur nächsten Aufgabe nicht anzeigen soll.
+     */
     public void versteckeNaechsteAufgabe() {
         this.btnNaechsteAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur vorherigen Aufgabe nicht anzeigen soll.
+     */
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Methode, mit welcher der Controller dem View mitteilt, dass er im Kontext einer Bewertung angezeigt wird.
+     */
     public void bewertbar() {
         this.txtfUserPunktzahl.setEditable(true);
         this.btnBewertungSpeichern.setVisible(true);

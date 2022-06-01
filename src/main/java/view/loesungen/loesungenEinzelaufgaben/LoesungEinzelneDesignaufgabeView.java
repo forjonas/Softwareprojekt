@@ -14,6 +14,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung der Lösung einer einzelnen Designaufgabe.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionListener {
     private Benutzer benutzer;
     private final Designaufgabe aufgabe;
@@ -35,6 +41,14 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
     private JLabel lblUserBild;
     private JLabel lblMusterBild;
 
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe                  Die darzustellende Aufgabe
+     * @param userloesungDesignaufgabe Die Userlösung die sowohl zum Benutzer als auch zur Aufgabe gehört
+     * @param benutzer                 Der zurzeit angemeldete Benutzer
+     * @param homeFrame                Der Hauptmenü-Frame, zu welchem der Benutzer nach Beendigung der Einsicht der Lösung zurückkehrt
+     */
     public LoesungEinzelneDesignaufgabeView(Designaufgabe aufgabe, UserloesungDesignaufgabe userloesungDesignaufgabe, Benutzer benutzer, JFrame homeFrame) {
         this.homeFrame = homeFrame;
         this.benutzer = benutzer;
@@ -43,6 +57,7 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         this.setTitle(aufgabe.getName());
         btnBeenden.addActionListener(this);
         btnHinweis.addActionListener(this);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
@@ -57,11 +72,18 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         lblUserloesung.setIcon(new ImageIcon(userloesungDesignaufgabe.getUserloesung()));
 
         this.pack();
+        this.setMinimumSize(new Dimension(400 + this.lblAufgabenstellungsbild.getWidth() + this.lblUserloesung.getWidth() + this.lblMusterloesung.getWidth(), 450 + this.lblMusterloesung.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
+    /**
+     * Methode, welche die Funktionalität des Actionlistener-Interfaces implementiert.
+     *
+     * @param e Die verschiedenen Button-Events die auftreten können
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             this.dispose();
@@ -75,6 +97,9 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         }
     }
 
+    /**
+     * Methode, welche den Benutzer zurück zum Aufgabenkatalog mit den einzelnen Aufgaben bringt.
+     */
     private void beenden() {
         new BearbeiteEinzelneAufgabeKatalogView(homeFrame, benutzer);
     }
@@ -107,12 +132,12 @@ public class LoesungEinzelneDesignaufgabeView extends JFrame implements ActionLi
         final Spacer spacer2 = new Spacer();
         mainPanel.add(spacer2, new GridConstraints(4, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         lblUserloesung = new JLabel();
-        lblUserloesung.setText("Placeholder Userlösung");
+        lblUserloesung.setText("");
         mainPanel.add(lblUserloesung, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         mainPanel.add(spacer3, new GridConstraints(4, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         lblMusterloesung = new JLabel();
-        lblMusterloesung.setText("Placeholder Musterloesung");
+        lblMusterloesung.setText("");
         mainPanel.add(lblMusterloesung, new GridConstraints(4, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
         mainPanel.add(spacer4, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));

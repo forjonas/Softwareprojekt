@@ -18,14 +18,14 @@ import java.util.ArrayList;
  * Die View zur Erstellung einer Multiple Choice Aufgabe
  *
  * @author Jannik Oehme
- * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
+ * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class ErstelleMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private Dozent doz;
     private JFrame aufgabeErstellenStartViewFrame;
-    private JPanel pnlAufgabeErstellenMultipleChoice;
     private BorderLayout borderLayout = new BorderLayout();
     private GridLayout gridLayout = new GridLayout(15, 1);
+    private JPanel pnlAufgabeErstellenMultipleChoice;
     private JPanel pnlCenter;
     private JPanel pnlNorth;
     private JPanel pnlSouth;

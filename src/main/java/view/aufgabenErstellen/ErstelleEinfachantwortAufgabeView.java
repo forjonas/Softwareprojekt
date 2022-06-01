@@ -17,14 +17,14 @@ import java.io.File;
  * Die View zur Erstellung einer Einfachantwort Aufgabe
  *
  * @author Jannik Oehme
- * @version 15.05.2022 switch zu extends JFRame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
+ * @version 15.05.2022 switch zu extends JFrame, Dozentübergabe gemacht, Musterlösung eingebunden, Filechooser ausgelagert, TA teilweise zu TF gemacht
  */
 public class ErstelleEinfachantwortAufgabeView extends JFrame implements ActionListener {
     private Dozent doz;
     private JFrame aufgabeErstellenStartViewFrame;
-    private JPanel pnlAufgabeErstellenEinfachAntwortView;
     private BorderLayout borderLayout = new BorderLayout();
     private GridLayout gridLayout = new GridLayout(10, 2);
+    private JPanel pnlAufgabeErstellenEinfachAntwortView;
     private JPanel pnlCenter;
     private JPanel pnlNorth;
     private JPanel pnlSouth;

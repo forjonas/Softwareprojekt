@@ -151,9 +151,11 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnZurueck.addActionListener(this);
         btnFreigeben.addActionListener(this);
-        btnPreview.addActionListener(this);//verändert
+        btnPreview.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(650, 650));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

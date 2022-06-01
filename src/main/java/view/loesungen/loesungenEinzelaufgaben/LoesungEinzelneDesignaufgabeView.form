@@ -39,7 +39,7 @@
           <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Placeholder Userlösung"/>
+          <text value=""/>
         </properties>
       </component>
       <hspacer id="6f460">
@@ -52,7 +52,7 @@
           <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Placeholder Musterloesung"/>
+          <text value=""/>
         </properties>
       </component>
       <hspacer id="c9636">

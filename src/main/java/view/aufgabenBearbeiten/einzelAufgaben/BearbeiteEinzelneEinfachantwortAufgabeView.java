@@ -19,6 +19,10 @@ import java.awt.event.ActionListener;
  * Fenster um eine einzelne Einfachantwort Aufgabe zu beantworten
  */
 public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implements ActionListener {
+    private Benutzer benutzer;
+    private EinfachantwortAufgabe aufgabe;
+    private UserloesungEinfachantwort userloesung;
+    private JFrame frame;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
     private JLabel lblBearbeitungszeit;
@@ -35,10 +39,6 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
 
     private String eingabe;
     private boolean hinweisVerwendet;
-    private EinfachantwortAufgabe aufgabe;
-    private UserloesungEinfachantwort userloesung;
-    private Benutzer benutzer;
-    private JFrame frame;
 
     /**
      * Konstruktor für Klasse BearbeiteEinzelneEinfachantwortAufgabeView
@@ -52,8 +52,6 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         this.aufgabe = aufgabe;
         this.benutzer = benutzer;
         this.frame = frame;
-        setTitle(aufgabe.getName());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(aufgabe.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -71,6 +69,8 @@ public class BearbeiteEinzelneEinfachantwortAufgabeView extends JFrame implement
         btnZeigeLoesungEinzel.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(850 + this.lblBild.getWidth(), 500 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

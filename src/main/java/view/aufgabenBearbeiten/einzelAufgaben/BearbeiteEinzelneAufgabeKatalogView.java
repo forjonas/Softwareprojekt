@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements ActionListener {
 
+    private Benutzer aktuellerBenutzer;
+    private List<Aufgabe> aufgabenliste;
+    private JFrame jFrame;
     private JPanel contentPane;
     private JTable tableAufgaben;
     private BearbeiteAufgabeTableModel bearbeiteAufgabeTableModel;
     private JButton btnZurueck;
     private JButton btnBearbeiten;
-    private List<Aufgabe> aufgabenliste;
-    private Benutzer aktuellerBenutzer;
-    private JFrame jFrame;
 
     /**
      * Konstruktor, der den Frame erstellt
@@ -91,6 +91,8 @@ public class BearbeiteEinzelneAufgabeKatalogView extends JFrame implements Actio
         btnZurueck.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(650, 650));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

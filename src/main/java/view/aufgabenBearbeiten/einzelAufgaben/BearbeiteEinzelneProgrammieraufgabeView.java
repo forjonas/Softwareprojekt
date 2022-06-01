@@ -19,6 +19,11 @@ import java.awt.event.ActionListener;
  * Fenster um eine einzelne Programmieraufgabe zu beantworten
  */
 public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements ActionListener {
+    private Benutzer benutzer;
+    private Programmieraufgabe aufgabe;
+    private UserloesungProgrammieraufgabe userloesung;
+    private JFrame frame;
+    private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
     private JLabel lblBearbeitungszeit;
@@ -31,14 +36,9 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
     private JButton btnZeigeLoesungEinzel;
     private JTextArea txtUsereingabe;
     private JLabel lblAufgabenText;
-    private JPanel mainPanel;
     private JTextArea txtaAufgabentext;
     private String eingabe;
     private boolean hinweisVerwendet;
-    private Programmieraufgabe aufgabe;
-    private UserloesungProgrammieraufgabe userloesung;
-    private Benutzer benutzer;
-    private JFrame frame;
 
     /**
      * Konstruktor für Klasse BearbeiteEinzelneProgrammieraufgabeView
@@ -70,6 +70,8 @@ public class BearbeiteEinzelneProgrammieraufgabeView extends JFrame implements A
         btnZeigeLoesungEinzel.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(850 + this.lblBild.getWidth(), 500 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);

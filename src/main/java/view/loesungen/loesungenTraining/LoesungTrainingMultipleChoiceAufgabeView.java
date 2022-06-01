@@ -13,6 +13,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ansicht zur Darstellung einer MultipleChoice-Aufgabe und dazugehöriger Lösungen im Kontext eines Trainings.
+ *
+ * @author Timo Joswig
+ * @version 29.05.2022
+ */
 public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements ActionListener {
     private final LoesungenTrainingController LoesungenTrainingController;
     private final MultipleChoiceAufgabe aufgabe;
@@ -43,7 +49,12 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
     private JLabel lblUserloesungString;
     private JLabel lblMusterloesungString;
 
-
+    /**
+     * Konstruktor für die benötigte View.
+     *
+     * @param aufgabe Die darzustellende Aufgabe
+     * @param LoesungenTrainingController der Trainingscontroller, der diesen Konstruktor aufgerufen hat
+     */
     public LoesungTrainingMultipleChoiceAufgabeView(MultipleChoiceAufgabe aufgabe, LoesungenTrainingController LoesungenTrainingController) {
         this.LoesungenTrainingController = LoesungenTrainingController;
         this.aufgabe = aufgabe;
@@ -54,6 +65,7 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         btnVorherigeAufgabe.addActionListener(this);
         btnNaechsteAufgabe.addActionListener(this);
         lblAufgabeBildString.setVisible(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         txtaAufgabentext.setText(aufgabe.getTextbeschreibung());
         txtaAufgabentext.setLineWrap(true);
@@ -97,11 +109,18 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         }
 
         this.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblAufgabenstellungsbild.getWidth(), 450 + this.lblAufgabenstellungsbild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 
+    /**
+     * Die Funktion welche die Funktionalitäten des Actionlistener-Interfaces der Klasse implementiert.
+     *
+     * @param e eines der möglichen Button-Events
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnBeenden) {
             this.dispose();
@@ -121,23 +140,38 @@ public class LoesungTrainingMultipleChoiceAufgabeView extends JFrame implements 
         }
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass der User die Einsicht beenden möchte.
+     */
     private void beenden() {
         LoesungenTrainingController.beendeLoesungTraining();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die nächste Aufgabe angezeigt werden soll.
+     */
     private void naechsteAufgabe() {
         LoesungenTrainingController.naechsteAufgabe();
     }
 
+    /**
+     * Methode die aufgerufen wird, wenn dem Controller mitgeteilt werden soll, dass die vorherige Aufgabe angezeigt werden soll.
+     */
     private void vorherigeAufgabe() {
         LoesungenTrainingController.vorherigeAufgabe();
     }
 
+    /**
+     * Hiermit teilt der Controller der View mit, dass sie den Button zur vorherigen Aufgabe nicht anzeigen soll.
+     */
     public void versteckeNaechsteAufgabe() {
         this.btnNaechsteAufgabe.setVisible(false);
         this.update(this.getGraphics());
     }
 
+    /**
+     * Methode, mit welcher der Controller dem View mitteilt, dass er im Kontext einer Bewertung angezeigt wird.
+     */
     public void versteckeVorherigeAufgabe() {
         this.btnVorherigeAufgabe.setVisible(false);
         this.update(this.getGraphics());

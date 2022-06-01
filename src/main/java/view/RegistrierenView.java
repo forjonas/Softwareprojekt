@@ -63,6 +63,7 @@ public class RegistrierenView extends JFrame implements ActionListener {
 
 
         this.setSize(600, 600);
+        this.setMinimumSize(new Dimension(600, 500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);

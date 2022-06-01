@@ -20,6 +20,10 @@ import java.awt.event.ActionListener;
  * Fenster um eine Multiple-Choice Aufgabe zu beantworten
  */
 public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements ActionListener {
+    protected TestatController testatController;
+    protected TrainingController trainingController;
+    protected MultipleChoiceAufgabe aufgabe;
+    protected UserloesungMultipleChoiceAufgabe userloesung;
     private JPanel mainPanel;
     private JLabel lblBild;
     private JLabel lblBearbeitungszeitWert;
@@ -43,13 +47,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
     private String antwort2;
     private String antwort3;
     private String antwort4;
-
     private boolean hinweisVerwendet;
-
-    protected TestatController testatController;
-    protected TrainingController trainingController;
-    protected MultipleChoiceAufgabe aufgabe;
-    protected UserloesungMultipleChoiceAufgabe userloesung;
 
     /**
      *
@@ -115,6 +113,8 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
+        this.setMinimumSize(new Dimension(800 + this.lblBild.getWidth(), 600 + this.lblBild.getHeight()));
+        this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
         super.setVisible(true);
@@ -316,7 +316,7 @@ public class BearbeiteMultipleChoiceAufgabeView extends JFrame implements Action
         btnLoesungshinweis.setText("Loesungshinweis");
         panel7.add(btnLoesungshinweis, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnVorherigeAufgabe = new JButton();
-        btnVorherigeAufgabe.setText("Voherige Aufgabe");
+        btnVorherigeAufgabe.setText("Vorherige Aufgabe");
         panel7.add(btnVorherigeAufgabe, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnNaechsteAufgabe = new JButton();
         btnNaechsteAufgabe.setText("Nächste Aufgabe");
