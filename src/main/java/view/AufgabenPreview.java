@@ -13,7 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * 20.05 T.Joswig u. K.Kubisch Preview
+ *
+ * Klasse um den Inhalt von einer Aufgabe anzugucken
+ * @author T.Joswig u. K.Kubisch
+ * @version 20.05.2022
+ *
  */
 public class AufgabenPreview extends JDialog implements ActionListener {
     private Aufgabe aufgabe;
@@ -32,6 +36,10 @@ public class AufgabenPreview extends JDialog implements ActionListener {
     private JRadioButton antwort3;
     private JRadioButton antwort4;
 
+    /**
+     *
+     * @param aufgabe die ausgewählte Aufgabe zur Einsicht
+     */
     public AufgabenPreview(Aufgabe aufgabe) {
         this.aufgabe = aufgabe;
         this.setContentPane(mainPanel);
@@ -72,6 +80,9 @@ public class AufgabenPreview extends JDialog implements ActionListener {
         }
     }
 
+    /**
+     * Funktion die im Fall von einer Multiple Choice Aufgabe die korrekte Ansicht zeigt
+     */
     public void showMcPanel() {
         this.pnlMultipleChoice.setVisible(true);
 
@@ -102,6 +113,9 @@ public class AufgabenPreview extends JDialog implements ActionListener {
         this.update(this.getGraphics());
     }
 
+    /**
+     * Versteckt im Fall von keiner Multiple-Choice-Aufgabe die Ansicht
+     */
     public void hideMcPanel() {
         this.pnlMultipleChoice.setVisible(false);
         this.update(this.getGraphics());
