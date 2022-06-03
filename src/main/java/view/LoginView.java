@@ -14,7 +14,12 @@ import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Ansicht, in der ein Fenster für die Einloggung erstellt wird, wo der Benutzer sich einloggen kann.
+ *
+ * @author Martin Bergen
+ * @version 23.05.2022
+ */
 public class LoginView extends JFrame implements ActionListener, KeyListener {
 
     persistence.DatabaseService ds = DatabaseService.getInstance();
