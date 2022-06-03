@@ -31,7 +31,10 @@ public class DozentMainView extends JFrame implements ActionListener {
     private JButton btnAbmelden;
     GridLayout gridLayout = new GridLayout(3, 3);
     Dozent dozent;
-
+    /**
+     * Konstruktor der Klasse, benötigt einen Dozenten.
+     * Setzt Parameter des JFrames und ruft fuelleDozentFrame() auf.
+     */
     public DozentMainView(Dozent doz) {
         this.dozent = doz;
         this.setName("Home");
@@ -43,7 +46,9 @@ public class DozentMainView extends JFrame implements ActionListener {
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
         this.setVisible(true);
     }
-
+    /**
+     * Erstellt die Komponenten des JFrames sowie JPanels welche später eingefügt werden. Und fügt die Componenten in den Frame ein.
+     */
     public void fuelleDozentFrame() {
         JLabel welcomeMsgLbl = new JLabel("Willkommen " + dozent.getVorname() + " " + dozent.getNachname());
 
@@ -98,7 +103,9 @@ public class DozentMainView extends JFrame implements ActionListener {
 
         this.add(pnlDozentMain);
     }
-
+    /**
+     * Führt Aktionen der JButtons aus und ruft ggf. weitere Methoden auf.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnTestateBewerten) {
@@ -123,52 +130,72 @@ public class DozentMainView extends JFrame implements ActionListener {
             abmelden();
         }
     }
-
+    /**
+     * Disposed diesen Frame und ruft die login view wieder auf.
+     */
     private void abmelden() {
         this.dispose();
         new LoginView();
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft EinsehenTrainingKatalogView auf.
+     */
     private void trainingsEinsehen() {
         this.setVisible(false);
         new EinsehenTrainingKatalogView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft TestatErstellenView auf.
+     */
     private void testateErstellen() {
         this.setVisible(false);
         new TestatErstellenView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft testatuebersicht auf.
+     */
     private void testatuebersicht() {
         this.setVisible(false);
         new TestatKatalogView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft ErstelleAufgabeStartView auf.
+     */
     private void aufgabeErstellen() {
         this.setVisible(false);
         new ErstelleAufgabeStartView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft BearbeiteEinzelneAufgabeKatalogView auf.
+     */
     private void aufgabeBearbeiten() {
         this.setVisible(false);
         new BearbeiteEinzelneAufgabeKatalogView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft AufgabenKatalogView auf.
+     */
     private void aufgabenuebersicht() {
         this.setVisible(false);
         new AufgabenKatalogView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft GenerierenTrainingView auf.
+     */
     private void trainingsDurchfuehren() {
         this.setVisible(false);
         new GenerierenTrainingView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft MeineTestateKatalogView auf.
+     */
     private void testateDurchfuehren() {
         this.setVisible(false);
         new MeineTestateKatalogView(this, dozent);
     }
-
+    /**
+     * Setzt diesen Frame auf invisible und ruft KorrigiereTestatKatalogView auf.
+     */
     private void testatEinsehen() {
         this.setVisible(false);
         new KorrigiereTestatKatalogView(this, dozent);
