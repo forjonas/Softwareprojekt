@@ -14,7 +14,10 @@ public class ImageFilter extends FileFilter {
     private String PNG = "PNG";
     private String JPEG = "JPEG";
     private char DotIndex = '.';
-
+    /**
+     * überprüft ob ein File vom richtigen Typen ist
+     * @param f
+     */
     @Override
     public boolean accept(File f) {
         if (f.isDirectory()) {
@@ -26,7 +29,10 @@ public class ImageFilter extends FileFilter {
             return false;
         }
     }
-
+    /**
+     * Extrahiert die Filextension
+     * @param f
+     */
     private String extension(File f) {
         String FileName = f.getName();
 
@@ -37,7 +43,9 @@ public class ImageFilter extends FileFilter {
             return "";
         }
     }
-
+    /**
+     * Gibt den Text zurück welcher dem User als einschränkung mitgeteilt werden soll
+     */
     @Override
     public String getDescription() {
         return "Jpeg oder PNG oder JPG";
