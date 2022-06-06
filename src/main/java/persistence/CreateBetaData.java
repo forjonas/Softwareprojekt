@@ -18,7 +18,12 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * Testdatenbestand für die Finalevorstellung des Programmes.
+ *
+ * @author Martin Bergen
+ * @version 04.06.2022
+ */
 public class CreateBetaData {
 
 
