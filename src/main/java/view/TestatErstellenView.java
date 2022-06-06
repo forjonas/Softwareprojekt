@@ -31,7 +31,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
     private JTable tableAufgaben;
     private AufgabenAuswaehlenAufgabensammlungTableModel aufgabenAuswaehlenAufgabensammlungTableModel;
     private JButton btnZurueck;
-    private JButton btnPreview;
+    private JButton btnEinsehen;
     private JButton btnFreigeben;
     private JTextField txtPasswort;
     private JTextField txtName;
@@ -83,8 +83,8 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         gbc_panelRightNorth.gridy = 0;
         panelNorth.add(panelRightNorth, gbc_panelRightNorth);
 
-        btnPreview = new JButton("Preview");
-        panelRightNorth.add(btnPreview);
+        btnEinsehen = new JButton("Einsehen");
+        panelRightNorth.add(btnEinsehen);
 
 
         JPanel panelCenterNorth = new JPanel();
@@ -151,7 +151,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
 
         btnZurueck.addActionListener(this);
         btnFreigeben.addActionListener(this);
-        btnPreview.addActionListener(this);
+        btnEinsehen.addActionListener(this);
 
         super.pack();
         this.setMinimumSize(new Dimension(650, 650));
@@ -169,7 +169,7 @@ public class TestatErstellenView extends JFrame implements ActionListener {
         if (e.getSource() == this.btnZurueck) {
             zurueckButtonLogik();
         }
-        if (e.getSource() == this.btnPreview) {
+        if (e.getSource() == this.btnEinsehen) {
             previewButtonLogik();
         }
         if (e.getSource() == this.btnFreigeben) {

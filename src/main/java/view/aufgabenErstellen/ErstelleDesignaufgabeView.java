@@ -32,7 +32,7 @@ public class ErstelleDesignaufgabeView extends JFrame implements ActionListener 
 
     private JButton btnZurueck;
     private JButton btnSpeichern;
-    private JButton btnUMLHochladen;
+    private JButton btnOptionalesBildHochladen;
     private JButton btnMusterloesung;
     private JComboBox cbKategorien;
     private JComboBox cbSchwierigkeit;
@@ -89,8 +89,8 @@ public class ErstelleDesignaufgabeView extends JFrame implements ActionListener 
         btnSpeichern = new JButton("Speichern");
         btnSpeichern.addActionListener(this);
 
-        btnUMLHochladen = new JButton("Design Hochladen");
-        btnUMLHochladen.addActionListener(this);
+        btnOptionalesBildHochladen = new JButton("Optionales Bild Hochladen");
+        btnOptionalesBildHochladen.addActionListener(this);
 
         btnMusterloesung = new JButton("Musterlösung Hochladen");
         btnMusterloesung.addActionListener(this);
@@ -125,7 +125,7 @@ public class ErstelleDesignaufgabeView extends JFrame implements ActionListener 
         pnlCenter.add(txtaAufgabentext);
         pnlCenter.add(lblKategorien);
         pnlCenter.add(cbKategorien);
-        pnlCenter.add(btnUMLHochladen);
+        pnlCenter.add(btnOptionalesBildHochladen);
         pnlCenter.add(btnMusterloesung);
         pnlCenter.add(lblSchwierigkeit);
         pnlCenter.add(cbSchwierigkeit);
@@ -154,7 +154,7 @@ public class ErstelleDesignaufgabeView extends JFrame implements ActionListener 
             zurueck();
         } else if (e.getSource() == this.btnSpeichern) {
             speichern();
-        } else if (e.getSource() == this.btnUMLHochladen) {
+        } else if (e.getSource() == this.btnOptionalesBildHochladen) {
             FileChooserAuslagerung filcV = new FileChooserAuslagerung();
             fileDesign = filcV.fileChooser();
         } else if (e.getSource() == this.btnMusterloesung) {

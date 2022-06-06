@@ -89,7 +89,7 @@ public class ErstelleProgrammieraufgabeView extends JFrame implements ActionList
         pnlAufgabeErstellenCode.setLayout(borderLayout);
         pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 
-        btnCodeHoch = new JButton("Optionales Java Design Hochladen");
+        btnCodeHoch = new JButton("Optionales Bild Hochladen");
         btnCodeHoch.addActionListener(this);
 
         btnZurueck = new JButton("Zurück");
