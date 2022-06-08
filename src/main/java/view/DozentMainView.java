@@ -39,8 +39,8 @@ public class DozentMainView extends JFrame implements ActionListener {
         this.dozent = doz;
         this.setName("Home");
         fuelleDozentFrame();
-        this.setMinimumSize(new Dimension(1500, 900));
-        this.setSize(1500, 900);
+        this.setMinimumSize(new Dimension(1000, 600));
+        this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -57,30 +57,39 @@ public class DozentMainView extends JFrame implements ActionListener {
 
         btnTestateKorrigieren = new JButton("Testate korrigieren");
         btnTestateKorrigieren.addActionListener(this);
+        btnTestateKorrigieren.setPreferredSize(new Dimension(160, 80));
 
         btnTrainingsEinsehen = new JButton("Trainings einsehen");
         btnTrainingsEinsehen.addActionListener(this);
+        btnTrainingsEinsehen.setPreferredSize(new Dimension(160, 80));
 
         btnTestatErstellen = new JButton("Testat erstellen");
         btnTestatErstellen.addActionListener(this);
+        btnTestatErstellen.setPreferredSize(new Dimension(160, 80));
 
         btnTestatuebersicht = new JButton("Testatübersicht");
         btnTestatuebersicht.addActionListener(this);
+        btnTestatuebersicht.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabeErstellen = new JButton("Aufgabe erstellen");
         btnAufgabeErstellen.addActionListener(this);
+        btnAufgabeErstellen.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabenuebersicht = new JButton("Aufgabenübersicht");
         btnAufgabenuebersicht.addActionListener(this);
+        btnAufgabenuebersicht.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabeBearbeiten = new JButton("Einzelne Aufgabe bearbeiten");
         btnAufgabeBearbeiten.addActionListener(this);
+        btnAufgabeBearbeiten.setPreferredSize(new Dimension(160, 80));
 
         btnTrainingDurchfuehren = new JButton("Training durchführen");
         btnTrainingDurchfuehren.addActionListener(this);
+        btnTrainingDurchfuehren.setPreferredSize(new Dimension(160, 80));
 
         btnMeineTestate = new JButton("Meine Testate");
         btnMeineTestate.addActionListener(this);
+        btnMeineTestate.setPreferredSize(new Dimension(160, 80));
         JPanel tempSouthPanel = new JPanel(new FlowLayout());
 
         pnlCenter = new JPanel(gridLayout);
@@ -96,7 +105,7 @@ public class DozentMainView extends JFrame implements ActionListener {
         pnlCenter.add(btnAufgabeErstellen);
         pnlCenter.add(btnAufgabeBearbeiten);
         tempSouthPanel.add(btnAbmelden);
-        pnlCenter.setBorder(BorderFactory.createEmptyBorder(10, 2, 10, 2));
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         pnlDozentMain.add(pnlCenter, BorderLayout.CENTER);
         pnlDozentMain.add(tempSouthPanel, BorderLayout.SOUTH);
         pnlDozentMain.add(welcomeMsgLbl, BorderLayout.NORTH);

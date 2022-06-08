@@ -676,6 +676,10 @@ public class DatabaseService<T> {
         return aufgabenList;
     }
 
+    /**************************************************************
+     * Die weiteren Methoden wurden von Timo Joswig implementiert *
+     **************************************************************/
+
     /**
      * Liest alle Userlösungen aus der Datenbank, die vom übergebenen Benutzer zum übergebenen Testat erstellt wurden
      *
