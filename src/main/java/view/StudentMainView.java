@@ -47,7 +47,8 @@ public class StudentMainView extends JFrame implements ActionListener {
         btnMeinteTestate = new JButton("Meine Testate");
         btnMeinteTestate.addActionListener(this);
         btnMeinteTestate.setPreferredSize(new Dimension(160, 80));
-        btnEinzelneAufgabe = new JButton("Einzelne Aufgabe bearbeiten");
+        btnEinzelneAufgabe = new JButton("<html>Einzelne Aufgabe<br>bearbeiten</html>");
+
         btnEinzelneAufgabe.addActionListener(this);
         btnEinzelneAufgabe.setPreferredSize(new Dimension(160, 80));
 

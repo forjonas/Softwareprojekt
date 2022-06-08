@@ -19,14 +19,14 @@ public class DozentMainView extends JFrame implements ActionListener {
 
     private JPanel pnlDozentMain;
     private JPanel pnlCenter;
-    private JButton btnTestateBewerten;
+    private JButton btnTestateKorrigieren;
     private JButton btnTrainingsEinsehen;
-    private JButton btnTestateErstellen;
+    private JButton btnTestatErstellen;
     private JButton btnTestatuebersicht;
     private JButton btnAufgabeErstellen;
     private JButton btnAufgabenuebersicht;
     private JButton btnAufgabeBearbeiten;
-    private JButton btnTrainingsDurchfuehren;
+    private JButton btnTrainingDurchfuehren;
     private JButton btnMeineTestate;
     private JButton btnAbmelden;
     GridLayout gridLayout = new GridLayout(3, 3);
@@ -55,14 +55,14 @@ public class DozentMainView extends JFrame implements ActionListener {
         btnAbmelden = new JButton("Abmelden");
         btnAbmelden.addActionListener(this);
 
-        btnTestateBewerten = new JButton("Testate bewerten");
-        btnTestateBewerten.addActionListener(this);
+        btnTestateKorrigieren = new JButton("Testate korrigieren");
+        btnTestateKorrigieren.addActionListener(this);
 
         btnTrainingsEinsehen = new JButton("Trainings einsehen");
         btnTrainingsEinsehen.addActionListener(this);
 
-        btnTestateErstellen = new JButton("Testate erstellen");
-        btnTestateErstellen.addActionListener(this);
+        btnTestatErstellen = new JButton("Testat erstellen");
+        btnTestatErstellen.addActionListener(this);
 
         btnTestatuebersicht = new JButton("Testatübersicht");
         btnTestatuebersicht.addActionListener(this);
@@ -76,8 +76,8 @@ public class DozentMainView extends JFrame implements ActionListener {
         btnAufgabeBearbeiten = new JButton("Einzelne Aufgabe bearbeiten");
         btnAufgabeBearbeiten.addActionListener(this);
 
-        btnTrainingsDurchfuehren = new JButton("Trainings durchführen");
-        btnTrainingsDurchfuehren.addActionListener(this);
+        btnTrainingDurchfuehren = new JButton("Training durchführen");
+        btnTrainingDurchfuehren.addActionListener(this);
 
         btnMeineTestate = new JButton("Meine Testate");
         btnMeineTestate.addActionListener(this);
@@ -86,11 +86,11 @@ public class DozentMainView extends JFrame implements ActionListener {
         pnlCenter = new JPanel(gridLayout);
         pnlDozentMain = new JPanel(new BorderLayout());
 
-        pnlCenter.add(btnTestateBewerten);
+        pnlCenter.add(btnTestateKorrigieren);
         pnlCenter.add(btnMeineTestate);
         pnlCenter.add(btnTestatuebersicht);
-        pnlCenter.add(btnTestateErstellen);
-        pnlCenter.add(btnTrainingsDurchfuehren);
+        pnlCenter.add(btnTestatErstellen);
+        pnlCenter.add(btnTrainingDurchfuehren);
         pnlCenter.add(btnTrainingsEinsehen);
         pnlCenter.add(btnAufgabenuebersicht);
         pnlCenter.add(btnAufgabeErstellen);
@@ -108,11 +108,11 @@ public class DozentMainView extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnTestateBewerten) {
+        if (e.getSource() == this.btnTestateKorrigieren) {
             testatEinsehen();
         } else if (e.getSource() == this.btnMeineTestate) {
             testateDurchfuehren();
-        } else if (e.getSource() == this.btnTrainingsDurchfuehren) {
+        } else if (e.getSource() == this.btnTrainingDurchfuehren) {
             trainingsDurchfuehren();
         } else if (e.getSource() == this.btnAufgabenuebersicht) {
             aufgabenuebersicht();
@@ -122,7 +122,7 @@ public class DozentMainView extends JFrame implements ActionListener {
             aufgabeBearbeiten();
         } else if (e.getSource() == this.btnTestatuebersicht) {
             testatuebersicht();
-        } else if (e.getSource() == this.btnTestateErstellen) {
+        } else if (e.getSource() == this.btnTestatErstellen) {
             testateErstellen();
         } else if (e.getSource() == this.btnTrainingsEinsehen) {
             trainingsEinsehen();
