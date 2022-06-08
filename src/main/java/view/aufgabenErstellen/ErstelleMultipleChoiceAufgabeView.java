@@ -105,7 +105,7 @@ public class ErstelleMultipleChoiceAufgabeView extends JFrame implements ActionL
         Schwierigkeitsgrad[] schw = {Schwierigkeitsgrad.Leicht, Schwierigkeitsgrad.Schwer, Schwierigkeitsgrad.Mittel};
         cbSchwierigkeit = new JComboBox(schw);
 
-        btnBeispielBild = new JButton("Beispiel Bild Hochladen");
+        btnBeispielBild = new JButton("Optionales Bild Hochladen");
         btnBeispielBild.addActionListener(this);
 
         btnZurueck = new JButton("Zurück");

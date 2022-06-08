@@ -22,7 +22,7 @@ public class StudentMainView extends JFrame implements ActionListener {
     private Student student;
     private JPanel pnlStudent;
     private JButton btnMeinteTestate;
-    private JButton btnGeneriereTraining;
+    private JButton btnDurchfuerenTraining;
     private JButton btnEinzelneAufgabe;
     private JButton btnAbmelden;
 
@@ -41,20 +41,21 @@ public class StudentMainView extends JFrame implements ActionListener {
         JPanel tempCenterPnl = new JPanel(new FlowLayout());
         JPanel tempSouthPnl = new JPanel(new FlowLayout());
 
-        btnGeneriereTraining = new JButton("Training generieren");
-        btnGeneriereTraining.addActionListener(this);
-        btnGeneriereTraining.setPreferredSize(new Dimension(160, 80));
+        btnDurchfuerenTraining = new JButton("Training durchführen");
+        btnDurchfuerenTraining.addActionListener(this);
+        btnDurchfuerenTraining.setPreferredSize(new Dimension(160, 80));
         btnMeinteTestate = new JButton("Meine Testate");
         btnMeinteTestate.addActionListener(this);
         btnMeinteTestate.setPreferredSize(new Dimension(160, 80));
-        btnEinzelneAufgabe = new JButton("Einzelne Aufgabe bearbeiten");
+        btnEinzelneAufgabe = new JButton("<html>Einzelne Aufgabe<br>bearbeiten</html>");
+
         btnEinzelneAufgabe.addActionListener(this);
         btnEinzelneAufgabe.setPreferredSize(new Dimension(160, 80));
 
         btnAbmelden = new JButton("Abmelden");
         btnAbmelden.addActionListener(this);
 
-        tempCenterPnl.add(btnGeneriereTraining);
+        tempCenterPnl.add(btnDurchfuerenTraining);
         tempCenterPnl.add(btnMeinteTestate);
         tempCenterPnl.add(btnEinzelneAufgabe);
         tempNorthPnl.add(textLbl);
@@ -84,7 +85,7 @@ public class StudentMainView extends JFrame implements ActionListener {
         } else if (e.getSource() == this.btnAbmelden) {
             this.dispose();
             new LoginView();
-        } else if (e.getSource() == this.btnGeneriereTraining) {
+        } else if (e.getSource() == this.btnDurchfuerenTraining) {
             new GenerierenTrainingView(this, student);
             this.setVisible(false);
         } else if (e.getSource() == this.btnEinzelneAufgabe) {

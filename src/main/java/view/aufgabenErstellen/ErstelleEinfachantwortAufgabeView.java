@@ -87,7 +87,7 @@ public class ErstelleEinfachantwortAufgabeView extends JFrame implements ActionL
         pnlAufgabeErstellenEinfachAntwortView = new JPanel();
         pnlAufgabeErstellenEinfachAntwortView.setLayout(borderLayout);
 
-        btnBeispielBild = new JButton("Beispiel Bild Hochladen");
+        btnBeispielBild = new JButton("Optionales Bild Hochladen");
         btnBeispielBild.addActionListener(this);
 
         btnZurueck = new JButton("Zurück");
