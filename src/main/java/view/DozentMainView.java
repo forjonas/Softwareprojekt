@@ -19,14 +19,14 @@ public class DozentMainView extends JFrame implements ActionListener {
 
     private JPanel pnlDozentMain;
     private JPanel pnlCenter;
-    private JButton btnTestateBewerten;
+    private JButton btnTestateKorrigieren;
     private JButton btnTrainingsEinsehen;
-    private JButton btnTestateErstellen;
+    private JButton btnTestatErstellen;
     private JButton btnTestatuebersicht;
     private JButton btnAufgabeErstellen;
     private JButton btnAufgabenuebersicht;
     private JButton btnAufgabeBearbeiten;
-    private JButton btnTrainingsDurchfuehren;
+    private JButton btnTrainingDurchfuehren;
     private JButton btnMeineTestate;
     private JButton btnAbmelden;
     GridLayout gridLayout = new GridLayout(3, 3);
@@ -39,8 +39,8 @@ public class DozentMainView extends JFrame implements ActionListener {
         this.dozent = doz;
         this.setName("Home");
         fuelleDozentFrame();
-        this.setMinimumSize(new Dimension(1500, 900));
-        this.setSize(1500, 900);
+        this.setMinimumSize(new Dimension(1000, 600));
+        this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((display.getSize().width - this.getSize().width) / 2, (display.getSize().height - this.getSize().height) / 2);
@@ -55,48 +55,57 @@ public class DozentMainView extends JFrame implements ActionListener {
         btnAbmelden = new JButton("Abmelden");
         btnAbmelden.addActionListener(this);
 
-        btnTestateBewerten = new JButton("Testate bewerten");
-        btnTestateBewerten.addActionListener(this);
+        btnTestateKorrigieren = new JButton("Testate korrigieren");
+        btnTestateKorrigieren.addActionListener(this);
+        btnTestateKorrigieren.setPreferredSize(new Dimension(160, 80));
 
         btnTrainingsEinsehen = new JButton("Trainings einsehen");
         btnTrainingsEinsehen.addActionListener(this);
+        btnTrainingsEinsehen.setPreferredSize(new Dimension(160, 80));
 
-        btnTestateErstellen = new JButton("Testate erstellen");
-        btnTestateErstellen.addActionListener(this);
+        btnTestatErstellen = new JButton("Testat erstellen");
+        btnTestatErstellen.addActionListener(this);
+        btnTestatErstellen.setPreferredSize(new Dimension(160, 80));
 
         btnTestatuebersicht = new JButton("Testatübersicht");
         btnTestatuebersicht.addActionListener(this);
+        btnTestatuebersicht.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabeErstellen = new JButton("Aufgabe erstellen");
         btnAufgabeErstellen.addActionListener(this);
+        btnAufgabeErstellen.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabenuebersicht = new JButton("Aufgabenübersicht");
         btnAufgabenuebersicht.addActionListener(this);
+        btnAufgabenuebersicht.setPreferredSize(new Dimension(160, 80));
 
         btnAufgabeBearbeiten = new JButton("Einzelne Aufgabe bearbeiten");
         btnAufgabeBearbeiten.addActionListener(this);
+        btnAufgabeBearbeiten.setPreferredSize(new Dimension(160, 80));
 
-        btnTrainingsDurchfuehren = new JButton("Trainings durchführen");
-        btnTrainingsDurchfuehren.addActionListener(this);
+        btnTrainingDurchfuehren = new JButton("Training durchführen");
+        btnTrainingDurchfuehren.addActionListener(this);
+        btnTrainingDurchfuehren.setPreferredSize(new Dimension(160, 80));
 
         btnMeineTestate = new JButton("Meine Testate");
         btnMeineTestate.addActionListener(this);
+        btnMeineTestate.setPreferredSize(new Dimension(160, 80));
         JPanel tempSouthPanel = new JPanel(new FlowLayout());
 
         pnlCenter = new JPanel(gridLayout);
         pnlDozentMain = new JPanel(new BorderLayout());
 
-        pnlCenter.add(btnTestateBewerten);
+        pnlCenter.add(btnTestateKorrigieren);
         pnlCenter.add(btnMeineTestate);
         pnlCenter.add(btnTestatuebersicht);
-        pnlCenter.add(btnTestateErstellen);
-        pnlCenter.add(btnTrainingsDurchfuehren);
+        pnlCenter.add(btnTestatErstellen);
+        pnlCenter.add(btnTrainingDurchfuehren);
         pnlCenter.add(btnTrainingsEinsehen);
         pnlCenter.add(btnAufgabenuebersicht);
         pnlCenter.add(btnAufgabeErstellen);
         pnlCenter.add(btnAufgabeBearbeiten);
         tempSouthPanel.add(btnAbmelden);
-        pnlCenter.setBorder(BorderFactory.createEmptyBorder(10, 2, 10, 2));
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         pnlDozentMain.add(pnlCenter, BorderLayout.CENTER);
         pnlDozentMain.add(tempSouthPanel, BorderLayout.SOUTH);
         pnlDozentMain.add(welcomeMsgLbl, BorderLayout.NORTH);
@@ -108,11 +117,11 @@ public class DozentMainView extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnTestateBewerten) {
+        if (e.getSource() == this.btnTestateKorrigieren) {
             testatEinsehen();
         } else if (e.getSource() == this.btnMeineTestate) {
             testateDurchfuehren();
-        } else if (e.getSource() == this.btnTrainingsDurchfuehren) {
+        } else if (e.getSource() == this.btnTrainingDurchfuehren) {
             trainingsDurchfuehren();
         } else if (e.getSource() == this.btnAufgabenuebersicht) {
             aufgabenuebersicht();
@@ -122,7 +131,7 @@ public class DozentMainView extends JFrame implements ActionListener {
             aufgabeBearbeiten();
         } else if (e.getSource() == this.btnTestatuebersicht) {
             testatuebersicht();
-        } else if (e.getSource() == this.btnTestateErstellen) {
+        } else if (e.getSource() == this.btnTestatErstellen) {
             testateErstellen();
         } else if (e.getSource() == this.btnTrainingsEinsehen) {
             trainingsEinsehen();

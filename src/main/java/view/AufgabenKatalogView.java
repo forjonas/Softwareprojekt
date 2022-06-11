@@ -32,7 +32,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
     private JTable tableAufgaben;
     private JButton btnZurueck;
     private JButton btnLoeschen;
-    private JButton btnPreview;
+    private JButton btnEinsehenPreview;
     private JButton btnErstellen;
 
     /**
@@ -98,8 +98,8 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         panelRightNorth.add(btnLoeschen);
 
 
-        btnPreview = new JButton("Preview");
-        panelRightNorth.add(btnPreview);
+        btnEinsehenPreview = new JButton("Einsehen");
+        panelRightNorth.add(btnEinsehenPreview);
 
 
         JScrollPane scrollPane = new JScrollPane();
@@ -114,7 +114,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
         btnLoeschen.addActionListener(this);
         btnErstellen.addActionListener(this);
         btnZurueck.addActionListener(this);
-        btnPreview.addActionListener(this);
+        btnEinsehenPreview.addActionListener(this);
 
         super.pack();
         this.setMinimumSize(new Dimension(650, 650));
@@ -139,7 +139,7 @@ public class AufgabenKatalogView extends JFrame implements ActionListener {
             loeschenButtonLogik();
         }
 
-        if (e.getSource() == this.btnPreview) {
+        if (e.getSource() == this.btnEinsehenPreview) {
             previewButtonLogik();
         }
 

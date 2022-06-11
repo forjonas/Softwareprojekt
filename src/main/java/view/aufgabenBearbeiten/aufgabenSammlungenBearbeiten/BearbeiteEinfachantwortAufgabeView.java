@@ -76,7 +76,7 @@ public class BearbeiteEinfachantwortAufgabeView extends JFrame implements Action
         btnNaechsteAufgabe.addActionListener(this);
 
         super.pack();
-        this.setMinimumSize(new Dimension(850 + this.lblBild.getWidth(), 500 + this.lblBild.getHeight()));
+        this.setMinimumSize(new Dimension(700 + this.lblBild.getWidth(), 400 + this.lblBild.getHeight()));
         this.setSize(this.getMinimumSize());
         Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
         super.setLocation((display.getSize().width - super.getSize().width) / 2, (display.getSize().height - super.getSize().height) / 2);
