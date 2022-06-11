@@ -31,6 +31,7 @@ public abstract class Aufgabe {
     private Kategorie kategorie;
     private int punktewert;
     private Schwierigkeitsgrad schwierigkeitsgrad;
+    @Column(length=10485760)
     private String textbeschreibung;
     private String name;
     protected Aufgabentyp aufgabentyp;

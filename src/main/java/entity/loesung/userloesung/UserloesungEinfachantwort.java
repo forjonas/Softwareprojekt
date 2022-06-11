@@ -16,6 +16,7 @@ import jakarta.persistence.*;
 @Entity
 public class UserloesungEinfachantwort extends Userloesung {
 
+    @Column(length=10485760)
     private String userloesung;
 
     /**
