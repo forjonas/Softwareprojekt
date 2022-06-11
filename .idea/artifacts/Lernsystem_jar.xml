@@ -3,13 +3,13 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Lernsystem_jar</output-path>
     <root id="archive" name="Lernsystem.jar">
       <element id="module-output" name="Lernsystem" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.asm/9.1.0/org.eclipse.persistence.asm-9.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/forms_rt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.jpa.jpql/3.0.2/org.eclipse.persistence.jpa.jpql-3.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.asm/9.1.0/org.eclipse.persistence.asm-9.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.3.4/postgresql-42.3.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jakarta/persistence/jakarta.persistence-api/3.0.0/jakarta.persistence-api-3.0.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.core/3.0.2/org.eclipse.persistence.core-3.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.3.4/postgresql-42.3.4.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.jpa.jpql/3.0.2/org.eclipse.persistence.jpa.jpql-3.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/forms_rt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/persistence/org.eclipse.persistence.jpa/3.0.2/org.eclipse.persistence.jpa-3.0.2.jar" path-in-jar="/" />
     </root>
   </artifact>
