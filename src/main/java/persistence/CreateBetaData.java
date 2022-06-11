@@ -305,7 +305,7 @@ public class CreateBetaData {
     }
 
     public void createBetaUserLösungen() throws Exception {
-        //training1 von Student2
+        //training1 von student2
         ul1 = new UserloesungMultipleChoiceAufgabe(ma1, true, 2, student2, training1);
         ul2 = new UserloesungEinfachantwort(ea4, false, "JRE", student2, training1);
         ul3 = new UserloesungProgrammieraufgabe(pa2, true, "public void baum(int h){\n String s='*';\nfor(int i=i;i<h;i++){\nSystem.out.println(i*s);\n}\n}", student2, training1);
@@ -314,7 +314,7 @@ public class CreateBetaData {
         student2.addErstellteLoesung(ul2);
         student2.addErstellteLoesung(ul3);
 
-        //training2 von Student3
+        //training2 von student3
         ul4 = new UserloesungEinfachantwort(ea12, false, "", student3, training2);
         ul5 = new UserloesungMultipleChoiceAufgabe(ma9, false, 2, student3, training2);
         ul6 = new UserloesungProgrammieraufgabe(pa10, false, "SELECT MAX(Einwohnerzahl)\nWHERE country;", student3, training2);
